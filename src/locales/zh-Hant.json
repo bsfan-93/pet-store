@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "新用戶註冊即享八折優惠！"
+  },
+  "header": {
+    "home": "首頁",
+    "shop": "商店",
+    "about_us": "關於我們",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "科學 & 健康",
+    "title2": "為愛寵",
+    "shop_now": "即刻選購"
+  },
+  "search": {
+    "placeholder": "找商品"
+  },
+  "cart": {
+    "title": "你的購物車",
+    "empty_message": "你的購物車是空的",
+    "continue_shopping": "繼續購物",
+    "login_prompt": "已經有帳戶了？",
+    "login_link": "登入以更快地結帳。"
+  }
+}

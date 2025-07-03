@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "20% Rabatt für neue Benutzer bei der Registrierung!"
+  },
+  "header": {
+    "home": "Startseite",
+    "shop": "Shop",
+    "about_us": "Über uns",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "Wissenschaftlich & Gesund",
+    "title2": "Für Haustiere",
+    "shop_now": "Jetzt einkaufen"
+  },
+  "search": {
+    "placeholder": "Produkte suchen"
+  },
+  "cart": {
+    "title": "Ihr Warenkorb",
+    "empty_message": "Ihr Warenkorb ist leer",
+    "continue_shopping": "Weiter einkaufen",
+    "login_prompt": "Haben Sie ein Konto?",
+    "login_link": "Melden Sie sich an, um schneller zur Kasse zu gehen."
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "新規ユーザー登録で20%オフ！"
+  },
+  "header": {
+    "home": "ホーム",
+    "shop": "ショップ",
+    "about_us": "会社概要",
+    "app": "アプリ"
+  },
+  "hero": {
+    "title1": "科学的 & 健康的",
+    "title2": "ペットのために",
+    "shop_now": "今すぐ購入"
+  },
+  "search": {
+    "placeholder": "商品を探す"
+  },
+  "cart": {
+    "title": "あなたのカート",
+    "empty_message": "カートは空です",
+    "continue_shopping": "買い物を続ける",
+    "login_prompt": "アカウントをお持ちですか？",
+    "login_link": "ログインして迅速にチェックアウト。"
+  }
+}

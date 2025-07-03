@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "20% de desconto para novos usuários no registro!"
+  },
+  "header": {
+    "home": "Início",
+    "shop": "Loja",
+    "about_us": "Sobre nós",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "Científico e Saudável",
+    "title2": "Para Animais de Estimação",
+    "shop_now": "Compre agora"
+  },
+  "search": {
+    "placeholder": "Procurar produtos"
+  },
+  "cart": {
+    "title": "Seu carrinho",
+    "empty_message": "Seu carrinho está vazio",
+    "continue_shopping": "Continuar comprando",
+    "login_prompt": "Tem uma conta?",
+    "login_link": "Faça login para finalizar a compra mais rápido."
+  }
+}

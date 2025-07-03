@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "20% de réduction pour les nouveaux utilisateurs lors de l'inscription !"
+  },
+  "header": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "about_us": "À propos",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "Scientifique & Sain",
+    "title2": "Pour les animaux",
+    "shop_now": "Acheter maintenant"
+  },
+  "search": {
+    "placeholder": "Rechercher des produits"
+  },
+  "cart": {
+    "title": "Votre panier",
+    "empty_message": "Votre panier est vide",
+    "continue_shopping": "Continuer vos achats",
+    "login_prompt": "Avez-vous un compte ?",
+    "login_link": "Connectez-vous pour passer à la caisse plus rapidement."
+  }
+}

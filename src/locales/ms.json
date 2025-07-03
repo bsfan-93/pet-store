@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "Diskaun 20% untuk Pengguna Baru selepas Pendaftaran!"
+  },
+  "header": {
+    "home": "Laman Utama",
+    "shop": "Kedai",
+    "about_us": "Tentang Kami",
+    "app": "Apl"
+  },
+  "hero": {
+    "title1": "Saintifik & Sihat",
+    "title2": "Untuk Haiwan Peliharaan",
+    "shop_now": "Beli sekarang"
+  },
+  "search": {
+    "placeholder": "Cari Produk"
+  },
+  "cart": {
+    "title": "Troli anda",
+    "empty_message": "Troli anda kosong",
+    "continue_shopping": "Teruskan membeli-belah",
+    "login_prompt": "Ada akaun?",
+    "login_link": "Log masuk untuk daftar keluar lebih pantas."
+  }
+}

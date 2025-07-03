@@ -1,0 +1,65 @@
+{
+  "top_banner": {
+    "promo": "20% Off for New Users Upon Registration!"
+  },
+  "header": {
+    "home": "Home",
+    "shop": "Shop",
+    "about_us": "About Us",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "Scientific & Healthy",
+    "title2": "For Pets",
+    "shop_now": "Shop Now"
+  },
+  "features": {
+    "camera_title": "Scout Smart Camera",
+    "camera_desc": "The best way to keep an eye on your furry friends.",
+    "feeder_title": "One RFID Feeder",
+    "feeder_desc": "Feeding made personal for multiple pet families.",
+    "fountain_title": "Dockstream Cordless Fountain",
+    "fountain_desc": "Fresh, flowing water to encourage hydration."
+  },
+  "gallery": {
+    "title": "Follow along for more"
+  },
+  "how_to": {
+    "title": "How to raise pets healthily"
+  },
+  "search": {
+    "placeholder": "Search Products",
+    "loading": "Searching...",
+    "no_results": "No related products found"
+  },
+  "cart": {
+    "title": "Your cart",
+    "empty_message": "Your cart is empty",
+    "continue_shopping": "Continue shopping",
+    "login_prompt": "Have an account?",
+    "login_link": "Log in to check out faster.",
+    "subtotal": "Subtotal",
+    "checkout_button": "Continue to checkout",
+    "placeholder_items": "Items will be displayed here..."
+  },
+  "footer": {
+    "tagline": "Providing the best for your furry family.",
+    "about_title": "About",
+    "support_title": "Support",
+    "join_title": "Join our list",
+    "join_desc": "Sign up to get the latest on sales, new releases and more…",
+    "placeholder_email": "Your email",
+    "signup_button": "Sign Up",
+    "copyright": "© 2025 PetsClan, Inc. All Rights Reserved.",
+    "app_store": "App Store",
+    "google_play": "Google Play",
+    "links": {
+      "company": "Company",
+      "careers": "Careers",
+      "press": "Press",
+      "contact_us": "Contact Us",
+      "faq": "FAQ",
+      "shipping": "Shipping"
+    }
+  }
+}

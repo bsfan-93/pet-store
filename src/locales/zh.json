@@ -1,0 +1,65 @@
+{
+  "top_banner": {
+    "promo": "新用户注册即享八折优惠！"
+  },
+  "header": {
+    "home": "首页",
+    "shop": "商店",
+    "about_us": "关于我们",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "科学 & 健康",
+    "title2": "为爱宠",
+    "shop_now": "即刻选购"
+  },
+  "features": {
+    "camera_title": "Scout 智能摄像头",
+    "camera_desc": "随时关注您毛茸茸朋友的最佳方式。",
+    "feeder_title": "RFID 喂食器",
+    "feeder_desc": "为多宠物家庭提供个性化喂养方案。",
+    "fountain_title": "Dockstream 无线饮水机",
+    "fountain_desc": "新鲜流动的水，鼓励宠物多喝水。"
+  },
+  "gallery": {
+    "title": "关注我们获取更多"
+  },
+  "how_to": {
+    "title": "如何健康养宠"
+  },
+  "search": {
+    "placeholder": "找商品",
+    "loading": "正在搜索...",
+    "no_results": "未找到相关商品"
+  },
+  "cart": {
+    "title": "你的购物车",
+    "empty_message": "你的购物车是空的",
+    "continue_shopping": "继续购物",
+    "login_prompt": "已经有账户了？",
+    "login_link": "登录以更快地结账。",
+    "subtotal": "小计",
+    "checkout_button": "继续结账",
+    "placeholder_items": "这里将显示商品列表..."
+  },
+  "footer": {
+    "tagline": "为你的毛茸茸家人提供最好的。",
+    "about_title": "关于",
+    "support_title": "支持",
+    "join_title": "加入我们",
+    "join_desc": "注册以获取有关促销、新品发布等的最新信息…",
+    "placeholder_email": "你的邮箱",
+    "signup_button": "注册",
+    "copyright": "© 2025 PetsClan, Inc. 版权所有。",
+    "app_store": "应用商店",
+    "google_play": "谷歌商店",
+    "links": {
+      "company": "公司",
+      "careers": "招聘",
+      "press": "媒体报道",
+      "contact_us": "联系我们",
+      "faq": "常见问题",
+      "shipping": "配送"
+    }
+  }
+}

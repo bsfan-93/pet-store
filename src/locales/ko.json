@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "신규 사용자 등록 시 20% 할인!"
+  },
+  "header": {
+    "home": "홈",
+    "shop": "상점",
+    "about_us": "회사 소개",
+    "app": "앱"
+  },
+  "hero": {
+    "title1": "과학적 & 건강한",
+    "title2": "반려동물을 위해",
+    "shop_now": "지금 구매"
+  },
+  "search": {
+    "placeholder": "상품 검색"
+  },
+  "cart": {
+    "title": "장바구니",
+    "empty_message": "장바구니가 비어 있습니다",
+    "continue_shopping": "쇼핑 계속하기",
+    "login_prompt": "계정이 있으신가요?",
+    "login_link": "더 빠른 결제를 위해 로그인하세요."
+  }
+}

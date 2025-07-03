@@ -1,0 +1,26 @@
+{
+  "top_banner": {
+    "promo": "Sconto del 20% per i nuovi utenti alla registrazione!"
+  },
+  "header": {
+    "home": "Home",
+    "shop": "Negozio",
+    "about_us": "Chi siamo",
+    "app": "App"
+  },
+  "hero": {
+    "title1": "Scientifico e Sano",
+    "title2": "Per Animali",
+    "shop_now": "Acquista ora"
+  },
+  "search": {
+    "placeholder": "Cerca prodotti"
+  },
+  "cart": {
+    "title": "Il tuo carrello",
+    "empty_message": "Il tuo carrello è vuoto",
+    "continue_shopping": "Continua lo shopping",
+    "login_prompt": "Hai un account?",
+    "login_link": "Accedi per un checkout più veloce."
+  }
+}
