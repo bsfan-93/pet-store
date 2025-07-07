@@ -7,7 +7,6 @@
     
     <main>
       <HeroSection :banners="bannerData"/>
-      <NewAndPopular :new-items="newProducts" :popular-items="popularProducts" />
       <CollectionList :collections="collectionData" />
       <FeatureSection />
       <GalleryCarousel />
@@ -25,7 +24,6 @@ import { ref, onMounted, onUnmounted, provide } from 'vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import HeroSection from '../components/HeroSection.vue';
-import NewAndPopular from '../components/NewAndPopular.vue';
 import CollectionList from '../components/CollectionList.vue';
 import FeatureSection from '../components/FeatureSection.vue';
 import GalleryCarousel from '../components/GalleryCarousel.vue';
@@ -35,14 +33,11 @@ import AppFooter from '../components/AppFooter.vue';
 // --- 响应式状态定义 ---
 const megaMenuData = ref(null);
 provide('megaMenuData', megaMenuData);
-
 const bannerData = ref([]);
 const collectionData = ref([]);
-const newProducts = ref([]);
-const popularProducts = ref([]); // <-- 【关键修复】补上这个缺失的变量定义
-
 const showTopBanner = ref(true);
 const isHeaderScrolled = ref(false);
+const galleryData = ref([]); // <-- 【关键修复】恢复这个变量的定义
 
 // --- 函数定义 ---
 const handleScroll = () => {
@@ -51,46 +46,91 @@ const handleScroll = () => {
   isHeaderScrolled.value = scrollTop > 50;
 };
 
-// 将 fetch 逻辑统一成一个可复用的函数
-const fetchAPIData = async (url, targetRef, transformFn) => {
+const fetchMegaMenuData = async () => {
   try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error(`API响应错误: ${url}`);
+    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=0');
+    if (!response.ok) throw new Error('菜单API响应错误');
+    const result = await response.json();
+    if (result.success && Array.isArray(result.data)) {
+      const rawData = result.data;
+      const baseUrl = 'http://192.168.2.9:9999';
+      const transformedData = {
+        links: rawData.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
+        products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: baseUrl + item.url }))
+      };
+      megaMenuData.value = transformedData;
+      sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+    }
+  } catch (error) {
+    console.error("获取菜单数据失败:", error);
+    megaMenuData.value = { links: [], products: [] };
+  }
+};
+
+const fetchBannerData = async () => {
+  try {
+    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=1');
+    if (!response.ok) throw new Error('Banner API响应错误');
     const result = await response.json();
     if (result.success && Array.isArray(result.data)) {
       const baseUrl = 'http://192.168.2.9:9999';
-      // 如果提供了转换函数，则使用它，否则默认处理
-      targetRef.value = transformFn ? transformFn(result.data, baseUrl) : result.data.map(item => ({ ...item, url: baseUrl + item.url }));
+      bannerData.value = result.data.map(item => ({ ...item, url: baseUrl + item.url }));
     }
   } catch (error) {
-    console.error(`获取数据失败 from ${url}:`, error);
+    console.error("获取Banner数据失败:", error);
   }
 };
+
+const fetchCollectionData = async () => {
+  try {
+    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=2');
+    if (!response.ok) throw new Error('Collection API Error');
+    const result = await response.json();
+    if (result.success && Array.isArray(result.data)) {
+      const baseUrl = 'http://192.168.2.9:9999';
+      collectionData.value = result.data.map(item => ({ ...item, url: baseUrl + item.url }));
+    }
+  } catch (error) {
+    console.error("获取Collection数据失败:", error);
+  }
+};
+
+const fetchGalleryData = async () => {
+  const cacheKey = 'galleryData';
+  const cachedData = sessionStorage.getItem(cacheKey);
+  if (cachedData) {
+    try {
+      galleryData.value = JSON.parse(cachedData);
+      return;
+    } catch(e) {
+      sessionStorage.removeItem(cacheKey);
+    }
+  }
+  try {
+    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=3');
+    if (!response.ok) throw new Error('Gallery API Error');
+    const result = await response.json();
+    if (result.success && Array.isArray(result.data)) {
+      const baseUrl = 'http://192.168.2.9:9999';
+      const processedData = result.data.map(item => ({...item, url: baseUrl + item.url}));
+      galleryData.value = processedData;
+      sessionStorage.setItem(cacheKey, JSON.stringify(processedData));
+    }
+  } catch (error) {
+    console.error("获取Gallery数据失败:", error);
+  }
+};
+
 
 // --- 生命周期钩子 ---
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   
-  // 获取超级菜单数据（它有特殊的缓存和转换逻辑，所以单独处理）
-  const cachedMegaMenu = sessionStorage.getItem('megaMenuData');
-  if (cachedMegaMenu) {
-    megaMenuData.value = JSON.parse(cachedMegaMenu);
-  } else {
-    fetchAPIData('http://192.168.2.9:9999/standalones/photo/details?type=0', megaMenuData, (data, baseUrl) => {
-      const transformed = {
-        links: data.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
-        products: data.map(item => ({ id: item.id, name: item.name, imageUrl: baseUrl + item.url }))
-      };
-      sessionStorage.setItem('megaMenuData', JSON.stringify(transformed));
-      return transformed;
-    });
-  }
-
-  // 获取其他所有模块的数据
-  fetchAPIData('http://192.168.2.9:9999/standalones/photo/details?type=1', bannerData);
-  fetchAPIData('http://192.168.2.9:9999/standalones/photo/details?type=2', collectionData);
-  fetchAPIData(`http://192.168.2.9:9999/standalones/good/list?tag=new`, newProducts);
-  fetchAPIData(`http://192.168.2.9:9999/standalones/good/list?tag=popular`, popularProducts);
+  // 调用所有获取数据的函数
+  fetchMegaMenuData();
+  fetchBannerData();
+  fetchCollectionData();
+  fetchGalleryData(); // 确保调用
 });
 
 onUnmounted(() => {
@@ -106,7 +146,5 @@ onUnmounted(() => {
   width: 100%;
   z-index: 1000;
 }
-main { 
-  /* 保持为空是正确的 */
-}
+main { }
 </style>

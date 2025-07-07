@@ -1,9 +1,11 @@
 <template>
-  <a :href="`/goods/${product.id}`" class="product-card">
-    <img :src="product.url" :alt="product.name" class="product-image">
+  <a :href="`/product/${product.id}`" class="product-card">
+    <div class="image-container">
+      <img :src="product.url" :alt="product.name" class="product-image">
+    </div>
     <div class="card-overlay">
       <h4 class="product-name">{{ product.name }}</h4>
-      <p class="product-price">$ {{ product.price }}</p>
+      <p class="product-price" v-if="product.price">$ {{ product.price }}</p>
       <button class="add-to-cart-btn">Add to Cart</button>
     </div>
   </a>
@@ -23,14 +25,22 @@ defineProps({
   display: block;
   position: relative; /* 作为浮层定位的基准 */
   overflow: hidden; /* 隐藏超出部分的浮层 */
-  border-radius: 8px;
-  background-color: #f7f7f8;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: box-shadow 0.3s ease;
+  border-radius: 12px;
+  background-color: #f8f8f8;
+  text-decoration: none;
+  color: var(--text-color);
+  /* 卡片上浮和阴影的过渡动画 */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .product-card:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transform: translateY(-8px); /* 悬停时向上移动8px */
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1); /* 添加更明显的阴影 */
+}
+
+.image-container {
+  overflow: hidden; /* 隐藏图片放大时超出的部分 */
+  border-radius: 12px;
 }
 
 .product-image {
@@ -38,7 +48,9 @@ defineProps({
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  padding: 10px;
+  padding: 15px;
+  background-color: #fff;
+  /* 图片放大动画 */
   transition: transform 0.4s ease;
 }
 
@@ -53,8 +65,9 @@ defineProps({
   left: 0;
   width: 100%;
   padding: 20px;
-  background: linear-gradient(to top, rgba(255, 255, 255, 1) 70%, rgba(255, 255, 255, 0));
-  
+  box-sizing: border-box;
+  background: white;
+  border-top: 1px solid var(--border-color);
   /* 默认状态下，浮层被移出卡片下方 */
   transform: translateY(100%);
   transition: transform 0.4s ease;
@@ -77,16 +90,18 @@ defineProps({
 .product-price {
   font-size: 14px;
   margin: 0 0 15px 0;
+  font-weight: 500;
 }
 
 .add-to-cart-btn {
   width: 100%;
-  padding: 10px;
-  background-color: #000;
-  color: #fff;
+  padding: 12px;
+  background-color: var(--text-color);
+  color: var(--secondary-color);
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
+  font-size: 14px;
 }
 </style>

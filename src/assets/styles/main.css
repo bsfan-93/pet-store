@@ -16,7 +16,7 @@
 
   /* 尺寸和间距 */
   --header-height: 70px;             /* <-- 修改这个值来调整导航栏高度 */
-  --logo-width: 170px;               /* <-- 修改这个值来调整LOGO宽度 */    
+  --logo-width: 175px;               /* <-- 修改这个值来调整LOGO宽度 */    
   --logo-height:66px;                /* <-- 修改这个值来调整LOGO高度 */
   --icon-size: 16px;
   --container-width: 1200px;        /* 页面内容主容器宽度 */

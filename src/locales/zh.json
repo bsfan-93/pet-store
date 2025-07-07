@@ -43,23 +43,24 @@
     "placeholder_items": "这里将显示商品列表..."
   },
   "footer": {
-    "tagline": "为你的毛茸茸家人提供最好的。",
-    "about_title": "关于",
+    "about_title": "公司",
     "support_title": "支持",
-    "join_title": "加入我们",
-    "join_desc": "注册以获取有关促销、新品发布等的最新信息…",
-    "placeholder_email": "你的邮箱",
-    "signup_button": "注册",
-    "copyright": "© 2025 PetsClan, Inc. 版权所有。",
-    "app_store": "应用商店",
-    "google_play": "谷歌商店",
+    "works_title": "工作原理",
+    "join_title": "注册以获取首单九折优惠",
+    "placeholder_email": "您的邮箱",
+    "signup_button": "订阅",
+    "download_app_title": "下载App",
     "links": {
-      "company": "公司",
-      "careers": "招聘",
-      "press": "媒体报道",
-      "contact_us": "联系我们",
-      "faq": "常见问题",
-      "shipping": "配送"
+        "about_us": "关于我们",
+        "privacy_policy": "隐私政策",
+        "terms_of_service": "服务条款",
+        "faq": "常见问题",
+        "contact_us": "联系我们",
+        "app_service": "App服务",
+        "user_manual": "用户手册",
+        "shipping_policy": "配送政策",
+        "warranty_policy": "保修政策",
+        "app": "App"
     }
   }
 }

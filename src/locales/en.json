@@ -43,23 +43,24 @@
     "placeholder_items": "Items will be displayed here..."
   },
   "footer": {
-    "tagline": "Providing the best for your furry family.",
-    "about_title": "About",
+    "about_title": "Company",
     "support_title": "Support",
-    "join_title": "Join our list",
-    "join_desc": "Sign up to get the latest on sales, new releases and more…",
-    "placeholder_email": "Your email",
-    "signup_button": "Sign Up",
-    "copyright": "© 2025 PetsClan, Inc. All Rights Reserved.",
-    "app_store": "App Store",
-    "google_play": "Google Play",
+    "works_title": "How It Works",
+    "join_title": "Sign up for 10% off your first order",
+    "placeholder_email": "E-mail",
+    "signup_button": "Subscribe",
+    "download_app_title": "Download App",
     "links": {
-      "company": "Company",
-      "careers": "Careers",
-      "press": "Press",
-      "contact_us": "Contact Us",
-      "faq": "FAQ",
-      "shipping": "Shipping"
+        "about_us": "About US",
+        "privacy_policy": "Privacy Policy",
+        "terms_of_service": "Terms of Service",
+        "faq": "FAQ",
+        "contact_us": "Contact us",
+        "app_service": "App Service",
+        "user_manual": "User Manual",
+        "shipping_policy": "Shipping Policy",
+        "warranty_policy": "Warranty Policy",
+        "app": "App"
     }
   }
 }

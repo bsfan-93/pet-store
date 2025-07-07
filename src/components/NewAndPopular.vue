@@ -4,12 +4,12 @@
       <h2 class="section-title">New & Popular</h2>
       
       <el-tabs v-model="activeTab" class="product-tabs">
-        <el-tab-pane label="New" name="new">
+        <el-tab-pane label="New Arrivals" name="new">
           <div class="product-grid">
             <ProductCard v-for="item in newItems" :key="item.id" :product="item"/>
           </div>
         </el-tab-pane>
-        <el-tab-pane label="Popular" name="popular">
+        <el-tab-pane label="Best Sellers" name="popular">
           <div class="product-grid">
             <ProductCard v-for="item in popularItems" :key="item.id" :product="item"/>
           </div>
@@ -35,6 +35,7 @@ const activeTab = ref('new');
 <style scoped>
 .new-popular-section {
   padding: 80px 0;
+  background-color: white;
 }
 .container {
   max-width: var(--container-width, 1200px);
@@ -49,7 +50,7 @@ const activeTab = ref('new');
 }
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 每行4个产品 */
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 25px;
 }
 
@@ -60,16 +61,22 @@ const activeTab = ref('new');
   margin-bottom: 40px;
 }
 :deep(.el-tabs__nav) {
-  border: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 50px;
+  padding: 5px;
 }
 :deep(.el-tabs__item) {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0 25px;
-  height: 50px;
+  height: 40px;
+  border-radius: 40px;
+}
+:deep(.el-tabs__item.is-active) {
+  background-color: var(--text-color);
+  color: var(--secondary-color);
 }
 :deep(.el-tabs__active-bar) {
-  background-color: var(--text-color);
-  height: 2px;
+  display: none;
 }
 </style>
