@@ -8,7 +8,7 @@
     <main>
       <HeroSection :banners="bannerData"/>
       <CollectionList :collections="collectionData" />
-      <FeatureSection />
+      
       <GalleryCarousel />
       <HowToSection />
     </main>
@@ -20,12 +20,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted, provide } from 'vue';
 
-// 导入所有需要的组件
+// 导入需要的组件 (已移除 FeatureSection 和 GalleryCarousel)
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import HeroSection from '../components/HeroSection.vue';
 import CollectionList from '../components/CollectionList.vue';
-import FeatureSection from '../components/FeatureSection.vue';
 import GalleryCarousel from '../components/GalleryCarousel.vue';
 import HowToSection from '../components/HowToSection.vue';
 import AppFooter from '../components/AppFooter.vue';
@@ -33,11 +32,13 @@ import AppFooter from '../components/AppFooter.vue';
 // --- 响应式状态定义 ---
 const megaMenuData = ref(null);
 provide('megaMenuData', megaMenuData);
+
 const bannerData = ref([]);
 const collectionData = ref([]);
+// galleryData 已被移除
+
 const showTopBanner = ref(true);
 const isHeaderScrolled = ref(false);
-const galleryData = ref([]); // <-- 【关键修复】恢复这个变量的定义
 
 // --- 函数定义 ---
 const handleScroll = () => {
@@ -47,6 +48,15 @@ const handleScroll = () => {
 };
 
 const fetchMegaMenuData = async () => {
+  const cachedData = sessionStorage.getItem('megaMenuData');
+  if (cachedData) {
+    try {
+      megaMenuData.value = JSON.parse(cachedData);
+      return;
+    } catch (e) {
+      sessionStorage.removeItem('megaMenuData');
+    }
+  }
   try {
     const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=0');
     if (!response.ok) throw new Error('菜单API响应错误');
@@ -59,7 +69,7 @@ const fetchMegaMenuData = async () => {
         products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: baseUrl + item.url }))
       };
       megaMenuData.value = transformedData;
-      sessionStorage.setItem(cacheKey, JSON.stringify(transformedData));
+      sessionStorage.setItem('megaMenuData', JSON.stringify(transformedData));
     }
   } catch (error) {
     console.error("获取菜单数据失败:", error);
@@ -95,42 +105,16 @@ const fetchCollectionData = async () => {
   }
 };
 
-const fetchGalleryData = async () => {
-  const cacheKey = 'galleryData';
-  const cachedData = sessionStorage.getItem(cacheKey);
-  if (cachedData) {
-    try {
-      galleryData.value = JSON.parse(cachedData);
-      return;
-    } catch(e) {
-      sessionStorage.removeItem(cacheKey);
-    }
-  }
-  try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=3');
-    if (!response.ok) throw new Error('Gallery API Error');
-    const result = await response.json();
-    if (result.success && Array.isArray(result.data)) {
-      const baseUrl = 'http://192.168.2.9:9999';
-      const processedData = result.data.map(item => ({...item, url: baseUrl + item.url}));
-      galleryData.value = processedData;
-      sessionStorage.setItem(cacheKey, JSON.stringify(processedData));
-    }
-  } catch (error) {
-    console.error("获取Gallery数据失败:", error);
-  }
-};
-
+// fetchGalleryData 函数已被移除
 
 // --- 生命周期钩子 ---
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
   
-  // 调用所有获取数据的函数
+  // 获取数据 (不再调用 fetchGalleryData)
   fetchMegaMenuData();
   fetchBannerData();
   fetchCollectionData();
-  fetchGalleryData(); // 确保调用
 });
 
 onUnmounted(() => {

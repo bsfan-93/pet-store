@@ -43,7 +43,7 @@ onMounted(() => {
 
 <style scoped>
 .how-to-section {
-  height: 70vh; /* 可以适当调整高度 */
+  height: 90vh; /* 可以适当调整高度 */
   background-size: cover;
   background-position: center;
   color: var(--secondary-color);

@@ -19,13 +19,13 @@
   --logo-width: 175px;               /* <-- 修改这个值来调整LOGO宽度 */    
   --logo-height:66px;                /* <-- 修改这个值来调整LOGO高度 */
   --icon-size: 16px;
-  --container-width: 1200px;        /* 页面内容主容器宽度 */
+  --container-width: 1600px;        /* 页面内容主容器宽度 */
 }
 
 /* 全局重置和基础样式 */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: 'Outfit', 'Noto Sans SC', sans-serif; 
   color: var(--text-color);
   background-color: var(--secondary-color);
 }

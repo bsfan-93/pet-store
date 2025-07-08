@@ -2,10 +2,10 @@
   <section class="gallery-section" v-if="images.length > 0">
     <div class="container">
       <el-carousel
-        :interval="4000"
-        arrow="always"
-        height="450px"
-        class="card-carousel"
+        :interval="5000"
+        type="card"
+        height="600px"
+        arrow="never"
         indicator-position="outside"
       >
         <el-carousel-item v-for="image in images" :key="image.id">
@@ -20,7 +20,6 @@
 import { ref, onMounted } from 'vue';
 import { ElCarousel, ElCarouselItem } from 'element-plus';
 
-// 1. 将数据状态和获取逻辑都放在组件内部
 const images = ref([]);
 
 const fetchGalleryData = async () => {
@@ -37,23 +36,33 @@ const fetchGalleryData = async () => {
   }
 };
 
-// 2. 在组件自己挂载时，调用自己的数据获取函数
 onMounted(() => {
   fetchGalleryData();
 });
 </script>
 
 <style scoped>
-/* 样式与我们之前确认的最终版保持一致 */
-.gallery-section { padding: 60px 0 80px 0; background-color: #f4f3f0; overflow-x: hidden; }
-.container { max-width: var(--container-width, 1200px); margin: 0 auto; }
-.card-carousel { width: calc(100% + 400px); margin: 0 -200px; }
-:deep(.el-carousel__container) { height: 100% !important; }
-:deep(.el-carousel__item) { width: 55%; padding: 0 15px; box-sizing: border-box; transition: transform 0.4s ease; }
-.carousel-image { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-:deep(.el-carousel__arrow) { background-color: rgba(0, 0, 0, 0.3); font-size: 24px; width: 50px; height: 50px; }
-:deep(.el-carousel__arrow:hover) { background-color: rgba(0, 0, 0, 0.5); }
-:deep(.el-carousel__indicators--outside) { position: static; margin-top: 30px; }
-:deep(.el-carousel__indicator button) { background-color: #a0a0a0; }
-:deep(.el-carousel__indicator.is-active button) { background-color: #333; }
+.gallery-section {
+  padding: 90px 20px;
+  background-color: #f4f3f0;
+}
+.container {
+  max-width: var(--container-width, 1200px);
+  margin: 0 auto;
+}
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+:deep(.el-carousel__item) {
+  border-radius: 12px;
+}
+:deep(.el-carousel__indicators--outside button) {
+  background-color: #a0a0a0;
+}
+:deep(.el-carousel__indicator.is-active button) {
+  background-color: #333;
+}
 </style>

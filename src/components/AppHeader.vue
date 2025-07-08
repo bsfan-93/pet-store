@@ -188,9 +188,9 @@ const changeLanguage = (langCode) => {
   filter: none;
 }
 
-
+/* 导航栏间距 */
 .main-nav {
-  margin-left: 255px;
+  margin-left: 455px;
 }
 .nav-item-shop {
   display: inline-block;
