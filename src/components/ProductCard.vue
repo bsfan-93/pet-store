@@ -6,12 +6,23 @@
     <div class="card-overlay">
       <h4 class="product-name">{{ product.name }}</h4>
       <p class="product-price" v-if="product.price">$ {{ product.price }}</p>
-      <button class="add-to-cart-btn">Add to Cart</button>
+      <button 
+        class="add-to-cart-btn" 
+        @click.prevent="cartStore.addItem(product)"
+      >
+        Add to Cart
+      </button>
     </div>
   </a>
 </template>
 
 <script setup>
+// 1. 导入 useCartStore
+import { useCartStore } from '../stores/cart';
+
+// 2. 获取 cart store 实例
+const cartStore = useCartStore();
+
 defineProps({
   product: {
     type: Object,

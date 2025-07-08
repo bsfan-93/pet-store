@@ -47,6 +47,7 @@
 <script setup>
 import { ref } from 'vue';
 import { ElInput, ElButton, ElMessage } from 'element-plus';
+import { subscribeMail } from '../api';
 
 const email = ref('');
 
@@ -94,21 +95,13 @@ const handleSubscribe = async () => {
     return;
   }
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/mail/subscribe', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email.value }),
-    });
-    const result = await response.json();
-    if (result.success) {
-      ElMessage.success('Subscription successful! Thank you.');
-      email.value = '';
-    } else {
-      ElMessage.error(result.msg || 'Subscription failed. Please try again.');
-    }
+    // API模块已处理了请求细节和成功/失败的判断
+    await subscribeMail(email.value);
+    ElMessage.success('Subscription successful! Thank you.');
+    email.value = '';
   } catch (error) {
-    console.error('Subscription API error:', error);
-    ElMessage.error('An error occurred. Please try again later.');
+    // API模块会抛出错误，我们在这里捕获并显示给用户
+    ElMessage.error(error.message || 'An error occurred. Please try again later.');
   }
 };
 </script>

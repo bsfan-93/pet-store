@@ -24,7 +24,10 @@
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
         <el-icon><User /></el-icon>
-        <el-icon @click="isCartVisible = true"><ShoppingCart /></el-icon>
+        
+        <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
+          <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
+        </el-badge>
         
         <el-dropdown @command="changeLanguage" trigger="click">
           <span class="el-dropdown-link lang">
@@ -43,7 +46,7 @@
           </template>
         </el-dropdown>
       </div>
-      </div>
+    </div>
     
     <MegaMenu 
       v-show="isMenuVisible"
@@ -58,21 +61,22 @@
     </Teleport>
 
     <Teleport to="body">
-      <ShoppingCartPanel 
-        :items="cartItems"
-        v-if="isCartVisible"
-        @close="isCartVisible = false"
-      />
+      <ShoppingCartPanel />
     </Teleport>
-    </header>
+  </header>
 </template>
 
+
 <script setup>
-import { ref, onMounted, computed } from 'vue'; // 3. 导入 onMounted (为API预留)
+import { ref, onMounted, computed } from 'vue'; // 导入 onMounted (为API预留)
 import { useI18n } from 'vue-i18n'; // 导入 useI18n
+import { useCartStore } from '../stores/cart';    // 导入 useCartStore
 import MegaMenu from './MegaMenu.vue';
 import SearchOverlay from './SearchOverlay.vue';
 import ShoppingCartPanel from './ShoppingCartPanel.vue'; // 4. 导入 ShoppingCartPanel 组件
+
+// 获取 cart store 实例
+const cartStore = useCartStore();
 
 defineProps({
   isScrolled: {
@@ -83,10 +87,10 @@ defineProps({
 
 const isMenuVisible = ref(false); 
 const isSearchVisible = ref(false);
-const isCartVisible = ref(false); // 5. 添加控制购物车的状态
+// const isCartVisible = ref(false); // 5. 添加控制购物车的状态
 
 // 6. 定义一个响应式数组来存放购物车商品，并为API调用预留位置
-const cartItems = ref([]);
+// const cartItems = ref([]);
 
 // 预留的API调用位置：通常在组件挂载或用户登录后获取购物车数据
 onMounted(() => {
@@ -255,5 +259,10 @@ const changeLanguage = (langCode) => {
 .lang:hover {
   transform: scale(1.1);
 }
-/* ▲▲▲ 修改结束 ▲▲▲ */
+
+.cart-badge {
+  /* 确保小红点位置正确 */
+  display: flex;
+  align-items: center;
+}
 </style>

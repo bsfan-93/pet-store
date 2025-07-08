@@ -12,26 +12,20 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-
+import { getPhotoDetails } from '../api';
 // 1. 创建一个ref来存储图片的URL
 const imageUrl = ref('');
 
-// 2. 创建一个函数来获取数据
+// 2. 使用新的API函数重构数据获取逻辑
 const fetchHowToImage = async () => {
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=4');
-    if (!response.ok) throw new Error('HowToSection API Error');
-    const result = await response.json();
-
-    // 检查请求是否成功，data是否为数组且不为空
-    if (result.success && Array.isArray(result.data) && result.data.length > 0) {
-      const baseUrl = 'http://192.168.2.9:9999';
-      // API返回的是数组，我们只取第一项
-      const imageItem = result.data[0]; 
-      imageUrl.value = baseUrl + imageItem.url;
+    const images = await getPhotoDetails(4); // type=4 for HowTo
+    // API返回的是数组，我们只取第一项
+    if (images && images.length > 0) {
+      imageUrl.value = images[0].url;
     }
   } catch (error) {
-    console.error("获取HowToSection图片失败:", error);
+    console.error("在HowToSection组件中捕获到错误:", error);
   }
 };
 

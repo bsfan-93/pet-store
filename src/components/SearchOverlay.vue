@@ -33,6 +33,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from 'vue';
+import { searchGoods } from '../api';
 
 const emit = defineEmits(['close']);
 
@@ -53,9 +54,8 @@ const close = () => {
 };
 
 // 使用 watch 监听搜索词的变化
+// 2. 使用新的API函数重构搜索逻辑
 watch(searchQuery, (newQuery) => {
-  console.log(`1. Watcher 触发，新的搜索词是: "${newQuery}"`);
-
   clearTimeout(debounceTimer);
 
   if (!newQuery.trim()) {
@@ -65,51 +65,18 @@ watch(searchQuery, (newQuery) => {
 
   isLoading.value = true;
 
-  // 在 watch 函数的 setTimeout 回调中
-debounceTimer = setTimeout(async () => {
-    console.log("2. SetTimeout 回调触发，准备执行fetch");
-
-    // ▼▼▼ 用下面的 try...catch 代码块替换你现有的 ▼▼▼
+  debounceTimer = setTimeout(async () => {
     try {
-      // POST请求的URL通常不带参数
-      const searchUrl = `/standalones/good/search`;
-      console.log("3. 即将请求的URL是:", searchUrl);
-
-      const response = await fetch(searchUrl, {
-        method: 'POST', // 1. 指定请求方法为 POST
-        headers: {
-          'Content-Type': 'application/json' // 2. 告诉服务器我们发送的是JSON格式的数据
-        },
-        // 3. 将搜索词作为JSON字符串放在请求体(body)中
-        body: JSON.stringify({ name: newQuery }) 
-      });
-
-      console.log("4. Fetch 执行完毕，准备处理响应");
-
-      if (!response.ok) throw new Error(`网络响应错误: ${response.statusText}`);
-
-      const result = await response.json();
-
-      if (result.success && Array.isArray(result.data)) {
-        const baseUrl = 'http://192.168.2.9:9999';
-        searchResults.value = result.data.map(item => ({
-          ...item,
-          url: baseUrl + item.url
-        }));
-         console.log("5. 数据处理成功，结果已更新:", searchResults.value);
-      } else {
-        searchResults.value = [];
-      }
-
+      // API模块会处理请求细节
+      const results = await searchGoods(newQuery);
+      searchResults.value = results;
     } catch (error) {
-      console.error("在try-catch块中捕获到错误:", error);
+      console.error("在SearchOverlay中捕获到错误:", error);
       searchResults.value = [];
     } finally {
       isLoading.value = false;
     }
-    // ▲▲▲ 替换结束 ▲▲▲
-
-  }, 500); // 500毫秒延迟
+  }, 500);
 });
 </script>
 

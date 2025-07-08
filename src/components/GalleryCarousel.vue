@@ -19,22 +19,22 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { ElCarousel, ElCarouselItem } from 'element-plus';
+import { getPhotoDetails } from '../api';
 
 const images = ref([]);
 
+// 2. 使用新的API函数重构数据获取逻辑
 const fetchGalleryData = async () => {
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=3');
-    if (!response.ok) throw new Error('Gallery API Error');
-    const result = await response.json();
-    if (result.success && Array.isArray(result.data)) {
-      const baseUrl = 'http://192.168.2.9:9999';
-      images.value = result.data.map(item => ({...item, url: baseUrl + item.url}));
-    }
+    // API模块已经处理了URL拼接和错误
+    images.value = await getPhotoDetails(3); // type=3 for Gallery
   } catch (error) {
-    console.error("获取Gallery数据失败:", error);
+    // API模块中已经console.error了，这里可以根据需要做一些UI上的提示
+    console.error("在GalleryCarousel组件中捕获到错误:", error);
   }
 };
+
+
 
 onMounted(() => {
   fetchGalleryData();

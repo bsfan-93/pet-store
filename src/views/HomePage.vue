@@ -19,8 +19,7 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted, provide } from 'vue';
-
-// 导入需要的组件 (已移除 FeatureSection 和 GalleryCarousel)
+import { getPhotoDetails } from '../api';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import HeroSection from '../components/HeroSection.vue';
@@ -35,7 +34,6 @@ provide('megaMenuData', megaMenuData);
 
 const bannerData = ref([]);
 const collectionData = ref([]);
-// galleryData 已被移除
 
 const showTopBanner = ref(true);
 const isHeaderScrolled = ref(false);
@@ -47,6 +45,7 @@ const handleScroll = () => {
   isHeaderScrolled.value = scrollTop > 50;
 };
 
+// 2. 使用新的API函数重构数据获取逻辑
 const fetchMegaMenuData = async () => {
   const cachedData = sessionStorage.getItem('megaMenuData');
   if (cachedData) {
@@ -58,19 +57,14 @@ const fetchMegaMenuData = async () => {
     }
   }
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=0');
-    if (!response.ok) throw new Error('菜单API响应错误');
-    const result = await response.json();
-    if (result.success && Array.isArray(result.data)) {
-      const rawData = result.data;
-      const baseUrl = 'http://192.168.2.9:9999';
-      const transformedData = {
-        links: rawData.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
-        products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: baseUrl + item.url }))
-      };
-      megaMenuData.value = transformedData;
-      sessionStorage.setItem('megaMenuData', JSON.stringify(transformedData));
-    }
+    const rawData = await getPhotoDetails(0); // type=0 for MegaMenu
+    // API模块已经处理了数据转换和URL拼接
+    const transformedData = {
+      links: rawData.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
+      products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: item.url }))
+    };
+    megaMenuData.value = transformedData;
+    sessionStorage.setItem('megaMenuData', JSON.stringify(transformedData));
   } catch (error) {
     console.error("获取菜单数据失败:", error);
     megaMenuData.value = { links: [], products: [] };
@@ -79,13 +73,7 @@ const fetchMegaMenuData = async () => {
 
 const fetchBannerData = async () => {
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=1');
-    if (!response.ok) throw new Error('Banner API响应错误');
-    const result = await response.json();
-    if (result.success && Array.isArray(result.data)) {
-      const baseUrl = 'http://192.168.2.9:9999';
-      bannerData.value = result.data.map(item => ({ ...item, url: baseUrl + item.url }));
-    }
+    bannerData.value = await getPhotoDetails(1); // type=1 for Banners
   } catch (error) {
     console.error("获取Banner数据失败:", error);
   }
@@ -93,19 +81,11 @@ const fetchBannerData = async () => {
 
 const fetchCollectionData = async () => {
   try {
-    const response = await fetch('http://192.168.2.9:9999/standalones/photo/details?type=2');
-    if (!response.ok) throw new Error('Collection API Error');
-    const result = await response.json();
-    if (result.success && Array.isArray(result.data)) {
-      const baseUrl = 'http://192.168.2.9:9999';
-      collectionData.value = result.data.map(item => ({ ...item, url: baseUrl + item.url }));
-    }
+    collectionData.value = await getPhotoDetails(2); // type=2 for Collections
   } catch (error) {
     console.error("获取Collection数据失败:", error);
   }
 };
-
-// fetchGalleryData 函数已被移除
 
 // --- 生命周期钩子 ---
 onMounted(() => {

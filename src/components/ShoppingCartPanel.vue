@@ -1,16 +1,16 @@
 <template>
-  <transition name="slide">
-    <div class="cart-overlay" @click.self="close">
+  <transition name="slide" v-if="cartStore.isCartVisible">
+    <div class="cart-overlay" @click.self="cartStore.closeCart()">
       <div class="cart-panel">
         <div class="panel-header">
           <h3>{{ $t('cart.title') }}</h3>
-          <el-icon class="close-icon" @click="close"><Close /></el-icon>
+          <el-icon class="close-icon" @click="cartStore.closeCart()"><Close /></el-icon>
         </div>
 
         <div class="panel-content">
-          <div v-if="items.length === 0" class="cart-empty">
+          <div v-if="cartStore.items.length === 0" class="cart-empty">
             <p class="empty-text">{{ $t('cart.empty_message') }}</p>
-            <button class="continue-btn" @click="close">{{ $t('cart.continue_shopping') }}</button>
+            <button class="continue-btn" @click="cartStore.closeCart()">{{ $t('cart.continue_shopping') }}</button>
             <div class="login-prompt">
               <span>{{ $t('cart.login_prompt') }}</span>
               <a href="#">{{ $t('cart.login_link') }}</a>
@@ -18,14 +18,16 @@
           </div>
 
           <div v-else class="cart-items">
-            <p>{{ $t('cart.placeholder_items') }}</p>
+            <div v-for="item in cartStore.items" :key="item.id" class="cart-item-display">
+              {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+            </div>
           </div>
         </div>
-
-        <div v-if="items.length > 0" class="panel-footer">
+        
+        <div v-if="cartStore.items.length > 0" class="panel-footer">
           <div class="subtotal">
             <span>{{ $t('cart.subtotal') }}</span>
-            <span>$168.99</span>
+            <span>$ {{ cartStore.subtotal }}</span>
           </div>
           <button class="checkout-btn">{{ $t('cart.checkout_button') }}</button>
         </div>
@@ -35,19 +37,26 @@
 </template>
 
 <script setup>
+
+// 1. 导入 useCartStore
+import { useCartStore } from '../stores/cart';
+
+// 2. 获取 cart store 实例
+const cartStore = useCartStore();
+
 // 定义props来接收购物车商品数据，目前默认为空数组
-defineProps({
-  items: {
-    type: Array,
-    default: () => []
-  }
-});
+// defineProps({
+//   items: {
+//     type: Array,
+//     default: () => []
+//   }
+// });
 
-const emit = defineEmits(['close']);
+// const emit = defineEmits(['close']);
 
-const close = () => {
-  emit('close');
-};
+// const close = () => {
+//   emit('close');
+// };
 </script>
 
 <style scoped>
@@ -174,5 +183,10 @@ const close = () => {
 .slide-enter-from .cart-panel,
 .slide-leave-to .cart-panel {
   transform: translateX(100%);
+}
+
+.cart-item-display {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
 }
 </style>
