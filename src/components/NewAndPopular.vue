@@ -35,7 +35,7 @@ const activeTab = ref('new');
 <style scoped>
 .new-popular-section {
   padding: 80px 0;
-  background-color: white;
+  background-color: var(--secondary-color);
 }
 .container {
   max-width: var(--container-width, 1200px);
@@ -61,7 +61,7 @@ const activeTab = ref('new');
   margin-bottom: 40px;
 }
 :deep(.el-tabs__nav) {
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 50px;
   padding: 5px;
 }

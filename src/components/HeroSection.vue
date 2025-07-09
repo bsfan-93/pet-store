@@ -73,9 +73,9 @@ defineProps({
 
 .shop-now-btn {
   /* 颜色 */
-  background-color: #7CB342; /* 示例: 换成一个活泼的珊瑚色 */
-  border-color: #7CB342;     /* 边框颜色最好和背景色保持一致 */
-  color: white;              /* 按钮内部文字的颜色 */
+  background-color: var(--primary-color);     /* 示例: 换成一个活泼的珊瑚色 */
+  border-color: var(--primary-color);         /* 边框颜色最好和背景色保持一致 */
+  color: var(--secondary-color);              /* 按钮内部文字的颜色 */
 
   /* 尺寸和形状 */
   padding: 20px 40px;        /* 示例: 让按钮更大一些 */
@@ -93,8 +93,8 @@ defineProps({
 
 /* 你还可以为按钮添加一个鼠标悬停的效果 */
 .shop-now-btn:hover {
-    background-color: #7CB342; /* 鼠标悬停时颜色变深 */
-    border-color: #7CB342;
+    background-color: var(--accent-color);   /* 鼠标悬停时颜色变深 */
+    border-color: var(--accent-color);
     transform: translateY(-2px); /* 轻微上浮 */
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }

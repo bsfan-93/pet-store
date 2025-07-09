@@ -29,7 +29,7 @@
             <span>{{ $t('cart.subtotal') }}</span>
             <span>$ {{ cartStore.subtotal }}</span>
           </div>
-          <button class="checkout-btn">{{ $t('cart.checkout_button') }}</button>
+          <button class="checkout-btn">{{ $t('checkout_button') }}</button>
         </div>
       </div>
     </div>
@@ -124,8 +124,9 @@ const cartStore = useCartStore();
 .continue-btn {
   width: 100%;
   padding: 14px;
-  background-color: #000;
-  color: #fff;
+  /* ▼▼▼ 【修改】使用CSS变量 ▼▼▼ */
+  background-color: var(--text-color);
+  color: var(--secondary-color);
   border: none;
   border-radius: 4px;
   font-size: 16px;
@@ -136,7 +137,8 @@ const cartStore = useCartStore();
   font-size: 14px;
 }
 .login-prompt a {
-  color: #000;
+  /* ▼▼▼ 【修改】使用CSS变量 ▼▼▼ */
+  color: var(--text-color);
   text-decoration: underline;
   margin-left: 5px;
 }
@@ -156,8 +158,9 @@ const cartStore = useCartStore();
 .checkout-btn {
   width: 100%;
   padding: 14px;
+  /* ▼▼▼ 【修改】使用CSS变量 ▼▼▼ */
   background-color: var(--accent-color);
-  color: #fff;
+  color: var(--secondary-color);
   border: none;
   border-radius: 4px;
   font-size: 16px;

@@ -108,8 +108,8 @@ const handleSubscribe = async () => {
 
 <style scoped>
 .app-footer {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--text-color);
+  color: var(--secondary-color);
   padding: 60px 5%;
 }
 
@@ -134,7 +134,7 @@ const handleSubscribe = async () => {
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 24px;
-  color: #fff;
+  color: var(--secondary-color);
 }
 
 .footer-column ul {
@@ -152,7 +152,7 @@ const handleSubscribe = async () => {
   transition: color 0.2s;
 }
 .footer-column a:hover {
-  color: #fff;
+  color: var(--secondary-color);
 }
 
 .subscribe-section {
@@ -174,13 +174,13 @@ const handleSubscribe = async () => {
   flex-grow: 1;
 }
 :deep(.el-input__wrapper) {
-  background-color: #fff;
+  background-color: var(--secondary-color);
   border-radius: 4px;
   box-shadow: none !important;
 }
 .subscribe-btn {
-  background-color: #7CB342 !important;
-  color: #fff !important;
+  background-color: var(--primary-color) !important;
+  color: var(--secondary-color) !important;
   border: none !important;
   font-weight: bold;
   border-radius: 4px !important;
@@ -207,7 +207,7 @@ const handleSubscribe = async () => {
   align-items: center;
   width: 25px;
   height: 25px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--secondary-color);
   border-radius: 50%;
   transition: transform 0.2s ease;
 }
@@ -237,7 +237,7 @@ const handleSubscribe = async () => {
 
 .store-link {
   display: inline-block; /* 让边框生效 */
-  border: 1.8px solid #fff;  /* 1像素宽的白色实线边框 */
+  border: 1.8px solid var(--secondary-color);
   border-radius: 6px;    /* 6像素的圆角 */
   line-height: 0;        /* 移除图片下方的多余空隙 */
   transition: transform 0.2s ease;

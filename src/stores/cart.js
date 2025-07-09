@@ -45,6 +45,24 @@ export const useCartStore = defineStore('cart', () => {
     openCart();
   }
 
+  // ▼▼▼ 【新增】从购物车移除指定商品 ▼▼▼
+  function removeItem(productId) {
+    items.value = items.value.filter(item => item.id !== productId);
+  }
+
+  // ▼▼▼ 【新增】更新指定商品的数量 ▼▼▼
+  function updateItemQuantity(productId, newQuantity) {
+    const item = items.value.find(item => item.id === productId);
+    if (item) {
+      if (newQuantity > 0) {
+        item.quantity = newQuantity;
+      } else {
+        // 如果数量小于等于0，则直接移除该商品
+        removeItem(productId);
+      }
+    }
+  }
+
   // 从购物车移除商品（这里我们先简单实现一个清空购物车的函数作为示例）
   function clearCart() {
     items.value = [];
@@ -71,5 +89,7 @@ export const useCartStore = defineStore('cart', () => {
     clearCart,
     openCart,
     closeCart,
+    removeItem, // <-- 导出新函数
+    updateItemQuantity, // <-- 导出新函数
   };
 });

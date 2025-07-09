@@ -37,7 +37,7 @@ defineProps({
   position: relative; /* 作为浮层定位的基准 */
   overflow: hidden; /* 隐藏超出部分的浮层 */
   border-radius: 12px;
-  background-color: #f8f8f8;
+  background-color: var(--light-gray-color);
   text-decoration: none;
   color: var(--text-color);
   /* 卡片上浮和阴影的过渡动画 */
@@ -60,7 +60,7 @@ defineProps({
   aspect-ratio: 1 / 1;
   object-fit: contain;
   padding: 15px;
-  background-color: #fff;
+  background-color: var(--secondary-color);
   /* 图片放大动画 */
   transition: transform 0.4s ease;
 }
@@ -77,7 +77,7 @@ defineProps({
   width: 100%;
   padding: 20px;
   box-sizing: border-box;
-  background: white;
+  background: var(--secondary-color);
   border-top: 1px solid var(--border-color);
   /* 默认状态下，浮层被移出卡片下方 */
   transform: translateY(100%);

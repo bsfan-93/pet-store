@@ -124,7 +124,7 @@ defineProps({
   padding: 0;
   font-size: 20px;
   font-weight: 600;
-  color: white;
+  color: var(--secondary-color);
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -134,7 +134,7 @@ defineProps({
   bottom: 25px; /* 与h3的bottom值保持一致，确保水平对齐 */
   right: 25px;  /* 定位到右下角 */
   font-size: 18px; /* 图标大小 */
-  color: white;
+  color: var(--secondary-color);
   opacity: 0; /* 默认状态下完全透明 */
   transition: opacity 0.3s ease-in-out; /* 让显示/隐藏有动画效果 */
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);

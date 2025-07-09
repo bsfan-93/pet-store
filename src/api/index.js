@@ -40,7 +40,7 @@ const apiFetch = async (url, options = {}) => {
       // 为使用更方便，我们直接返回data部分
       // 同时，我们将图片的URL在这里拼接好
       if (Array.isArray(result.data)) {
-        const imageBaseUrl = 'http://192.168.2.9:9999'; // 这个IP地址只在这里出现一次
+        const imageBaseUrl = import.meta.env.VITE_API_BASE_URL; // 这个IP地址只在这里出现一次
         return result.data.map(item => ({
           ...item,
           // 检查item是否有url属性，如果有，则拼接
