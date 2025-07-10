@@ -1,15 +1,21 @@
 <template>
-  <div class="mega-menu" v-if="menuData && menuData.links && menuData.products">
+  <div class="mega-menu" v-show="visible" v-if="menuData">
     <div class="menu-container">
       <div class="menu-links">
         <ul>
           <li v-for="link in menuData.links" :key="link.id">
-            <a :href="link.url">{{ link.name }}</a>
+            <a href="#" @click.prevent="navigateTo('productDetail', link.goodId)">{{ link.name }}</a>
           </li>
         </ul>
       </div>
       <div class="menu-products">
-        <a v-for="product in menuData.products" :key="product.id" :href="`/product/${product.name.toLowerCase()}`" class="product-item">
+        <a 
+          v-for="product in menuData.products" 
+          :key="product.id" 
+          href="#" 
+          @click.prevent="navigateTo('productDetail', product.goodId)" 
+          class="product-item"
+        >
           <img :src="product.imageUrl" :alt="product.name">
         </a>
       </div>
@@ -18,11 +24,62 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
-const menuData = inject('megaMenuData');
+import { ref, inject, watch } from 'vue';
+import { getPhotoDetails } from '../api';
+
+// 1. 接收来自 AppHeader 的 visible prop
+const props = defineProps({
+  visible: Boolean
+});
+
+// 2. 注入全局的导航函数
+const navigateTo = inject('navigateTo');
+
+// 3. 在组件内部管理自己的数据
+const menuData = ref(null);
+
+// 4. 定义获取数据的函数
+const fetchMegaMenuData = async () => {
+  // 为避免重复请求，只有在没有数据时才请求。
+  // 如果您希望每次都重新获取，可以移除 if (menuData.value) return; 这行。
+  if (menuData.value) return;
+
+  try {
+    const rawData = await getPhotoDetails(0);
+    
+    // ▼▼▼ 【修改】根据新的 API 格式来转换数据 ▼▼▼
+    menuData.value = {
+      // 左侧链接区的数据
+      links: rawData.map(item => ({ 
+        id: item.id, 
+        name: item.name, 
+        goodId: item.goodId // 确保 goodId 被保存
+      })),
+      // 右侧图片区的数据
+      products: rawData.map(item => ({ 
+        id: item.id, 
+        name: item.name, 
+        imageUrl: item.url, // 图片地址
+        goodId: item.goodId // 确保 goodId 被保存
+      }))
+    };
+
+  } catch (error) {
+    console.error("在 MegaMenu 中获取数据失败:", error);
+  }
+};
+
+// 5. 使用 watch 监听 visible prop 的变化
+watch(() => props.visible, (newValue) => {
+  // 当菜单需要显示时 (从 false 变为 true)，就触发数据获取
+  if (newValue) {
+    fetchMegaMenuData();
+  }
+});
 </script>
 
 <style scoped>
+/* 您的样式代码完全正确，无需任何修改 */
 .mega-menu {
   position: absolute;
   top: 100%;
@@ -38,16 +95,14 @@ const menuData = inject('megaMenuData');
   padding-top: 30px;
   padding-bottom: 30px;
   padding-right: 40px;
-  padding-left: 370px; /* <-- 修改这个值来控制向右移动的距离 */
-
+  padding-left: 370px;
   display: flex;
   align-items: flex-start;
   gap: 80px;
 }
 
-/* 左侧链接区 */
 .menu-links {
-  width: var(--logo-width); /* 宽度与Logo平齐 */
+  width: var(--logo-width);
   flex-shrink: 0;
   padding-top: 10px;
 }
@@ -72,7 +127,6 @@ const menuData = inject('megaMenuData');
   color: var(--accent-color);
 }
 
-/* 右侧产品区 */
 .menu-products {
   flex: 1;
   display: flex;
@@ -82,7 +136,7 @@ const menuData = inject('megaMenuData');
 
 .product-item {
   display: block;
-  width: 300px;         /* <-- 修改这个值来调整图片大小 */
+  width: 300px;
   text-decoration: none;
 }
 
@@ -99,7 +153,6 @@ const menuData = inject('megaMenuData');
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-/* 下拉动画 */
 @keyframes growDown {
   0% {
     opacity: 0;

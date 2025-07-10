@@ -5,12 +5,12 @@
     @mouseleave="isMenuVisible = false"
   >
     <div class="header-container">
-      <a href="/" class="logo">
+      <a href="#" @click.prevent="navigateTo('home')" class="logo">
         <img src="/images/logo.png" alt="PetsClan Logo">
       </a>
       
       <nav class="main-nav">
-        <a href="#">{{ $t('header.home') }}</a>
+        <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a>
         <div 
           class="nav-item-shop"
           @mouseenter="isMenuVisible = true"
@@ -24,11 +24,9 @@
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
         <el-icon><User /></el-icon>
-        
         <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
           <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
         </el-badge>
-        
         <el-dropdown @command="changeLanguage" trigger="click">
           <span class="el-dropdown-link lang">
             {{ currentLanguageAbbr }} <el-icon class="el-icon--right"><arrow-down /></el-icon>
@@ -49,7 +47,7 @@
     </div>
     
     <MegaMenu 
-      v-show="isMenuVisible"
+      :visible="isMenuVisible"
       @mouseenter="isMenuVisible = true" 
     />
 
@@ -59,24 +57,23 @@
         @close="isSearchVisible = false" 
       />
     </Teleport>
-
     <Teleport to="body">
       <ShoppingCartPanel />
     </Teleport>
   </header>
 </template>
 
-
 <script setup>
-import { ref, onMounted, computed } from 'vue'; // 导入 onMounted (为API预留)
-import { useI18n } from 'vue-i18n'; // 导入 useI18n
-import { useCartStore } from '../stores/cart';    // 导入 useCartStore
+// 【修改】移除了 provide 和 getPhotoDetails
+import { ref, computed, inject } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { useCartStore } from '../stores/cart';
 import MegaMenu from './MegaMenu.vue';
 import SearchOverlay from './SearchOverlay.vue';
-import ShoppingCartPanel from './ShoppingCartPanel.vue'; // 4. 导入 ShoppingCartPanel 组件
+import ShoppingCartPanel from './ShoppingCartPanel.vue';
 
-// 获取 cart store 实例
 const cartStore = useCartStore();
+const navigateTo = inject('navigateTo');
 
 defineProps({
   isScrolled: {
@@ -85,30 +82,11 @@ defineProps({
   }
 });
 
+// isMenuVisible 现在只用于控制 MegaMenu 的显示和隐藏
 const isMenuVisible = ref(false); 
 const isSearchVisible = ref(false);
-// const isCartVisible = ref(false); // 5. 添加控制购物车的状态
 
-// 6. 定义一个响应式数组来存放购物车商品，并为API调用预留位置
-// const cartItems = ref([]);
-
-// 预留的API调用位置：通常在组件挂载或用户登录后获取购物车数据
-onMounted(() => {
-  // fetchCartItems();
-});
-
-const fetchCartItems = async () => {
-  // 这里是未来你调用获取购物车数据的API的地方
-  // 例如: const response = await fetch('/api/cart');
-  // const data = await response.json();
-  // cartItems.value = data.items;
-  console.log("在这里调用获取购物车数据的API");
-};
-
-// --- i18n 语言切换逻辑 ---
 const { locale } = useI18n();
-
-// 定义我们支持的语言列表
 const languages = ref([
     { code: 'en', name: 'English', abbr: 'EN' },
     { code: 'zh-Hans', name: '简体中文', abbr: 'CN' },
@@ -124,17 +102,12 @@ const languages = ref([
     { code: 'th', name: 'ภาษาไทย', abbr: 'TH' }
 ]);
 
-// 计算属性，用于显示当前语言的名称
 const currentLanguageAbbr = computed(() => {
-  // 找到当前locale对应的语言对象，返回其缩写
   return languages.value.find(lang => lang.code === locale.value)?.abbr || 'EN';
 });
 
-// 切换语言的函数
 const changeLanguage = (langCode) => {
   locale.value = langCode;
-  // 你可以在这里把用户的语言偏好保存到 localStorage
-  // localStorage.setItem('user-language', langCode);
 };
 </script>
 

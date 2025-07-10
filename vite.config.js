@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    host: true, // [!code focus] // <--- 添加这一行
     proxy: {
       // 当你的请求路径以 /standalones 开头时，
       // Vite会把这个请求转发到 target 指定的地址

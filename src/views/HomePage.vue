@@ -8,17 +8,17 @@
     <main>
       <HeroSection :banners="bannerData"/>
       <CollectionList :collections="collectionData" />
-      
       <GalleryCarousel />
       <HowToSection />
     </main>
 
     <AppFooter />
+    <SubscribePopup v-model="isPopupVisible" />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, provide } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import { getPhotoDetails } from '../api';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
@@ -27,53 +27,45 @@ import CollectionList from '../components/CollectionList.vue';
 import GalleryCarousel from '../components/GalleryCarousel.vue';
 import HowToSection from '../components/HowToSection.vue';
 import AppFooter from '../components/AppFooter.vue';
+import SubscribePopup from '../components/SubscribePopup.vue'; // 【新增】导入弹窗组件
 
-// --- 响应式状态定义 ---
-const megaMenuData = ref(null);
-provide('megaMenuData', megaMenuData);
+// =======================================================
+// ▼▼▼ 【新增】控制弹窗的逻辑 ▼▼▼
+// =======================================================
+const isPopupVisible = ref(false);
 
+onMounted(() => {
+  // 【修改】在设置定时器之前，先检查 localStorage
+  const hasSubscribed = localStorage.getItem('hasSubscribed');
+
+  // 只有当用户没有订阅过时，才设置定时器显示弹窗
+  if (!hasSubscribed) {
+    setTimeout(() => {
+      isPopupVisible.value = true;
+    }, 3000);
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  fetchBannerData();
+  fetchCollectionData();
+});
+// =======================================================
+
+// HomePage 现在只关心自己的数据
 const bannerData = ref([]);
 const collectionData = ref([]);
-
 const showTopBanner = ref(true);
 const isHeaderScrolled = ref(false);
 
-// --- 函数定义 ---
 const handleScroll = () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   showTopBanner.value = scrollTop < 10;
   isHeaderScrolled.value = scrollTop > 50;
 };
 
-// 2. 使用新的API函数重构数据获取逻辑
-const fetchMegaMenuData = async () => {
-  const cachedData = sessionStorage.getItem('megaMenuData');
-  if (cachedData) {
-    try {
-      megaMenuData.value = JSON.parse(cachedData);
-      return;
-    } catch (e) {
-      sessionStorage.removeItem('megaMenuData');
-    }
-  }
-  try {
-    const rawData = await getPhotoDetails(0); // type=0 for MegaMenu
-    // API模块已经处理了数据转换和URL拼接
-    const transformedData = {
-      links: rawData.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
-      products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: item.url }))
-    };
-    megaMenuData.value = transformedData;
-    sessionStorage.setItem('megaMenuData', JSON.stringify(transformedData));
-  } catch (error) {
-    console.error("获取菜单数据失败:", error);
-    megaMenuData.value = { links: [], products: [] };
-  }
-};
-
 const fetchBannerData = async () => {
   try {
-    bannerData.value = await getPhotoDetails(1); // type=1 for Banners
+    bannerData.value = await getPhotoDetails(1);
   } catch (error) {
     console.error("获取Banner数据失败:", error);
   }
@@ -81,18 +73,14 @@ const fetchBannerData = async () => {
 
 const fetchCollectionData = async () => {
   try {
-    collectionData.value = await getPhotoDetails(2); // type=2 for Collections
+    collectionData.value = await getPhotoDetails(2);
   } catch (error) {
     console.error("获取Collection数据失败:", error);
   }
 };
 
-// --- 生命周期钩子 ---
 onMounted(() => {
   window.addEventListener('scroll', handleScroll);
-  
-  // 获取数据 (不再调用 fetchGalleryData)
-  fetchMegaMenuData();
   fetchBannerData();
   fetchCollectionData();
 });

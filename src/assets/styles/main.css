@@ -2,7 +2,7 @@
   /* 颜色 */
   --primary-color: #7CB342;           /* 优惠栏背景色 */
   --secondary-color: #ffffff;        /* <--- 控制透明导航栏下的文字颜色（当前是白色） */
-  --accent-color: #6a994e;          /* 绿色按钮的颜色 */
+  --accent-color: #7CB342;          /* 绿色按钮的颜色 */
   --text-color: #000000;               /* <--- 控制白色导航栏下的文字颜色（当前是深灰色） */
   --light-gray-color: #f8f8f8;
   --border-color: #eeeeee;
