@@ -116,28 +116,6 @@
         </div>
       </section>
 
-      <section class="usp-carousel-section">
-        <div class="section-container">
-          <h2 class="section-title text-left">Why use a smart pet feeder</h2>
-          <el-carousel 
-            :interval="5000" 
-            type="card" 
-            height="400px"
-            indicator-position="none"
-          >
-            <el-carousel-item v-for="(item, index) in productDetail.goodFeature" :key="item.id">
-              <div class="usp-card">
-                <div class="usp-card-image-placeholder">
-                   <img :src="getFeatureImageById(item.imageId)" class="usp-image-content" alt="">
-                </div>
-                <div class="usp-card-number">{{ '0' + (index + 1) }}</div>
-                <div class="usp-card-caption">{{ item.title }}</div>
-              </div>
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </section>
-
       <section class="specs-params-section">
         <div class="section-container">
           <h2 class="section-title">Product Specifications</h2>
@@ -609,79 +587,43 @@ const handleAddToCart = () => {
   border-radius: 12px;
   margin-bottom: 20px;
 }
-.feature-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-.feature-item-placeholder {
+.feature-square-placeholder {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1; /* 关键：设置为1/1的正方形比例 */
   background-color: var(--light-gray-color);
   border-radius: 12px;
-}
-.usp-carousel-section {
-  padding: 80px 0;
-  background-color: #f9f9f9;
-}
-.text-left {
-  text-align: left;
-}
-.usp-carousel-section :deep(.el-carousel__container) {
-  height: 400px;
-}
-.usp-carousel-section :deep(.el-carousel__item) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.usp-card {
-  position: relative;
-  width: 90%;
-  height: 90%;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   overflow: hidden;
-  text-align: center;
-  padding-bottom: 20px;
-  transition: transform 0.3s;
 }
-.usp-carousel-section :deep(.el-carousel__item.is-active) .usp-card {
-  transform: scale(1.05);
+
+.feature-image-content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-.usp-card-image-placeholder {
-  width: 100%;
-  height: 70%;
-  background-color: var(--light-gray-color);
-}
-.usp-card-number {
-  position: absolute;
-  top: 10px;
-  left: 20px;
-  font-size: 80px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.05);
-}
-.usp-card-caption {
-  margin-top: 25px;
-  font-size: 18px;
-  font-weight: 500;
-}
+
 .specs-params-section {
   padding: 80px 20px;
 }
 .specs-images-container {
   display: flex;
   justify-content: center;
-  gap: 40px;
   margin-bottom: 60px;
 }
 .spec-image-placeholder {
-  width: 300px;
-  height: 300px;
+  width: 100%;
+  max-width: 800px; /* Aligns with the parameters table below */
+  aspect-ratio: 1 / 1; /* Ensures it's a square */
   background-color: var(--light-gray-color);
+  border-radius: 12px;
+  overflow: hidden;
 }
+/* 新增：让图片在占位符内正确显示 */
+.spec-image-content {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 使用 contain 防止技术图纸变形 */
+}
+
 .params-table {
   max-width: 800px;
   margin: 0 auto;

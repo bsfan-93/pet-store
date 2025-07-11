@@ -117,6 +117,7 @@ const handleSubscribe = async () => {
   justify-content: center;
   background-color: #fff;
   box-sizing: border-box;
+  border-radius: 12px; /* 将圆角大小调整为您想要的数值，例如 12px */
 }
 
 .error-message {
