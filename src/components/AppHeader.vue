@@ -5,16 +5,13 @@
     @mouseleave="isMenuVisible = false"
   >
     <div class="header-container">
-      <a href="#" @click.prevent="navigateTo('home')" class="logo">
+      <a href="#" @click.prevent="navigationStore.navigateTo('home')" class="logo">
         <img src="/images/logo.png" alt="PetsClan Logo">
       </a>
       
       <nav class="main-nav">
-        <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a>
-        <div 
-          class="nav-item-shop"
-          @mouseenter="isMenuVisible = true"
-        >
+        <a href="#" @click.prevent="navigationStore.navigateTo('home')">{{ $t('header.home') }}</a>
+        <div class="nav-item-shop" @mouseenter="isMenuVisible = true">
           <a href="#">{{ $t('header.shop') }}</a>
         </div>
         <a href="#">{{ $t('header.about_us') }}</a>
@@ -23,66 +20,35 @@
 
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
-        <el-icon><User /></el-icon>
+        
+        <el-icon @click="navigationStore.navigateTo('login')"><User /></el-icon>
+        
         <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
           <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
         </el-badge>
-        <el-dropdown @command="changeLanguage" trigger="click">
-          <span class="el-dropdown-link lang">
-            {{ currentLanguageAbbr }} <el-icon class="el-icon--right"><arrow-down /></el-icon>
-          </span>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item 
-                v-for="lang in languages" 
-                :key="lang.code" 
-                :command="lang.code"
-              >
-                {{ lang.name }}
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </div>
+        </div>
     </div>
     
-    <MegaMenu 
-      :visible="isMenuVisible"
-      @mouseenter="isMenuVisible = true" 
-    />
-
-    <Teleport to="body">
-      <SearchOverlay 
-        v-if="isSearchVisible" 
-        @close="isSearchVisible = false" 
-      />
-    </Teleport>
-    <Teleport to="body">
-      <ShoppingCartPanel />
-    </Teleport>
+    <MegaMenu :visible="isMenuVisible" @mouseenter="isMenuVisible = true" />
+    <Teleport to="body"><SearchOverlay v-if="isSearchVisible" @close="isSearchVisible = false" /></Teleport>
+    <Teleport to="body"><ShoppingCartPanel /></Teleport>
   </header>
 </template>
 
 <script setup>
-// 【修改】移除了 provide 和 getPhotoDetails
-import { ref, computed, inject } from 'vue';
+import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
+import { useNavigationStore } from '../stores/navigation'; // 导入导航 store
 import MegaMenu from './MegaMenu.vue';
 import SearchOverlay from './SearchOverlay.vue';
 import ShoppingCartPanel from './ShoppingCartPanel.vue';
 
 const cartStore = useCartStore();
-const navigateTo = inject('navigateTo');
+const navigationStore = useNavigationStore(); // 获取导航 store 实例
 
-defineProps({
-  isScrolled: {
-    type: Boolean,
-    default: false
-  }
-});
+defineProps({ isScrolled: Boolean });
 
-// isMenuVisible 现在只用于控制 MegaMenu 的显示和隐藏
 const isMenuVisible = ref(false); 
 const isSearchVisible = ref(false);
 

@@ -12,7 +12,7 @@
       </div>
       <div class="popup-content">
         <el-icon class="close-icon" @click="closeDialog"><Close /></el-icon>
-        <h2>Unlock <span class="highlight">20%</span> OFF Your order Today</h2>
+        <h2>Unlock <span class="highlight">20% OFF</span> Your order Today</h2>
         <p>Make it more convenient for pets</p>
         <form @submit.prevent="handleSubscribe">
           <label for="email-input">Email</label>
@@ -88,18 +88,19 @@ const handleSubscribe = async () => {
 </script>
 
 <style scoped>
-/* ▼▼▼ 【修改】调整了弹窗的高度 ▼▼▼ */
 .popup-container {
   display: flex;
   width: 970px;
-  height: 550px; /* <-- 从 480px 增加到 550px  */
+  height: 550px;
+  border-radius: 20px; /* 【新增】为整个容器添加圆角 */
+  overflow: hidden;    /* 【新增】确保子元素的直角被隐藏 */
 }
 
 .popup-image {
   width: 485px;
-  height: 550px; /* <-- 从 480px 增加到 550px  */
+  height: 550px;
   flex-shrink: 0;
-  background-color: #000;
+  background-color: #000; /* 修复了语法错误，移除了多余的 '+' */
 }
 .popup-image img {
   width: 100%;
@@ -110,44 +111,37 @@ const handleSubscribe = async () => {
 .popup-content {
   position: relative;
   width: 485px;
-  height: 550px; /* <-- 从 480px 增加到 550px  */
-  padding: 60px;
+  height: 550px;
+  padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   background-color: #fff;
   box-sizing: border-box;
-  border-radius: 12px; /* 将圆角大小调整为您想要的数值，例如 12px */
 }
 
-.error-message {
-  color: #D32F2F;
-  font-size: 12px;
-  margin-top: -15px;
-  margin-bottom: 10px;
-}
-
+/* ... 其余样式保持不变 ... */
 .close-icon {
   position: absolute;
-  top: 15px;
-  right: 15px;
-  font-size: 20px;
+  top: 20px;
+  right: 20px;
+  font-size: 22px;
   color: #999;
   cursor: pointer;
 }
 h2 {
-  font-size: 34px;
-  font-weight: 600;
-  margin: 0 0 20px 0;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 15px 0;
   color: #000;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 .highlight {
   color: #D32F2F;
 }
 p {
   font-size: 18px;
-  color: #666;
+  color: #555;
   margin: 0 0 40px 0;
 }
 form {
@@ -155,41 +149,44 @@ form {
   flex-direction: column;
 }
 label {
-  font-size: 16px;
-  font-weight: 500;
-  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 10px;
   color: #333;
 }
 .email-input {
-  margin-bottom: 18px;
+  margin-bottom: 25px;
 }
-
-/* 使用 :deep() 来修改 Element Plus 组件的内部样式 */
 .email-input :deep(.el-input__wrapper) {
-  height: 30px; /* 增加输入框高度 */
-  border-radius: 4px; /* 可以调整圆角 */
+  height: 50px;
+  border-radius: 4px;
 }
 .email-input :deep(.el-input__inner) {
-  font-size: 14px; /* 增加输入框内文字大小 */
+  font-size: 16px;
 }
-
 .subscribe-btn {
   background-color: #f0c14b;
   color: #111;
   border: none;
-  padding: 18px;
-  font-size: 16px;
-  font-weight: 500;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: 600;
 }
 .subscribe-btn:hover {
   background-color: #e8b63a;
 }
 .no-thanks-link {
   text-align: center;
-  margin-top: 30px;
-  font-size: 14px;
-  color: #999;
+  margin-top: 25px;
+  font-size: 15px;
+  color: #777;
   text-decoration: underline;
+}
+.error-message {
+  color: #D32F2F;
+  font-size: 13px;
+  margin-top: -15px;
+  margin-bottom: 15px;
 }
 :global(.subscribe-dialog.el-dialog) {
   background-color: transparent;

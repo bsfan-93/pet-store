@@ -42,7 +42,7 @@
     "login_prompt": "Have an account?",
     "login_link": "Log in to check out faster.",
     "subtotal": "Subtotal",
-    "checkout_button": "Continue to checkout",
+    "checkout": "Continue to checkout",
     "placeholder_items": "Items will be displayed here..."
   },
   "footer": {

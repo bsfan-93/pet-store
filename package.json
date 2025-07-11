@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "crypto-js": "^4.2.0",
     "element-plus": "^2.10.2",
     "pinia": "^3.0.3",
     "swiper": "^9.4.1",

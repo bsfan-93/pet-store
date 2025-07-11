@@ -112,4 +112,20 @@ defineProps({
 :deep(.el-carousel__indicator--horizontal.is-active .el-carousel__button) {
   background: var(--text-color);
 }
+
+/* ▼▼▼ 【新增】轮播指示器(小圆点)的样式 ▼▼▼ */
+:deep(.el-carousel__indicator--horizontal .el-carousel__button) {
+  width: 10px;
+  height: 10px;
+  background: transparent;
+  /* 设置未选中时圆点的边框颜色 */
+  border: 2px solid var(--secondary-color); /* 例如，白色边框 */
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+:deep(.el-carousel__indicator--horizontal.is-active .el-carousel__button) {
+  /* 设置选中时圆点的背景颜色 */
+  background: var(--secondary-color); /* 例如，白色实心 */
+}
 </style>
