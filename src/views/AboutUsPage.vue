@@ -259,7 +259,7 @@ import AppFooter from '../components/AppFooter.vue';
   margin: 0 auto 40px auto; /* 上下左右居中，并设置下边距 */
 }
 .closing-image-placeholder {
-  width: 100%;
+  width: 1800px;
   height: 500px; /* 您可以根据需要调整图片高度 */
   background-color: #e9ecef;
   border-radius: 12px;

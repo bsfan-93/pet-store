@@ -10,7 +10,7 @@
       </a>
       
       <nav class="main-nav">
-        <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a>
+        <!-- <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a> -->
         <div 
           class="nav-item-shop"
           @mouseenter="isMenuVisible = true"
@@ -23,7 +23,9 @@
 
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
-        <el-icon @click="navigateTo('login')"><User /></el-icon>
+        
+        <el-icon @click="handleUserIconClick"><User /></el-icon>
+        
         <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
           <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
         </el-badge>
@@ -44,7 +46,7 @@
             </el-dropdown-menu>
           </template>
         </el-dropdown>
-        </div>
+      </div>
     </div>
     
     <MegaMenu 
@@ -67,24 +69,48 @@
 import { ref, computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
-import { useAuthStore } from '../stores/auth'; // 导入用户状态库
+import { useAuthStore } from '../stores/auth';
+import { storeToRefs } from 'pinia'; // 1. 导入 storeToRefs
 import MegaMenu from './MegaMenu.vue';
 import SearchOverlay from './SearchOverlay.vue';
 import ShoppingCartPanel from './ShoppingCartPanel.vue';
 
 const cartStore = useCartStore();
-const authStore = useAuthStore(); // 获取用户状态实例
+const authStore = useAuthStore();
 const navigateTo = inject('navigateTo');
 
+// 2. 使用 storeToRefs 来获取响应式的 isLoggedIn 状态
+const { isLoggedIn } = storeToRefs(authStore);
 
-// ▼▼▼ 【新增】点击用户图标的处理函数 ▼▼▼
+// 3. 定义点击用户图标的处理函数
 const handleUserIconClick = () => {
-  if (authStore.isLoggedIn) {
-    navigateTo('account'); // 如果已登录，跳转到账户页面
+  if (isLoggedIn.value) { // 判断响应式状态的 .value
+    navigateTo('account'); 
   } else {
-    navigateTo('login'); // 如果未登录，跳转到登录页面
+    navigateTo('login');
   }
 };
+
+// ▼▼▼ 【新增】About Us 下拉菜单的数据和处理函数 ▼▼▼
+const aboutMenu = ref([
+  { text: 'About Us', page: 'about' },
+  { text: 'FAQ', page: 'faq' },
+  { text: 'Contact Us', page: 'contact' },
+  { text: 'Order Tracking', page: 'tracking' },
+]);
+
+const handleAboutMenuCommand = (page) => {
+  // 注意：目前我们只创建了 'about' 页面，所以所有点击都会跳转到 about 页面
+  // 当您未来创建了 'faq', 'contact' 等页面后，这里的跳转会自动生效
+  if (page === 'about') {
+    navigateTo('about');
+  } else {
+    console.log(`准备跳转到: ${page}`);
+    // 临时跳转到 about 页作为占位
+    navigateTo('about');
+  }
+};
+
 
 defineProps({ isScrolled: Boolean });
 
@@ -172,7 +198,7 @@ const changeLanguage = (langCode) => {
 
 /* 导航栏间距 */
 .main-nav {
-  margin-left: 455px;
+  margin-left: 460px;
 }
 .nav-item-shop {
   display: inline-block;
@@ -200,7 +226,7 @@ const changeLanguage = (langCode) => {
 .main-nav a, .nav-item-shop > a {
   display: inline-block;
   font-size: var(--font-size-nav);
-  margin: 0 25px;
+  margin: 0 35px;
   text-decoration: none;
 }
 
@@ -285,4 +311,6 @@ const changeLanguage = (langCode) => {
   display: flex;
   align-items: center;
 }
+
+
 </style>

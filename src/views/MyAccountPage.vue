@@ -30,12 +30,9 @@
               <el-icon><ArrowRight /></el-icon>
             </div>
             <div class="card-body settings-card-body">
-              <p v-if="authStore.userInfo">{{ authStore.userInfo.name }}</p>
-              <p>Manage Subscriptions</p>
-              <p v-if="authStore.userInfo">{{ authStore.userInfo.username }}</p>
-              <div class="address-info">
-                <p v-if="authStore.userInfo">{{ authStore.userInfo.name }}</p>
-                <p>United States</p>
+              <div v-if="authStore.userInfo">
+                <p class="user-name">{{ authStore.userInfo.name }}</p>
+                <p class="user-email">{{ authStore.userInfo.username }}</p>
               </div>
             </div>
           </div>
@@ -60,7 +57,7 @@ const navigateTo = inject('navigateTo');
 
 const logout = () => {
   authStore.handleLogout();
-  navigateTo('home'); // 登出后跳转到首页
+  navigateTo('home');
 };
 </script>
 
@@ -83,10 +80,10 @@ const logout = () => {
   filter: none;
 }
 .main-content {
-  padding: 60px 20px;
+  padding: 80px 20px;
 }
 .account-container {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 .page-header {
@@ -98,11 +95,15 @@ const logout = () => {
 .page-header h1 {
   font-size: 36px;
   font-weight: 600;
+  margin: 0;
 }
 .logout-link {
   color: #666;
   text-decoration: underline;
   font-size: 14px;
+}
+.logout-link:hover {
+    color: #000;
 }
 .cards-wrapper {
   display: grid;
@@ -119,47 +120,55 @@ const logout = () => {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: #e9ecef;
+  border-radius: 8px 8px 0 0;
 }
 .card-header h3 {
   margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #333;
+}
+.card-header .el-icon {
   font-size: 16px;
-  font-weight: 500;
 }
 .card-body {
   padding: 30px;
+  font-size: 14px;
 }
 .order-card-body {
   text-align: center;
-  padding: 60px 30px;
-}
-.order-card-body p {
-  margin-bottom: 20px;
+  padding: 70px 30px;
   color: #666;
 }
 .go-shopping-btn {
   background-color: #000;
   color: #fff;
   padding: 20px 40px;
+  height: auto;
   border-radius: 30px;
+  margin-top: 10px;
+  font-weight: 500;
 }
 .go-shopping-btn:hover {
   background-color: #333;
 }
+
+/* ▼▼▼ 【修改】账户设置卡片的样式 ▼▼▼ */
+.settings-card-body {
+  /* 让内容高度与另一张卡片对齐 */
+  min-height: 225px; 
+}
 .settings-card-body p {
-  margin: 0 0 15px 0;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #f0f0f0;
+  margin: 0;
+  padding-bottom: 15px; /* 设置每行之间的间距 */
 }
-.settings-card-body p:last-child {
-    border-bottom: none;
+.settings-card-body .user-name {
+  font-weight: 500;
 }
-.address-info {
-    margin-top: 20px;
-}
-.address-info p {
-    border-bottom: none;
-    margin-bottom: 5px;
+.settings-card-body .user-email {
+  color: #888;
+  padding-bottom: 0; /* 最后一行不需要下边距 */
 }
 </style>
