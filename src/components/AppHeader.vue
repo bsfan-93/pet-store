@@ -5,47 +5,86 @@
     @mouseleave="isMenuVisible = false"
   >
     <div class="header-container">
-      <a href="#" @click.prevent="navigationStore.navigateTo('home')" class="logo">
+      <a href="#" @click.prevent="navigateTo('home')" class="logo">
         <img src="/images/logo.png" alt="PetsClan Logo">
       </a>
       
       <nav class="main-nav">
-        <a href="#" @click.prevent="navigationStore.navigateTo('home')">{{ $t('header.home') }}</a>
-        <div class="nav-item-shop" @mouseenter="isMenuVisible = true">
+        <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a>
+        <div 
+          class="nav-item-shop"
+          @mouseenter="isMenuVisible = true"
+        >
           <a href="#">{{ $t('header.shop') }}</a>
         </div>
-        <a href="#">{{ $t('header.about_us') }}</a>
+        <a href="#" @click.prevent="navigateTo('about')">{{ $t('header.about_us') }}</a>
         <a href="#">{{ $t('header.app') }}</a>
       </nav>
 
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
-        
-        <el-icon @click="navigationStore.navigateTo('login')"><User /></el-icon>
-        
+        <el-icon @click="navigateTo('login')"><User /></el-icon>
         <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
           <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
         </el-badge>
+        
+        <el-dropdown @command="changeLanguage" trigger="hover">
+          <span class="el-dropdown-link lang">
+            {{ currentLanguageAbbr }} <el-icon class="el-icon--right"><arrow-down /></el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item 
+                v-for="lang in languages" 
+                :key="lang.code" 
+                :command="lang.code"
+              >
+                {{ lang.name }}
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
         </div>
     </div>
     
-    <MegaMenu :visible="isMenuVisible" @mouseenter="isMenuVisible = true" />
-    <Teleport to="body"><SearchOverlay v-if="isSearchVisible" @close="isSearchVisible = false" /></Teleport>
-    <Teleport to="body"><ShoppingCartPanel /></Teleport>
+    <MegaMenu 
+      :visible="isMenuVisible"
+      @mouseenter="isMenuVisible = true" 
+    />
+    <Teleport to="body">
+      <SearchOverlay 
+        v-if="isSearchVisible" 
+        @close="isSearchVisible = false" 
+      />
+    </Teleport>
+    <Teleport to="body">
+      <ShoppingCartPanel />
+    </Teleport>
   </header>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
-import { useNavigationStore } from '../stores/navigation'; // 导入导航 store
+import { useAuthStore } from '../stores/auth'; // 导入用户状态库
 import MegaMenu from './MegaMenu.vue';
 import SearchOverlay from './SearchOverlay.vue';
 import ShoppingCartPanel from './ShoppingCartPanel.vue';
 
 const cartStore = useCartStore();
-const navigationStore = useNavigationStore(); // 获取导航 store 实例
+const authStore = useAuthStore(); // 获取用户状态实例
+const navigateTo = inject('navigateTo');
+
+
+// ▼▼▼ 【新增】点击用户图标的处理函数 ▼▼▼
+const handleUserIconClick = () => {
+  if (authStore.isLoggedIn) {
+    navigateTo('account'); // 如果已登录，跳转到账户页面
+  } else {
+    navigateTo('login'); // 如果未登录，跳转到登录页面
+  }
+};
 
 defineProps({ isScrolled: Boolean });
 
@@ -201,6 +240,48 @@ const changeLanguage = (langCode) => {
 
 .cart-badge {
   /* 确保小红点位置正确 */
+  position: relative; 
+  display: flex;
+  align-items: center;
+}
+
+/* 使用 :deep() 来修改 Element Plus 组件的内部样式 */
+.cart-badge :deep(.el-badge__content) {
+  /* 调整尺寸和字体 */
+  height: 10px;       /* 缩小高度 */
+  line-height: 6px;  /* 垂直对齐文字 */
+  padding: 0 0px;     /* 调整水平内边距 */
+  font-size: 10px;    /* 缩小字号 */
+  min-width: 10px;    /* 确保单个数字时也是圆形 */
+
+  /* 重新定位角标 */
+  top: 0;             /* 移动到顶部 */
+  right: 5px;         /* 向左移动一点 */
+  transform: translateY(-60%) translateX(100%); /* 精细调整位置，使其位于图标右上角 */
+}
+
+/* ▼▼▼ 【新增】自定义下拉菜单的样式 ▼▼▼ */
+.el-dropdown-link {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-nav);
+  font-weight: bold;
+  /* 移除 Element Plus 的默认 outline */
+  outline: none;
+}
+.el-dropdown-link:focus, .el-dropdown-link:focus-visible {
+    outline: none;
+}
+
+.lang {
+  transition: transform 0.2s ease;
+}
+.lang:hover {
+  transform: scale(1.1);
+}
+
+.cart-badge {
   display: flex;
   align-items: center;
 }

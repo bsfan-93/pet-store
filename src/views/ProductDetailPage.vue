@@ -294,8 +294,9 @@ const handleAddToCart = () => {
     url: mainImage.value,
     selectedSize: form.size,
     selectedColor: form.color,
+    quantity: form.quantity // 新增：将用户在页面上选择的数量也一并打包
   };
-  cartStore.addItem(itemToAdd, form.quantity);
+  cartStore.addItem(itemToAdd);
 }
 </script>
 

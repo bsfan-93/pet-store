@@ -25,12 +25,10 @@
 </template>
 
 <script setup>
-// ▼▼▼ 【新增】导入 inject 以便使用全局函数 ▼▼▼
 import { inject } from 'vue';
 import { ElIcon } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 
-// 接收从 HomePage 传递过来的 collections 数组
 defineProps({
   collections: {
     type: Array,
@@ -38,9 +36,9 @@ defineProps({
   }
 });
 
-// ▼▼▼ 【新增】注入由 App.vue 提供的全局导航函数 ▼▼▼
 const navigateTo = inject('navigateTo');
 </script>
+
 
 <style scoped>
 /* 样式无需修改 */

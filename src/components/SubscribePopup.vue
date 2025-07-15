@@ -12,7 +12,7 @@
       </div>
       <div class="popup-content">
         <el-icon class="close-icon" @click="closeDialog"><Close /></el-icon>
-        <h2>Unlock <span class="highlight">20% OFF</span> Your order Today</h2>
+        <h2>Unlock <span class="highlight">20%</span> OFF Your order Today</h2>
         <p>Make it more convenient for pets</p>
         <form @submit.prevent="handleSubscribe">
           <label for="email-input">Email</label>
@@ -130,7 +130,7 @@ const handleSubscribe = async () => {
   cursor: pointer;
 }
 h2 {
-  font-size: 28px;
+  font-size: 48px;
   font-weight: 700;
   margin: 0 0 15px 0;
   color: #000;
@@ -165,7 +165,7 @@ label {
   font-size: 16px;
 }
 .subscribe-btn {
-  background-color: #f0c14b;
+  background-color: #7CB342;
   color: #111;
   border: none;
   padding: 20px;
@@ -173,7 +173,7 @@ label {
   font-weight: 600;
 }
 .subscribe-btn:hover {
-  background-color: #e8b63a;
+  background-color: #7CB342;
 }
 .no-thanks-link {
   text-align: center;

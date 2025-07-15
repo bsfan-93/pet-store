@@ -108,15 +108,13 @@ export const getGoodDetail = (goodId) => {
 
 export const login = async (username, password) => {
   const fullUrl = `${BASE_URL}/auth/oauth2/token`;
-
-  // 在这里对密码进行加密
   const encryptedPassword = encryptPassword(password);
 
   const details = {
     'grant_type': 'password',
-    'scope': 'password',
+    'scope': 'server', // 根据您的截图，scope 应该是 'server'
     'username': username,
-    'password': encryptedPassword // 使用加密后的密码
+    'password': encryptedPassword 
   };
 
   let formBody = [];
@@ -131,13 +129,18 @@ export const login = async (username, password) => {
     const response = await fetch(fullUrl, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+        // ▼▼▼ 【新增】添加 Basic Auth 认证头 ▼▼▼
+        'Authorization': 'Basic dGVzdDp0ZXN0' 
       },
       body: formBody
     });
 
     if (!response.ok) {
-      throw new Error(`登录失败: ${response.statusText}`);
+      // 尝试解析错误响应体
+      const errorData = await response.json().catch(() => null);
+      const errorMsg = errorData?.msg || `登录失败: ${response.statusText}`;
+      throw new Error(errorMsg);
     }
 
     return await response.json();
@@ -146,4 +149,55 @@ export const login = async (username, password) => {
     console.error(`登录API请求失败:`, error);
     throw error;
   }
+};
+
+// =======================================================
+// ▼▼▼ 【新增】购物车相关的API函数 ▼▼▼
+// =======================================================
+
+// 5. 查询购物车
+export const getCartItems = () => {
+  return apiFetch('/order/cart-item/');
+};
+
+// 2. 添加商品到购物车
+export const addToCart = (cartItem) => {
+  return apiFetch('/order/cart-item/', {
+    method: 'POST',
+    body: JSON.stringify(cartItem)
+  });
+};
+
+// 3. 修改购物车商品数量
+export const updateCartItem = (cartItem) => {
+  return apiFetch('/order/cart-item/', {
+    method: 'PUT',
+    body: JSON.stringify(cartItem)
+  });
+};
+
+// 4. 删除购物车商品 (支持批量删除)
+export const deleteCartItems = (ids) => {
+  return apiFetch('/order/cart-item/', {
+    method: 'DELETE',
+    body: JSON.stringify(ids)
+  });
+};
+
+// ▼▼▼ 【新增】用户注册API函数 ▼▼▼
+export const registerUser = (userData) => {
+  // 从传入的 userData 中解构出需要发送的字段
+  const { name, email, password } = userData;
+  
+  // 构造符合 API 要求的传参对象
+  const payload = {
+    nickname: name, // 将前端的 name 映射到后端的 nickname
+    email: email,
+    password: password
+  };
+
+  return apiFetch('/standalones/register/email', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
 };

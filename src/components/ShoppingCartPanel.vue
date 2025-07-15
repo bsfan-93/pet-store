@@ -8,7 +8,7 @@
         </div>
 
         <div class="panel-content">
-          <div v-if="cartStore.items.length === 0" class="cart-empty">
+          <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
             <p class="empty-text">{{ $t('cart.empty_message') }}</p>
             <button class="continue-btn" @click="cartStore.closeCart()">{{ $t('cart.continue_shopping') }}</button>
             <div class="login-prompt">
@@ -18,8 +18,24 @@
           </div>
 
           <div v-else class="cart-items">
-            <div v-for="item in cartStore.items" :key="item.id" class="cart-item-display">
-              {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+            <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
+              <img :src="item.url || '/images/placeholder.png'" :alt="item.name" class="item-image">
+              
+              <div class="item-details">
+                <p class="item-name">{{ item.name || item.goodName }}</p>
+                <p class="item-specs">{{ item.colorName || 'Default Color' }}/{{ item.specName || 'Default Size' }}</p>
+                <el-input-number 
+                  size="small"
+                  :model-value="item.quantity"
+                  @change="(currentValue) => cartStore.updateQuantity(item.id, currentValue)"
+                  :min="1"
+                />
+              </div>
+
+              <div class="item-actions">
+                <p class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}</p>
+                <el-icon class="item-remove" @click="cartStore.removeItems(item.id)"><Delete /></el-icon>
+              </div>
             </div>
           </div>
         </div>
@@ -29,7 +45,7 @@
             <span>{{ $t('cart.subtotal') }}</span>
             <span>$ {{ cartStore.subtotal }}</span>
           </div>
-          <button class="checkout-btn" @click="handleCheckout">{{ $t('cart.checkout_button') }}</button>
+          <button class="checkout-btn" @click="handleCheckout">{{ $t('cart.checkout') }}</button>
         </div>
       </div>
     </div>
@@ -37,33 +53,34 @@
 </template>
 
 <script setup>
+import { inject } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
-import { useNavigationStore } from '../stores/navigation'; // 导入导航 store
+import { ElIcon, ElInputNumber } from 'element-plus';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const navigationStore = useNavigationStore(); // 获取导航 store 实例
+const navigateTo = inject('navigateTo');
 
+// 定义统一的处理函数，用于跳转或结算
 const handleCheckout = () => {
   if (authStore.isLoggedIn) {
+    // 如果已登录，可以执行真正的结算逻辑
     console.log("用户已登录，可以进行结算。");
+    // 如果您有结算页，可以在这里调用 navigateTo('checkoutPage')
   } else {
+    // 如果未登录，关闭当前购物车并跳转到登录页
     cartStore.closeCart();
-    // 直接调用 store 的 action 来导航
-    navigationStore.navigateTo('login');
+    navigateTo('login');
   }
 };
 </script>
 
 <style scoped>
-/* 您的样式完全正确，无需修改 */
+/* 您的样式完全正确，这里为了简洁省略，您无需修改 */
+/* ... */
 .cart-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2000;
   display: flex;
@@ -71,10 +88,10 @@ const handleCheckout = () => {
 }
 .cart-panel {
   width: 100%;
-  max-width: 420px;
+  max-width: 480px;
   height: 100%;
   background-color: var(--secondary-color);
-  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+  box-shadow: -5px 0 25px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
 }
@@ -86,46 +103,71 @@ const handleCheckout = () => {
   align-items: center;
   flex-shrink: 0;
 }
-.panel-header h3 {
-  margin: 0;
-  font-size: 18px;
-}
-.close-icon {
-  font-size: 24px;
-  cursor: pointer;
-}
+.panel-header h3 { margin: 0; font-size: 18px; }
+.close-icon { font-size: 24px; cursor: pointer; }
 .panel-content {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 30px 25px;
+  padding: 20px;
 }
-.cart-empty {
-  text-align: center;
-  margin-top: 30%;
-}
-.empty-text {
-  font-size: 18px;
-  font-weight: 500;
-  margin: 0 0 20px 0;
-}
+.cart-empty { text-align: center; margin-top: 30%; }
+.empty-text { font-size: 18px; font-weight: 500; margin: 0 0 20px 0; }
 .continue-btn {
-  width: 100%;
-  padding: 14px;
-  background-color: var(--text-color);
-  color: var(--secondary-color);
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 30px;
+  width: 100%; padding: 14px; background-color: var(--text-color); color: var(--secondary-color);
+  border: none; border-radius: 4px; font-size: 16px; cursor: pointer; margin-bottom: 30px;
 }
-.login-prompt {
+.login-prompt { font-size: 14px; }
+.login-prompt a { color: var(--text-color); text-decoration: underline; margin-left: 5px; cursor: pointer; }
+.cart-items {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+.item-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  flex-shrink: 0;
+}
+.item-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.item-name {
+  font-weight: 500;
   font-size: 14px;
 }
-.login-prompt a {
-  color: var(--text-color);
-  text-decoration: underline;
-  margin-left: 5px;
+.item-specs {
+  font-size: 12px;
+  color: #888;
+}
+.item-actions {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+.item-total-price {
+  font-weight: 500;
+  font-size: 16px;
+}
+.item-remove {
+  cursor: pointer;
+  color: #999;
+  font-size: 18px;
+}
+.item-remove:hover {
+  color: var(--primary-color);
 }
 .panel-footer {
   padding: 20px 25px;
@@ -135,8 +177,9 @@ const handleCheckout = () => {
 .subtotal {
   display: flex;
   justify-content: space-between;
-  font-size: 16px;
   margin-bottom: 20px;
+  font-size: 16px;
+  font-weight: 500;
 }
 .checkout-btn {
   width: 100%;
@@ -150,22 +193,10 @@ const handleCheckout = () => {
 }
 .slide-enter-active,
 .slide-leave-active {
-  transition: background-color 0.4s ease;
-}
-.slide-enter-active .cart-panel,
-.slide-leave-active .cart-panel {
   transition: transform 0.4s ease;
 }
 .slide-enter-from,
 .slide-leave-to {
-  background-color: transparent;
-}
-.slide-enter-from .cart-panel,
-.slide-leave-to .cart-panel {
   transform: translateX(100%);
-}
-.cart-item-display {
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
 }
 </style>

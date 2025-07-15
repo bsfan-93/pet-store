@@ -27,51 +27,27 @@
 import { ref, inject, watch } from 'vue';
 import { getPhotoDetails } from '../api';
 
-// 1. 接收来自 AppHeader 的 visible prop
 const props = defineProps({
   visible: Boolean
 });
 
-// 2. 注入全局的导航函数
 const navigateTo = inject('navigateTo');
-
-// 3. 在组件内部管理自己的数据
 const menuData = ref(null);
 
-// 4. 定义获取数据的函数
 const fetchMegaMenuData = async () => {
-  // 为避免重复请求，只有在没有数据时才请求。
-  // 如果您希望每次都重新获取，可以移除 if (menuData.value) return; 这行。
   if (menuData.value) return;
-
   try {
     const rawData = await getPhotoDetails(0);
-    
-    // ▼▼▼ 【修改】根据新的 API 格式来转换数据 ▼▼▼
     menuData.value = {
-      // 左侧链接区的数据
-      links: rawData.map(item => ({ 
-        id: item.id, 
-        name: item.name, 
-        goodId: item.goodId // 确保 goodId 被保存
-      })),
-      // 右侧图片区的数据
-      products: rawData.map(item => ({ 
-        id: item.id, 
-        name: item.name, 
-        imageUrl: item.url, // 图片地址
-        goodId: item.goodId // 确保 goodId 被保存
-      }))
+      links: rawData.map(item => ({ id: item.id, name: item.name, goodId: item.goodId })),
+      products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: item.url, goodId: item.goodId }))
     };
-
   } catch (error) {
     console.error("在 MegaMenu 中获取数据失败:", error);
   }
 };
 
-// 5. 使用 watch 监听 visible prop 的变化
 watch(() => props.visible, (newValue) => {
-  // 当菜单需要显示时 (从 false 变为 true)，就触发数据获取
   if (newValue) {
     fetchMegaMenuData();
   }

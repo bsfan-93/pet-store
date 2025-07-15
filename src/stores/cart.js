@@ -1,95 +1,108 @@
-// src/stores/cart.js
-
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
+import { useAuthStore } from './auth';
+import { getCartItems, addToCart, updateCartItem, deleteCartItems } from '../api';
 
-// 使用 defineStore 定义一个 store
-// 第一个参数是 store 的唯一 ID，Pinia 用它来连接 devtools
-// 第二个参数是一个函数，定义了 store 的 state, getters, 和 actions
+const LOCAL_STORAGE_KEY = 'pet-store-cart';
+
 export const useCartStore = defineStore('cart', () => {
-  // --- State ---
-  // 使用 ref() 来定义 state 属性，等同于组件中的 data
-  const items = ref([]); // 存放购物车中的商品
-  const isCartVisible = ref(false); // 控制购物车面板是否显示
+  // State
+  const items = ref([]); 
+  const isCartVisible = ref(false);
 
-  // --- Getters ---
-  // 使用 computed() 来定义 getters，等同于组件中的 computed properties
-  
-  // 计算购物车商品总数
+  // Getter
   const totalItems = computed(() => {
     return items.value.reduce((total, item) => total + item.quantity, 0);
   });
-
-  // 计算购物车总价
   const subtotal = computed(() => {
     return items.value.reduce((total, item) => {
-      return total + (item.price * item.quantity);
-    }, 0).toFixed(2); // toFixed(2) 保留两位小数
+      const price = item.price || 0; // 确保价格存在
+      return total + (price * item.quantity);
+    }, 0).toFixed(2);
   });
-  
-  // --- Actions ---
-  // 使用 function() 来定义 actions，等同于组件中的 methods
 
-  // 添加商品到购物车
-  function addItem(product) {
+  // --- 核心 Actions ---
+
+  // 1. 添加商品
+  async function addItem(product) { // 它接收一个 product 对象
     const existingItem = items.value.find(item => item.id === product.id);
-
     if (existingItem) {
-      // 如果商品已存在，则数量加一
-      existingItem.quantity++;
+      // 如果商品已存在，则累加数量
+      existingItem.quantity += product.quantity || 1;
     } else {
-      // 如果是新商品，则添加到数组中，并设置数量为1
-      items.value.push({ ...product, quantity: 1 });
+      // 如果是新商品，则将包含数量的整个对象添加进去
+      items.value.push({ ...product, quantity: product.quantity || 1 });
     }
-    // 添加商品后自动打开购物车面板
     openCart();
   }
 
-  // ▼▼▼ 【新增】从购物车移除指定商品 ▼▼▼
-  function removeItem(productId) {
-    items.value = items.value.filter(item => item.id !== productId);
-  }
-
-  // ▼▼▼ 【新增】更新指定商品的数量 ▼▼▼
-  function updateItemQuantity(productId, newQuantity) {
-    const item = items.value.find(item => item.id === productId);
-    if (item) {
-      if (newQuantity > 0) {
-        item.quantity = newQuantity;
-      } else {
-        // 如果数量小于等于0，则直接移除该商品
-        removeItem(productId);
-      }
+  // 2. 更新数量
+  async function updateQuantity(cartItemId, newQuantity) {
+    const authStore = useAuthStore();
+    if (authStore.isLoggedIn) {
+      await updateCartItem({ id: cartItemId, quantity: newQuantity });
+      await syncCart();
+    } else {
+      const item = items.value.find(item => item.id === cartItemId);
+      if (item) item.quantity = newQuantity;
+      saveLocalCart();
     }
   }
 
-  // 从购物车移除商品（这里我们先简单实现一个清空购物车的函数作为示例）
-  function clearCart() {
-    items.value = [];
+  // 3. 删除商品 (支持单个或多个)
+  async function removeItems(ids) {
+    const authStore = useAuthStore();
+    const idArray = Array.isArray(ids) ? ids : [ids];
+    if (authStore.isLoggedIn) {
+      await deleteCartItems(idArray);
+      await syncCart();
+    } else {
+      items.value = items.value.filter(item => !idArray.includes(item.id));
+      saveLocalCart();
+    }
   }
   
-  // 打开购物车面板
-  function openCart() {
-    isCartVisible.value = true;
+  // 4. 同步/查询购物车 (核心)
+  async function syncCart() {
+    try {
+      const serverCart = await getCartItems();
+      items.value = serverCart.map(item => ({
+        id: item.id, // 这是购物项的唯一ID
+        goodId: item.goodId,
+        name: item.goodName,
+        url: item.goodImage,
+        price: item.price, // 注意：API返参中没有price，这里需要您确认
+        quantity: item.quantity,
+        specName: item.specName,
+        colorName: item.colorName,
+      }));
+    } catch (error) {
+      console.error("同步购物车失败:", error);
+      items.value = []; // 同步失败则清空
+    }
   }
   
-  // 关闭购物车面板
-  function closeCart() {
-    isCartVisible.value = false;
+  // --- 本地缓存 Actions ---
+  function saveLocalCart() {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items.value));
+  }
+  
+  function loadLocalCart() {
+    const localCart = localStorage.getItem(LOCAL_STORAGE_KEY);
+    items.value = localCart ? JSON.parse(localCart) : [];
   }
 
-  // --- Return ---
-  // 必须返回所有你想暴露给其他组件使用的 state, getters, 和 actions
+  // --- UI Actions ---
+  function openCart() { isCartVisible.value = true; }
+  function closeCart() { isCartVisible.value = false; }
+  
+  // 初始化时加载本地购物车
+  loadLocalCart();
+
   return {
-    items,
-    isCartVisible,
-    totalItems,
-    subtotal,
-    addItem,
-    clearCart,
-    openCart,
-    closeCart,
-    removeItem, // <-- 导出新函数
-    updateItemQuantity, // <-- 导出新函数
+    items, isCartVisible, totalItems, subtotal,
+    addItem, updateQuantity, removeItems,
+    syncCart, loadLocalCart,
+    openCart, closeCart,
   };
 });

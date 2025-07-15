@@ -6,7 +6,12 @@
           <h4>{{ $t(column.title) }}</h4>
           <ul>
             <li v-for="link in column.links" :key="link.text">
-              <a :href="link.href">{{ $t(link.text) }}</a>
+              <a 
+                href="#" 
+                @click.prevent="link.action ? link.action() : null"
+              >
+                {{ $t(link.text) }}
+              </a>
             </li>
           </ul>
         </div>
@@ -45,18 +50,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { ElInput, ElButton, ElMessage } from 'element-plus';
 import { subscribeMail } from '../api';
 
 const email = ref('');
+const navigateTo = inject('navigateTo'); // 【新增】注入全局导航函数
 
 // 页脚链接数据
 const footerColumns = ref([
   {
     title: 'footer.about_title',
     links: [
-      { text: 'footer.links.about_us', href: '#' },
+      { text: 'footer.links.about_us', action: () => navigateTo('about') },
       { text: 'footer.links.privacy_policy', href: '#' },
       { text: 'footer.links.terms_of_service', href: '#' }
     ]
@@ -82,10 +88,10 @@ const footerColumns = ref([
 
 // 社交图标数据
 const socialLinks = ref([
-  { name: 'facebook', src: '/images/icons/facebook.png', link: '#' },
-  { name: 'instagram', src: '/images/icons/instagram.png', link: '#' },
-  { name: 'tiktok', src: '/images/icons/tiktok.png', link: '#' },
-  { name: 'youtube', src: '/images/icons/youtube.png', link: '#' }
+  { name: 'facebook', src: '/images/icons/facebook.png', link: 'https://www.facebook.com/' },
+  { name: 'instagram', src: '/images/icons/instagram.png', link: 'https://www.instagram.com/' },
+  { name: 'tiktok', src: '/images/icons/tiktok.png', link: 'https://www.tiktok.com/' },
+  { name: 'youtube', src: '/images/icons/youtube.png', link: 'https://www.youtube.com/' }
 ]);
 
 // 邮件订阅提交函数
