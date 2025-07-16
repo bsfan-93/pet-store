@@ -269,7 +269,7 @@ watch(() => props.productId, (newId) => {
 
 onMounted(() => {
   fetchMegaMenuData();
-  fetchProductData('1'); 
+  // fetchProductData('1'); 
 });
 
 const handleMouseEnter = () => {

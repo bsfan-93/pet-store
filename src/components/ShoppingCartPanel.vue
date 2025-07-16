@@ -45,7 +45,7 @@
             <span>{{ $t('cart.subtotal') }}</span>
             <span>$ {{ cartStore.subtotal }}</span>
           </div>
-          <button class="checkout-btn" @click="handleCheckout">{{ $t('cart.checkout') }}</button>
+          <button class="checkout-btn" @click="handleCheckout">{{ checkoutButtonText }}</button>
         </div>
       </div>
     </div>
@@ -53,14 +53,20 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { computed } from 'vue'; // 1. 确保导入了 computed
+import { useI18n } from 'vue-i18n'; // 2. 导入 useI18n
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import { ElIcon, ElInputNumber } from 'element-plus';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const navigateTo = inject('navigateTo');
+const { t } = useI18n(); // 3. 获取 t 函数
+
+// 4. 创建一个计算属性来动态决定按钮文本
+const checkoutButtonText = computed(() => {
+  return authStore.isLoggedIn ? t('cart.checkout') : t('cart.login_to_checkout');
+});
 
 // 定义统一的处理函数，用于跳转或结算
 const handleCheckout = () => {

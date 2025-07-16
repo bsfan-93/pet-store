@@ -43,6 +43,7 @@
     "login_link": "Log in to check out faster.",
     "subtotal": "Subtotal",
     "checkout_button": "Continue to checkout",
+    "login_to_checkout": "Login to Checkout",
     "placeholder_items": "Items will be displayed here..."
   },
   "footer": {

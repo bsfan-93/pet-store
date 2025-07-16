@@ -43,6 +43,7 @@
     "login_link": "登录以更快地结账。",
     "subtotal": "小计",
     "checkout": "继续结账",
+    "login_to_checkout": "登录以结账",
     "placeholder_items": "这里将显示商品列表..."
   },
   "footer": {

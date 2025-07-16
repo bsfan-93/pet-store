@@ -1,21 +1,16 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
   server: {
     host: true,
     proxy: {
-      // 规则一：处理所有 /standalones 开头的请求
-      '/standalones': {
-        target: 'http://192.168.2.9:9999',
-        changeOrigin: true,
-      },
-      // ▼▼▼ 【新增】规则二：处理所有 /auth 开头的请求 ▼▼▼
-      '/auth': {
-        target: 'http://192.168.2.9:9999',
-        changeOrigin: true,
+      // 将所有以 /api 开头的请求都代理到后端服务器
+      '/api': {
+        target: 'http://192.168.2.9:9999', // 目标服务器地址
+        changeOrigin: true, // 必须设置为 true
+        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径，去掉 /api 前缀
       }
     }
   }
