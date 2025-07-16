@@ -186,14 +186,11 @@ export const deleteCartItems = (ids) => {
 
 // ▼▼▼ 【新增】用户注册API函数 ▼▼▼
 export const registerUser = (userData) => {
-  // 从传入的 userData 中解构出需要发送的字段
-  const { name, email, password } = userData;
-  
-  // 构造符合 API 要求的传参对象
+  // 直接将前端的字段名映射到后端需要的字段名
   const payload = {
-    nickname: name, // 将前端的 name 映射到后端的 nickname
-    email: email,
-    password: password
+    nickname: userData.name,
+    email: userData.email,
+    password: userData.password
   };
 
   return apiFetch('/standalones/register/email', {

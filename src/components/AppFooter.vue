@@ -89,6 +89,7 @@ const footerColumns = ref([
       { text: 'footer.links.contact_us', href: '#' },
       { text: 'footer.links.app_service', href: '#' },
       { text: 'footer.links.user_manual', href: '#' },
+      { text: 'footer.links.order_tracking', href: '#' }, // [!code ++]
       { text: 'footer.links.shipping_policy', href: '#' },
       { text: 'footer.links.warranty_policy', href: '#' },
       { text: 'footer.links.price_match_policy', href: '#' },

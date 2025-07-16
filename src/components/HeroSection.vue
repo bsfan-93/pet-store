@@ -99,20 +99,6 @@ defineProps({
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* Element Plus 轮播指示器(小圆点)的样式美化 (可选) */
-:deep(.el-carousel__indicator--horizontal .el-carousel__button) {
-  width: 10px;
-  height: 10px;
-  background: transparent;
-  border: 1px solid var(--text-color);
-  border-radius: 50%;
-  opacity: 0.8;
-}
-
-:deep(.el-carousel__indicator--horizontal.is-active .el-carousel__button) {
-  background: var(--text-color);
-}
-
 /* ▼▼▼ 【新增】轮播指示器(小圆点)的样式 ▼▼▼ */
 :deep(.el-carousel__indicator--horizontal .el-carousel__button) {
   width: 10px;
