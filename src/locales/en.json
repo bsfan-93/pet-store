@@ -42,7 +42,7 @@
     "login_prompt": "Have an account?",
     "login_link": "Log in to check out faster.",
     "subtotal": "Subtotal",
-    "checkout": "Continue to checkout",
+    "checkout_button": "Continue to checkout",
     "placeholder_items": "Items will be displayed here..."
   },
   "footer": {
@@ -55,6 +55,7 @@
     "download_app_title": "Download App",
     "links": {
         "about_us": "About US",
+        "blog": "Blog",
         "privacy_policy": "Privacy Policy",
         "terms_of_service": "Terms of Service",
         "faq": "FAQ",
@@ -63,6 +64,8 @@
         "user_manual": "User Manual",
         "shipping_policy": "Shipping Policy",
         "warranty_policy": "Warranty Policy",
+        "price_match_policy": "Price Match Policy",
+        "return_refund_policy": "Return & Refund Policy",
         "app": "App"
     }
   }

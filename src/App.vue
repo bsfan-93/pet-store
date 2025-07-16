@@ -5,6 +5,7 @@
   <RegisterPage v-else-if="currentPage === 'register'" />
   <AboutUsPage v-else-if="currentPage === 'about'" />
   <MyAccountPage v-else-if="currentPage === 'account'" />
+  <FAQPage v-else-if="currentPage === 'faq'" />
 </template>
 
 <script setup>
@@ -15,6 +16,7 @@ import LoginPage from './views/LoginPage.vue';
 import RegisterPage from './views/RegisterPage.vue'; // 导入注册页面组件
 import AboutUsPage from './views/AboutUsPage.vue'; // 导入新页面
 import MyAccountPage from './views/MyAccountPage.vue'; // 导入新页面
+import FAQPage from './views/FAQPage.vue'; // 导入新页面
 
 const currentPage = ref('home'); 
 const currentProductId = ref(null);
@@ -26,6 +28,7 @@ const handleUrlChange = () => {
   const registerMatch = path.match(/^\/register/); // 新增
   const aboutMatch = path.match(/^\/about/); // 新增
   const accountMatch = path.match(/^\/account/); // 新增
+  const faqMatch = path.match(/^\/faq/); // 新增
 
   if (productMatch) {
     currentPage.value = 'productDetail';
@@ -38,6 +41,8 @@ const handleUrlChange = () => {
     currentPage.value = 'about';
   } else if (accountMatch) { // 新增
     currentPage.value = 'account';
+  } else if (faqMatch) { // 新增
+    currentPage.value = 'faq';
   } else {
     currentPage.value = 'home';
   }
@@ -55,6 +60,8 @@ const navigateTo = (page, productId = null) => {
     path = '/about';
   } else if (page === 'account') { // 新增
     path = '/account';
+  } else if (page === 'faq') { // 新增
+    path = '/faq';
   }
   
   window.history.pushState({}, '', path);
