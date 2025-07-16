@@ -17,8 +17,8 @@
         >
           <a href="#">{{ $t('header.shop') }}</a>
         </div>
-        <a href="#" @click.prevent="navigateTo('about')">{{ $t('header.about_us') }}</a>
-        <a href="#">{{ $t('header.app') }}</a>
+        <router-link to="/about">{{ $t('header.about_us') }}</router-link>
+        <router-link to="/">{{ $t('header.app') }}</router-link>
       </nav>
 
       <div class="header-actions">
@@ -66,7 +66,8 @@
 </template>
 
 <script setup>
-import { ref, computed, inject } from 'vue';
+import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router'; // 1. 导入 useRouter
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
@@ -77,17 +78,17 @@ import ShoppingCartPanel from './ShoppingCartPanel.vue';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const navigateTo = inject('navigateTo');
+const router = useRouter(); // 2. 获取 router 实例
 
 // 2. 使用 storeToRefs 来获取响应式的 isLoggedIn 状态
 const { isLoggedIn } = storeToRefs(authStore);
 
-// 3. 定义点击用户图标的处理函数
+// 3. 修改点击处理函数
 const handleUserIconClick = () => {
-  if (isLoggedIn.value) { // 判断响应式状态的 .value
-    navigateTo('account'); 
+  if (isLoggedIn.value) {
+    router.push('/account'); // 使用 router.push() 进行跳转
   } else {
-    navigateTo('login');
+    router.push('/login');
   }
 };
 

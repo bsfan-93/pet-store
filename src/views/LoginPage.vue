@@ -45,7 +45,7 @@
         </el-form>
         <div class="sign-up-prompt">
           <span>Don't have an account?</span>
-          <a href="#" @click.prevent="navigateTo('register')" class="sign-up-link">Sign up</a>
+          <router-link to="/register" class="sign-up-link">Sign up</router-link>
         </div>
       </div>
     </main>
@@ -54,7 +54,8 @@
 </template>
 
 <script setup>
-import { reactive, ref, inject } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router'; // 导入 useRouter
 import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
@@ -62,7 +63,7 @@ import AppFooter from '../components/AppFooter.vue';
 import { useAuthStore } from '../stores/auth';
 
 const authStore = useAuthStore();
-const navigateTo = inject('navigateTo');
+const router = useRouter(); // 获取 router 实例
 
 const loginFormRef = ref(null);
 const isLoading = ref(false);
@@ -88,7 +89,7 @@ const submitForm = async (formEl) => {
       try {
         await authStore.handleLogin(loginForm.email, loginForm.password);
         ElMessage.success('Login successful!');
-        navigateTo('home'); // 只有在登录成功时才跳转
+        router.push('/'); // 使用 router.push() 跳转到首页
       } catch (error) {
         ElMessage.error(error.message || 'Login failed. Please check your credentials.');
         // 登录失败时，不做任何跳转，停留在当前页面

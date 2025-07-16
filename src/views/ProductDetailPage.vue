@@ -8,7 +8,7 @@
     <main class="product-main-content">
       <div class="product-container">
         <div class="product-gallery">
-          <div 
+          <div
             class="main-image-container"
             ref="mainImageContainer"
             @mouseenter="isMagnifierVisible = true"
@@ -16,19 +16,19 @@
             @mousemove="handleMouseMove"
           >
             <img :src="mainImage" alt="Main product image" class="main-image-content">
-            <div 
-              v-show="isMagnifierVisible" 
+            <div
+              v-show="isMagnifierVisible"
               class="magnifier-view"
               :style="magnifierStyle"
             ></div>
           </div>
-          
+
           <div class="thumbnail-carousel">
             <el-icon class="arrow-icon"><ArrowLeft /></el-icon>
             <div class="thumbnail-track">
-              <div 
-                v-for="img in productDetail.goodPic" 
-                :key="img.id" 
+              <div
+                v-for="img in productDetail.goodPic"
+                :key="img.id"
                 class="thumbnail-placeholder"
                 @click="mainImage = img.url"
               >
@@ -56,21 +56,21 @@
               <div class="option-item">
                 <span class="option-label">size</span>
                 <el-select v-model="form.size" placeholder="Select" size="default">
-                    <el-option 
-                      v-for="size in sizeOptions" 
-                      :key="size.id" 
-                      :label="size.value" 
-                      :value="size.value" 
+                    <el-option
+                      v-for="size in sizeOptions"
+                      :key="size.id"
+                      :label="size.value"
+                      :value="size.value"
                     />
                 </el-select>
               </div>
               <div class="option-item">
                 <span class="option-label">Color</span>
                 <el-radio-group v-model="form.color">
-                    <el-radio 
-                        v-for="color in colorOptions" 
-                        :key="color.id" 
-                        :value="color.value"  
+                    <el-radio
+                        v-for="color in colorOptions"
+                        :key="color.id"
+                        :value="color.value"
                         class="color-swatch"
                         :style="{ '--swatch-color': color.hex || '#ccc' }"
                     />
@@ -142,7 +142,6 @@
 </template>
 
 <script setup>
-// Script部分与上次完全相同，这里为了简洁省略，你可以直接使用你已有的正确版本
 import { ref, reactive, onMounted, provide, computed, watch } from 'vue';
 import { getPhotoDetails, getGoodDetail } from '../api';
 import { useCartStore } from '../stores/cart';
@@ -150,10 +149,16 @@ import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
-// 1. 定义 props 来接收来自 App.vue 的 productId
 const props = defineProps({
-  productId: String
+  id: String // vue-router 会传递一个名为 'id' 的 prop
 });
+
+// 您原有的 watch 逻辑可以根据新的 prop 'id' 来调整
+watch(() => props.id, (newId) => {
+  if (newId) {
+    fetchProductData(newId);
+  }
+}, { immediate: true });
 
 const cartStore = useCartStore();
 const megaMenuData = ref(null);
@@ -166,7 +171,7 @@ const mainImageContainer = ref(null);
 const isMagnifierVisible = ref(false);
 const mouseX = ref(0);
 const mouseY = ref(0);
-const zoomLevel = 2; 
+const zoomLevel = 2;
 
 const form = reactive({
   quantity: 1,
@@ -201,27 +206,34 @@ const getFeatureImageById = (imageId) => {
 
 const magnifierStyle = computed(() => {
   if (!mainImageContainer.value) return {};
+
+  const lensSize = 150;
   const container = mainImageContainer.value;
-  
-  // 使用clientWidth来获取元素的内部宽度，不包括边框和滚动条
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
-  
-  // 计算背景图的位置
-  const bgPosX = -(mouseX.value * zoomLevel - containerWidth / 2);
-  const bgPosY = -(mouseY.value * zoomLevel - containerHeight / 2);
+
+  // 【关键修改】调整镜片的位置计算
+  const lensHalfSize = lensSize / 2;
+  const lensX = Math.max(0, Math.min(mouseX.value - lensHalfSize, containerWidth - lensSize));
+  const lensY =  Math.max(0, Math.min(mouseY.value - lensHalfSize, containerHeight - lensSize));
+
+  // 【关键修改】使用新的公式计算背景图的偏移
+  const bgPosX = -(mouseX.value * zoomLevel - lensSize / 2);
+  const bgPosY = -(mouseY.value * zoomLevel - lensSize / 2);
 
   return {
+    top: `${lensY}px`,
+    left: `${lensX}px`,
     backgroundImage: `url(${mainImage.value})`,
-    // 背景图尺寸要根据容器的实际渲染尺寸来计算
     backgroundSize: `${containerWidth * zoomLevel}px ${containerHeight * zoomLevel}px`,
     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
   };
 });
 
+
 const fetchProductData = async (goodId) => {
   try {
-    productDetail.value = null; // 在获取新数据前先清空旧数据，显示loading...
+    productDetail.value = null;
     const data = await getGoodDetail(goodId);
     productDetail.value = data;
     if (data.goodPic.length > 0) {
@@ -260,16 +272,14 @@ const fetchMegaMenuData = async () => {
   }
 };
 
-// 2. 【关键】使用 watch 监听 prop 的变化
 watch(() => props.productId, (newId) => {
   if (newId) {
     fetchProductData(newId);
   }
-}, { immediate: true }); // immediate: true 保证组件首次加载时也会执行
+}, { immediate: true });
 
 onMounted(() => {
   fetchMegaMenuData();
-  // fetchProductData('1'); 
 });
 
 const handleMouseEnter = () => {
@@ -294,56 +304,49 @@ const handleAddToCart = () => {
     url: mainImage.value,
     selectedSize: form.size,
     selectedColor: form.color,
-    quantity: form.quantity // 新增：将用户在页面上选择的数量也一并打包
+    quantity: form.quantity
   };
   cartStore.addItem(itemToAdd);
 }
 </script>
 
 <style scoped>
-/* ======================================================= */
-/* ▼▼▼ 【最终修正】放大镜相关样式 ▼▼▼ */
-/* ======================================================= */
 .product-gallery {
   width: 50%;
   flex-shrink: 0;
-  /* position: relative;  将相对定位移到这里 */
 }
 
 .main-image-container {
-  position: relative; /* 关键: 父容器相对定位 */
+  position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   background-color: var(--light-gray-color);
   border-radius: 12px;
   margin-bottom: 20px;
   cursor: crosshair;
-  /* overflow: hidden;  为了让放大镜显示在右侧，这里不能隐藏溢出 */
+  overflow: hidden;
 }
 
 .main-image-content {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 12px; /* 确保图片本身也有圆角 */
+  border-radius: 12px;
 }
 
 .magnifier-view {
-  display: block; /* 使用 v-show 替代 v-if，确保尺寸计算正确 */
+  display: block;
   position: absolute;
-  top: 0;
-  left: 105%; /* 定位在主图右侧，留出5%间隙 */
-  width: 100%;
-  height: 100%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
   background-color: #fff;
-  border: 1px solid var(--border-color);
-  z-index: 10;
   pointer-events: none;
-  border-radius: 8px;
   background-repeat: no-repeat;
+  z-index: 10; /* 【新增】确保放大镜在图片上层 */
 }
-/* ======================================================= */
-
 
 /* 其余样式保持不变 */
 .loading-state {
@@ -379,7 +382,7 @@ const handleAddToCart = () => {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background-color: var(--secondary-color); 
+  background-color: var(--secondary-color);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 .header-wrapper :deep(.main-nav a),
@@ -590,7 +593,7 @@ const handleAddToCart = () => {
 }
 .feature-square-placeholder {
   width: 100%;
-  aspect-ratio: 1 / 1; /* 关键：设置为1/1的正方形比例 */
+  aspect-ratio: 1 / 1;
   background-color: var(--light-gray-color);
   border-radius: 12px;
   overflow: hidden;
@@ -612,17 +615,16 @@ const handleAddToCart = () => {
 }
 .spec-image-placeholder {
   width: 100%;
-  max-width: 800px; /* Aligns with the parameters table below */
-  aspect-ratio: 1 / 1; /* Ensures it's a square */
+  max-width: 800px;
+  aspect-ratio: 1 / 1;
   background-color: var(--light-gray-color);
   border-radius: 12px;
   overflow: hidden;
 }
-/* 新增：让图片在占位符内正确显示 */
 .spec-image-content {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* 使用 contain 防止技术图纸变形 */
+    object-fit: contain;
 }
 
 .params-table {
