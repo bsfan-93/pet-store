@@ -183,12 +183,12 @@ h1 {
   padding: 22px;
   font-size: 16px;
   font-weight: 500;
-  background-color: #f0ad4e;
-  border-color: #f0ad4e;
+  background-color: #7CB342;
+  border-color: #7CB342;;
 }
 .login-button:hover {
-  background-color: #ec971f;
-  border-color: #d58512;
+  background-color: #7CB342;;
+  border-color: #7CB342;;
 }
 
 .sign-up-prompt {
@@ -196,7 +196,7 @@ h1 {
   font-size: 14px;
 }
 .sign-up-link {
-  color: var(--primary-color);
+  color: #1976D2;
   text-decoration: none;
   font-weight: 500;
   margin-left: 5px;

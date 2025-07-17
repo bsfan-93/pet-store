@@ -179,7 +179,7 @@ label {
   text-align: center;
   margin-top: 25px;
   font-size: 15px;
-  color: #777;
+  color: #1976D2;
   text-decoration: underline;
 }
 .error-message {

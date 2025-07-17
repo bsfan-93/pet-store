@@ -8,6 +8,10 @@ import RegisterPage from '../views/RegisterPage.vue';
 import AboutUsPage from '../views/AboutUsPage.vue';
 import MyAccountPage from '../views/MyAccountPage.vue';
 import FAQPage from '../views/FAQPage.vue';
+import OrderTrackingPage from '../views/OrderTrackingPage.vue';
+import ContactUsPage from '../views/ContactUsPage.vue';
+import ReturnRefundPolicyPage from '../views/ReturnRefundPolicyPage.vue';
+import AppPage from '../views/AppPage.vue';
 
 // 定义路由规则
 const routes = [
@@ -40,6 +44,27 @@ const routes = [
     path: '/account', 
     name: 'MyAccount', 
     component: MyAccountPage 
+  },
+  { 
+    path: '/tracking', 
+    name: 'OrderTracking', 
+    component: OrderTrackingPage 
+  },
+  // 2. 添加新的路由规则
+  {
+    path: '/contact',
+    name: 'ContactUs',
+    component: ContactUsPage
+  },
+  {
+    path: '/return-policy',
+    name: 'ReturnRefundPolicy',
+    component: ReturnRefundPolicyPage
+  },
+  {
+    path: '/app',
+    name: 'App',
+    component: AppPage
   },
   { 
     // 定义带有动态参数 'id' 的路由

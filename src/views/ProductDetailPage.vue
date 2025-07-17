@@ -143,25 +143,20 @@
 
 <script setup>
 import { ref, reactive, onMounted, provide, computed, watch } from 'vue';
-import { getPhotoDetails, getGoodDetail } from '../api';
+import { getGoodDetail } from '../api'; // 确保 getGoodDetail 已导入
 import { useCartStore } from '../stores/cart';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
+// 1. 定义 props
 const props = defineProps({
-  id: String // vue-router 会传递一个名为 'id' 的 prop
+  // 根据您 router/index.js 中的设置，参数名应该是 'id'
+  id: String 
 });
 
-// 您原有的 watch 逻辑可以根据新的 prop 'id' 来调整
-watch(() => props.id, (newId) => {
-  if (newId) {
-    fetchProductData(newId);
-  }
-}, { immediate: true });
-
 const cartStore = useCartStore();
-const megaMenuData = ref(null);
+const megaMenuData = ref(null); // 如果 megaMenuData 也需要，请确保相关逻辑存在
 provide('megaMenuData', megaMenuData);
 
 const productDetail = ref(null);
@@ -171,7 +166,7 @@ const mainImageContainer = ref(null);
 const isMagnifierVisible = ref(false);
 const mouseX = ref(0);
 const mouseY = ref(0);
-const zoomLevel = 2;
+const zoomLevel = 2; 
 
 const form = reactive({
   quantity: 1,
@@ -180,63 +175,13 @@ const form = reactive({
   standard: 'os'
 });
 
-const colorOptions = computed(() => {
-  if (!productDetail.value) return [];
-  const colors = productDetail.value.specifications.find(s => s.name === 'color')?.values || [];
-  const colorMap = { 'red': '#D32F2F', 'blue': '#1976D2', 'green': '#689F38', 'gray': '#E0E0E0' };
-  return colors.map(c => ({...c, hex: colorMap[c.value.toLowerCase()] || '#ccc'}));
-});
-const sizeOptions = computed(() => {
-  if (!productDetail.value) return [];
-  return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
-});
-const productVideo = computed(() => {
-  if (!productDetail.value) return null;
-  return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
-});
-const featureImages = computed(() => {
-  if (!productDetail.value) return [];
-  return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
-});
-const getFeatureImageById = (imageId) => {
-    if (!productDetail.value) return '';
-    const pic = productDetail.value.goodPic.find(p => p.id === imageId);
-    return pic ? pic.url : '';
-}
-
-const magnifierStyle = computed(() => {
-  if (!mainImageContainer.value) return {};
-
-  const lensSize = 150;
-  const container = mainImageContainer.value;
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
-
-  // 【关键修改】调整镜片的位置计算
-  const lensHalfSize = lensSize / 2;
-  const lensX = Math.max(0, Math.min(mouseX.value - lensHalfSize, containerWidth - lensSize));
-  const lensY =  Math.max(0, Math.min(mouseY.value - lensHalfSize, containerHeight - lensSize));
-
-  // 【关键修改】使用新的公式计算背景图的偏移
-  const bgPosX = -(mouseX.value * zoomLevel - lensSize / 2);
-  const bgPosY = -(mouseY.value * zoomLevel - lensSize / 2);
-
-  return {
-    top: `${lensY}px`,
-    left: `${lensX}px`,
-    backgroundImage: `url(${mainImage.value})`,
-    backgroundSize: `${containerWidth * zoomLevel}px ${containerHeight * zoomLevel}px`,
-    backgroundPosition: `${bgPosX}px ${bgPosY}px`,
-  };
-});
-
-
+// 【关键修复】将 fetchProductData 函数的定义，移动到 watch 监听器之前
 const fetchProductData = async (goodId) => {
   try {
     productDetail.value = null;
     const data = await getGoodDetail(goodId);
     productDetail.value = data;
-    if (data.goodPic.length > 0) {
+    if (data.goodPic && data.goodPic.length > 0) {
       mainImage.value = data.goodPic[0].url;
     }
     if (sizeOptions.value.length > 0) {
@@ -249,45 +194,62 @@ const fetchProductData = async (goodId) => {
     console.error("Failed to fetch product details:", error);
   }
 };
-const fetchMegaMenuData = async () => {
-  const cachedData = sessionStorage.getItem('megaMenuData');
-  if (cachedData) {
-    try {
-      megaMenuData.value = JSON.parse(cachedData);
-      return;
-    } catch (e) {
-      sessionStorage.removeItem('megaMenuData');
-    }
-  }
-  try {
-    const rawData = await getPhotoDetails(0);
-    const transformedData = {
-      links: rawData.map(item => ({ id: item.id, name: item.name, url: `/category/${item.name.toLowerCase()}` })),
-      products: rawData.map(item => ({ id: item.id, name: item.name, imageUrl: item.url }))
-    };
-    megaMenuData.value = transformedData;
-    sessionStorage.setItem('megaMenuData', JSON.stringify(transformedData));
-  } catch (error) {
-    console.error("获取菜单数据失败:", error);
-  }
-};
 
-watch(() => props.productId, (newId) => {
+// 2.【关键修复】现在 watch 调用 fetchProductData 时，函数已经被定义了
+// 同时，确保监听的是 props.id
+watch(() => props.id, (newId) => {
   if (newId) {
     fetchProductData(newId);
   }
 }, { immediate: true });
 
+// onMounted 中不再需要调用 fetchProductData，因为 watch 的 immediate:true 会处理首次加载
 onMounted(() => {
-  fetchMegaMenuData();
+  // fetchMegaMenuData(); // 如果您有这个函数，请确保它也被定义了
 });
 
-const handleMouseEnter = () => {
-  isMagnifierVisible.value = true;
-};
-const handleMouseLeave = () => {
-  isMagnifierVisible.value = false;
-};
+
+// --- Computed Properties ---
+const colorOptions = computed(() => {
+  if (!productDetail.value || !productDetail.value.specifications) return [];
+  const colors = productDetail.value.specifications.find(s => s.name === 'color')?.values || [];
+  const colorMap = { 'red': '#D32F2F', 'blue': '#1976D2', 'green': '#689F38', 'gray': '#E0E0E0' };
+  return colors.map(c => ({...c, hex: colorMap[c.value.toLowerCase()] || '#ccc'}));
+});
+
+const sizeOptions = computed(() => {
+  if (!productDetail.value || !productDetail.value.specifications) return [];
+  return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
+});
+
+const productVideo = computed(() => {
+  if (!productDetail.value || !productDetail.value.detailPic) return null;
+  return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
+});
+
+const featureImages = computed(() => {
+  if (!productDetail.value || !productDetail.value.detailPic) return [];
+  return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
+});
+
+const magnifierStyle = computed(() => {
+  if (!mainImageContainer.value) return {};
+  const container = mainImageContainer.value;
+  
+  const containerWidth = container.clientWidth;
+  const containerHeight = container.clientHeight;
+  
+  const bgPosX = -(mouseX.value * zoomLevel - containerWidth / 2);
+  const bgPosY = -(mouseY.value * zoomLevel - containerHeight / 2);
+
+  return {
+    backgroundImage: `url(${mainImage.value})`,
+    backgroundSize: `${containerWidth * zoomLevel}px ${containerHeight * zoomLevel}px`,
+    backgroundPosition: `${bgPosX}px ${bgPosY}px`,
+  };
+});
+
+// --- Methods ---
 const handleMouseMove = (event) => {
   if (!mainImageContainer.value) return;
   const rect = mainImageContainer.value.getBoundingClientRect();
@@ -308,6 +270,9 @@ const handleAddToCart = () => {
   };
   cartStore.addItem(itemToAdd);
 }
+
+// 确保 fetchMegaMenuData 如果被使用，也在这里定义
+// const fetchMegaMenuData = async () => { ... }
 </script>
 
 <style scoped>

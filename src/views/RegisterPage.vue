@@ -38,7 +38,7 @@
         </el-form>
         <div class="login-prompt">
           <span>Already have an account?</span>
-          <a href="#" @click.prevent="navigateTo('login')">Log in</a>
+          <router-link to="/login">Log in</router-link>
         </div>
       </div>
     </main>

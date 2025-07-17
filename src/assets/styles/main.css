@@ -27,7 +27,7 @@ body {
   margin: 0;
   font-family: 'Outfit', 'Noto Sans SC', sans-serif; 
   color: var(--text-color);
-  background-color: var(--secondary-color);
+  background-color: #ffffff;
 }
 
 a {

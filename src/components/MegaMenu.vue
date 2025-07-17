@@ -4,20 +4,19 @@
       <div class="menu-links">
         <ul>
           <li v-for="link in menuData.links" :key="link.id">
-            <a href="#" @click.prevent="navigateTo('productDetail', link.goodId)">{{ link.name }}</a>
+            <router-link :to="`/product/${link.goodId}`">{{ link.name }}</router-link>
           </li>
         </ul>
       </div>
       <div class="menu-products">
-        <a 
+        <router-link
           v-for="product in menuData.products" 
           :key="product.id" 
-          href="#" 
-          @click.prevent="navigateTo('productDetail', product.goodId)" 
+          :to="`/product/${product.goodId}`" 
           class="product-item"
         >
           <img :src="product.imageUrl" :alt="product.name">
-        </a>
+        </router-link>
       </div>
     </div>
   </div>

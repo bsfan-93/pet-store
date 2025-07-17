@@ -118,24 +118,25 @@ h2 {
 }
 .verify-link-wrapper a {
   color: #007bff;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 .track-button {
   width: 100%;
   height: 50px;
-  background-color: #f0ad4e;
-  border-color: #f0ad4e;
+  background-color: #7CB342;
+  border-color: #7CB342;
   color: #fff;
   font-size: 18px;
   font-weight: 500;
 }
 .track-button:hover {
-  background-color: #ec971f;
-  border-color: #d58512;
+  background-color: #7CB342;
+  border-color: #7CB342;
 }
 .customer-service-info {
   font-size: 13px;
   color: #888;
   line-height: 1.6;
+  text-align: left; /* 新增：将文字左对齐 */
 }
 </style>

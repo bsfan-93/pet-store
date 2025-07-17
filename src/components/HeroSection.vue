@@ -38,80 +38,89 @@ defineProps({
   height: 100vh;
 }
 
-/* 单个轮播幻灯片的样式 */
+/* 【修改】单个轮播幻灯片的样式 
+  - 添加 position: relative; 作为定位上下文
+  - 删除了 flex 相关的属性
+*/
 .carousel-slide {
+  position: relative; /* 新增：为绝对定位的子元素提供容器 */
   width: 100%;
   height: 100%;
-  /* 设置背景图样式 */
   background-size: cover;
   background-position: center;
-  /* 使用 Flexbox 来垂直居中内容 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;      /* 这个属性控制垂直对齐 */
-  align-items: flex-start;      /* 内容靠左对齐 */
-  padding-left: 10%;             /* 和之前保持一致的左边距 */
 }
 
-/* 文本和按钮的容器样式，基本保持不变 */
+/* 【修改】文本和按钮的容器样式
+  - 改为绝对定位，固定在左下角
+*/
 .hero-content {
-  position: relative;
-  color: var(--secondary-color);            /* <-- 控制文字颜色 (当前为白色) */
-  padding-top: calc(var(--header-height) + 28px);
-  transform: translateY(200px); /* 示例: 从中心点向上移动30像素 */
+  position: absolute; /* 新增 */
+  bottom: 60px;       /* 新增：距离底部的位置 */
+  left: 10%;        /* 新增：距离左边的位置 */
+  z-index: 10;        /* 新增：确保在图片上层 */
+  color: var(--secondary-color);
 }
 
-/* <h1> 标签的具体样式 */
+/* <h1> 标签的具体样式 (保持不变) */
 .hero-content h1 {
-  font-size: 52px;    /* <-- 控制字体大小 */
-  font-weight: 400;                     /* <-- 控制字体粗细 (例如 700是bold) */
+  font-size: 52px;
+  font-weight: 400;
   margin-bottom: 30px;
   line-height: 1.2;
-  /* 如果背景图片是深色的，可以给文字加阴影使其更清晰 */
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* "Shop Now" 按钮样式 (保持不变) */
 .shop-now-btn {
-  /* 颜色 */
-  background-color: var(--primary-color);     /* 示例: 换成一个活泼的珊瑚色 */
-  border-color: var(--primary-color);         /* 边框颜色最好和背景色保持一致 */
-  color: var(--secondary-color);              /* 按钮内部文字的颜色 */
-
-  /* 尺寸和形状 */
-  padding: 20px 40px;        /* 示例: 让按钮更大一些 */
-  border-radius: 50px;       /* 示例: 变成圆角的胶囊形状 */
-  border-width: 2px;         /* 示例: 增加边框宽度 */
-
-  /* 文字样式 */
-  font-size: 18px;           /* 示例: 增大按钮内的字体 */
-  font-weight: bold;         /* 字体加粗 */
-  letter-spacing: 1px;       /* 增加文字间距 */
-
-  /* 鼠标悬停效果 */
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--secondary-color);
+  padding: 20px 40px;
+  border-radius: 50px;
+  border-width: 2px;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
   transition: all 0.3s ease;
 }
 
-/* 你还可以为按钮添加一个鼠标悬停的效果 */
 .shop-now-btn:hover {
-    background-color: var(--accent-color);   /* 鼠标悬停时颜色变深 */
+    background-color: var(--accent-color);
     border-color: var(--accent-color);
-    transform: translateY(-2px); /* 轻微上浮 */
+    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* ▼▼▼ 【新增】轮播指示器(小圆点)的样式 ▼▼▼ */
-:deep(.el-carousel__indicator--horizontal .el-carousel__button) {
-  width: 10px;
-  height: 10px;
-  background: transparent;
-  /* 设置未选中时圆点的边框颜色 */
-  border: 2px solid var(--secondary-color); /* 例如，白色边框 */
-  border-radius: 50%;
-  opacity: 0.8;
+
+/* ▼▼▼【重点修改】轮播指示器的样式 ▼▼▼ */
+
+/* 【新增】指示器容器的样式
+  - 将整个指示器区域绝对定位到右下角
+*/
+:deep(.el-carousel__indicators--horizontal) {
+  position: absolute;
+  bottom: 78px;  /* 调整此值以与按钮垂直对齐 */
+  right: 10%;
+  left: auto; /* 取消Element Plus默认的居中 */
+  transform: none; /* 取消Element Plus默认的居中 */
+  z-index: 10;
 }
 
+/* 【修改】单个指示器(小圆点)的样式
+  - 修改宽高，使其拉长
+*/
+:deep(.el-carousel__indicator--horizontal .el-carousel__button) {
+  width: 40px;   /* 拉长宽度 */
+  height: 4px;   /* 减小高度 */
+  background: rgba(255, 255, 255, 0.5); /* 未选中时的颜色 */
+  border-radius: 2px; /* 设置圆角 */
+  border: none; /* 移除边框 */
+  opacity: 1;
+}
+
+/* 【修改】当前激活的指示器的样式
+*/
 :deep(.el-carousel__indicator--horizontal.is-active .el-carousel__button) {
-  /* 设置选中时圆点的背景颜色 */
-  background: var(--secondary-color); /* 例如，白色实心 */
+  background: var(--secondary-color); /* 选中时的颜色 (例如: 白色) */
 }
 </style>

@@ -5,31 +5,28 @@
     @mouseleave="isMenuVisible = false"
   >
     <div class="header-container">
-      <a href="#" @click.prevent="navigateTo('home')" class="logo">
+      <router-link to="/" class="logo">
         <img src="/images/logo.png" alt="PetsClan Logo">
-      </a>
+      </router-link>
       
       <nav class="main-nav">
-        <!-- <a href="#" @click.prevent="navigateTo('home')">{{ $t('header.home') }}</a> -->
         <div 
           class="nav-item-shop"
-          @mouseenter="isMenuVisible = true"
+          @mouseenter="showMenu"
+          @mouseleave="hideMenu"
         >
           <a href="#">{{ $t('header.shop') }}</a>
         </div>
         <router-link to="/about">{{ $t('header.about_us') }}</router-link>
-        <router-link to="/">{{ $t('header.app') }}</router-link>
+        <router-link to="/app">{{ $t('header.app') }}</router-link>
       </nav>
 
       <div class="header-actions">
         <el-icon @click="isSearchVisible = true"><Search /></el-icon>
-        
         <el-icon @click="handleUserIconClick"><User /></el-icon>
-        
         <el-badge :value="cartStore.totalItems" :hidden="cartStore.totalItems === 0" class="cart-badge">
           <el-icon @click="cartStore.openCart()"><ShoppingCart /></el-icon>
         </el-badge>
-        
         <el-dropdown @command="changeLanguage" trigger="hover">
           <span class="el-dropdown-link lang">
             {{ currentLanguageAbbr }} <el-icon class="el-icon--right"><arrow-down /></el-icon>
@@ -51,7 +48,8 @@
     
     <MegaMenu 
       :visible="isMenuVisible"
-      @mouseenter="isMenuVisible = true" 
+      @mouseenter="showMenu"
+      @mouseleave="hideMenu"
     />
     <Teleport to="body">
       <SearchOverlay 
@@ -115,8 +113,24 @@ const handleAboutMenuCommand = (page) => {
 
 defineProps({ isScrolled: Boolean });
 
-const isMenuVisible = ref(false); 
-const isSearchVisible = ref(false);
+// ▼▼▼ 【核心修改】替换菜单显示/隐藏的逻辑 ▼▼▼
+const isMenuVisible = ref(false);
+let menuTimer = null; // 用于存放计时器
+
+// 显示菜单的函数
+const showMenu = () => {
+  clearTimeout(menuTimer); // 如果有关闭的计时器，先清除它
+  isMenuVisible.value = true;
+};
+
+// 隐藏菜单的函数（有延迟）
+const hideMenu = () => {
+  // 设置一个 300 毫秒的延迟，如果期间鼠标没有进入新区域，就关闭菜单
+  menuTimer = setTimeout(() => {
+    isMenuVisible.value = false;
+  }, 300);
+};
+// ▲▲▲ 修改结束 ▲▲▲
 
 const { locale } = useI18n();
 const languages = ref([
@@ -150,6 +164,7 @@ const changeLanguage = (langCode) => {
   height: var(--header-height);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   background-color: transparent;
+  
 }
 .app-header.scrolled,
 .app-header:hover {

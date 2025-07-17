@@ -13,7 +13,7 @@
             <button class="continue-btn" @click="cartStore.closeCart()">{{ $t('cart.continue_shopping') }}</button>
             <div class="login-prompt">
               <span>{{ $t('cart.login_prompt') }}</span>
-              <a href="#" @click.prevent="handleCheckout">{{ $t('cart.login_link') }}</a>
+              <a href="#" @click.prevent="handleLoginClick">{{ $t('cart.login_link') }}</a>
             </div>
           </div>
 
@@ -53,33 +53,36 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'; // 1. 确保导入了 computed
-import { useI18n } from 'vue-i18n'; // 2. 导入 useI18n
+import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import { ElIcon, ElInputNumber } from 'element-plus';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 
+const router = useRouter();
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const { t } = useI18n(); // 3. 获取 t 函数
+const { t } = useI18n();
 
-// 4. 创建一个计算属性来动态决定按钮文本
+// 【修复】处理登录按钮的点击事件
+const handleLoginClick = () => {
+  cartStore.closeCart();
+  router.push('/login');
+};
+
+const handleCheckout = () => {
+  if (authStore.isLoggedIn) {
+    console.log("用户已登录，可以进行结算。");
+  } else {
+    // 如果未登录，跳转到登录页
+    handleLoginClick();
+  }
+};
+
 const checkoutButtonText = computed(() => {
   return authStore.isLoggedIn ? t('cart.checkout') : t('cart.login_to_checkout');
 });
-
-// 定义统一的处理函数，用于跳转或结算
-const handleCheckout = () => {
-  if (authStore.isLoggedIn) {
-    // 如果已登录，可以执行真正的结算逻辑
-    console.log("用户已登录，可以进行结算。");
-    // 如果您有结算页，可以在这里调用 navigateTo('checkoutPage')
-  } else {
-    // 如果未登录，关闭当前购物车并跳转到登录页
-    cartStore.closeCart();
-    navigateTo('login');
-  }
-};
 </script>
 
 <style scoped>

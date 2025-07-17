@@ -24,11 +24,13 @@
             v-model="email"
             :placeholder="$t('footer.placeholder_email')" 
             class="email-input-new"
+            @input="clearError"
           >
             <template #append>
               <el-button :icon="ArrowRightBold" native-type="submit" />
             </template>
           </el-input>
+          <div v-if="emailError" class="error-message">{{ emailError }}</div>
         </form>
       </div>
     </div>
@@ -67,6 +69,7 @@ const router = useRouter();
 const email = ref('');
 const emailError = ref('');
 
+// 【修复】确保所有 action 都使用 router.push
 const footerColumns = ref([
   {
     title: 'footer.about_title',
@@ -81,12 +84,14 @@ const footerColumns = ref([
     title: 'footer.support_title',
     links: [
       { text: 'footer.links.faq', action: () => router.push('/faq') },
-      { text: 'footer.links.contact_us', href: '#' },
+      { text: 'footer.links.contact_us', action: () => router.push('/contact') },
       { text: 'footer.links.order_tracking', action: () => router.push('/tracking') },
-      { text: 'footer.links.app_service', href: '#' },
+      { text: 'footer.links.app_service', action: () => router.push('/app') },
       { text: 'footer.links.user_manual', href: '#' },
       { text: 'footer.links.shipping_policy', href: '#' },
       { text: 'footer.links.warranty_policy', href: '#' },
+      { text: 'footer.links.price_match_policy', href: '#' },
+      { text: 'footer.links.return_refund_policy', action: () => router.push('/return-policy') }
     ]
   },
   {
@@ -105,9 +110,13 @@ const socialLinks = ref([
   { name: 'youtube', src: '/images/icons/youtube.png', link: 'https://www.youtube.com/' }
 ]);
 
+// 【修改】处理订阅逻辑
 const handleSubscribe = async () => {
+  // 提交前先清空之前的错误
   emailError.value = ''; 
+
   if (!email.value || !/^\S+@\S+\.\S+$/.test(email.value)) {
+    // 【修改】不再使用 ElMessage，而是设置本地错误状态
     emailError.value = 'Please enter a valid email address.';
     return;
   }
@@ -136,13 +145,13 @@ const handleSubscribe = async () => {
 }
 .links-section {
   display: flex;
-  gap: 60px; /* 减小gap */
+  gap: 160px; /* 减小gap */
   flex-grow: 1;
 }
 .footer-column h4 {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 26px;
+  margin-bottom: 36px;
   color: #fff;
   white-space: nowrap;
 }
@@ -164,13 +173,14 @@ const handleSubscribe = async () => {
   color: #fff;
 }
 .subscribe-section {
-  flex-basis: 300px; /* 减小宽度 */
+  flex-basis: 400px; /* 减小宽度 */
   flex-shrink: 0;
 }
 .subscribe-section h4 {
-  font-size: 14px;
+  font-size: 36px;
   font-weight: 600;
-  margin-bottom: 26px;
+  margin-bottom: 36px;
+  margin-top: -20px; /* 新增此行来调整上间距，可自行修改数值 */
 }
 .subscribe-form-new {
   position: relative;
@@ -214,7 +224,7 @@ const handleSubscribe = async () => {
   left: 0;
 }
 .footer-bottom {
-  border-top: 1px solid #333;
+  border-top: 1px solid #000;
   padding-top: 40px;
   margin-top: 40px;
   display: flex;
@@ -272,5 +282,16 @@ img[src*="pinterest.png"] {
 }
 .store-link:hover {
   transform: scale(1.05);
+}
+
+/* ▼▼▼ 【新增】错误信息的样式 ▼▼▼ */
+.error-message {
+  color: #f56c6c;
+  font-size: 12px;
+  line-height: 1;
+  padding-top: 5px; /* 与输入框的间距 */
+  text-align: left;  /* 确保文字左对齐 */
+  position: absolute;  /* 使用绝对定位，不影响其他元素布局 */
+  bottom: 0px;       /* 定位在表单底部 */
 }
 </style>
