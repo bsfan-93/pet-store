@@ -135,7 +135,7 @@ const hideMenu = () => {
 const { locale } = useI18n();
 const languages = ref([
     { code: 'en', name: 'English', abbr: 'EN' },
-    { code: 'zh-Hans', name: '简体中文', abbr: 'CN' },
+    { code: 'zh', name: '简体中文', abbr: 'CN' },
     { code: 'zh-Hant', name: '繁體中文', abbr: 'TW' },
     { code: 'ja', name: '日本語', abbr: 'JP' },
     { code: 'ko', name: '한국어', abbr: 'KR' },

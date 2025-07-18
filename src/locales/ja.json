@@ -22,5 +22,154 @@
     "continue_shopping": "買い物を続ける",
     "login_prompt": "アカウントをお持ちですか？",
     "login_link": "ログインして迅速にチェックアウト。"
+  },
+  "footer": {
+  "about_title": "会社",
+  "support_title": "サポート",
+  "works_title": "仕組み",
+  "join_title": "初回注文10%オフにサインアップ",
+  "placeholder_email": "Eメール",
+  "signup_button": "購読する",
+  "download_app_title": "アプリをダウンロード",
+  "links": {
+    "about_us": "会社概要",
+    "blog": "ブログ",
+    "privacy_policy": "プライバシーポリシー",
+    "terms_of_service": "利用規約",
+    "faq": "よくある質問",
+    "contact_us": "お問い合わせ",
+    "order_tracking": "注文追跡",
+    "app_service": "アプリサービス",
+    "user_manual": "ユーザーマニュアル",
+    "shipping_policy": "配送ポリシー",
+    "warranty_policy": "保証ポリシー",
+    "price_match_policy": "価格一致ポリシー",
+    "return_refund_policy": "返品・返金ポリシー"
   }
+},
+  "faq": {
+    "title": "よくある質問",
+    "feedback": {
+      "title": "このページは役に立ちましたか？",
+      "yes": "はい",
+      "no": "いいえ"
+    },
+    "items": [
+      {
+        "question": "あなたの会社はどこにありますか？",
+        "answer": "私たちのオフィスはカリフォルニア州サンタクララ、ウォルシュアベニュー1135にあります。"
+      },
+      {
+        "question": "どこから発送しますか？",
+        "answer": "私たちは州内の提携倉庫から発送します。異なる倉庫が異なる製造分野を専門としているため、複数の商品を注文した場合、商品は別々に発送されることをご承知おきください。"
+      },
+      {
+        "question": "商品が届くまでどのくらいかかりますか？",
+        "answer": "ショップから2営業日以内に発送されます。標準配送の輸送時間は3〜4営業日です。お客様のご注文から8営業日以内に到着予定です。休日、ブラックフライデー、サイバーマンデーなどのピーク時には、発送に最大5営業日かかる場合があります。"
+      }
+    ]
+  },
+  "account": {
+    "title": "マイアカウント",
+    "logout": "ログアウト",
+    "order_card": {
+      "title": "私の注文",
+      "no_orders": "まだ注文はありません",
+      "go_shopping": "ショッピングに行く"
+    },
+    "settings_card": {
+      "title": "アカウント設定"
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "email_label": "メールアドレス",
+    "password_label": "パスワード",
+    "forgot_password": "パスワードをお忘れですか？",
+    "login_button": "ログイン",
+    "signup_prompt": "アカウントをお持ちでないですか？",
+    "signup_link": "サインアップ",
+    "validation": {
+      "email_required": "メールアドレスを入力してください",
+      "email_format": "正しいメール形式を入力してください",
+      "password_required": "パスワードを入力してください"
+    },
+    "success_message": "ログインに成功しました！",
+    "error_message": "ログインに失敗しました。認証情報を確認してください。"
+  },
+  "register": {
+    "title": "アカウントを作成",
+    "subtitle": "限定機能などへのアクセスを取得します。",
+    "name_label": "名前",
+    "create_button": "アカウントを作成",
+    "login_prompt": "すでにアカウントをお持ちですか？",
+    "login_link": "ログイン",
+    "validation": {
+        "name_required": "名前を入力してください",
+        "email_required": "メールアドレスを入力してください",
+        "email_format": "有効なメールアドレスを入力してください",
+        "password_required": "パスワードを入力してください"
+    },
+    "success_message": "アカウントが正常に作成されました！",
+    "error_message": "登録に失敗しました。"
+  },
+  "product": {
+    "quantity": "数量",
+    "size": "サイズ",
+    "color": "色",
+    "standard": "標準",
+    "select_placeholder": "選択",
+    "add_to_cart": "カートに追加",
+    "buy_now": "今すぐ購入",
+    "usp_title": "ユニークなセールスポイント",
+    "specs_title": "製品仕様",
+    "params_title": "製品パラメータ",
+    "loading": "読み込み中..."
+  },
+  "subscribe_popup": {
+    "title": "今日の注文で<span class=\"highlight\">20%</span>オフをアンロック",
+    "subtitle": "ペットにとってより便利に",
+    "email_label": "メールアドレス",
+    "subscribe_button": "購読する",
+    "no_thanks": "いいえ、結構です",
+    "error_email": "有効なメールアドレスを入力してください。"
+  },
+  "collection_list": {
+    "title": "カテゴリーで探す"
+  },
+  "new_popular": {
+    "title": "新作＆人気",
+    "new_arrivals": "新着商品",
+    "best_sellers": "ベストセラー"
+  },
+  "about_us": {
+  "hero": {
+    "alt": "Pets Clanへようこそ"
+  },
+  "intro": {
+    "tagline1": "PETS CLAN",
+    "tagline2": "手軽な",
+    "tagline3": "ペットケア。",
+    "p1": "Pets Clanでは、すべてのペットオーナーに、よりスマートで、より環境に優しく、より便利なペットライフスタイルをお届けすることをお約束します。私たちは、テクノロジーとデザインはユーザーのニーズを中心に据え、真に生活の質を向上させる製品を生み出すべきだと固く信じています。",
+    "p2": "私たちはテクノロジーの推進者であるだけでなく、ペットとオーナーの架け橋でもあり、ペットとのより深い感情的なつながりを築くお手伝いをします。",
+    "signature_alt": "Pets Clanの署名"
+  },
+  "banner": {
+    "alt": "Pets Clanバナー"
+  },
+  "features": {
+    "feature1": {
+      "title": "環境に優しく<br>持続可能",
+      "description": "私たちはペットだけでなく、地球も大切にしています。環境に優しい素材と持続可能なプロセスを使用し、すべての選択が未来への貢献となるようにしています。"
+    },
+    "feature2": {
+      "title": "デザイン主導<br>＆革新的",
+      "description": "私たちはデザイン主導のブランドです。外観から機能まで、すべてのディテールが実用的かつ美しく、家庭生活に完璧に溶け込むように丁寧に作られています。"
+    },
+    "feature3": {
+      "title": "ペット中心<br>＆心を込めて",
+      "description": "すべての製品はペットへの愛情から生まれています。私たちはペットとそのオーナーのニーズを深く理解し、心から真に価値のある製品を創造します。"
+    }
+  }
+}
 }

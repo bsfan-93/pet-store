@@ -22,5 +22,154 @@
     "continue_shopping": "Weiter einkaufen",
     "login_prompt": "Haben Sie ein Konto?",
     "login_link": "Melden Sie sich an, um schneller zur Kasse zu gehen."
+  },
+  "footer": {
+  "about_title": "Unternehmen",
+  "support_title": "Unterstützung",
+  "works_title": "So funktioniert's",
+  "join_title": "Melden Sie sich für 10% Rabatt auf Ihre erste Bestellung an",
+  "placeholder_email": "E-Mail",
+  "signup_button": "Abonnieren",
+  "download_app_title": "App herunterladen",
+  "links": {
+    "about_us": "Über uns",
+    "blog": "Blog",
+    "privacy_policy": "Datenschutzrichtlinie",
+    "terms_of_service": "Nutzungsbedingungen",
+    "faq": "FAQ",
+    "contact_us": "Kontaktieren Sie uns",
+    "order_tracking": "Bestellverfolgung",
+    "app_service": "App-Service",
+    "user_manual": "Benutzerhandbuch",
+    "shipping_policy": "Versandbedingungen",
+    "warranty_policy": "Garantiebedingungen",
+    "price_match_policy": "Preisanpassungsrichtlinie",
+    "return_refund_policy": "Rückgabe- & Rückerstattungsrichtlinie"
   }
+},
+  "faq": {
+    "title": "FAQs",
+    "feedback": {
+      "title": "Ist diese Seite hilfreich für Sie?",
+      "yes": "JA",
+      "no": "NEIN"
+    },
+    "items": [
+      {
+        "question": "Wo befindet sich Ihr Unternehmen?",
+        "answer": "Unser Büro befindet sich in 1135 Walsh Ave, Santa Clara, Kalifornien."
+      },
+      {
+        "question": "Von wo versenden Sie?",
+        "answer": "Wir versenden von unseren Partnerlagern im ganzen Bundesstaat. Bitte erwarten Sie, dass Ihre Artikel separat versendet werden (wenn Sie mehr als einen Artikel bestellen), da sich verschiedene Lager auf unterschiedliche Herstellungsbereiche spezialisiert haben."
+      },
+      {
+        "question": "Wie lange dauert es, bis meine Artikel ankommen?",
+        "answer": "Versand aus dem Shop innerhalb von 2 Werktagen. Die Laufzeit für den Standardversand beträgt 3-4 Werktage. Die voraussichtliche Ankunftszeit liegt innerhalb von 8 Werktagen nach der Bestellung des Kunden. In Spitzenzeiten wie Feiertagen, Black Friday und Cyber Monday erlauben Sie bitte bis zu 5 Werktage für den Versand."
+      }
+    ]
+  },
+  "account": {
+    "title": "Mein Konto",
+    "logout": "Abmelden",
+    "order_card": {
+      "title": "MEINE BESTELLUNG",
+      "no_orders": "Sie haben noch keine Bestellungen",
+      "go_shopping": "EINKAUFEN GEHEN"
+    },
+    "settings_card": {
+      "title": "KONTOEINSTELLUNGEN"
+    }
+  },
+  "login": {
+    "title": "Anmelden",
+    "email_label": "E-Mail",
+    "password_label": "Passwort",
+    "forgot_password": "Passwort vergessen?",
+    "login_button": "Anmelden",
+    "signup_prompt": "Sie haben noch kein Konto?",
+    "signup_link": "Registrieren",
+    "validation": {
+      "email_required": "Bitte geben Sie Ihre E-Mail-Adresse ein",
+      "email_format": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+      "password_required": "Bitte geben Sie Ihr Passwort ein"
+    },
+    "success_message": "Anmeldung erfolgreich!",
+    "error_message": "Anmeldung fehlgeschlagen. Bitte überprüfen Sie Ihre Anmeldedaten."
+  },
+  "register": {
+    "title": "Konto erstellen",
+    "subtitle": "Erhalten Sie Zugang zu exklusiven Funktionen und mehr.",
+    "name_label": "Name",
+    "create_button": "Konto erstellen",
+    "login_prompt": "Haben Sie bereits ein Konto?",
+    "login_link": "Anmelden",
+    "validation": {
+        "name_required": "Bitte geben Sie Ihren Namen ein",
+        "email_required": "Bitte geben Sie Ihre E-Mail ein",
+        "email_format": "Bitte geben Sie eine gültige E-Mail-Adresse ein",
+        "password_required": "Bitte geben Sie ein Passwort ein"
+    },
+    "success_message": "Konto erfolgreich erstellt!",
+    "error_message": "Registrierung fehlgeschlagen."
+  },
+  "product": {
+    "quantity": "Menge",
+    "size": "Größe",
+    "color": "Farbe",
+    "standard": "Standard",
+    "select_placeholder": "Auswählen",
+    "add_to_cart": "In den Warenkorb",
+    "buy_now": "Jetzt kaufen",
+    "usp_title": "Alleinstellungsmerkmale",
+    "specs_title": "Produktspezifikationen",
+    "params_title": "Produktparameter",
+    "loading": "Wird geladen..."
+  },
+  "subscribe_popup": {
+    "title": "Schalten Sie <span class=\"highlight\">20%</span> Rabatt auf Ihre heutige Bestellung frei",
+    "subtitle": "Machen Sie es für Haustiere bequemer",
+    "email_label": "E-Mail",
+    "subscribe_button": "Abonnieren für",
+    "no_thanks": "Nein, danke",
+    "error_email": "Bitte geben Sie eine gültige E-Mail-Adresse ein."
+  },
+  "collection_list": {
+    "title": "Nach Kategorie einkaufen"
+  },
+  "new_popular": {
+    "title": "Neu & Beliebt",
+    "new_arrivals": "Neuheiten",
+    "best_sellers": "Bestseller"
+  },
+  "about_us": {
+  "hero": {
+    "alt": "Willkommen bei Pets Clan"
+  },
+  "intro": {
+    "tagline1": "PETS CLAN",
+    "tagline2": "MÜHELOSE",
+    "tagline3": "HAUSTIERPFLEGE.",
+    "p1": "Bei Pets Clan verpflichten wir uns, jedem Haustierbesitzer einen intelligenteren, umweltfreundlicheren und bequemeren Lebensstil mit Haustieren zu ermöglichen. Wir sind der festen Überzeugung, dass Technologie und Design sich an den Bedürfnissen der Benutzer orientieren sollten, um Produkte zu schaffen, die die Lebensqualität wirklich verbessern können.",
+    "p2": "Wir sind nicht nur ein Förderer der Technologie, sondern auch eine Brücke zwischen Haustieren und Tierbesitzern, die Ihnen hilft, eine tiefere emotionale Verbindung zu Ihrem Haustier aufzubauen.",
+    "signature_alt": "Pets Clan Unterschrift"
+  },
+  "banner": {
+    "alt": "Pets Clan Banner"
+  },
+  "features": {
+    "feature1": {
+      "title": "UMWELTFREUNDLICH &<br>NACHHALTIG",
+      "description": "Wir kümmern uns nicht nur um Haustiere, sondern auch um den Planeten. Wir verwenden umweltfreundliche Materialien und nachhaltige Prozesse, damit jede Wahl ein Beitrag für die Zukunft ist."
+    },
+    "feature2": {
+      "title": "DESIGNORIENTIERT &<br>INNOVATIV",
+      "description": "Wir sind eine designorientierte Marke. Vom Aussehen bis zur Funktionalität wird jedes Detail sorgfältig ausgearbeitet, um sowohl praktisch als auch schön zu sein und sich perfekt in Ihr Zuhause einzufügen."
+    },
+    "feature3": {
+      "title": "HAUSTIERZENTRIERT &<br>HERZLICH",
+      "description": "Jedes Produkt entspringt der Liebe zu Haustieren. Wir verstehen die Bedürfnisse von Haustieren und ihren Besitzern zutiefst und schaffen mit Herz wirklich wertvolle Produkte."
+    }
+  }
+}
 }

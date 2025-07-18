@@ -21,7 +21,7 @@ const encryptPassword = (password) => {
 // 基础 URL (保持不变)
 const BASE_URL = import.meta.env.PROD ? 'http://your-production-api-server.com' : '';
 
-// 封装的 fetch 函数 (保持不变)
+// ▼▼▼【修改 1/2】对 apiFetch 函数进行增强 ▼▼▼
 const apiFetch = async (url, options = {}) => {
   const fullUrl = `${BASE_URL}${url}`;
   
@@ -30,6 +30,13 @@ const apiFetch = async (url, options = {}) => {
     ...options.headers,
   };
 
+  // 【新增】自动从 localStorage 获取 token
+  const token = localStorage.getItem('access_token');
+  if (token) {
+    // 【新增】如果 token 存在，就添加到请求头中
+    defaultHeaders['Authorization'] = `Bearer ${token}`;
+  }
+
   try {
     const response = await fetch(fullUrl, {
       ...options,
@@ -37,6 +44,10 @@ const apiFetch = async (url, options = {}) => {
     });
 
     if (!response.ok) {
+      // 如果是401错误，可以在这里进行统一处理，比如跳转到登录页
+      if (response.status === 401) {
+          console.error("认证失败或Token已过期。");
+      }
       throw new Error(`网络响应错误: ${response.statusText}`);
     }
 
@@ -77,7 +88,7 @@ const apiFetch = async (url, options = {}) => {
 };
 
 
-// ---【修改】更新所有 API 函数，在 URL 前面统一加上 /api 前缀 ---
+// --- 您原有的 API 函数 (保持不变) ---
 
 export const getPhotoDetails = (type) => {
   return apiFetch(`/api/standalones/photo/details?type=${type}`);
@@ -102,7 +113,6 @@ export const getGoodDetail = (goodId) => {
 };
 
 export const login = async (username, password) => {
-  // 对于未使用 apiFetch 的原始 fetch 请求，同样需要加上 /api 前缀
   const fullUrl = `${BASE_URL}/api/auth/oauth2/token`;
   const encryptedPassword = encryptPassword(password);
 
@@ -145,8 +155,6 @@ export const login = async (username, password) => {
   }
 };
 
-// ---【修改】购物车相关的 API 函数 ---
-
 export const getCartItems = () => {
   return apiFetch('/api/order/cart-item/');
 };
@@ -172,8 +180,6 @@ export const deleteCartItems = (ids) => {
   });
 };
 
-// ---【修改】用户注册 API 函数 ---
-
 export const registerUser = (userData) => {
   const { name, email, password } = userData;
   
@@ -186,5 +192,20 @@ export const registerUser = (userData) => {
   return apiFetch('/api/standalones/register/email', {
     method: 'POST',
     body: JSON.stringify(payload)
+  });
+};
+
+// ▼▼▼【修改 2/2】对 createCheckoutSession 函数进行修正 ▼▼▼
+export const createCheckoutSession = (items) => {
+  const itemsWithSpec = items.map(item => ({
+    ...item,
+    specification: 'default'
+  }));
+
+  // 【修正】与您文件中其他函数保持一致，也使用 /api 前缀
+  // 这样它就能被 vite.config.js 中的 '/api' 规则正确代理
+  return apiFetch('/api/order/stripe/create-checkout-session', {
+    method: 'POST',
+    body: JSON.stringify(itemsWithSpec)
   });
 };

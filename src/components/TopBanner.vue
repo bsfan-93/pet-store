@@ -4,6 +4,13 @@
   </div>
 </template>
 
+<script setup>
+// 引入 useI18n
+import { useI18n } from 'vue-i18n';
+// 获取 t 函数
+const { t } = useI18n();
+</script>
+
 <style scoped>
 /* 优惠栏 */
 .top-banner {

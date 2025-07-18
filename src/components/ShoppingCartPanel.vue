@@ -56,33 +56,48 @@
 import { useRouter } from 'vue-router';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
-import { ElIcon, ElInputNumber } from 'element-plus';
-import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { createCheckoutSession } from '../api'; // Import createCheckoutSession
+import { ElIcon, ElInputNumber, ElMessage } from 'element-plus';
+import { Close, Delete } from '@element-plus/icons-vue';
 
 const router = useRouter();
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const { t } = useI18n();
 
-// 【修复】处理登录按钮的点击事件
-const handleLoginClick = () => {
-  cartStore.closeCart();
-  router.push('/login');
-};
-
-const handleCheckout = () => {
+const handleCheckout = async () => {
   if (authStore.isLoggedIn) {
-    console.log("用户已登录，可以进行结算。");
+    if (cartStore.items.length === 0) {
+      ElMessage.info('Your cart is empty.');
+      return;
+    }
+
+    // Map cart items to the format your backend expects
+    const itemsToCheckout = cartStore.items.map(item => ({
+      goodId: item.id,
+      quantity: item.quantity,
+      name: item.name,
+      amount: item.price,
+      goodImage: item.url,
+    }));
+
+    try {
+      const checkoutUrl = await createCheckoutSession(itemsToCheckout);
+      if (checkoutUrl) {
+        // Redirect to Stripe
+        window.location.href = checkoutUrl;
+      } else {
+        ElMessage.error('Could not initiate payment. Please try again.');
+      }
+    } catch (error) {
+      console.error("Failed to create checkout session:", error);
+      ElMessage.error('An error occurred while creating the payment session.');
+    }
   } else {
-    // 如果未登录，跳转到登录页
-    handleLoginClick();
+    // If not logged in, close cart and redirect to login page
+    cartStore.closeCart();
+    router.push('/login');
   }
 };
-
-const checkoutButtonText = computed(() => {
-  return authStore.isLoggedIn ? t('cart.checkout') : t('cart.login_to_checkout');
-});
 </script>
 
 <style scoped>

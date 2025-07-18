@@ -5,22 +5,22 @@
     :style="{ backgroundImage: `url(${imageUrl})` }"
   >
     <div class="content-overlay">
-      <h2>{{ $t('how_to.title') }}</h2>
+      <h2>{{ t('how_to.title') }}</h2>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { getPhotoDetails } from '../api';
-// 1. 创建一个ref来存储图片的URL
+
+const { t } = useI18n();
 const imageUrl = ref('');
 
-// 2. 使用新的API函数重构数据获取逻辑
 const fetchHowToImage = async () => {
   try {
-    const images = await getPhotoDetails(4); // type=4 for HowTo
-    // API返回的是数组，我们只取第一项
+    const images = await getPhotoDetails(4);
     if (images && images.length > 0) {
       imageUrl.value = images[0].url;
     }
@@ -29,7 +29,6 @@ const fetchHowToImage = async () => {
   }
 };
 
-// 3. 在组件挂载时，调用获取数据的函数
 onMounted(() => {
   fetchHowToImage();
 });

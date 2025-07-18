@@ -22,5 +22,154 @@
     "continue_shopping": "쇼핑 계속하기",
     "login_prompt": "계정이 있으신가요?",
     "login_link": "더 빠른 결제를 위해 로그인하세요."
+  },
+  "footer": {
+  "about_title": "회사",
+  "support_title": "지원",
+  "works_title": "작동 방식",
+  "join_title": "첫 주문 10% 할인을 위해 가입하세요",
+  "placeholder_email": "이메일",
+  "signup_button": "구독하기",
+  "download_app_title": "앱 다운로드",
+  "links": {
+    "about_us": "회사 소개",
+    "blog": "블로그",
+    "privacy_policy": "개인정보 처리방침",
+    "terms_of_service": "서비스 약관",
+    "faq": "자주 묻는 질문",
+    "contact_us": "문의하기",
+    "order_tracking": "주문 추적",
+    "app_service": "앱 서비스",
+    "user_manual": "사용 설명서",
+    "shipping_policy": "배송 정책",
+    "warranty_policy": "보증 정책",
+    "price_match_policy": "최저가 보상 정책",
+    "return_refund_policy": "반품 및 환불 정책"
   }
+},
+  "faq": {
+    "title": "자주 묻는 질문",
+    "feedback": {
+      "title": "이 페이지가 도움이 되셨나요?",
+      "yes": "예",
+      "no": "아니요"
+    },
+    "items": [
+      {
+        "question": "귀사는 어디에 있습니까?",
+        "answer": "저희 사무실은 캘리포니아 산타클라라 월시 애비뉴 1135에 있습니다."
+      },
+      {
+        "question": "어디에서 배송되나요?",
+        "answer": "저희는 주 전역의 파트너 창고에서 배송합니다. 다른 창고가 다른 제조 분야를 전문으로 하므로 두 개 이상의 품목을 주문하는 경우 품목이 별도로 배송될 수 있습니다."
+      },
+      {
+        "question": "상품이 도착하는 데 얼마나 걸립니까?",
+        "answer": "상점에서 2영업일 이내에 배송됩니다. 표준 배송의 운송 시간은 3-4영업일입니다. 예상 도착 시간은 고객 주문 후 8영업일 이내입니다. 공휴일, 블랙 프라이데이 및 사이버 먼데이와 같은 성수기에는 발송에 최대 5영업일이 소요될 수 있습니다."
+      }
+    ]
+  },
+  "account": {
+    "title": "내 계정",
+    "logout": "로그아웃",
+    "order_card": {
+      "title": "내 주문",
+      "no_orders": "아직 주문이 없습니다",
+      "go_shopping": "쇼핑하러 가기"
+    },
+    "settings_card": {
+      "title": "계정 설정"
+    }
+  },
+  "login": {
+    "title": "로그인",
+    "email_label": "이메일",
+    "password_label": "비밀번호",
+    "forgot_password": "비밀번호를 잊으셨나요?",
+    "login_button": "로그인",
+    "signup_prompt": "계정이 없으신가요?",
+    "signup_link": "가입하기",
+    "validation": {
+      "email_required": "이메일 주소를 입력하세요",
+      "email_format": "올바른 이메일 형식을 입력하세요",
+      "password_required": "비밀번호를 입력하세요"
+    },
+    "success_message": "로그인 성공!",
+    "error_message": "로그인에 실패했습니다. 자격 증명을 확인하세요."
+  },
+  "register": {
+    "title": "계정 만들기",
+    "subtitle": "독점 기능 등에 액세스하세요.",
+    "name_label": "이름",
+    "create_button": "계정 만들기",
+    "login_prompt": "이미 계정이 있으신가요?",
+    "login_link": "로그인",
+    "validation": {
+        "name_required": "이름을 입력하세요",
+        "email_required": "이메일을 입력하세요",
+        "email_format": "유효한 이메일 주소를 입력하세요",
+        "password_required": "비밀번호를 입력하세요"
+    },
+    "success_message": "계정이 성공적으로 생성되었습니다!",
+    "error_message": "등록에 실패했습니다."
+  },
+  "product": {
+    "quantity": "수량",
+    "size": "사이즈",
+    "color": "색상",
+    "standard": "표준",
+    "select_placeholder": "선택",
+    "add_to_cart": "장바구니에 추가",
+    "buy_now": "지금 구매",
+    "usp_title": "독특한 판매 포인트",
+    "specs_title": "제품 사양",
+    "params_title": "제품 매개변수",
+    "loading": "로드 중..."
+  },
+  "subscribe_popup": {
+    "title": "오늘 주문에서 <span class=\"highlight\">20%</span> 할인을 받으세요",
+    "subtitle": "반려동물을 위해 더 편리하게 만드세요",
+    "email_label": "이메일",
+    "subscribe_button": "구독하기",
+    "no_thanks": "아니요, 괜찮습니다",
+    "error_email": "유효한 이메일 주소를 입력하세요."
+  },
+  "collection_list": {
+    "title": "카테고리별 쇼핑"
+  },
+  "new_popular": {
+    "title": "신규 & 인기",
+    "new_arrivals": "신상품",
+    "best_sellers": "베스트셀러"
+  },
+  "about_us": {
+  "hero": {
+    "alt": "Pets Clan에 오신 것을 환영합니다"
+  },
+  "intro": {
+    "tagline1": "PETS CLAN",
+    "tagline2": "손쉬운",
+    "tagline3": "펫 케어.",
+    "p1": "Pets Clan에서는 모든 반려동물 소유주에게 더 스마트하고, 친환경적이며, 편리한 반려동물 라이프스타일을 제공하기 위해 최선을 다하고 있습니다. 우리는 기술과 디자인이 진정으로 삶의 질을 향상시킬 수 있는 제품을 만들기 위해 사용자 요구에 중점을 두어야 한다고 굳게 믿습니다.",
+    "p2": "우리는 기술의 촉진자일 뿐만 아니라 반려동물과 소유주 사이의 다리 역할을 하여 반려동물과 더 깊은 정서적 유대를 형성하도록 돕습니다.",
+    "signature_alt": "Pets Clan 서명"
+  },
+  "banner": {
+    "alt": "Pets Clan 배너"
+  },
+  "features": {
+    "feature1": {
+      "title": "친환경적이고<br>지속 가능한",
+      "description": "우리는 반려동물뿐만 아니라 지구도 생각합니다. 우리는 친환경적인 재료와 지속 가능한 공정을 사용하여 모든 선택이 미래에 기여하도록 합니다."
+    },
+    "feature2": {
+      "title": "디자인 중심<br>및 혁신적",
+      "description": "우리는 디자인 중심의 브랜드입니다. 외관에서 기능에 이르기까지 모든 세부 사항은 실용적이고 아름답도록 세심하게 제작되어 가정생활에 완벽하게 조화됩니다."
+    },
+    "feature3": {
+      "title": "반려동물 중심<br>및 진심 어린",
+      "description": "모든 제품은 반려동물에 대한 사랑에서 태어납니다. 우리는 반려동물과 그 소유주의 요구를 깊이 이해하고 진정으로 가치 있는 제품을 마음으로 만듭니다."
+    }
+  }
+}
 }

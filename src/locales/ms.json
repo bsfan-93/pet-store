@@ -22,5 +22,124 @@
     "continue_shopping": "Teruskan membeli-belah",
     "login_prompt": "Ada akaun?",
     "login_link": "Log masuk untuk daftar keluar lebih pantas."
+  },
+  "footer": {
+  "about_title": "Syarikat",
+  "support_title": "Sokongan",
+  "works_title": "Bagaimana ia berfungsi",
+  "join_title": "Daftar untuk diskaun 10% bagi pesanan pertama anda",
+  "placeholder_email": "E-mel",
+  "signup_button": "Langgan",
+  "download_app_title": "Muat turun Aplikasi",
+  "links": {
+    "about_us": "Tentang Kami",
+    "blog": "Blog",
+    "privacy_policy": "Dasar Privasi",
+    "terms_of_service": "Syarat Perkhidmatan",
+    "faq": "Soalan Lazim",
+    "contact_us": "Hubungi Kami",
+    "order_tracking": "Penjejakan Pesanan",
+    "app_service": "Perkhidmatan Aplikasi",
+    "user_manual": "Manual Pengguna",
+    "shipping_policy": "Dasar Penghantaran",
+    "warranty_policy": "Dasar Waranti",
+    "price_match_policy": "Dasar Padanan Harga",
+    "return_refund_policy": "Dasar Pemulangan & Bayaran Balik"
+  }
+},
+  "faq": {
+    "title": "Soalan Lazim",
+    "feedback": {
+      "title": "Adakah halaman ini membantu anda?",
+      "yes": "YA",
+      "no": "TIDAK"
+    },
+    "items": [
+      {
+        "question": "Di manakah lokasi syarikat anda?",
+        "answer": "Pejabat kami terletak di 1135 Walsh Ave, Santa Clara, California."
+      },
+      {
+        "question": "Dari mana anda menghantar?",
+        "answer": "Kami menghantar dari gudang rakan kongsi kami di seluruh negeri. Harap maklum bahawa item anda akan dihantar secara berasingan (jika anda memesan lebih daripada satu item) kerana gudang yang berbeza pakar dalam bidang pembuatan yang berbeza."
+      },
+      {
+        "question": "Berapa lama masa yang diambil untuk item saya tiba?",
+        "answer": "Dihantar dari kedai dalam masa 2 hari perniagaan. Masa transit untuk penghantaran standard ialah 3-4 hari perniagaan. Anggaran masa ketibaan adalah dalam masa 8 hari perniagaan dari pesanan pelanggan. Semasa tempoh puncak seperti cuti, Black Friday dan Cyber Monday, sila berikan masa sehingga 5 hari perniagaan untuk penghantaran."
+      }
+    ]
+  },
+  "account": {
+    "title": "Akaun saya",
+    "logout": "Log keluar",
+    "order_card": {
+      "title": "PESANAN SAYA",
+      "no_orders": "Anda belum mempunyai pesanan",
+      "go_shopping": "PERGI MEMBELI-BELAH"
+    },
+    "settings_card": {
+      "title": "TETAPAN AKAUN"
+    }
+  },
+  "login": {
+    "title": "Log masuk",
+    "email_label": "E-mel",
+    "password_label": "Kata Laluan",
+    "forgot_password": "Lupa kata laluan anda?",
+    "login_button": "Log masuk",
+    "signup_prompt": "Tidak mempunyai akaun?",
+    "signup_link": "Daftar",
+    "validation": {
+      "email_required": "Sila masukkan alamat e-mel",
+      "email_format": "Sila masukkan format e-mel yang betul",
+      "password_required": "Sila masukkan kata laluan"
+    },
+    "success_message": "Log masuk berjaya!",
+    "error_message": "Log masuk gagal. Sila semak kelayakan anda."
+  },
+  "register": {
+    "title": "Buat Akaun",
+    "subtitle": "Dapatkan akses kepada ciri eksklusif dan banyak lagi.",
+    "name_label": "Nama",
+    "create_button": "Buat Akaun",
+    "login_prompt": "Sudah mempunyai akaun?",
+    "login_link": "Log masuk",
+    "validation": {
+        "name_required": "Sila masukkan nama anda",
+        "email_required": "Sila masukkan e-mel anda",
+        "email_format": "Sila masukkan alamat e-mel yang sah",
+        "password_required": "Sila masukkan kata laluan"
+    },
+    "success_message": "Akaun berjaya dicipta!",
+    "error_message": "Pendaftaran gagal."
+  },
+  "product": {
+    "quantity": "Kuantiti",
+    "size": "Saiz",
+    "color": "Warna",
+    "standard": "Standard",
+    "select_placeholder": "Pilih",
+    "add_to_cart": "Tambah ke Troli",
+    "buy_now": "Beli Sekarang",
+    "usp_title": "Nilai Jualan Unik",
+    "specs_title": "Spesifikasi Produk",
+    "params_title": "Parameter Produk",
+    "loading": "Memuatkan..."
+  },
+  "subscribe_popup": {
+    "title": "Buka kunci diskaun <span class=\"highlight\">20%</span> untuk pesanan anda hari ini",
+    "subtitle": "Jadikannya lebih mudah untuk haiwan kesayangan",
+    "email_label": "E-mel",
+    "subscribe_button": "Langgan Untuk",
+    "no_thanks": "Tidak, terima kasih",
+    "error_email": "Sila masukkan alamat e-mel yang sah."
+  },
+  "collection_list": {
+    "title": "Beli mengikut kategori"
+  },
+  "new_popular": {
+    "title": "Baru & Popular",
+    "new_arrivals": "Ketibaan Baru",
+    "best_sellers": "Paling Laris"
   }
 }

@@ -12,27 +12,31 @@
       </div>
       <div class="popup-content">
         <el-icon class="close-icon" @click="closeDialog"><Close /></el-icon>
-        <h2>Unlock <span class="highlight">20%</span> OFF Your order Today</h2>
-        <p>Make it more convenient for pets</p>
+        
+        <h2 v-html="t('subscribe_popup.title')"></h2>
+        
+        <p>{{ t('subscribe_popup.subtitle') }}</p>
         <form @submit.prevent="handleSubscribe">
-          <label for="email-input">Email</label>
+          <label for="email-input">{{ t('subscribe_popup.email_label') }}</label>
+          
           <el-input 
             id="email-input"
             v-model="email" 
-            placeholder="Email" 
+            :placeholder="t('subscribe_popup.email_label')" 
             class="email-input"
             @input="clearError"
           />
+
           <div v-if="emailError" class="error-message">{{ emailError }}</div>
           <el-button 
             :loading="isLoading" 
             native-type="submit" 
             class="subscribe-btn"
           >
-            Subscribe For
+            {{ t('subscribe_popup.subscribe_button') }}
           </el-button>
         </form>
-        <a href="#" class="no-thanks-link" @click.prevent="closeDialog">No, Thanks</a>
+        <a href="#" class="no-thanks-link" @click.prevent="closeDialog">{{ t('subscribe_popup.no_thanks') }}</a>
       </div>
     </div>
   </el-dialog>
@@ -40,8 +44,11 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { ElDialog, ElInput, ElButton, ElIcon, ElMessage } from 'element-plus';
 import { subscribeMail } from '../api';
+
+const { t } = useI18n();
 
 const props = defineProps({
   modelValue: Boolean
@@ -136,7 +143,8 @@ h2 {
   color: #000;
   line-height: 1.4;
 }
-.highlight {
+/* ▼▼▼【核心修正】使用 :deep() 选择器 ▼▼▼ */
+:deep(.highlight) {
   color: #D32F2F;
 }
 p {
@@ -166,7 +174,7 @@ label {
 }
 .subscribe-btn {
   background-color: #7CB342;
-  color: #111;
+  color: #fff;
   border: none;
   padding: 20px;
   font-size: 18px;

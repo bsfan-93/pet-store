@@ -22,5 +22,154 @@
     "continue_shopping": "繼續購物",
     "login_prompt": "已經有帳戶了？",
     "login_link": "登入以更快地結帳。"
+  },
+  "footer": {
+  "about_title": "公司",
+  "support_title": "支援",
+  "works_title": "工作原理",
+  "join_title": "註冊以獲取首單九折優惠",
+  "placeholder_email": "您的郵箱",
+  "signup_button": "訂閱",
+  "download_app_title": "下載App",
+  "links": {
+    "about_us": "關於我們",
+    "blog": "部落格",
+    "privacy_policy": "隱私權政策",
+    "terms_of_service": "服務條款",
+    "faq": "常見問題",
+    "contact_us": "聯絡我們",
+    "order_tracking": "訂單追蹤",
+    "app_service": "App服務",
+    "user_manual": "使用者手冊",
+    "shipping_policy": "配送政策",
+    "warranty_policy": "保固政策",
+    "price_match_policy": "價格匹配政策",
+    "return_refund_policy": "退貨和退款政策"
   }
+},
+  "faq": {
+    "title": "常見問題",
+    "feedback": {
+      "title": "此頁面對您有幫助嗎？",
+      "yes": "是",
+      "no": "否"
+    },
+    "items": [
+      {
+        "question": "貴公司位於何處？",
+        "answer": "我們的辦公室位於加州聖塔克拉拉市沃爾什大道 1135 號。"
+      },
+      {
+        "question": "你們從哪裡發貨？",
+        "answer": "我們從遍布全州的合作倉庫發貨。由於不同的倉庫專注於不同的製造領域，如果您訂購多於一件商品，請預計您的商品將分開發貨。"
+      },
+      {
+        "question": "我的商品需要多長時間才能到達？",
+        "answer": "商店在 2 個工作日內發貨。標準運輸的運輸時間為 3-4 個工作日。預計到達時間在客戶下單後的 8 個工作日內。在節假日、黑色星期五和網絡星期一等高峰期，請允許最多 5 個工作日的發貨時間。"
+      }
+    ]
+  },
+  "account": {
+    "title": "我的帳戶",
+    "logout": "登出",
+    "order_card": {
+      "title": "我的訂單",
+      "no_orders": "您還沒有訂單",
+      "go_shopping": "去購物"
+    },
+    "settings_card": {
+      "title": "帳戶設定"
+    }
+  },
+  "login": {
+    "title": "登入",
+    "email_label": "電子郵件",
+    "password_label": "密碼",
+    "forgot_password": "忘記密碼？",
+    "login_button": "登入",
+    "signup_prompt": "還沒有帳戶？",
+    "signup_link": "註冊",
+    "validation": {
+      "email_required": "請輸入電子郵件地址",
+      "email_format": "請輸入正確的電子郵件格式",
+      "password_required": "請輸入密碼"
+    },
+    "success_message": "登入成功！",
+    "error_message": "登入失敗。請檢查您的憑證。"
+  },
+  "register": {
+    "title": "建立帳戶",
+    "subtitle": "獲取獨家功能及更多。",
+    "name_label": "姓名",
+    "create_button": "建立帳戶",
+    "login_prompt": "已經有帳戶了？",
+    "login_link": "登入",
+    "validation": {
+        "name_required": "請輸入您的姓名",
+        "email_required": "請輸入您的電子郵件",
+        "email_format": "請輸入有效的電子郵件地址",
+        "password_required": "請輸入密碼"
+    },
+    "success_message": "帳戶建立成功！",
+    "error_message": "註冊失敗。"
+  },
+  "product": {
+    "quantity": "數量",
+    "size": "尺寸",
+    "color": "顏色",
+    "standard": "標準",
+    "select_placeholder": "選擇",
+    "add_to_cart": "加入購物車",
+    "buy_now": "立即購買",
+    "usp_title": "獨特賣點",
+    "specs_title": "產品規格",
+    "params_title": "產品參數",
+    "loading": "載入中..."
+  },
+  "subscribe_popup": {
+    "title": "立即解鎖您的訂單 <span class=\"highlight\">20%</span> 折扣",
+    "subtitle": "讓寵物生活更便利",
+    "email_label": "電子郵件",
+    "subscribe_button": "訂閱",
+    "no_thanks": "不，謝謝",
+    "error_email": "請輸入有效的電子郵件地址。"
+  },
+  "collection_list": {
+    "title": "按類別選購"
+  },
+  "new_popular": {
+    "title": "新品與熱銷",
+    "new_arrivals": "新品上市",
+    "best_sellers": "熱銷排行"
+  },
+  "about_us": {
+  "hero": {
+    "alt": "歡迎來到 Pets Clan"
+  },
+  "intro": {
+    "tagline1": "PETS CLAN",
+    "tagline2": "輕鬆",
+    "tagline3": "寵物護理。",
+    "p1": "在 Pets Clan，我們致力於為每一位寵物主人帶來更智能、更環保、更便捷的寵物生活方式。我們堅信，技術和設計應以使用者需求為中心，創造出能真正提升生活品質的產品。",
+    "p2": "我們不僅是技術的推動者，更是寵物與主人之間的橋樑，幫助您與您的寵物建立更深層次的情感聯繫。",
+    "signature_alt": "Pets Clan 簽名"
+  },
+  "banner": {
+    "alt": "Pets Clan 橫幅"
+  },
+  "features": {
+    "feature1": {
+      "title": "環保與<br>可持續",
+      "description": "我們不僅關心寵物，也關心地球。我們使用環保材料和可持續的工藝，讓每一個選擇都為未來做出貢獻。"
+    },
+    "feature2": {
+      "title": "設計驅動與<br>創新",
+      "description": "我們是一個以設計為驅動的品牌。從外觀到功能，每一個細節都經過精心打造，既實用又美觀，完美融入您的家居生活。"
+    },
+    "feature3": {
+      "title": "以寵物為中心<br>用心製作",
+      "description": "每一款產品都源於對寵物的熱愛。我們深入了解寵物及其主人的需求，用心創造真正有價值的產品。"
+    }
+  }
+}
 }

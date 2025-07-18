@@ -7,7 +7,7 @@
 
     <main class="login-main">
       <div class="login-box">
-        <h1>Login</h1>
+        <h1>{{ $t('login.title') }}</h1>
         <el-form
           ref="loginFormRef"
           :model="loginForm"
@@ -17,20 +17,20 @@
           :hide-required-asterisk="true"
         >
           <div class="form-group">
-            <label class="form-label">Email</label>
+            <label class="form-label">{{ $t('login.email_label') }}</label>
             <el-form-item prop="email">
               <el-input v-model="loginForm.email" placeholder="Email" size="large"/>
             </el-form-item>
           </div>
           
           <div class="form-group">
-            <label class="form-label">Password</label>
+            <label class="form-label">{{ $t('login.password_label') }}</label>
             <el-form-item prop="password">
-              <el-input v-model="loginForm.password" type="password" placeholder="Password" show-password size="large"/>
+              <el-input v-model="loginForm.password" type="password" placeholder="$t('login.password_label')" show-password size="large"/>
             </el-form-item>
           </div>
           
-          <a href="#" class="forgot-password">Forgot your password?</a>
+          <a href="#" class="forgot-password">{{ $t('login.forgot_password') }}</a>
           
           <el-form-item>
             <el-button 
@@ -39,13 +39,13 @@
               type="primary" 
               native-type="submit"
             >
-              Login
+              {{ $t('login.login_button') }}
             </el-button>
           </el-form-item>
         </el-form>
         <div class="sign-up-prompt">
-          <span>Don't have an account?</span>
-          <router-link to="/register" class="sign-up-link">Sign up</router-link>
+          <span>{{ $t('login.signup_prompt') }}</span>
+          <router-link to="/register" class="sign-up-link">{{ $t('login.signup_link') }}</router-link>
         </div>
       </div>
     </main>

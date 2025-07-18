@@ -7,8 +7,8 @@
 
     <main class="register-main">
       <div class="register-box">
-        <h1>Create Account</h1>
-        <p class="subtitle">Get access to exclusive features and more.</p>
+        <h1>{{ $t('register.title') }}</h1>
+        <p class="subtitle">{{ $t('register.subtitle') }}</p>
         <el-form
           ref="registerFormRef"
           :model="registerForm"
@@ -17,13 +17,13 @@
           @submit.prevent="submitForm(registerFormRef)"
         >
           <el-form-item prop="name">
-            <el-input v-model="registerForm.name" placeholder="Name" size="large"/>
+            <el-input v-model="registerForm.name" placeholder="$t('register.name_label')" size="large"/>
           </el-form-item>
           <el-form-item prop="email">
-            <el-input v-model="registerForm.email" placeholder="Email" size="large"/>
+            <el-input v-model="registerForm.email" placeholder="$t('register.email_label')" size="large"/>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="registerForm.password" type="password" placeholder="Password" show-password size="large"/>
+            <el-input v-model="registerForm.password" type="password" placeholder="$t('register.password_label')" show-password size="large"/>
           </el-form-item>
           <el-form-item>
             <el-button 
@@ -32,13 +32,13 @@
               type="primary" 
               native-type="submit"
             >
-              Create Account
+              {{ $t('register.create_button') }}
             </el-button>
           </el-form-item>
         </el-form>
         <div class="login-prompt">
-          <span>Already have an account?</span>
-          <router-link to="/login">Log in</router-link>
+          <span>{{ $t('register.login_prompt') }}</span>
+          <router-link to="/login">{{ $t('register.login_link') }}</router-link>
         </div>
       </div>
     </main>

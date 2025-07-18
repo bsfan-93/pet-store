@@ -7,75 +7,61 @@
 
     <main class="main-content">
       <section class="hero-section">
-        <img src="/images/about-us-hero-with-text.png" alt="Welcome to Pets Clan" class="hero-image">
+        <img src="/images/about-us-hero-with-text.png" :alt="t('about_us.hero.alt')" class="hero-image">
       </section>
 
       <section class="intro-section">
         <div class="intro-container">
           <div class="intro-left">
             <div class="intro-tagline-wrapper">
-              <span class="tagline-line">PETS CLAN</span>
-              <span class="tagline-line">EFFORTLESS</span>
-              <span class="tagline-line">PET CARE.</span>
+              <span class="tagline-line">{{ t('about_us.intro.tagline1') }}</span>
+              <span class="tagline-line">{{ t('about_us.intro.tagline2') }}</span>
+              <span class="tagline-line">{{ t('about_us.intro.tagline3') }}</span>
             </div>
           </div>
           <div class="intro-right">
-            <p class="description">
-              At Pets Clan, we are committed to bringing a smarter, greener, and more convenient pet lifestyle to every pet owner. We firmly believe that Technology and Design should be centered on user needs to create products that can truly improve the quality of life.
-            </p>
-            <p class="description">
-              We are not only a promoter of technology, but also a bridge between pets and pet owners, helping you to establish a deeper emotional connection with your pet.
-            </p>
-            <img src="/images/signature.png" alt="Pets Clan Signature" class="signature-image">
+            <p class="description">{{ t('about_us.intro.p1') }}</p>
+            <p class="description">{{ t('about_us.intro.p2') }}</p>
+            <img src="/images/signature.png" :alt="t('about_us.intro.signature_alt')" class="signature-image">
           </div>
-          </div>
+        </div>
       </section>
 
       <section class="image-banner-section">
-        <img src="/images/about-us-banner.jpg" alt="Pets Clan Banner" class="banner-image">
+        <img src="/images/about-us-banner.jpg" :alt="t('about_us.banner.alt')" class="banner-image">
       </section>
 
       <section class="features-section">
         <div class="features-container">
-          <div v-for="(feature, index) in featuresData" :key="index" class="feature-item">
+          <div v-for="(feature, index) in features" :key="index" class="feature-item">
             <img :src="feature.icon" :alt="feature.title" class="feature-icon">
             <h3 class="feature-title" v-html="feature.title"></h3>
             <p class="feature-description" v-html="feature.description"></p>
-            </div>
+          </div>
         </div>
       </section>
 
       <section class="lifelong-friends-section">
         <div class="lifelong-friends-container">
           <div class="lf-left">
-            <img src="/images/pet-feeder-promo.png" alt="Pets Clan Smart Feeder">
+            <img src="/images/pet-feeder-promo.png" :alt="t('about_us.lifelong.image_alt')">
           </div>
           <div class="lf-right">
-            <h2 class="lf-title">PETS CLAN,<br>FEEDING LIFELONG FRIENDSHIPS.</h2>
-            <p class="lf-description">
-              ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA
-              HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA
-              GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE
-              SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI
-              ASUDIIOASUIDOIASUDHIASUDIOUSAIDIUAIOSDUIIASUDIIASIUDIOASUDIASIU
-            </p>
-            <p class="lf-description">
-              ABCDEFGHIKLMNOPORSTUVWXYZabcdefghiklmnoparstuwwx234567890ISAHIDSA
-              HBDHASXJHSAJHXJSHAXJUSAHCXH5AJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA
-              GCSSCGHASHC]KHX]CHASUHC]XHAC]HZX]JCHIASHXCJASHC|HASC]ZHCIKSAH
-            </p>
+            <h2 class="lf-title" v-html="t('about_us.lifelong.title')"></h2>
+            <p class="lf-description">{{ t('about_us.lifelong.p1') }}</p>
+            <p class="lf-description">{{ t('about_us.lifelong.p2') }}</p>
             <div class="lf-stats">
               <div class="stat-item">
                 <span class="stat-value">130+</span>
-                <span class="stat-label">experimental test results</span>
+                <span class="stat-label">{{ t('about_us.lifelong.stat1_label') }}</span>
               </div>
               <div class="stat-item">
                 <span class="stat-value">400+</span>
-                <span class="stat-label">Precise feeding</span>
+                <span class="stat-label">{{ t('about_us.lifelong.stat2_label') }}</span>
               </div>
               <div class="stat-item">
                 <span class="stat-value">100h+</span>
-                <span class="stat-label">Long-lasting battery</span>
+                <span class="stat-label">{{ t('about_us.lifelong.stat3_label') }}</span>
               </div>
             </div>
           </div>
@@ -85,17 +71,13 @@
       <section class="about-ponti-section">
         <div class="ponti-container">
           <div class="ponti-left">
-            <h3 class="ponti-subtitle">ABOUT PONTI</h3>
-            <h2 class="ponti-title">HONGDIANJIANG IFJIANG<br>DUOCI HUODEZHE</h2>
-            <p class="ponti-description">
-              Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012. Hedeigs for mulildie gobstomparies,induding Caseify fends. Hser REF,Kotcik, Mona, Nelsse, Qong, pnasomc, The Peniusus ibsh, Phil, and Ssmsonite He hs rececned numerusnkitersnslensignansrd, induding the ped Dot Deign Award, he if Deign Anar, andithe Good Design Award.
-            </p>
-            <p class="ponti-description">
-              A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota. In these formstive yesrs, Andres Pontl honed his artisic inguags, design sitband knowe dge of kechndog a weias ta dfonal kpanese msteras and manubvckuing ischriques.
-            </p>
+            <h3 class="ponti-subtitle">{{ t('about_us.ponti.subtitle') }}</h3>
+            <h2 class="ponti-title" v-html="t('about_us.ponti.title')"></h2>
+            <p class="ponti-description">{{ t('about_us.ponti.p1') }}</p>
+            <p class="ponti-description">{{ t('about_us.ponti.p2') }}</p>
           </div>
           <div class="ponti-right">
-            <img src="/images/about-ponti-portrait.jpg" alt="Portrait of Ponti" class="ponti-portrait">
+            <img src="/images/about-ponti-portrait.jpg" :alt="t('about_us.ponti.portrait_alt')" class="ponti-portrait">
             <span class="ponti-vertical-name">PO<br>NTI</span>
           </div>
         </div>
@@ -103,16 +85,15 @@
 
       <section class="about-clan-section">
         <div class="clan-container">
-          <h2 class="clan-title">About Pets Clan</h2>
+          <h2 class="clan-title">{{ t('about_us.clan.title') }}</h2>
           <div class="clan-video-wrapper">
-            <img src="/images/about-clan-video-thumb.jpg" alt="About Pets Clan Video" class="video-thumbnail">
+            <img src="/images/about-clan-video-thumb.jpg" :alt="t('about_us.clan.video_alt')" class="video-thumbnail">
             <div class="play-button-overlay">
               <el-icon class="play-icon"><VideoPlay /></el-icon>
             </div>
           </div>
         </div>
       </section>
-
     </main>
 
     <AppFooter />
@@ -120,43 +101,43 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed } from 'vue'; // 引入 computed
+import { useI18n } from 'vue-i18n'; // 引入 useI18n
 import { ElIcon } from 'element-plus';
 import { VideoPlay } from '@element-plus/icons-vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
-// 为特性区域创建数据源
-const featuresData = ref([
+const { t } = useI18n(); // 获取 t 函数
+
+// 【重要】将 featuresData 转换为计算属性 features
+const features = computed(() => [
   {
     icon: '/images/icons/feature-green.png',
-    title: 'Green living, energy conservation<br>and environmental protection',
-    description: 'Waste-free design, responsible for<br>pets and the planet'
+    title: t('about_us.features.feature1.title'),
+    description: t('about_us.features.feature1.description')
   },
   {
     icon: '/images/icons/feature-intelligent.png',
-    title: 'Intelligent control,<br>feeding at any time',
-    description: 'Remotely monitor your pet’s health<br>and feed them anytime'
+    title: t('about_us.features.feature2.title'),
+    description: t('about_us.features.feature2.description')
   },
   {
     icon: '/images/icons/feature-simple.png',
-    title: 'Simple design,<br>zero waste',
-    description: 'No need for extra consumables,<br>with environmental protection<br>and intelligence going hand in hand'
+    title: t('about_us.features.feature3.title'),
+    description: t('about_us.features.feature3.description')
   },
   {
     icon: '/images/icons/feature-reddot.png',
-    title: 'Red Dot Design,<br>a choice of quality',
-    description: 'Award-winning design, a perfect<br>integration of technology and aesthetics'
+    title: t('about_us.features.feature4.title'),
+    description: t('about_us.features.feature4.description')
   }
 ]);
 
-// ▼▼▼ START: SCRIPT MODIFICATION ▼▼▼
-const formatTitle = (title) => {
-  return title.replace(',', ',<br>');
-};
-// ▲▲▲ END: SCRIPT MODIFICATION ▲▲▲
+// 不再需要 formatTitle 函数
 </script>
+
 
 <style scoped>
 /* 确保页面最外层是白色背景 */

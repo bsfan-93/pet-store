@@ -1,7 +1,4 @@
 {
-  "collection_list": {
-    "title": "Shop by category"
-  },
   "top_banner": {
     "promo": "20% Off for New Users Upon Registration!"
   },
@@ -16,20 +13,6 @@
     "title2": "For Pets",
     "shop_now": "Shop Now"
   },
-  "features": {
-    "camera_title": "Scout Smart Camera",
-    "camera_desc": "The best way to keep an eye on your furry friends.",
-    "feeder_title": "One RFID Feeder",
-    "feeder_desc": "Feeding made personal for multiple pet families.",
-    "fountain_title": "Dockstream Cordless Fountain",
-    "fountain_desc": "Fresh, flowing water to encourage hydration."
-  },
-  "gallery": {
-    "title": "Follow along for more"
-  },
-  "how_to": {
-    "title": "How to raise pets healthily"
-  },
   "search": {
     "placeholder": "Search Products",
     "loading": "Searching...",
@@ -42,9 +25,7 @@
     "login_prompt": "Have an account?",
     "login_link": "Log in to check out faster.",
     "subtotal": "Subtotal",
-    "checkout_button": "Continue to checkout",
-    "login_to_checkout": "Login to Checkout",
-    "placeholder_items": "Items will be displayed here..."
+    "checkout_button": "Continue to checkout"
   },
   "footer": {
     "about_title": "Company",
@@ -55,20 +36,198 @@
     "signup_button": "Subscribe",
     "download_app_title": "Download App",
     "links": {
-        "about_us": "About US",
-        "blog": "Blog",
-        "privacy_policy": "Privacy Policy",
-        "terms_of_service": "Terms of Service",
-        "faq": "FAQ",
-        "contact_us": "Contact us",
-        "app_service": "App Service",
-        "user_manual": "User Manual",
-        "order_tracking": "Order Tracking",
-        "shipping_policy": "Shipping Policy",
-        "warranty_policy": "Warranty Policy",
-        "price_match_policy": "Price Match Policy",
-        "return_refund_policy": "Return & Refund Policy",
-        "app": "App"
+      "about_us": "About US",
+      "blog": "Blog",
+      "privacy_policy": "Privacy Policy",
+      "terms_of_service": "Terms of Service",
+      "faq": "FAQ",
+      "contact_us": "Contact us",
+      "order_tracking": "Order Tracking",
+      "app_service": "App Service",
+      "user_manual": "User Manual",
+      "shipping_policy": "Shipping Policy",
+      "warranty_policy": "Warranty Policy",
+      "price_match_policy": "Price Match Policy",
+      "return_refund_policy": "Return & Refund Policy"
     }
+  },
+  "faq": {
+    "title": "FAQs",
+    "feedback": {
+      "title": "Is this page helpful to you?",
+      "yes": "YES",
+      "no": "NO"
+    },
+    "items": [
+      {
+        "question": "Where is your company located?",
+        "answer": "Our office is located at 1135 Walsh Ave, Santa Clara, California."
+      }
+    ]
+  },
+  "account": {
+    "title": "My account",
+    "logout": "Log out",
+    "order_card": {
+      "title": "MY ORDER",
+      "no_orders": "You have no orders yet",
+      "go_shopping": "GO SHOPPING"
+    },
+    "settings_card": {
+      "title": "ACCOUNT SETTINGS"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "email_label": "Email",
+    "password_label": "Password",
+    "forgot_password": "Forgot your password?",
+    "login_button": "Login",
+    "signup_prompt": "Don't have an account?",
+    "signup_link": "Sign up",
+    "validation": {
+      "email_required": "Please input email address",
+      "email_format": "Please input correct email format",
+      "password_required": "Please input password"
+    },
+    "success_message": "Login successful!",
+    "error_message": "Login failed. Please check your credentials."
+  },
+  "register": {
+    "title": "Create Account",
+    "subtitle": "Get access to exclusive features and more.",
+    "name_label": "Name",
+    "email_label": "Email",
+    "password_label": "Password",
+    "create_button": "Create Account",
+    "login_prompt": "Already have an account?",
+    "login_link": "Log in",
+    "validation": {
+      "name_required": "Please enter your name",
+      "email_required": "Please enter your email",
+      "email_format": "Please enter a valid email address",
+      "password_required": "Please enter a password"
+    },
+    "success_message": "Account created successfully!",
+    "error_message": "Registration failed."
+  },
+  "product": {
+    "quantity": "Quantity",
+    "size": "Size",
+    "color": "Color",
+    "standard": "Standard",
+    "select_placeholder": "Select",
+    "add_to_cart": "Add to Cart",
+    "buy_now": "Buy Now",
+    "usp_title": "Unique Selling Points",
+    "specs_title": "Product Specifications",
+    "params_title": "Product Parameters",
+    "loading": "Loading...",
+    "added_feedback": "Added!"
+  },
+  "subscribe_popup": {
+    "title": "Unlock <span class=\"highlight\">20%</span> OFF Your order Today",
+    "subtitle": "Make it more convenient for pets",
+    "email_label": "Email",
+    "subscribe_button": "Subscribe For",
+    "no_thanks": "No, Thanks",
+    "error_email": "Please enter a valid email address."
+  },
+  "collection_list": {
+    "title": "Shop by category"
+  },
+  "new_popular": {
+    "title": "New & Popular",
+    "new_arrivals": "New Arrivals",
+    "best_sellers": "Best Sellers"
+  },
+  "products": {
+    "product-1": "Smart Feeder",
+    "product-2": "Cozy Pet Bed",
+    "product-3": "Interactive Toy"
+  },
+  "about_us": {
+  "hero": { "alt": "Welcome to Pets Clan" },
+  "intro": {
+    "tagline1": "PETS CLAN",
+    "tagline2": "EFFORTLESS",
+    "tagline3": "PET CARE.",
+    "p1": "At Pets Clan, we are committed to bringing a smarter, greener, and more convenient pet lifestyle to every pet owner. We firmly believe that Technology and Design should be centered on user needs to create products that can truly improve the quality of life.",
+    "p2": "We are not only a promoter of technology, but also a bridge between pets and pet owners, helping you to establish a deeper emotional connection with your pet.",
+    "signature_alt": "Pets Clan Signature"
+  },
+  "banner": { "alt": "Pets Clan Banner" },
+  "features": {
+    "feature1": {
+      "title": "Green living, energy conservation<br>and environmental protection",
+      "description": "Waste-free design, responsible for<br>pets and the planet"
+    },
+    "feature2": {
+      "title": "Intelligent control,<br>feeding at any time",
+      "description": "Remotely monitor your pet’s health<br>and feed them anytime"
+    },
+    "feature3": {
+      "title": "Simple design,<br>zero waste",
+      "description": "No need for extra consumables,<br>with environmental protection<br>and intelligence going hand in hand"
+    },
+    "feature4": {
+      "title": "Red Dot Design,<br>a choice of quality",
+      "description": "Award-winning design, a perfect<br>integration of technology and aesthetics"
+    }
+  },
+  "lifelong": {
+    "image_alt": "Pets Clan Smart Feeder",
+    "title": "PETS CLAN,<br>FEEDING LIFELONG FRIENDSHIPS.",
+    "p1": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
+    "p2": "GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+    "stat1_label": "experimental test results",
+    "stat2_label": "Precise feeding",
+    "stat3_label": "Long-lasting battery"
+  },
+  "ponti": {
+    "subtitle": "ABOUT PONTI",
+    "title": "HONGDIANJIANG IFJIANG<br>DUOCI HUODEZHE",
+    "p1": "Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
+    "p2": "A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+    "portrait_alt": "Portrait of Ponti"
+  },
+  "clan": {
+    "title": "About Pets Clan",
+    "video_alt": "About Pets Clan Video"
   }
+},
+"app_page": {
+  "hero": {
+    "ios": "IOS",
+    "android": "Android"
+  },
+  "all_in_one": {
+    "title": "All-in-One",
+    "description": "Manage all your devices in one app,<br>allowing owners to check their pets' status",
+    "alt": "All in one app interface"
+  },
+  "data_service": {
+    "title": "Free Pet Data Service",
+    "description": "Get to know your furpals even better with data tracking over time",
+    "alt": "Data service illustration"
+  },
+  "features": {
+    "feeder": {
+      "title": "Feeder",
+      "description": "Get to know your furpals even<br>better with data tracking over time"
+    },
+    "fountains": {
+      "title": "Fountains",
+      "description": "Get to know your furpals even<br>better with data tracking over time"
+    },
+    "leash": {
+      "title": "Leash",
+      "description": "Get to know your furpals even<br>better with data tracking over time"
+    }
+  },
+  "remote_control": {
+    "title": "Achieve remote control via interconnection support",
+    "alt": "Remote control support"
+  }
+}
 }

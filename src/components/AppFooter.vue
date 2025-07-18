@@ -3,14 +3,14 @@
     <div class="footer-container">
       <div class="links-section">
         <div v-for="column in footerColumns" :key="column.title" class="footer-column">
-          <h4>{{ $t(column.title) }}</h4>
+          <h4>{{ t(column.title) }}</h4>
           <ul>
             <li v-for="link in column.links" :key="link.text">
               <a 
                 :href="link.href || '#'" 
                 @click.prevent="link.action ? link.action() : null"
               >
-                {{ $t(link.text) }}
+                {{ t(link.text) }}
               </a>
             </li>
           </ul>
@@ -18,11 +18,11 @@
       </div>
 
       <div class="subscribe-section">
-        <h4>{{ $t('footer.join_title') }}</h4>
+        <h4>{{ t('footer.join_title') }}</h4>
         <form @submit.prevent="handleSubscribe" class="subscribe-form-new">
           <el-input 
             v-model="email"
-            :placeholder="$t('footer.placeholder_email')" 
+            :placeholder="t('footer.placeholder_email')" 
             class="email-input-new"
             @input="clearError"
           >
@@ -48,7 +48,7 @@
         </a>
       </div>
       <div class="download-app">
-        <h4>{{ $t('footer.download_app_title') }}</h4>
+        <h4>{{ t('footer.download_app_title') }}</h4>
         <div class="store-buttons">
           <a href="#" class="store-link"><img src="/images/app-store.png" alt="Download on the App Store"></a>
           <a href="#" class="store-link"><img src="/images/google-play.png" alt="Get it on Google Play"></a>
@@ -59,22 +59,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router'; 
+import { ref, inject } from 'vue'; // 【修正】引入 inject
+import { useI18n } from 'vue-i18n'; // 【新增】引入 i18n
 import { ElInput, ElButton, ElMessage } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 import { subscribeMail } from '../api';
 
-const router = useRouter(); 
+const { t } = useI18n(); // 【新增】获取 t 函数
 const email = ref('');
 const emailError = ref('');
+const navigateTo = inject('navigateTo'); // 【修正】使用 inject 获取 navigateTo
 
-// 【修复】确保所有 action 都使用 router.push
 const footerColumns = ref([
   {
     title: 'footer.about_title',
     links: [ 
-      { text: 'footer.links.about_us', action: () => router.push('/about') },
+      { text: 'footer.links.about_us', action: () => navigateTo('about') },
       { text: 'footer.links.blog', href: '#' },
       { text: 'footer.links.privacy_policy', href: '#' },
       { text: 'footer.links.terms_of_service', href: '#' }
@@ -83,15 +83,16 @@ const footerColumns = ref([
   {
     title: 'footer.support_title',
     links: [
-      { text: 'footer.links.faq', action: () => router.push('/faq') },
-      { text: 'footer.links.contact_us', action: () => router.push('/contact') },
-      { text: 'footer.links.order_tracking', action: () => router.push('/tracking') },
-      { text: 'footer.links.app_service', action: () => router.push('/app') },
+      { text: 'footer.links.faq', action: () => navigateTo('faq') },
+      // 假设 contact, tracking, app, return-policy 页面未来会创建
+      { text: 'footer.links.contact_us', action: () => navigateTo('contact') },
+      { text: 'footer.links.order_tracking', action: () => navigateTo('tracking') },
+      { text: 'footer.links.app_service', action: () => navigateTo('app') },
       { text: 'footer.links.user_manual', href: '#' },
       { text: 'footer.links.shipping_policy', href: '#' },
       { text: 'footer.links.warranty_policy', href: '#' },
       { text: 'footer.links.price_match_policy', href: '#' },
-      { text: 'footer.links.return_refund_policy', action: () => router.push('/return-policy') }
+      { text: 'footer.links.return_refund_policy', action: () => navigateTo('return-policy') }
     ]
   },
   {

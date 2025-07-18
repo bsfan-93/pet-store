@@ -4,19 +4,20 @@
       <div class="menu-links">
         <ul>
           <li v-for="link in menuData.links" :key="link.id">
-            <router-link :to="`/product/${link.goodId}`">{{ link.name }}</router-link>
+            <a href="#" @click.prevent="navigateTo('productDetail', link.goodId)">{{ t('mega_menu.' + link.name) }}</a>
           </li>
         </ul>
       </div>
       <div class="menu-products">
-        <router-link
+        <a 
           v-for="product in menuData.products" 
           :key="product.id" 
-          :to="`/product/${product.goodId}`" 
+          href="#" 
+          @click.prevent="navigateTo('productDetail', product.goodId)" 
           class="product-item"
         >
           <img :src="product.imageUrl" :alt="product.name">
-        </router-link>
+        </a>
       </div>
     </div>
   </div>
@@ -24,11 +25,27 @@
 
 <script setup>
 import { ref, inject, watch } from 'vue';
+// ▼▼▼【新增】引入 useI18n ▼▼▼
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router'; // 【新增】导入 useRouter
 import { getPhotoDetails } from '../api';
+
+// ▼▼▼【新增】获取 t 函数 ▼▼▼
+const { t } = useI18n();
 
 const props = defineProps({
   visible: Boolean
 });
+const emit = defineEmits(['close']); // 【新增】定义一个 close 事件
+
+// --- 【修改】使用 Vue Router 进行导航 ---
+const router = useRouter();
+const goToProduct = (productId) => {
+  if (productId) {
+    router.push({ path: `/product/${productId}` });
+    emit('close'); // 【新增】跳转后，触发 close 事件来关闭菜单
+  }
+};
 
 const navigateTo = inject('navigateTo');
 const menuData = ref(null);

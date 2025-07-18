@@ -50,12 +50,12 @@
           <div class="options-section">
             <div class="options-grid">
               <div class="option-item">
-                <span class="option-label">Quantity</span>
+                <span class="option-label">{{ $t('product.quantity') }}</span>
                 <el-input-number v-model="form.quantity" :min="1" size="default" />
               </div>
               <div class="option-item">
-                <span class="option-label">size</span>
-                <el-select v-model="form.size" placeholder="Select" size="default">
+                <span class="option-label">{{ $t('product.size') }}</span>
+                <el-select v-model="form.size" placeholder="$t('product.select_placeholder')" size="default">
                     <el-option 
                       v-for="size in sizeOptions" 
                       :key="size.id" 
@@ -65,7 +65,7 @@
                 </el-select>
               </div>
               <div class="option-item">
-                <span class="option-label">Color</span>
+                <span class="option-label">{{ $t('product.color') }}</span>
                 <el-radio-group v-model="form.color">
                     <el-radio 
                         v-for="color in colorOptions" 
@@ -77,8 +77,8 @@
                 </el-radio-group>
               </div>
               <div class="option-item">
-                <span class="option-label">Standard</span>
-                <el-select v-model="form.standard" placeholder="Select" size="default">
+                <span class="option-label">{{ $t('product.standard') }}</span>
+                <el-select v-model="form.standard" placeholder="$t('product.select_placeholder')" size="default">
                     <el-option label="OS" value="os" />
                 </el-select>
               </div>
@@ -87,14 +87,17 @@
           <div class="action-buttons">
             <el-button size="large" class="cart-btn" @click="handleAddToCart">
               <el-icon style="margin-right: 8px;"><ShoppingCart /></el-icon>
-              Add to Cart
+              {{ $t('product.add_to_cart') }}
             </el-button>
-            <el-button size="large" class="buy-now-btn">Buy Now</el-button>
+            
+            <el-button size="large" class="buy-now-btn" @click="handleBuyNow">
+              {{ $t('product.buy_now') }}
+            </el-button>
 
             <transition name="fade">
               <div v-if="showAddedFeedback" class="added-feedback">
                 <el-icon><Select /></el-icon>
-                <span>Added!</span>
+                <span>{{ $t('product.added_feedback') }}</span>
               </div>
             </transition>
             </div>
@@ -103,7 +106,7 @@
 
       <section class="video-section" v-if="productVideo">
         <div class="section-container">
-          <h2 class="section-title">Unique Selling Points</h2>
+          <h2 class="section-title">{{ $t('product.usp_title') }}</h2>
           <div class="video-player-container">
             <video :src="productVideo" controls class="video-thumbnail-placeholder"></video>
           </div>
@@ -125,13 +128,19 @@
 
       <section class="specs-params-section">
         <div class="section-container">
-          <h2 class="section-title">Product Specifications</h2>
-          <div class="specs-images-container">
-            <div class="spec-image-placeholder"></div>
-            <div class="spec-image-placeholder"></div>
+          <h2 class="section-title">{{ $t('product.specs_title') }}</h2>
+          <div class="specs-images-container" v-if="productDetail.sizePic && productDetail.sizePic.length > 0">
+            <div 
+              v-for="pic in productDetail.sizePic" 
+              :key="pic.id" 
+              class="spec-image-placeholder"
+            >
+              <img :src="pic.url" :alt="pic.name" class="spec-image-content">
+            </div>
           </div>
-          <h2 class="section-title">Product Parameters</h2>
-          <div class="params-table">
+          
+          <h2 class="section-title">{{ $t('product.params_title') }}</h2>
+          <div class="params-table" v-if="productDetail.goodParameter && productDetail.goodParameter.length > 0">
             <div class="param-row" v-for="param in productDetail.goodParameter" :key="param.id">
               <span class="param-label">{{ param.paramName }}</span>
               <span class="param-value">{{ param.paramValue }}</span>
@@ -144,25 +153,35 @@
     <AppFooter />
   </div>
   <div v-else class="loading-state">
-    Loading...
+    {{ $t('product.loading') }}
   </div>
 </template>
 
 <script setup>
 import { ref, reactive, onMounted, provide, computed, watch } from 'vue';
-import { getGoodDetail } from '../api'; // 确保 getGoodDetail 已导入
+import { useRoute, useRouter } from 'vue-router';
+import { getGoodDetail, createCheckoutSession } from '../api'; // 确保 getGoodDetail 已导入
 import { useCartStore } from '../stores/cart';
+import { useAuthStore } from '../stores/auth'; // Import useAuthStore
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+
+import {
+  ElButton, ElTag, ElInputNumber, ElSelect, ElOption,
+  ElRadioGroup, ElRadio, ElIcon, ElMessage
+} from 'element-plus';
+import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
 
 // 1. 定义 props
 const props = defineProps({
   // 根据您 router/index.js 中的设置，参数名应该是 'id'
   id: String 
 });
-
+const route = useRoute();
+const router = useRouter(); // Get router instance
 const cartStore = useCartStore();
+const authStore = useAuthStore(); // Get auth store instance
 const megaMenuData = ref(null); // 如果 megaMenuData 也需要，请确保相关逻辑存在
 provide('megaMenuData', megaMenuData);
 
@@ -184,6 +203,7 @@ const form = reactive({
 
 // 【关键修复】将 fetchProductData 函数的定义，移动到 watch 监听器之前
 const fetchProductData = async (goodId) => {
+  if (!goodId) return; // 如果没有 goodId，则不执行
   try {
     productDetail.value = null;
     const data = await getGoodDetail(goodId);
@@ -305,6 +325,39 @@ const handleWheel = (event) => {
   }
 };
 
+// ▼▼▼ THIS IS THE NEW/UPDATED FUNCTION ▼▼▼
+const handleBuyNow = async () => {
+  // First, check if user is logged in
+  if (!authStore.isLoggedIn) {
+    ElMessage.info('Please log in to proceed with the purchase.');
+    router.push('/login');
+    return;
+  }
+
+  if (!productDetail.value) return;
+
+  // Create the list of items to send to the backend
+  const itemsToCheckout = [{
+    goodId: productDetail.value.good.id,
+    quantity: form.quantity,
+    name: productDetail.value.good.name,
+    amount: productDetail.value.good.price,
+    goodImage: mainImage.value,
+  }];
+
+  try {
+    const checkoutUrl = await createCheckoutSession(itemsToCheckout);
+    if (checkoutUrl) {
+      // Redirect to Stripe for payment
+      window.location.href = checkoutUrl;
+    } else {
+      ElMessage.error('Could not initiate payment. Please try again.');
+    }
+  } catch (error) {
+    console.error("Failed to create checkout session:", error);
+    ElMessage.error('An error occurred while creating the payment session.');
+  }
+};
 </script>
 
 <style scoped>
@@ -645,19 +698,23 @@ const handleWheel = (event) => {
 .specs-params-section {
   padding: 80px 20px;
 }
+/* ▼▼▼ 【修改部分】 ▼▼▼ */
 .specs-images-container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: stretch; /* 关键：将 flex-start 改为 stretch，让两个框等高 */
+  gap: 0;
   margin-bottom: 60px;
 }
 .spec-image-placeholder {
-  width: 100%;
-  max-width: 800px;
-  aspect-ratio: 1 / 1;
-  background-color: var(--light-gray-color);
-  border-radius: 12px;
+  flex: 1;
+  max-width: 500px;
+  /* background-color: var(--light-gray-color); */
+  border-radius: 0px;
   overflow: hidden;
 }
+/* ▲▲▲ 【修改结束】 ▲▲▲ */
 .spec-image-content {
     width: 100%;
     height: 100%;

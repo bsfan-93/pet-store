@@ -6,12 +6,12 @@ export default defineConfig({
   server: {
     host: true,
     proxy: {
-      // 将所有以 /api 开头的请求都代理到后端服务器
+      // A single rule to proxy all requests starting with /api
       '/api': {
-        target: 'http://192.168.2.9:9999', // 目标服务器地址
-        changeOrigin: true, // 必须设置为 true
-        rewrite: (path) => path.replace(/^\/api/, ''), // 重写路径，去掉 /api 前缀
-      }
+        target: 'http://192.168.2.9:9999', // Your backend server
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''), // Remove /api prefix before sending to backend
+      },
     }
   }
 })

@@ -50,29 +50,3 @@ const i18n = createI18n({
 });
 
 export default i18n;
-
-
-
-
-// import { createI18n } from 'vue-i18n';
-
-// // 动态导入所有locales/*.json文件
-// const messages = Object.fromEntries(
-//   Object.entries(
-//     import.meta.glob('./locales/*.json', { eager: true }))
-//     .map(([key, value]) => {
-//       const jsonKey = key.substring(key.lastIndexOf('/') + 1, key.lastIndexOf('.'));
-//       return [jsonKey, value.default];
-//     })
-// );
-
-// const i18n = createI18n({
-//   legacy: false, 
-//   // ▼▼▼ 【关键修改】直接将默认语言设置为 'en' ▼▼▼
-//   locale: 'en',
-//   // 当切换到一个缺少某些翻译的语言时，会回退到英语来显示
-//   fallbackLocale: 'en', 
-//   messages,
-// });
-
-// export default i18n;

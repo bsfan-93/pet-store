@@ -22,5 +22,124 @@
     "continue_shopping": "Continuer vos achats",
     "login_prompt": "Avez-vous un compte ?",
     "login_link": "Connectez-vous pour passer à la caisse plus rapidement."
+  },
+  "footer": {
+  "about_title": "Entreprise",
+  "support_title": "Soutien",
+  "works_title": "Comment ça marche",
+  "join_title": "Inscrivez-vous pour 10% de réduction sur votre première commande",
+  "placeholder_email": "E-mail",
+  "signup_button": "S'abonner",
+  "download_app_title": "Télécharger l'application",
+  "links": {
+    "about_us": "À propos de nous",
+    "blog": "Blog",
+    "privacy_policy": "Politique de confidentialité",
+    "terms_of_service": "Conditions d'utilisation",
+    "faq": "FAQ",
+    "contact_us": "Contactez-nous",
+    "order_tracking": "Suivi de commande",
+    "app_service": "Service d'application",
+    "user_manual": "Manuel de l'utilisateur",
+    "shipping_policy": "Politique d'expédition",
+    "warranty_policy": "Politique de garantie",
+    "price_match_policy": "Politique d'alignement des prix",
+    "return_refund_policy": "Politique de retour et de remboursement"
+  }
+},
+  "faq": {
+    "title": "FAQ",
+    "feedback": {
+      "title": "Cette page vous est-elle utile ?",
+      "yes": "OUI",
+      "no": "NON"
+    },
+    "items": [
+      {
+        "question": "Où se trouve votre entreprise ?",
+        "answer": "Notre bureau est situé au 1135 Walsh Ave, Santa Clara, Californie."
+      },
+      {
+        "question": "D'où expédiez-vous ?",
+        "answer": "Nous expédions depuis nos entrepôts partenaires à travers l'État. Veuillez vous attendre à ce que vos articles soient expédiés séparément (si vous commandez plus d'un article) car différents entrepôts sont spécialisés dans différents domaines de fabrication."
+      },
+      {
+        "question": "Combien de temps faudra-t-il pour que mes articles arrivent ?",
+        "answer": "Expédié depuis la boutique sous 2 jours ouvrables. Le temps de transit pour l'expédition standard est de 3-4 jours ouvrables. Le délai de livraison estimé est de 8 jours ouvrables à compter de la commande du client. Pendant les périodes de pointe comme les vacances, le Black Friday et le Cyber Monday, veuillez prévoir jusqu'à 5 jours ouvrables pour l'expédition."
+      }
+    ]
+  },
+  "account": {
+    "title": "Mon compte",
+    "logout": "Se déconnecter",
+    "order_card": {
+      "title": "MA COMMANDE",
+      "no_orders": "Vous n'avez pas encore de commandes",
+      "go_shopping": "ALLER FAIRE LES COURSES"
+    },
+    "settings_card": {
+      "title": "PARAMÈTRES DU COMPTE"
+    }
+  },
+  "login": {
+    "title": "Connexion",
+    "email_label": "E-mail",
+    "password_label": "Mot de passe",
+    "forgot_password": "Mot de passe oublié ?",
+    "login_button": "Connexion",
+    "signup_prompt": "Vous n'avez pas de compte ?",
+    "signup_link": "S'inscrire",
+    "validation": {
+      "email_required": "Veuillez saisir l'adresse e-mail",
+      "email_format": "Veuillez saisir un format d'e-mail correct",
+      "password_required": "Veuillez saisir le mot de passe"
+    },
+    "success_message": "Connexion réussie !",
+    "error_message": "Échec de la connexion. Veuillez vérifier vos identifiants."
+  },
+  "register": {
+    "title": "Créer un compte",
+    "subtitle": "Accédez à des fonctionnalités exclusives et plus encore.",
+    "name_label": "Nom",
+    "create_button": "Créer un compte",
+    "login_prompt": "Vous avez déjà un compte ?",
+    "login_link": "Se connecter",
+    "validation": {
+        "name_required": "Veuillez entrer votre nom",
+        "email_required": "Veuillez entrer votre e-mail",
+        "email_format": "Veuillez entrer une adresse e-mail valide",
+        "password_required": "Veuillez entrer un mot de passe"
+    },
+    "success_message": "Compte créé avec succès !",
+    "error_message": "Échec de l'inscription."
+  },
+  "product": {
+    "quantity": "Quantité",
+    "size": "Taille",
+    "color": "Couleur",
+    "standard": "Standard",
+    "select_placeholder": "Sélectionner",
+    "add_to_cart": "Ajouter au panier",
+    "buy_now": "Acheter maintenant",
+    "usp_title": "Arguments de vente uniques",
+    "specs_title": "Spécifications du produit",
+    "params_title": "Paramètres du produit",
+    "loading": "Chargement..."
+  },
+  "subscribe_popup": {
+    "title": "Débloquez <span class=\"highlight\">20%</span> de réduction sur votre commande aujourd'hui",
+    "subtitle": "Rendez-le plus pratique pour les animaux de compagnie",
+    "email_label": "E-mail",
+    "subscribe_button": "S'abonner pour",
+    "no_thanks": "Non, merci",
+    "error_email": "Veuillez entrer une adresse e-mail valide."
+  },
+  "collection_list": {
+    "title": "Acheter par catégorie"
+  },
+  "new_popular": {
+    "title": "Nouveau & Populaire",
+    "new_arrivals": "Nouveautés",
+    "best_sellers": "Meilleures ventes"
   }
 }

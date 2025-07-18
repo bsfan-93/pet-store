@@ -22,5 +22,124 @@
     "continue_shopping": "Continua lo shopping",
     "login_prompt": "Hai un account?",
     "login_link": "Accedi per un checkout più veloce."
+  },
+  "footer": {
+  "about_title": "Azienda",
+  "support_title": "Supporto",
+  "works_title": "Come funziona",
+  "join_title": "Iscriviti per uno sconto del 10% sul tuo primo ordine",
+  "placeholder_email": "E-mail",
+  "signup_button": "Iscriviti",
+  "download_app_title": "Scarica l'app",
+  "links": {
+    "about_us": "Chi siamo",
+    "blog": "Blog",
+    "privacy_policy": "Informativa sulla privacy",
+    "terms_of_service": "Termini di servizio",
+    "faq": "FAQ",
+    "contact_us": "Contattaci",
+    "order_tracking": "Tracciamento dell'ordine",
+    "app_service": "Servizio app",
+    "user_manual": "Manuale utente",
+    "shipping_policy": "Politica di spedizione",
+    "warranty_policy": "Politica di garanzia",
+    "price_match_policy": "Politica di corrispondenza dei prezzi",
+    "return_refund_policy": "Politica di reso e rimborso"
+  }
+},
+  "faq": {
+    "title": "FAQ",
+    "feedback": {
+      "title": "Questa pagina ti è stata utile?",
+      "yes": "SÌ",
+      "no": "NO"
+    },
+    "items": [
+      {
+        "question": "Dove si trova la vostra azienda?",
+        "answer": "Il nostro ufficio si trova al 1135 Walsh Ave, Santa Clara, California."
+      },
+      {
+        "question": "Da dove spedite?",
+        "answer": "Spediamo dai nostri magazzini partner in tutto lo stato. Si prega di aspettarsi che i vostri articoli vengano spediti separatamente (se ordinate più di un articolo) poiché diversi magazzini sono specializzati in diverse aree di produzione."
+      },
+      {
+        "question": "Quanto tempo ci vorrà per l'arrivo dei miei articoli?",
+        "answer": "Spedito dal negozio entro 2 giorni lavorativi. Il tempo di transito per la spedizione standard è di 3-4 giorni lavorativi. L'orario di arrivo stimato è entro 8 giorni lavorativi dall'ordine del cliente. Nei periodi di punta come le vacanze, il Black Friday e il Cyber Monday, si prega di consentire fino a 5 giorni lavorativi per la spedizione."
+      }
+    ]
+  },
+  "account": {
+    "title": "Il mio account",
+    "logout": "Esci",
+    "order_card": {
+      "title": "IL MIO ORDINE",
+      "no_orders": "Non hai ancora ordini",
+      "go_shopping": "VAI A FARE SHOPPING"
+    },
+    "settings_card": {
+      "title": "IMPOSTAZIONI ACCOUNT"
+    }
+  },
+  "login": {
+    "title": "Accedi",
+    "email_label": "Email",
+    "password_label": "Password",
+    "forgot_password": "Password dimenticata?",
+    "login_button": "Accedi",
+    "signup_prompt": "Non hai un account?",
+    "signup_link": "Iscriviti",
+    "validation": {
+      "email_required": "Inserisci l'indirizzo email",
+      "email_format": "Inserisci un formato email corretto",
+      "password_required": "Inserisci la password"
+    },
+    "success_message": "Accesso riuscito!",
+    "error_message": "Accesso fallito. Controlla le tue credenziali."
+  },
+  "register": {
+    "title": "Crea account",
+    "subtitle": "Ottieni l'accesso a funzionalità esclusive e altro ancora.",
+    "name_label": "Nome",
+    "create_button": "Crea account",
+    "login_prompt": "Hai già un account?",
+    "login_link": "Accedi",
+    "validation": {
+        "name_required": "Inserisci il tuo nome",
+        "email_required": "Inserisci la tua email",
+        "email_format": "Inserisci un indirizzo email valido",
+        "password_required": "Inserisci una password"
+    },
+    "success_message": "Account creato con successo!",
+    "error_message": "Registrazione fallita."
+  },
+  "product": {
+    "quantity": "Quantità",
+    "size": "Taglia",
+    "color": "Colore",
+    "standard": "Standard",
+    "select_placeholder": "Seleziona",
+    "add_to_cart": "Aggiungi al carrello",
+    "buy_now": "Acquista ora",
+    "usp_title": "Punti di forza unici",
+    "specs_title": "Specifiche del prodotto",
+    "params_title": "Parametri del prodotto",
+    "loading": "Caricamento in corso..."
+  },
+  "subscribe_popup": {
+    "title": "Sblocca uno sconto del <span class=\"highlight\">20%</span> sul tuo ordine di oggi",
+    "subtitle": "Rendilo più comodo per gli animali domestici",
+    "email_label": "Email",
+    "subscribe_button": "Iscriviti per",
+    "no_thanks": "No, grazie",
+    "error_email": "Inserisci un indirizzo email valido."
+  },
+  "collection_list": {
+    "title": "Acquista per categoria"
+  },
+  "new_popular": {
+    "title": "Nuovi e popolari",
+    "new_arrivals": "Nuovi arrivi",
+    "best_sellers": "I più venduti"
   }
 }

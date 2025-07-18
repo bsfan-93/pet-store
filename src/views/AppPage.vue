@@ -12,29 +12,29 @@
       >
         <div class="hero-content">
           <div class="os-buttons">
-            <a href="#" class="os-button">IOS</a>
-            <a href="#" class="os-button">Android</a>
+            <a href="#" class="os-button">{{ t('app_page.hero.ios') }}</a>
+            <a href="#" class="os-button">{{ t('app_page.hero.android') }}</a>
           </div>
         </div>
       </section>
 
       <section class="all-in-one-section">
-        <img src="/images/app-all-in-one.png" alt="All in one app interface" class="aio-image">
+        <img src="/images/app-all-in-one.png" alt="t('app_page.all_in_one.alt')" class="aio-image">
         <div class="aio-text-overlay">
           <div class="aio-text">
-            <h2>All-in-One</h2>
-            <p>Manage all your devices in one app,<br>allowing owners to check their pets' status</p>
+            <h2>{{ t('app_page.all_in_one.title') }}</h2>
+            <p v-html="t('app_page.all_in_one.description')"></p>
           </div>
         </div>
       </section>
 
       <section class="data-service-section">
         <div class="data-service-container">
-          <img src="/images/app-data-service.png" alt="Data service illustration" class="section-image-large">
+          <img src="/images/app-data-service.png" alt="t('app_page.data_service.alt')" class="section-image-large">
           <div class="data-service-overlay">
             <div class="data-service-text">
-              <h2>Free Pet Data Service</h2>
-              <p>Get to know your furpals even better with data tracking over time</p>
+              <h2>{{ t('app_page.data_service.title') }}</h2>
+              <p>{{ t('app_page.data_service.description') }}</p>
             </div>
           </div>
         </div>
@@ -61,8 +61,8 @@
       </section>
 
       <section class="remote-control-section">
-        <h2>Achieve remote control via interconnection support</h2>
-        <img src="/images/app-remote-control.png" alt="Remote control support" class="section-image-large remote-control-image">
+        <h2>{{ t('app_page.remote_control.title') }}</h2>
+        <img src="/images/app-remote-control.png" :alt="t('app_page.remote_control.alt')" class="section-image-large remote-control-image">
       </section>
 
     </main>
@@ -72,26 +72,29 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'; // 引入 computed
+import { useI18n } from 'vue-i18n'; // 引入 useI18n
 import { ref } from 'vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
+const { t } = useI18n(); // 获取 t 函数
 // Add image paths to your data
-const productFeatures = ref([
+const productFeatures = computed(() => [
   { 
-    title: 'Feeder', 
-    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    title: t('app_page.features.feeder.title'), 
+    description: t('app_page.features.feeder.description'),
     image: '/images/app-feature-feeder.png' 
   },
   { 
-    title: 'Fountains', 
-    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    title: t('app_page.features.fountains.title'), 
+    description: t('app_page.features.fountains.description'),
     image: '/images/app-feature-fountains.png'
   },
   { 
-    title: 'Leash', 
-    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    title: t('app_page.features.leash.title'), 
+    description: t('app_page.features.leash.description'),
     image: '/images/app-feature-leash.png'
   },
 ]);

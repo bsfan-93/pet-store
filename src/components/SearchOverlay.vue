@@ -7,8 +7,9 @@
         <input 
           type="text" 
           class="search-input" 
-          :placeholder="$t('search.placeholder')"
-          v-model="searchQuery"
+          :placeholder="t('search.placeholder')"
+          :value="searchQuery"
+          @input="onInput"
           ref="searchInputRef"
           autocomplete="off"
         >
@@ -25,63 +26,90 @@
         </a>
       </div>
 
-      <div class="status-text" v-if="searchQuery && isLoading">{{ $t('search.loading') }}</div>
-      <div class="status-text" v-if="searchQuery && !isLoading && searchResults.length === 0">{{ $t('search.no_results') }}</div>
+      <div class="status-text" v-if="statusText">{{ statusText }}</div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { ElIcon } from 'element-plus';
+import { Close, Search } from '@element-plus/icons-vue';
 import { searchGoods } from '../api';
 
+const { t } = useI18n();
 const emit = defineEmits(['close']);
 
 const searchQuery = ref('');
 const searchResults = ref([]);
 const isLoading = ref(false);
-let debounceTimer = null;
-
 const searchInputRef = ref(null);
 
-// 组件挂载时，自动聚焦到输入框
-onMounted(() => {
-  searchInputRef.value?.focus();
+// ▼▼▼【修改2】将状态文本统一管理 ▼▼▼
+const statusText = computed(() => {
+  if (isLoading.value) {
+    return t('search.loading');
+  }
+  if (searchQuery.value && searchResults.value.length === 0) {
+    return t('search.no_results');
+  }
+  return ''; // 默认无文本
 });
 
 const close = () => {
   emit('close');
 };
 
-// 使用 watch 监听搜索词的变化
-// 2. 使用新的API函数重构搜索逻辑
-watch(searchQuery, (newQuery) => {
-  clearTimeout(debounceTimer);
-
-  if (!newQuery.trim()) {
+// ▼▼▼【修改3】创建独立的 performSearch 函数 ▼▼▼
+const performSearch = async (query) => {
+  if (!query) {
     searchResults.value = [];
+    isLoading.value = false;
     return;
   }
-
+  
   isLoading.value = true;
+  try {
+    const results = await searchGoods(query);
+    searchResults.value = results;
+  } catch (error) {
+    console.error("在SearchOverlay中捕获到错误:", error);
+    searchResults.value = [];
+  } finally {
+    isLoading.value = false;
+  }
+};
 
-  debounceTimer = setTimeout(async () => {
-    try {
-      // API模块会处理请求细节
-      const results = await searchGoods(newQuery);
-      searchResults.value = results;
-    } catch (error) {
-      console.error("在SearchOverlay中捕获到错误:", error);
-      searchResults.value = [];
-    } finally {
-      isLoading.value = false;
-    }
-  }, 500);
+// ▼▼▼【修改4】创建防抖函数 ▼▼▼
+const debounce = (func, delay) => {
+  let timeoutId;
+  return (...args) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      func.apply(this, args);
+    }, delay);
+  };
+};
+
+// 使用防抖包装我们的搜索函数
+const debouncedSearch = debounce(performSearch, 500);
+
+// ▼▼▼【修改5】创建输入事件处理器 ▼▼▼
+const onInput = (event) => {
+  const query = event.target.value;
+  searchQuery.value = query; // 更新 ref 以便 :value 生效
+  debouncedSearch(query.trim());
+};
+
+
+onMounted(() => {
+  searchInputRef.value?.focus();
 });
 </script>
 
 <style scoped>
-/* 样式完全按照你的截图设计 */
+/* 您的样式无需任何修改 */
 .search-overlay {
   position: fixed;
   top: 0;
@@ -95,13 +123,11 @@ watch(searchQuery, (newQuery) => {
   justify-content: center;
   animation: fadeIn 0.3s ease;
 }
-
 .search-content {
   width: 100%;
   max-width: 600px;
   margin-top: 20vh;
 }
-
 .close-icon {
   position: absolute;
   top: 40px;
@@ -110,12 +136,10 @@ watch(searchQuery, (newQuery) => {
   color: #333;
   cursor: pointer;
 }
-
 .search-input-wrapper {
   position: relative;
   border-bottom: 2px solid #000;
 }
-
 .search-input {
   width: 100%;
   border: none;
@@ -126,11 +150,9 @@ watch(searchQuery, (newQuery) => {
   padding: 10px 0;
   padding-right: 50px;
 }
-
 .search-input::placeholder {
   color: #aaa;
 }
-
 .search-icon {
   position: absolute;
   right: 0;
@@ -139,15 +161,13 @@ watch(searchQuery, (newQuery) => {
   font-size: 28px;
   color: #333;
 }
-
 .search-results-list {
   margin-top: 30px;
-  max-height: calc(80vh - 200px); /* 限制最大高度，超出则滚动 */
+  max-height: calc(80vh - 200px);
   overflow-y: auto;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
 }
-
 .result-item {
   display: flex;
   align-items: center;
@@ -163,7 +183,6 @@ watch(searchQuery, (newQuery) => {
 .result-item:hover {
   background-color: #f7f7f7;
 }
-
 .result-image {
   width: 70px;
   height: 70px;
@@ -172,30 +191,25 @@ watch(searchQuery, (newQuery) => {
   border-radius: 4px;
   flex-shrink: 0;
 }
-
 .result-info {
   display: flex;
   flex-direction: column;
 }
-
 .result-name {
   font-size: 16px;
   margin-bottom: 4px;
   font-weight: 500;
 }
-
 .result-price {
   font-size: 14px;
   color: #555;
   font-weight: bold;
 }
-
 .status-text {
   margin-top: 30px;
   text-align: center;
   color: #999;
 }
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

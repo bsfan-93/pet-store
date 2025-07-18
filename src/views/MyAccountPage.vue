@@ -8,25 +8,25 @@
     <main class="main-content">
       <div class="account-container">
         <div class="page-header">
-          <h1>My account</h1>
-          <a href="#" @click.prevent="logout" class="logout-link">Log out</a>
+          <h1>{{ $t('account.title') }}</h1>
+          <a href="#" @click.prevent="logout" class="logout-link">{{ $t('account.logout') }}</a>
         </div>
 
         <div class="cards-wrapper">
           <div class="account-card">
             <div class="card-header">
-              <h3>MY ORDER</h3>
+              <h3>{{ $t('account.order_card.title') }}</h3>
               <el-icon><ArrowRight /></el-icon>
             </div>
             <div class="card-body order-card-body">
-              <p>You have no orders yet</p>
-              <el-button class="go-shopping-btn" @click="navigateTo('home')">GO SHOPPING</el-button>
+              <p>{{ $t('account.order_card.no_orders') }}</p>
+              <el-button class="go-shopping-btn" @click="navigateTo('home')">{{ $t('account.order_card.go_shopping') }}</el-button>
             </div>
           </div>
 
           <div class="account-card">
             <div class="card-header">
-              <h3>ACCOUNT SETTINGS</h3>
+              <h3>{{ $t('account.settings_card.title') }}</h3>
               <el-icon><ArrowRight /></el-icon>
             </div>
             <div class="card-body settings-card-body">

@@ -22,5 +22,124 @@
     "continue_shopping": "Continuar comprando",
     "login_prompt": "Tem uma conta?",
     "login_link": "Faça login para finalizar a compra mais rápido."
+  },
+  "footer": {
+  "about_title": "Empresa",
+  "support_title": "Apoio",
+  "works_title": "Como funciona",
+  "join_title": "Inscreva-se para 10% de desconto no seu primeiro pedido",
+  "placeholder_email": "E-mail",
+  "signup_button": "Subscrever",
+  "download_app_title": "Baixar aplicativo",
+  "links": {
+    "about_us": "Sobre nós",
+    "blog": "Blog",
+    "privacy_policy": "Política de Privacidade",
+    "terms_of_service": "Termos de serviço",
+    "faq": "FAQ",
+    "contact_us": "Contate-Nos",
+    "order_tracking": "Rastreamento de pedidos",
+    "app_service": "Serviço de aplicativo",
+    "user_manual": "Manual do usuário",
+    "shipping_policy": "Política de Envio",
+    "warranty_policy": "Política de garantia",
+    "price_match_policy": "Política de correspondência de preços",
+    "return_refund_policy": "Política de devolução e reembolso"
+  }
+},
+  "faq": {
+    "title": "Perguntas frequentes",
+    "feedback": {
+      "title": "Esta página foi útil para você?",
+      "yes": "SIM",
+      "no": "NÃO"
+    },
+    "items": [
+      {
+        "question": "Onde está localizada a sua empresa?",
+        "answer": "Nosso escritório está localizado na 1135 Walsh Ave, Santa Clara, Califórnia."
+      },
+      {
+        "question": "De onde vocês enviam?",
+        "answer": "Enviamos de nossos armazéns parceiros em todo o estado. Espere que seus itens sejam enviados separadamente (se você pedir mais de um item), pois diferentes armazéns são especializados em diferentes áreas de fabricação."
+      },
+      {
+        "question": "Quanto tempo levará para meus itens chegarem?",
+        "answer": "Enviado da loja em 2 dias úteis. O tempo de trânsito para o envio padrão é de 3 a 4 dias úteis. O tempo estimado de chegada é de 8 dias úteis a partir do pedido do cliente. Em períodos de pico, como feriados, Black Friday e Cyber Monday, aguarde até 5 dias úteis para o envio."
+      }
+    ]
+  },
+  "account": {
+    "title": "Minha conta",
+    "logout": "Sair",
+    "order_card": {
+      "title": "MEU PEDIDO",
+      "no_orders": "Você ainda não tem pedidos",
+      "go_shopping": "IR ÀS COMPRAS"
+    },
+    "settings_card": {
+      "title": "CONFIGURAÇÕES DA CONTA"
+    }
+  },
+  "login": {
+    "title": "Login",
+    "email_label": "E-mail",
+    "password_label": "Senha",
+    "forgot_password": "Esqueceu sua senha?",
+    "login_button": "Login",
+    "signup_prompt": "Não tem uma conta?",
+    "signup_link": "Inscreva-se",
+    "validation": {
+      "email_required": "Por favor, insira o endereço de e-mail",
+      "email_format": "Por favor, insira um formato de e-mail correto",
+      "password_required": "Por favor, insira a senha"
+    },
+    "success_message": "Login bem-sucedido!",
+    "error_message": "Falha no login. Verifique suas credenciais."
+  },
+  "register": {
+    "title": "Criar conta",
+    "subtitle": "Obtenha acesso a recursos exclusivos e muito mais.",
+    "name_label": "Nome",
+    "create_button": "Criar conta",
+    "login_prompt": "Já tem uma conta?",
+    "login_link": "Login",
+    "validation": {
+        "name_required": "Por favor, insira seu nome",
+        "email_required": "Por favor, insira seu e-mail",
+        "email_format": "Por favor, insira um endereço de e-mail válido",
+        "password_required": "Por favor, insira uma senha"
+    },
+    "success_message": "Conta criada com sucesso!",
+    "error_message": "Falha no registro."
+  },
+  "product": {
+    "quantity": "Quantidade",
+    "size": "Tamanho",
+    "color": "Cor",
+    "standard": "Padrão",
+    "select_placeholder": "Selecionar",
+    "add_to_cart": "Adicionar ao carrinho",
+    "buy_now": "Comprar agora",
+    "usp_title": "Pontos de Venda Únicos",
+    "specs_title": "Especificações do produto",
+    "params_title": "Parâmetros do produto",
+    "loading": "Carregando..."
+  },
+  "subscribe_popup": {
+    "title": "Desbloqueie <span class=\"highlight\">20%</span> de desconto no seu pedido hoje",
+    "subtitle": "Torne-o mais conveniente para animais de estimação",
+    "email_label": "E-mail",
+    "subscribe_button": "Inscrever-se para",
+    "no_thanks": "Não, obrigado",
+    "error_email": "Por favor, insira um endereço de e-mail válido."
+  },
+  "collection_list": {
+    "title": "Comprar por categoria"
+  },
+  "new_popular": {
+    "title": "Novo e Popular",
+    "new_arrivals": "Novidades",
+    "best_sellers": "Mais vendidos"
   }
 }

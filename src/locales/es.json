@@ -22,5 +22,124 @@
     "continue_shopping": "Seguir comprando",
     "login_prompt": "¿Tienes una cuenta?",
     "login_link": "Inicia sesión para pagar más rápido."
+  },
+  "footer": {
+  "about_title": "Empresa",
+  "support_title": "Soporte",
+  "works_title": "Cómo funciona",
+  "join_title": "Regístrese para obtener un 10% de descuento en su primer pedido",
+  "placeholder_email": "E-mail",
+  "signup_button": "Suscribirse",
+  "download_app_title": "Descargar aplicación",
+  "links": {
+    "about_us": "Sobre nosotros",
+    "blog": "Blog",
+    "privacy_policy": "Política de privacidad",
+    "terms_of_service": "Términos de servicio",
+    "faq": "Preguntas frecuentes",
+    "contact_us": "Contáctenos",
+    "order_tracking": "Seguimiento de pedidos",
+    "app_service": "Servicio de la aplicación",
+    "user_manual": "Manual de usuario",
+    "shipping_policy": "Política de envío",
+    "warranty_policy": "Política de garantía",
+    "price_match_policy": "Política de igualación de precios",
+    "return_refund_policy": "Política de devoluciones y reembolsos"
+  }
+},
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "feedback": {
+      "title": "¿Te ha resultado útil esta página?",
+      "yes": "SÍ",
+      "no": "NO"
+    },
+    "items": [
+      {
+        "question": "¿Dónde se encuentra su empresa?",
+        "answer": "Nuestra oficina se encuentra en 1135 Walsh Ave, Santa Clara, California."
+      },
+      {
+        "question": "¿Desde dónde realizan los envíos?",
+        "answer": "Realizamos envíos desde nuestros almacenes asociados en todo el estado. Espere que sus artículos se envíen por separado (si pide más de un artículo), ya que los diferentes almacenes se especializan en diferentes áreas de fabricación."
+      },
+      {
+        "question": "¿Cuánto tiempo tardarán en llegar mis artículos?",
+        "answer": "Se envía desde la tienda en un plazo de 2 días hábiles. El tiempo de tránsito para el envío estándar es de 3-4 días hábiles. El tiempo estimado de llegada es de 8 días hábiles a partir del pedido del cliente. En períodos de máxima actividad como vacaciones, Black Friday y Cyber Monday, por favor, espere hasta 5 días hábiles para el envío."
+      }
+    ]
+  },
+  "account": {
+    "title": "Mi cuenta",
+    "logout": "Cerrar sesión",
+    "order_card": {
+      "title": "MI PEDIDO",
+      "no_orders": "Aún no tienes pedidos",
+      "go_shopping": "IR DE COMPRAS"
+    },
+    "settings_card": {
+      "title": "CONFIGURACIÓN DE LA CUENTA"
+    }
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "email_label": "Correo electrónico",
+    "password_label": "Contraseña",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "login_button": "Iniciar sesión",
+    "signup_prompt": "¿No tienes una cuenta?",
+    "signup_link": "Regístrate",
+    "validation": {
+      "email_required": "Por favor, introduce la dirección de correo electrónico",
+      "email_format": "Por favor, introduce un formato de correo electrónico correcto",
+      "password_required": "Por favor, introduce la contraseña"
+    },
+    "success_message": "¡Inicio de sesión exitoso!",
+    "error_message": "Error al iniciar sesión. Por favor, comprueba tus credenciales."
+  },
+  "register": {
+    "title": "Crear cuenta",
+    "subtitle": "Obtén acceso a funciones exclusivas y más.",
+    "name_label": "Nombre",
+    "create_button": "Crear cuenta",
+    "login_prompt": "¿Ya tienes una cuenta?",
+    "login_link": "Iniciar sesión",
+    "validation": {
+        "name_required": "Por favor, introduce tu nombre",
+        "email_required": "Por favor, introduce tu correo electrónico",
+        "email_format": "Por favor, introduce una dirección de correo electrónico válida",
+        "password_required": "Por favor, introduce una contraseña"
+    },
+    "success_message": "¡Cuenta creada con éxito!",
+    "error_message": "Error en el registro."
+  },
+  "product": {
+    "quantity": "Cantidad",
+    "size": "Talla",
+    "color": "Color",
+    "standard": "Estándar",
+    "select_placeholder": "Seleccionar",
+    "add_to_cart": "Añadir al carrito",
+    "buy_now": "Comprar ahora",
+    "usp_title": "Puntos de venta únicos",
+    "specs_title": "Especificaciones del producto",
+    "params_title": "Parámetros del producto",
+    "loading": "Cargando..."
+  },
+  "subscribe_popup": {
+    "title": "Desbloquea un <span class=\"highlight\">20%</span> de descuento en tu pedido de hoy",
+    "subtitle": "Hazlo más conveniente para las mascotas",
+    "email_label": "Correo electrónico",
+    "subscribe_button": "Suscribirse para",
+    "no_thanks": "No, gracias",
+    "error_email": "Por favor, introduce una dirección de correo electrónico válida."
+  },
+  "collection_list": {
+    "title": "Comprar por categoría"
+  },
+  "new_popular": {
+    "title": "Novedades y Populares",
+    "new_arrivals": "Novedades",
+    "best_sellers": "Más vendidos"
   }
 }

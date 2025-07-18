@@ -7,7 +7,7 @@
 
     <main class="main-content">
       <div class="faq-container">
-        <h1>FAQs</h1>
+        <h1>{{ $t('faq.title') }}</h1>
         
         <el-collapse v-model="activeNames" class="faq-collapse" accordion>
           <el-collapse-item 
@@ -28,13 +28,13 @@
         </el-collapse>
 
         <div class="page-feedback">
-            <h3>Is this page helpful to you?</h3>
+            <h3>{{ $t('faq.feedback.title') }}</h3>
             <div class="feedback-buttons">
                 <el-button class="feedback-btn no-btn" round>
-                    <img src="/images/sad.png" alt="Sad face" class="feedback-icon"/> NO
+                    <img src="/images/sad.png" alt="Sad face" class="feedback-icon"/> {{ $t('faq.feedback.no') }}
                 </el-button>
                 <el-button class="feedback-btn yes-btn" round>
-                    <img src="/images/happy.png" alt="Happy face" class="feedback-icon"/> YES
+                    <img src="/images/happy.png" alt="Happy face" class="feedback-icon"/> {{ $t('faq.feedback.yes') }}
                 </el-button>
             </div>
         </div>

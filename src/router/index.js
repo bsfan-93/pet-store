@@ -66,6 +66,12 @@ const routes = [
     name: 'App',
     component: AppPage
   },
+  {
+    path: '/product/:productId', // 使用动态路由匹配 :productId
+    name: 'ProductDetail',
+    component: ProductDetailPage,
+    props: true // 这会将 URL 中的 :productId 作为 prop 传递给页面组件，非常方便
+  },
   { 
     // 定义带有动态参数 'id' 的路由
     path: '/product/:id', 

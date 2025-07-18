@@ -2,7 +2,7 @@
   <section class="collection-section" v-if="collections.length > 0">
     <div class="container">
       <div class="section-header">
-        <h2>Shop by category</h2>
+        <h2>{{ t('collection_list.title') }}</h2>
       </div>
 
       <div class="collection-grid">
@@ -10,12 +10,12 @@
           v-for="item in collections" 
           :key="item.id" 
           href="#" 
-          @click.prevent="navigateTo('productDetail', item.goodId)" 
+          @click.prevent="goToProduct(item.goodId)" 
           class="collection-item"
         >
           <div class="image-wrapper">
             <img :src="item.url" :alt="item.name">
-            <h3>{{ item.name }}</h3>
+            <h3>{{ t('products.' + item.name) }}</h3>
             <el-icon class="arrow-icon"><ArrowRightBold /></el-icon>
           </div>
         </a>
@@ -25,9 +25,12 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject } from 'vue'; // 【修正】引入 inject
+import { useI18n } from 'vue-i18n'; // 【新增】引入 i18n
 import { ElIcon } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
+
+const { t } = useI18n(); // 【新增】获取 t 函数
 
 defineProps({
   collections: {
@@ -36,6 +39,7 @@ defineProps({
   }
 });
 
+// ▼▼▼【修正】恢复使用项目原有的 navigateTo 函数 ▼▼▼
 const navigateTo = inject('navigateTo');
 </script>
 

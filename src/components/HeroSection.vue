@@ -12,10 +12,10 @@
       >
         <div class="hero-content">
           <h1>
-            {{ $t('hero.title1') }}<br>
-            {{ $t('hero.title2') }}
+            {{ t('hero.title1') }}<br>
+            {{ t('hero.title2') }}
           </h1>
-          <el-button type="success" class="shop-now-btn">{{ $t('hero.shop_now') }}</el-button>
+          <el-button type="success" class="shop-now-btn">{{ t('hero.shop_now') }}</el-button>
         </div>
       </div>
     </el-carousel-item>
@@ -23,7 +23,11 @@
 </template>
 
 <script setup>
-// 定义props，接收从HomePage传递过来的banners数组
+import { useI18n } from 'vue-i18n';
+import { ElCarousel, ElCarouselItem, ElButton } from 'element-plus';
+
+const { t } = useI18n();
+
 defineProps({
   banners: {
     type: Array,

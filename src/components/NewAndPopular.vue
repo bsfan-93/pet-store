@@ -1,7 +1,7 @@
 <template>
   <section class="new-popular-section">
     <div class="container">
-      <h2 class="section-title">New & Popular</h2>
+      <h2 class="section-title">{{ $t('new_popular.title') }}</h2>
       
       <el-tabs v-model="activeTab" class="product-tabs">
         <el-tab-pane label="New Arrivals" name="new">
