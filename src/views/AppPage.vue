@@ -6,9 +6,11 @@
     </div>
 
     <main class="main-content">
-      <section class="app-hero-section">
+      <section 
+        class="app-hero-section"
+        :style="{ backgroundImage: 'url(/images/app-hero-background.jpg)' }"
+      >
         <div class="hero-content">
-          <h1>Pets Clan</h1>
           <div class="os-buttons">
             <a href="#" class="os-button">IOS</a>
             <a href="#" class="os-button">Android</a>
@@ -17,26 +19,50 @@
       </section>
 
       <section class="all-in-one-section">
-        <div class="image-placeholder-large"></div>
-      </section>
-
-      <section class="product-features-section">
-        <div class="product-features-container">
-          <div v-for="(item, index) in productFeatures" :key="index" class="product-item">
-            <div class="product-image-placeholder"></div>
-            <h3 class="product-title">{{ item.title }}</h3>
-            <p class="product-description">{{ item.description }}</p>
+        <img src="/images/app-all-in-one.png" alt="All in one app interface" class="aio-image">
+        <div class="aio-text-overlay">
+          <div class="aio-text">
+            <h2>All-in-One</h2>
+            <p>Manage all your devices in one app,<br>allowing owners to check their pets' status</p>
           </div>
         </div>
       </section>
 
       <section class="data-service-section">
-        <div class="image-placeholder-large"></div>
+        <div class="data-service-container">
+          <img src="/images/app-data-service.png" alt="Data service illustration" class="section-image-large">
+          <div class="data-service-overlay">
+            <div class="data-service-text">
+              <h2>Free Pet Data Service</h2>
+              <p>Get to know your furpals even better with data tracking over time</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+
+      <section class="product-features-section">
+        <div class="product-features-container">
+          <div 
+            v-for="(item, index) in productFeatures" 
+            :key="index" 
+            class="product-item"
+            :class="{ 'reverse-layout': index === 1 }"
+          >
+            <div class="product-image-wrapper">
+              <img :src="item.image" :alt="item.title" class="product-image">
+            </div>
+            <div class="product-text-content">
+              <h3 class="product-title">{{ item.title }}</h3>
+              <p class="product-description" v-html="item.description"></p>
+            </div>
+          </div>
+          </div>
       </section>
 
       <section class="remote-control-section">
         <h2>Achieve remote control via interconnection support</h2>
-        <div class="image-placeholder-large"></div>
+        <img src="/images/app-remote-control.png" alt="Remote control support" class="section-image-large remote-control-image">
       </section>
 
     </main>
@@ -51,10 +77,23 @@ import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
+// Add image paths to your data
 const productFeatures = ref([
-  { title: 'Feeder', description: 'Get to know your furpals even better with data tracking over time' },
-  { title: 'Fountains', description: 'Get to know your furpals even better with data tracking over time' },
-  { title: 'Leash', description: 'Get to know your furpals even better with data tracking over time' },
+  { 
+    title: 'Feeder', 
+    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    image: '/images/app-feature-feeder.png' 
+  },
+  { 
+    title: 'Fountains', 
+    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    image: '/images/app-feature-fountains.png'
+  },
+  { 
+    title: 'Leash', 
+    description: 'Get to know your furpals even<br>betterwith data tracking over time',
+    image: '/images/app-feature-leash.png'
+  },
 ]);
 </script>
 
@@ -80,35 +119,39 @@ const productFeatures = ref([
 /* 英雄区 */
 .app-hero-section {
   width: 100%;
-  height: 70vh;
-  background-color: #e0e0e0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  height: 60vh;
+  /* 可选值： cover ，contain ， auto ， [length/percentage] */
+  background-size: cover;            
+  /* 控制点 2: 调整这个值来改变图片的显示焦点，避免重要内容被裁掉 */
+  /* 可选值: center top, center center, center bottom */
+  background-position: center bottom; 
+  position: relative; 
+  
 }
 .hero-content {
-  color: #fff;
+  /* This container is now less important for centering */
 }
-.hero-content h1 {
-  font-size: 6vw;
-  font-weight: bold;
-  margin: 0 0 20px 0;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-}
+
 .os-buttons {
+  position: absolute;
+  bottom: 5%; 
+  left: 50%;
+  transform: translateX(-50%);
+
   display: flex;
   justify-content: center;
   gap: 20px;
 }
+
 .os-button {
   display: inline-block;
-  padding: 10px 30px;
+  padding: 12px 35px;
   background-color: rgba(255, 255, 255, 0.9);
   color: #333;
-  border-radius: 20px;
+  border-radius: 120px;
   text-decoration: none;
   font-weight: 500;
+  font-size: 26px;
   transition: all 0.2s ease;
 }
 .os-button:hover {
@@ -116,19 +159,110 @@ const productFeatures = ref([
   transform: scale(1.05);
 }
 
-/* All-in-one 图片占位区 */
+/* ▼▼▼ START: CSS MODIFICATION ▼▼▼ */
+/* All-in-one Section */
 .all-in-one-section {
-  padding: 80px 20px;
-  display: flex;
-  justify-content: center;
+  position: relative; /* 关键：作为文字浮动层的定位基准 */
+  padding: 80px 0; /* 控制点 1: 调整这个值来改变与上方英雄图的白色间距 */
+  line-height: 0; /* 消除图片下方的微小间隙 */
 }
-.image-placeholder-large {
+
+.aio-image {
+  display: block;
+  width: 100%; /* 让图片铺满宽度 */
+  height: 100vh; /* 高度自动，保证图片不变形 */
+}
+
+.aio-text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  max-width: 1100px;
-  aspect-ratio: 1100 / 550;
-  background-color: #f0f0f0;
-  border: 1px dashed #ccc;
-  border-radius: 8px;
+  height: 100%;
+
+  /* 使用 Flexbox 轻松控制文字的位置 */
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  
+  padding: 0 8%; /* 与页面其他内容左右对齐 */
+  box-sizing: border-box;
+}
+
+.aio-text {
+  /* 控制点 2: 调整这个宽度来改变文字块的宽度 */
+  width: 40%;
+  max-width: 1450px;
+  text-align: center; /* 修改这里，让文字居中 */
+}
+
+.aio-text h2 {
+  font-size: 55px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 25px;
+  line-height: 1.4;
+}
+
+.aio-text p {
+  font-size: 24px;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 25px;
+  line-height: 1.8;
+}
+
+/* Data Service Section */
+.data-service-section {
+  position: relative; /* 关键：作为文字浮动层的定位基准 */
+  padding: 80px 0; /* 控制与上下模块的间距 */
+  line-height: 0; /* 消除图片下方的微小间隙 */
+}
+
+.data-service-image {
+  display: block;
+  width: 100%; /* 让图片铺满宽度 */
+  height: auto; /* 高度自动，保证图片不变形 */
+}
+
+.data-service-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  justify-content: flex-end; /* 水平靠右 */
+  padding: 0 8%;
+  box-sizing: border-box;
+}
+
+.data-service-text {
+  width: 60%;
+  max-width: 1450px;
+  text-align: left;
+  text-align: center; /* 修改这里，让文字居中 */
+}
+
+.data-service-text h2 {
+  font-size: 60px;
+  font-weight: 400;
+  color: #000;
+  margin-bottom: 80px;
+}
+
+.data-service-text p {
+  font-size: 22px;
+  color: #000;
+  line-height: 1.0;
+}
+
+.section-image-large {
+  display: block;
+  width: 100%;
+  /* max-width: 1450px; */
+  height: 100vh;
+  border-radius: 0px;
 }
 
 /* 三栏产品特性区 */
@@ -137,7 +271,7 @@ const productFeatures = ref([
   background-color: #fff;
 }
 .product-features-container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -145,52 +279,59 @@ const productFeatures = ref([
 }
 .product-item {
   border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: 0px;
   overflow: hidden;
-  text-align: left;
+  display: flex; /* 关键：设为 Flex 布局 */
+  flex-direction: column; /* 关键：默认垂直排列 (图片在上，文字在下) */
 }
-.product-image-placeholder {
+.product-image-wrapper {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  background-color: #f0f0f0;
+  aspect-ratio: 1 / 1; /* 让图片区域变成正方形 */
+  background-color: #fff;
+}
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-text-content {
+  padding: 30px;
+  text-align: center;
 }
 .product-title {
-  font-size: 24px;
-  font-weight: 500;
-  margin: 20px 20px 10px;
+  font-size: 50px;
+  font-weight: 400;
+  margin: 0 0 25px 0;
 }
 .product-description {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.6;
-  margin: 0 20px 20px;
+  font-size: 22px;
+  font-weight: 400;
+  color: #000;
+  line-height: 2.0;
+  margin: 0;
+}
+/* 仅对有 .reverse-layout 的卡片 (中间那个) 应用翻转效果 */
+.product-item.reverse-layout {
+  flex-direction: column-reverse; /* 关键：翻转垂直排列顺序 (文字在上，图片在下) */
 }
 
-/* 数据服务图片占位区 */
-.data-service-section {
-  padding: 80px 20px;
-  text-align: center;
-  background-color: #f7f7f7;
-  display: flex;
-  justify-content: center;
-}
 
-/* ▼▼▼ 【新增】远程控制区域样式 ▼▼▼ */
+/* 远程控制区域 */
 .remote-control-section {
-  padding: 80px 20px 120px; /* 增加底部间距 */
+  padding: 80px 20px 20px;
   background-color: #fff;
   text-align: center;
 }
 .remote-control-section h2 {
-  font-size: 28px;
+  font-size: 60px;
   font-weight: 500;
   color: #000;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
 }
-.remote-control-section .image-placeholder-large {
-  max-width: 900px; /* 调整此区域图片的最大宽度 */
-  aspect-ratio: 900 / 500; /* 调整此区域图片的高宽比 */
-  /* 【关键修改】添加这行代码使其水平居中 */
-  margin: 0 auto;
+.remote-control-image {
+  max-width: 1500px;
+  max-height: 80vh;
+  display: block; /* 确保是块级元素 */
+  margin: 0 auto; /* 自动计算左右外边距，实现居中 */
 }
 </style>

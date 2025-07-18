@@ -8,27 +8,27 @@
     <main class="product-main-content">
       <div class="product-container">
         <div class="product-gallery">
-          <div
+          <div 
             class="main-image-container"
             ref="mainImageContainer"
             @mouseenter="isMagnifierVisible = true"
             @mouseleave="isMagnifierVisible = false"
             @mousemove="handleMouseMove"
-          >
+            @wheel.prevent="handleWheel" >
             <img :src="mainImage" alt="Main product image" class="main-image-content">
-            <div
-              v-show="isMagnifierVisible"
+            <div 
+              v-show="isMagnifierVisible" 
               class="magnifier-view"
               :style="magnifierStyle"
             ></div>
           </div>
-
+          
           <div class="thumbnail-carousel">
             <el-icon class="arrow-icon"><ArrowLeft /></el-icon>
             <div class="thumbnail-track">
-              <div
-                v-for="img in productDetail.goodPic"
-                :key="img.id"
+              <div 
+                v-for="img in productDetail.goodPic" 
+                :key="img.id" 
                 class="thumbnail-placeholder"
                 @click="mainImage = img.url"
               >
@@ -56,21 +56,21 @@
               <div class="option-item">
                 <span class="option-label">size</span>
                 <el-select v-model="form.size" placeholder="Select" size="default">
-                    <el-option
-                      v-for="size in sizeOptions"
-                      :key="size.id"
-                      :label="size.value"
-                      :value="size.value"
+                    <el-option 
+                      v-for="size in sizeOptions" 
+                      :key="size.id" 
+                      :label="size.value" 
+                      :value="size.value" 
                     />
                 </el-select>
               </div>
               <div class="option-item">
                 <span class="option-label">Color</span>
                 <el-radio-group v-model="form.color">
-                    <el-radio
-                        v-for="color in colorOptions"
-                        :key="color.id"
-                        :value="color.value"
+                    <el-radio 
+                        v-for="color in colorOptions" 
+                        :key="color.id" 
+                        :value="color.value"  
                         class="color-swatch"
                         :style="{ '--swatch-color': color.hex || '#ccc' }"
                     />
@@ -90,7 +90,14 @@
               Add to Cart
             </el-button>
             <el-button size="large" class="buy-now-btn">Buy Now</el-button>
-          </div>
+
+            <transition name="fade">
+              <div v-if="showAddedFeedback" class="added-feedback">
+                <el-icon><Select /></el-icon>
+                <span>Added!</span>
+              </div>
+            </transition>
+            </div>
         </div>
       </div>
 
@@ -166,7 +173,7 @@ const mainImageContainer = ref(null);
 const isMagnifierVisible = ref(false);
 const mouseX = ref(0);
 const mouseY = ref(0);
-const zoomLevel = 2; 
+const zoomLevel = ref(2); 
 
 const form = reactive({
   quantity: 1,
@@ -239,15 +246,21 @@ const magnifierStyle = computed(() => {
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
   
-  const bgPosX = -(mouseX.value * zoomLevel - containerWidth / 2);
-  const bgPosY = -(mouseY.value * zoomLevel - containerHeight / 2);
+  // ▼▼▼【修改】确保在计算时使用 .value ▼▼▼
+  const bgPosX = -(mouseX.value * zoomLevel.value - containerWidth / 2);
+  const bgPosY = -(mouseY.value * zoomLevel.value - containerHeight / 2);
 
   return {
     backgroundImage: `url(${mainImage.value})`,
-    backgroundSize: `${containerWidth * zoomLevel}px ${containerHeight * zoomLevel}px`,
+    // ▼▼▼【修改】确保在计算时使用 .value ▼▼▼
+    backgroundSize: `${containerWidth * zoomLevel.value}px ${containerHeight * zoomLevel.value}px`,
     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
   };
 });
+
+// ▼▼▼【新增】用于控制“已添加”提示的状态 ▼▼▼
+const showAddedFeedback = ref(false);
+let feedbackTimer = null;
 
 // --- Methods ---
 const handleMouseMove = (event) => {
@@ -271,8 +284,27 @@ const handleAddToCart = () => {
   cartStore.addItem(itemToAdd);
 }
 
-// 确保 fetchMegaMenuData 如果被使用，也在这里定义
-// const fetchMegaMenuData = async () => { ... }
+// ▼▼▼【新增】触发反馈效果 ▼▼▼
+  // 如果当前有定时器在运行，先清除它
+  if (feedbackTimer) {
+    clearTimeout(feedbackTimer);
+  }
+  showAddedFeedback.value = true;
+  // 2秒后自动隐藏提示
+  feedbackTimer = setTimeout(() => {
+    showAddedFeedback.value = false;
+  }, 2000);
+
+// ▼▼▼【新增】处理鼠标滚轮事件的函数 ▼▼▼
+const handleWheel = (event) => {
+  // event.deltaY < 0 表示向上滚动（放大），> 0 表示向下滚动（缩小）
+  if (event.deltaY < 0) {
+    zoomLevel.value = Math.min(zoomLevel.value + 0.5, 5); // 放大，最大不超过5倍
+  } else {
+    zoomLevel.value = Math.max(zoomLevel.value - 0.5, 1.5); // 缩小，最小不低于1.5倍
+  }
+};
+
 </script>
 
 <style scoped>
@@ -289,7 +321,7 @@ const handleAddToCart = () => {
   border-radius: 12px;
   margin-bottom: 20px;
   cursor: crosshair;
-  overflow: hidden;
+  /* overflow: hidden;  为了让放大镜显示在右侧，这里不能隐藏溢出*/
 }
 
 .main-image-content {
@@ -299,18 +331,21 @@ const handleAddToCart = () => {
   border-radius: 12px;
 }
 
+/* ▼▼▼【修改】放大镜样式 ▼▼▼ */
 .magnifier-view {
-  display: block;
+  display: block; 
   position: absolute;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  top: 0;
+  left: 105%; /* 定位在主图右侧，留出5%间隙 */
+  width: 500px;   /* 直接定义一个更大的宽度 */
+  height: 500px;  /* 直接定义一个更大的高度 */
   background-color: #fff;
+  border: 1px solid var(--border-color);
+  z-index: 10;
   pointer-events: none;
+  border-radius: 12px; /* 边角做得更圆润 */
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15); /* 添加阴影使其更有立体感 */
   background-repeat: no-repeat;
-  z-index: 10; /* 【新增】确保放大镜在图片上层 */
 }
 
 /* 其余样式保持不变 */
@@ -468,7 +503,44 @@ const handleAddToCart = () => {
   display: flex;
   gap: 20px;
   margin-top: 10px;
+  position: relative; /* 【新增】为反馈信息的绝对定位提供基准 */
 }
+
+/* ▼▼▼【新增】反馈信息的样式 ▼▼▼ */
+.added-feedback {
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 10px); /* 让它出现在第一个按钮的右侧 */
+  transform: translate(100%, -50%); /* 垂直居中 */
+  
+  display: flex;
+  align-items: center;
+  background-color: #67c23a; /* 成功绿色 */
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap; /* 防止文字换行 */
+}
+
+.added-feedback .el-icon {
+  margin-right: 6px;
+  font-weight: bold;
+}
+
+/* ▼▼▼【新增】淡入淡出动画效果 ▼▼▼ */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translate(100%, -50%) scale(0.8);
+}
+
 .cart-btn {
   background-color: #337ab7;
   border-color: #2e6da4;
