@@ -51,7 +51,8 @@
       "shipping_policy": "Shipping Policy",
       "warranty_policy": "Warranty Policy",
       "price_match_policy": "Price Match Policy",
-      "return_refund_policy": "Return & Refund Policy"
+      "return_refund_policy": "Return & Refund Policy",
+      "app": "App"
     }
   },
   "faq": {
