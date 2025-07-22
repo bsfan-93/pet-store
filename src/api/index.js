@@ -1,3 +1,5 @@
+// src/api/index.js
+
 import CryptoJS from 'crypto-js';
 
 // 加密函数 (保持不变)
@@ -42,6 +44,18 @@ const apiFetch = async (url, options = {}) => {
       ...options,
       headers: defaultHeaders,
     });
+
+    // ▼▼▼【新增这个代码块来处理401错误】▼▼▼
+    if (response.status === 401) {
+      console.error("认证失败 (401). 强制登出。");
+      // 在这里我们不能使用 Pinia 的 store，最稳妥的方式是直接清理存储并刷新页面
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user_info');
+      localStorage.removeItem('login_timestamp');
+      window.location.href = '/login'; // 强制跳转到登录页
+      throw new Error('Unauthorized');
+    }
+    // ▲▲▲ 新增代码块结束 ▲▲▲
 
     if (!response.ok) {
       // 如果是401错误，可以在这里进行统一处理，比如跳转到登录页
@@ -156,7 +170,7 @@ export const login = async (username, password) => {
 };
 
 export const getCartItems = () => {
-  return apiFetch('/api/order/cart-item/');
+  return apiFetch('/api/order/cart-item/myGoods');
 };
 
 export const addToCart = (cartItem) => {
@@ -195,17 +209,21 @@ export const registerUser = (userData) => {
   });
 };
 
-// ▼▼▼【修改 2/2】对 createCheckoutSession 函数进行修正 ▼▼▼
-export const createCheckoutSession = (items) => {
-  const itemsWithSpec = items.map(item => ({
-    ...item,
-    specification: 'default'
-  }));
+// ▼▼▼【新增】登出接口 ▼▼▼
+export const logoutApi = () => {
+  return apiFetch('/api/auth/token/logout', { // 使用 /api 前缀以匹配 vite.config.js 中的代理规则
+    method: 'DELETE',
+  });
+};
 
-  // 【修正】与您文件中其他函数保持一致，也使用 /api 前缀
-  // 这样它就能被 vite.config.js 中的 '/api' 规则正确代理
+export const createCheckoutSession = (checkoutData) => { // 接收一个对象，不是数组
   return apiFetch('/api/order/stripe/create-checkout-session', {
     method: 'POST',
-    body: JSON.stringify(itemsWithSpec)
+    body: JSON.stringify(checkoutData) 
   });
+};
+
+// ▼▼▼【新增】获取用户信息接口 ▼▼▼
+export const getUserInfo = () => {
+  return apiFetch('/api/admin/user/info'); // 使用 /api 前缀以匹配 vite.config.js 中的代理规则
 };

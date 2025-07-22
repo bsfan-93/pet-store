@@ -17,13 +17,26 @@
           @submit.prevent="submitForm(registerFormRef)"
         >
           <el-form-item prop="name">
-            <el-input v-model="registerForm.name" placeholder="$t('register.name_label')" size="large"/>
+            <el-input 
+              v-model="registerForm.name" 
+              :placeholder="$t('register.name_label')" 
+              size="large"
+            />
           </el-form-item>
           <el-form-item prop="email">
-            <el-input v-model="registerForm.email" placeholder="$t('register.email_label')" size="large"/>
+            <el-input 
+              v-model="registerForm.email"
+              :placeholder="$t('register.email_label')" 
+              size="large"
+            />
           </el-form-item>
           <el-form-item prop="password">
-            <el-input v-model="registerForm.password" type="password" placeholder="$t('register.password_label')" show-password size="large"/>
+            <el-input 
+              v-model="registerForm.password" 
+              type="password" 
+              :placeholder="$t('register.password_label')" 
+              show-password size="large"
+            />
           </el-form-item>
           <el-form-item>
             <el-button 
@@ -38,7 +51,9 @@
         </el-form>
         <div class="login-prompt">
           <span>{{ $t('register.login_prompt') }}</span>
-          <router-link to="/login">{{ $t('register.login_link') }}</router-link>
+          <a href="#" @click.prevent="navigateTo('login')">
+            {{ $t('register.login_link') }}
+          </a>
         </div>
       </div>
     </main>
@@ -53,10 +68,12 @@ import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import { registerUser } from '../api'; // 【新增】导入注册 API 函数
+import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
 
 const navigateTo = inject('navigateTo');
 const registerFormRef = ref(null);
 const isLoading = ref(false);
+const { t } = useI18n(); // 【新增】获取 t 函数
 
 const registerForm = reactive({
   name: '',
@@ -65,13 +82,14 @@ const registerForm = reactive({
 });
 
 const registerRules = reactive({
-  name: [{ required: true, message: 'Please enter your name', trigger: 'blur' }],
+  name: [{ required: true, message: t('register.validation.name_required'), trigger: 'blur' }], 
   email: [
-    { required: true, message: 'Please enter your email', trigger: 'blur' },
-    { type: 'email', message: 'Please enter a valid email address', trigger: ['blur', 'change'] }
+    { required: true, message: t('register.validation.email_required'), trigger: 'blur' }, 
+    { type: 'email', message: t('register.validation.email_format'), trigger: ['blur', 'change'] } 
   ],
-  password: [{ required: true, message: 'Please enter a password', trigger: 'blur' }],
+  password: [{ required: true, message: t('register.validation.password_required'), trigger: 'blur' }], 
 });
+
 
 // ▼▼▼ 【修改】更新 submitForm 函数以调用 API ▼▼▼
 const submitForm = async (formEl) => {
@@ -83,11 +101,11 @@ const submitForm = async (formEl) => {
         // 调用我们刚刚创建的注册API函数
         await registerUser(registerForm); 
         
-        ElMessage.success('Account created successfully!');
+        ElMessage.success(t('register.success_message'));
         navigateTo('login'); // 注册成功后跳转到登录页
       } catch (error) {
         // API 失败时显示错误信息
-        ElMessage.error(error.message || 'Registration failed.');
+        ElMessage.error(t('register.error_message'));
       } finally {
         isLoading.value = false;
       }

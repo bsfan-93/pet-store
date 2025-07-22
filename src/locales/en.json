@@ -3,7 +3,6 @@
     "promo": "20% Off for New Users Upon Registration!"
   },
   "header": {
-    "home": "Home",
     "shop": "Shop",
     "about_us": "About Us",
     "app": "App"
@@ -24,8 +23,12 @@
     "continue_shopping": "Continue shopping",
     "login_prompt": "Have an account?",
     "login_link": "Log in to check out faster.",
+    "welcome_back": "Welcome back, {userName}!",
+    "start_Browse": "Your cart is currently empty. Start Browse our amazing products!", 
     "subtotal": "Subtotal",
-    "checkout_button": "Continue to checkout"
+    "checkout_button": "Continue to checkout",
+    "checkout": "CHECK OUT",
+    "placeholder_items": "Items will be displayed here..."
   },
   "footer": {
     "about_title": "Company",
@@ -74,7 +77,8 @@
       "go_shopping": "GO SHOPPING"
     },
     "settings_card": {
-      "title": "ACCOUNT SETTINGS"
+      "title": "ACCOUNT SETTINGS",
+      "user_info_not_available": "User info not available."
     }
   },
   "login": {
@@ -119,11 +123,16 @@
     "select_placeholder": "Select",
     "add_to_cart": "Add to Cart",
     "buy_now": "Buy Now",
+    "added_feedback": "Added!",
     "usp_title": "Unique Selling Points",
     "specs_title": "Product Specifications",
     "params_title": "Product Parameters",
     "loading": "Loading...",
-    "added_feedback": "Added!"
+    "login_to_purchase_message": "Please log in to proceed with the purchase.", 
+    "product_details_not_loaded": "Product details are not loaded yet. Please wait.", 
+    "network_error_message": "Network connection failed, please check your network.", 
+    "payment_service_error_message": "Payment service is temporarily unavailable, please try again later.", 
+    "payment_session_failed_message": "Failed to create payment session."
   },
   "subscribe_popup": {
     "title": "Unlock <span class=\"highlight\">20%</span> OFF Your order Today",
@@ -131,7 +140,9 @@
     "email_label": "Email",
     "subscribe_button": "Subscribe For",
     "no_thanks": "No, Thanks",
-    "error_email": "Please enter a valid email address."
+    "error_email": "Please enter a valid email address.",
+    "subscription_successful": "Subscription successful! Thank you.", 
+    "subscription_failed": "Subscription failed. Please try again."
   },
   "collection_list": {
     "title": "Shop by category"
@@ -141,9 +152,14 @@
     "new_arrivals": "New Arrivals",
     "best_sellers": "Best Sellers"
   },
+  "mega_menu": {
+    "feeder": "Feeder",
+    "fountains": "Fountains",
+    "leash": "Leash"
+  },
   "products": {
     "product-1": "Smart Feeder",
-    "product-2": "Cozy Pet Bed",
+    "product-2": "Smart Fountains",
     "product-3": "Interactive Toy"
   },
   "about_us": {
@@ -230,4 +246,5 @@
     "alt": "Remote control support"
   }
 }
+
 }

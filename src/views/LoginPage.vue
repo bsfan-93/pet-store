@@ -26,7 +26,11 @@
           <div class="form-group">
             <label class="form-label">{{ $t('login.password_label') }}</label>
             <el-form-item prop="password">
-              <el-input v-model="loginForm.password" type="password" placeholder="$t('login.password_label')" show-password size="large"/>
+              <el-input v-model="loginForm.password" 
+              type="password" 
+              :placeholder="$t('login.password_label')"
+              show-password size="large"
+              />
             </el-form-item>
           </div>
           
@@ -61,9 +65,11 @@ import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import { useAuthStore } from '../stores/auth';
+import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
 
 const authStore = useAuthStore();
 const router = useRouter(); // 获取 router 实例
+const { t } = useI18n(); // 【新增】获取 t 函数
 
 const loginFormRef = ref(null);
 const isLoading = ref(false);
@@ -74,11 +80,11 @@ const loginForm = reactive({
 });
 
 const loginRules = reactive({
-  email: [
-      { required: true, message: 'Please input email address', trigger: 'blur' },
-      { type: 'email', message: 'Please input correct email format', trigger: ['blur', 'change'] }
+    email: [
+      { required: true, message: t('login.validation.email_required'), trigger: 'blur' }, 
+      { type: 'email', message: t('login.validation.email_format'), trigger: ['blur', 'change'] } 
     ],
-  password: [{ required: true, message: 'Please input password', trigger: 'blur' }],
+  password: [{ required: true, message: t('login.validation.password_required'), trigger: 'blur' }], 
 });
 
 const submitForm = async (formEl) => {
@@ -88,10 +94,10 @@ const submitForm = async (formEl) => {
       isLoading.value = true;
       try {
         await authStore.handleLogin(loginForm.email, loginForm.password);
-        ElMessage.success('Login successful!');
+        ElMessage.success(t('login.success_message'));
         router.push('/'); // 使用 router.push() 跳转到首页
       } catch (error) {
-        ElMessage.error(error.message || 'Login failed. Please check your credentials.');
+        ElMessage.error(t('login.error_message'));
         // 登录失败时，不做任何跳转，停留在当前页面
       } finally {
         isLoading.value = false;

@@ -13,16 +13,17 @@
       <div class="popup-content">
         <el-icon class="close-icon" @click="closeDialog"><Close /></el-icon>
         
-        <h2 v-html="t('subscribe_popup.title')"></h2>
-        
-        <p>{{ t('subscribe_popup.subtitle') }}</p>
+        <h2>{{ $t('subscribe_popup.title') }}</h2> 
+        <p>{{ $t('subscribe_popup.subtitle') }}</p> 
         <form @submit.prevent="handleSubscribe">
-          <label for="email-input">{{ t('subscribe_popup.email_label') }}</label>
+          <label for="email-input">
+            {{ $t('subscribe_popup.email_label') }}
+          </label>
           
           <el-input 
             id="email-input"
             v-model="email" 
-            :placeholder="t('subscribe_popup.email_label')" 
+            :placeholder="$t('subscribe_popup.email_label')" 
             class="email-input"
             @input="clearError"
           />
@@ -33,10 +34,12 @@
             native-type="submit" 
             class="subscribe-btn"
           >
-            {{ t('subscribe_popup.subscribe_button') }}
+            {{ $t('subscribe_popup.subscribe_button') }}
           </el-button>
         </form>
-        <a href="#" class="no-thanks-link" @click.prevent="closeDialog">{{ t('subscribe_popup.no_thanks') }}</a>
+        <a href="#" class="no-thanks-link" @click.prevent="closeDialog">
+          {{ $t('subscribe_popup.no_thanks') }}
+        </a>
       </div>
     </div>
   </el-dialog>
@@ -77,17 +80,17 @@ const clearError = () => {
 
 const handleSubscribe = async () => {
   if (!email.value || !/^\S+@\S+\.\S+$/.test(email.value)) {
-    emailError.value = 'Please enter a valid email address.';
+    emailError.value = t('subscribe_popup.error_email'); 
     return;
   }
   isLoading.value = true;
   try {
     await subscribeMail(email.value);
-    ElMessage.success('Subscription successful! Thank you.');
+    ElMessage.success(t('subscribe_popup.subscription_successful')); 
     localStorage.setItem('hasSubscribed', 'true');
     closeDialog();
   } catch (error) {
-    ElMessage.error(error.message || 'Subscription failed. Please try again.');
+    ElMessage.error(error.message || t('subscribe_popup.subscription_failed')); 
   } finally {
     isLoading.value = false;
   }

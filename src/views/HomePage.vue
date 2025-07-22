@@ -28,18 +28,21 @@ import GalleryCarousel from '../components/GalleryCarousel.vue';
 import HowToSection from '../components/HowToSection.vue';
 import AppFooter from '../components/AppFooter.vue';
 import SubscribePopup from '../components/SubscribePopup.vue'; // 【新增】导入弹窗组件
+import { useAuthStore } from '../stores/auth'; // 【新增】导入 auth store
 
 // =======================================================
 // ▼▼▼ 【新增】控制弹窗的逻辑 ▼▼▼
 // =======================================================
 const isPopupVisible = ref(false);
 
+const authStore = useAuthStore(); // 【新增】获取 auth store 实例
+
 onMounted(() => {
   // 【修改】在设置定时器之前，先检查 localStorage
   const hasSubscribed = localStorage.getItem('hasSubscribed');
 
   // 只有当用户没有订阅过时，才设置定时器显示弹窗
-  if (!hasSubscribed) {
+  if (!hasSubscribed && !authStore.isLoggedIn) {
     setTimeout(() => {
       isPopupVisible.value = true;
     }, 3000);
@@ -78,12 +81,6 @@ const fetchCollectionData = async () => {
     console.error("获取Collection数据失败:", error);
   }
 };
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-  fetchBannerData();
-  fetchCollectionData();
-});
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);

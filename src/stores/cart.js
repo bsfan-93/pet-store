@@ -38,13 +38,31 @@ export const useCartStore = defineStore('cart', () => {
 
   // 2. 更新数量
   async function updateQuantity(cartItemId, newQuantity) {
+    // Find the item in the local cart first
+    const item = items.value.find(item => item.id === cartItemId);
+    if (!item) return;
+
+    // Store the old quantity in case we need to revert
+    const oldQuantity = item.quantity;
+    
+    // Optimistically update the local state immediately
+    item.quantity = newQuantity;
+
+    // Now, update the backend
     const authStore = useAuthStore();
     if (authStore.isLoggedIn) {
-      await updateCartItem({ id: cartItemId, quantity: newQuantity });
-      await syncCart();
+      try {
+        // Send the update to the server in the background
+        await updateCartItem({ id: cartItemId, quantity: newQuantity });
+        // No need to call syncCart(), our local state is already correct!
+      } catch (error) {
+        console.error("Failed to update cart on server:", error);
+        // If the server update fails, revert the local change and notify the user
+        item.quantity = oldQuantity;
+        // You can add an error message here, e.g., using ElMessage
+      }
     } else {
-      const item = items.value.find(item => item.id === cartItemId);
-      if (item) item.quantity = newQuantity;
+      // For guest users, just save to local storage
       saveLocalCart();
     }
   }

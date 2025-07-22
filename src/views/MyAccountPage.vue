@@ -9,7 +9,9 @@
       <div class="account-container">
         <div class="page-header">
           <h1>{{ $t('account.title') }}</h1>
-          <a href="#" @click.prevent="logout" class="logout-link">{{ $t('account.logout') }}</a>
+          <a href="#" @click.prevent="logout" class="logout-link">
+            {{ $t('account.logout') }}
+          </a>
         </div>
 
         <div class="cards-wrapper">
@@ -20,19 +22,27 @@
             </div>
             <div class="card-body order-card-body">
               <p>{{ $t('account.order_card.no_orders') }}</p>
-              <el-button class="go-shopping-btn" @click="navigateTo('home')">{{ $t('account.order_card.go_shopping') }}</el-button>
+              <el-button class="go-shopping-btn" @click="navigateTo('home')">
+                {{ $t('account.order_card.go_shopping') }}
+              </el-button>
             </div>
           </div>
 
           <div class="account-card">
             <div class="card-header">
               <h3>{{ $t('account.settings_card.title') }}</h3>
-              <el-icon><ArrowRight /></el-icon>
+              <el-icon>
+                <ArrowRight />
+              </el-icon>
             </div>
             <div class="card-body settings-card-body">
               <div v-if="authStore.userInfo">
-                <p class="user-name">{{ authStore.userInfo.name }}</p>
-                <p class="user-email">{{ authStore.userInfo.username }}</p>
+                <!-- <p class="user-name">{{ authStore.userInfo.nickname || authStore.userInfo.username }}</p> {/* 【修改】显示用户昵称或用户名 */}
+                <p class="user-email">{{ authStore.userInfo.email }}</p> {/* 【修改】显示用户邮箱 */} -->
+              </div>
+              <div v-else>
+                <!-- 【新增】用户信息未加载时的提示 -->
+                <p>{{ $t('account.settings_card.user_info_not_available') }}</p> {/* 【修改】替换为国际化键 */}
               </div>
             </div>
           </div>
@@ -56,8 +66,12 @@ const authStore = useAuthStore();
 const navigateTo = inject('navigateTo');
 
 const logout = () => {
+  // 1. 调用 Pinia store 中的登出方法，清除 state 和 localStorage
   authStore.handleLogout();
-  navigateTo('home');
+  // 2. 强制刷新页面并跳转到首页
+  // This ensures all component states are reset completely.
+  window.location.href = '/'; 
+
 };
 </script>
 

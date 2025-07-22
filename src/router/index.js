@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { useAuthStore } from '../stores/auth'; // 引入 auth store
 
 // 导入所有页面组件
 import HomePage from '../views/HomePage.vue';
@@ -12,6 +13,7 @@ import OrderTrackingPage from '../views/OrderTrackingPage.vue';
 import ContactUsPage from '../views/ContactUsPage.vue';
 import ReturnRefundPolicyPage from '../views/ReturnRefundPolicyPage.vue';
 import AppPage from '../views/AppPage.vue';
+import PlaceholderPage from '../views/PlaceholderPage.vue';
 
 // 定义路由规则
 const routes = [
@@ -43,7 +45,8 @@ const routes = [
   { 
     path: '/account', 
     name: 'MyAccount', 
-    component: MyAccountPage 
+    component: MyAccountPage ,
+    meta: { requiresAuth: true } // 将此路由标记为需要登录
   },
   { 
     path: '/tracking', 
@@ -57,6 +60,11 @@ const routes = [
     component: ContactUsPage
   },
   {
+    path: '/order-tracking',
+    name: 'OrderTracking',
+    component: OrderTrackingPage
+  },
+  {
     path: '/return-policy',
     name: 'ReturnRefundPolicy',
     component: ReturnRefundPolicyPage
@@ -66,6 +74,7 @@ const routes = [
     name: 'App',
     component: AppPage
   },
+  
   {
     path: '/product/:productId', // 使用动态路由匹配 :productId
     name: 'ProductDetail',
@@ -79,6 +88,11 @@ const routes = [
     component: ProductDetailPage,
     // 将路由参数作为 props 传递给组件，简化 ProductDetailPage 的逻辑
     props: true 
+  },
+  {
+    path: '/placeholder/:topic', // e.g., /placeholder/Blog
+    name: 'Placeholder',
+    component: PlaceholderPage,
   }
 ];
 
@@ -91,5 +105,20 @@ const router = createRouter({
     return { top: 0 };
   },
 });
+
+// ▼▼▼【新增这个导航守卫】▼▼▼
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+  
+  // 检查目标路由是否需要认证，以及用户当前是否未登录
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    // 如果是，则重定向到登录页
+    next({ name: 'Login' });
+  } else {
+    // 否则，允许正常跳转
+    next();
+  }
+});
+// ▲▲▲ 导航守卫结束 ▲▲▲
 
 export default router;

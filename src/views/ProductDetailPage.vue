@@ -55,7 +55,7 @@
               </div>
               <div class="option-item">
                 <span class="option-label">{{ $t('product.size') }}</span>
-                <el-select v-model="form.size" placeholder="$t('product.select_placeholder')" size="default">
+                <el-select v-model="form.size" :placeholder="$t('product.select_placeholder')" size="default">
                     <el-option 
                       v-for="size in sizeOptions" 
                       :key="size.id" 
@@ -78,7 +78,7 @@
               </div>
               <div class="option-item">
                 <span class="option-label">{{ $t('product.standard') }}</span>
-                <el-select v-model="form.standard" placeholder="$t('product.select_placeholder')" size="default">
+                <el-select v-model="form.standard" :placeholder="$t('product.select_placeholder')" size="default">
                     <el-option label="OS" value="os" />
                 </el-select>
               </div>
@@ -158,52 +158,58 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, provide, computed, watch } from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getGoodDetail, createCheckoutSession } from '../api'; // 确保 getGoodDetail 已导入
+// ▼▼▼ Ensure addToCart is imported ▼▼▼
+import { getGoodDetail, createCheckoutSession, addToCart } from '../api';
 import { useCartStore } from '../stores/cart';
-import { useAuthStore } from '../stores/auth'; // Import useAuthStore
+import { useAuthStore } from '../stores/auth';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
-
 import {
   ElButton, ElTag, ElInputNumber, ElSelect, ElOption,
   ElRadioGroup, ElRadio, ElIcon, ElMessage
 } from 'element-plus';
 import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
+import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
 
-// 1. 定义 props
+// props and router
 const props = defineProps({
-  // 根据您 router/index.js 中的设置，参数名应该是 'id'
   id: String 
 });
 const route = useRoute();
-const router = useRouter(); // Get router instance
-const cartStore = useCartStore();
-const authStore = useAuthStore(); // Get auth store instance
-const megaMenuData = ref(null); // 如果 megaMenuData 也需要，请确保相关逻辑存在
-provide('megaMenuData', megaMenuData);
+const router = useRouter(); 
+const { t } = useI18n(); // 【新增】获取 t 函数
 
+// Store
+const cartStore = useCartStore();
+const authStore = useAuthStore();
+
+// 产品详情数据
 const productDetail = ref(null);
 const mainImage = ref('');
 
+// 放大镜功能相关
 const mainImageContainer = ref(null);
 const isMagnifierVisible = ref(false);
 const mouseX = ref(0);
 const mouseY = ref(0);
 const zoomLevel = ref(2); 
 
+// 表单数据
 const form = reactive({
   quantity: 1,
   size: '',
   color: '',
   standard: 'os'
 });
+const showAddedFeedback = ref(false);
+let feedbackTimer = null; 
 
-// 【关键修复】将 fetchProductData 函数的定义，移动到 watch 监听器之前
+// --- Data Fetching ---
 const fetchProductData = async (goodId) => {
-  if (!goodId) return; // 如果没有 goodId，则不执行
+  if (!goodId) return;
   try {
     productDetail.value = null;
     const data = await getGoodDetail(goodId);
@@ -219,68 +225,53 @@ const fetchProductData = async (goodId) => {
     }
   } catch (error) {
     console.error("Failed to fetch product details:", error);
+    ElMessage.error(t('product.product_details_not_loaded'));
   }
 };
 
-// 2.【关键修复】现在 watch 调用 fetchProductData 时，函数已经被定义了
-// 同时，确保监听的是 props.id
-watch(() => props.id, (newId) => {
+watch(() => route.params.id, (newId) => {
   if (newId) {
     fetchProductData(newId);
   }
 }, { immediate: true });
 
-// onMounted 中不再需要调用 fetchProductData，因为 watch 的 immediate:true 会处理首次加载
-onMounted(() => {
-  // fetchMegaMenuData(); // 如果您有这个函数，请确保它也被定义了
-});
-
-
 // --- Computed Properties ---
 const colorOptions = computed(() => {
-  if (!productDetail.value || !productDetail.value.specifications) return [];
-  const colors = productDetail.value.specifications.find(s => s.name === 'color')?.values || [];
-  const colorMap = { 'red': '#D32F2F', 'blue': '#1976D2', 'green': '#689F38', 'gray': '#E0E0E0' };
-  return colors.map(c => ({...c, hex: colorMap[c.value.toLowerCase()] || '#ccc'}));
+    if (!productDetail.value || !productDetail.value.specifications) return [];
+    const colors = productDetail.value.specifications.find(s => s.name === 'color')?.values || [];
+    const colorMap = { 'red': '#D32F2F', 'blue': '#1976D2', 'green': '#689F38', 'gray': '#E0E0E0' };
+    return colors.map(c => ({...c, hex: colorMap[c.value.toLowerCase()] || '#ccc'}));
 });
 
 const sizeOptions = computed(() => {
-  if (!productDetail.value || !productDetail.value.specifications) return [];
-  return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
+    if (!productDetail.value || !productDetail.value.specifications) return [];
+    return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
 });
 
 const productVideo = computed(() => {
-  if (!productDetail.value || !productDetail.value.detailPic) return null;
-  return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
+    if (!productDetail.value || !productDetail.value.detailPic) return null;
+    return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
 });
 
 const featureImages = computed(() => {
-  if (!productDetail.value || !productDetail.value.detailPic) return [];
-  return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
+    if (!productDetail.value || !productDetail.value.detailPic) return [];
+    return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
 });
 
 const magnifierStyle = computed(() => {
   if (!mainImageContainer.value) return {};
   const container = mainImageContainer.value;
-  
   const containerWidth = container.clientWidth;
   const containerHeight = container.clientHeight;
-  
-  // ▼▼▼【修改】确保在计算时使用 .value ▼▼▼
   const bgPosX = -(mouseX.value * zoomLevel.value - containerWidth / 2);
   const bgPosY = -(mouseY.value * zoomLevel.value - containerHeight / 2);
-
   return {
     backgroundImage: `url(${mainImage.value})`,
-    // ▼▼▼【修改】确保在计算时使用 .value ▼▼▼
     backgroundSize: `${containerWidth * zoomLevel.value}px ${containerHeight * zoomLevel.value}px`,
     backgroundPosition: `${bgPosX}px ${bgPosY}px`,
   };
 });
 
-// ▼▼▼【新增】用于控制“已添加”提示的状态 ▼▼▼
-const showAddedFeedback = ref(false);
-let feedbackTimer = null;
 
 // --- Methods ---
 const handleMouseMove = (event) => {
@@ -290,9 +281,23 @@ const handleMouseMove = (event) => {
   mouseY.value = event.clientY - rect.top;
 };
 
-const handleAddToCart = () => {
-  if (!productDetail.value) return;
-  const itemToAdd = {
+const handleWheel = (event) => {
+  if (event.deltaY < 0) {
+    zoomLevel.value = Math.min(zoomLevel.value + 0.5, 5);
+  } else {
+    zoomLevel.value = Math.max(zoomLevel.value - 0.5, 1.5);
+  }
+};
+
+// ▼▼▼ THIS IS THE CORRECTED FUNCTION ▼▼▼
+const handleAddToCart = async () => {
+  if (!productDetail.value) {
+    ElMessage.warning(t('product.product_details_not_loaded')); 
+    return;
+  }
+
+  // Step 1: Update the local cart store for a responsive feel.
+  cartStore.addItem({
     id: productDetail.value.good.id,
     name: productDetail.value.good.name,
     price: productDetail.value.good.price,
@@ -300,62 +305,68 @@ const handleAddToCart = () => {
     selectedSize: form.size,
     selectedColor: form.color,
     quantity: form.quantity
-  };
-  cartStore.addItem(itemToAdd);
-}
+  });
+  
+  // The unwanted ElMessage.success notification has been removed.
 
-// ▼▼▼【新增】触发反馈效果 ▼▼▼
-  // 如果当前有定时器在运行，先清除它
-  if (feedbackTimer) {
-    clearTimeout(feedbackTimer);
-  }
-  showAddedFeedback.value = true;
-  // 2秒后自动隐藏提示
-  feedbackTimer = setTimeout(() => {
-    showAddedFeedback.value = false;
-  }, 2000);
+  // Step 2: If the user is logged in, send the update to the server.
+  if (authStore.isLoggedIn) {
+    const apiPayload = {
+      goodId: productDetail.value.good.id,
+      // Note: These values are hardcoded as per your API example.
+      // You will need to make these dynamic based on user selection.
+      spec: 3, 
+      color: 1, 
+      quantity: form.quantity
+    };
 
-// ▼▼▼【新增】处理鼠标滚轮事件的函数 ▼▼▼
-const handleWheel = (event) => {
-  // event.deltaY < 0 表示向上滚动（放大），> 0 表示向下滚动（缩小）
-  if (event.deltaY < 0) {
-    zoomLevel.value = Math.min(zoomLevel.value + 0.5, 5); // 放大，最大不超过5倍
-  } else {
-    zoomLevel.value = Math.max(zoomLevel.value - 0.5, 1.5); // 缩小，最小不低于1.5倍
+    try {
+      await addToCart(apiPayload);
+    } catch (error) {
+      console.error("Failed to save cart to server:", error);
+    }
   }
 };
+// ▲▲▲ END OF CORRECTION ▲▲▲
 
-// ▼▼▼ THIS IS THE NEW/UPDATED FUNCTION ▼▼▼
 const handleBuyNow = async () => {
-  // First, check if user is logged in
   if (!authStore.isLoggedIn) {
-    ElMessage.info('Please log in to proceed with the purchase.');
+    ElMessage.info(t('product.login_to_purchase_message'));
     router.push('/login');
     return;
   }
+  
+  if (!productDetail.value) {
+    ElMessage.warning(t('product.product_details_not_loaded')); {/* 【修改】 */}
+    return;
+  }
 
-  if (!productDetail.value) return;
-
-  // Create the list of items to send to the backend
-  const itemsToCheckout = [{
+  const checkoutData = { 
     goodId: productDetail.value.good.id,
     quantity: form.quantity,
     name: productDetail.value.good.name,
-    amount: productDetail.value.good.price,
-    goodImage: mainImage.value,
-  }];
-
+    amount: productDetail.value.good.price, 
+    goodImage: mainImage.value, 
+    currency: "USD", 
+    description: productDetail.value.good.name + (productDetail.value.good.description ? ' - ' + productDetail.value.good.description : ''), 
+    successUrl: "http://127.0.0.1/success",
+    cancelUrl: "http://127.0.0.1/cancel",
+    specification: "{}"
+  };
   try {
-    const checkoutUrl = await createCheckoutSession(itemsToCheckout);
+    const checkoutUrl = await createCheckoutSession(checkoutData); 
     if (checkoutUrl) {
-      // Redirect to Stripe for payment
       window.location.href = checkoutUrl;
-    } else {
-      ElMessage.error('Could not initiate payment. Please try again.');
+    }else {
+      ElMessage.error(t('product.payment_session_failed_message'));
     }
   } catch (error) {
     console.error("Failed to create checkout session:", error);
-    ElMessage.error('An error occurred while creating the payment session.');
+    const errorMessage = error.message.includes('Failed to fetch') ? t('product.network_error_message') :
+                         (error.message.includes('401') ? t('product.login_to_purchase_message') : 
+                         (error.message.includes('500') ? t('product.payment_service_error_message') : 
+                         t('product.payment_session_failed_message'))); 
+    ElMessage.error(errorMessage); 
   }
 };
 </script>
@@ -568,7 +579,7 @@ const handleBuyNow = async () => {
   
   display: flex;
   align-items: center;
-  background-color: #67c23a; /* 成功绿色 */
+  background-color: #7CB342; /* 成功绿色 */
   color: white;
   padding: 8px 15px;
   border-radius: 20px;
@@ -605,14 +616,14 @@ const handleBuyNow = async () => {
   border-color: #204d74;
 }
 .buy-now-btn {
-  background-color: #f0ad4e;
-  border-color: #eea236;
+  background-color: #7CB342;
+  border-color: #7CB342;
   color: white;
   flex-grow: 1;
 }
 .buy-now-btn:hover {
-  background-color: #ec971f;
-  border-color: #d58512;
+  background-color: #7CB342;
+  border-color: #7CB342;
 }
 .video-section {
   padding: 80px 20px;

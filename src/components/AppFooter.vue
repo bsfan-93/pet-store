@@ -6,13 +6,10 @@
           <h4>{{ t(column.title) }}</h4>
           <ul>
             <li v-for="link in column.links" :key="link.text">
-              <a 
-                :href="link.href || '#'" 
-                @click.prevent="link.action ? link.action() : null"
-              >
+              <router-link :to="link.to">
                 {{ t(link.text) }}
-              </a>
-            </li>
+              </router-link>
+              </li>
           </ul>
         </div>
       </div>
@@ -24,7 +21,6 @@
             v-model="email"
             :placeholder="t('footer.placeholder_email')" 
             class="email-input-new"
-            @input="clearError"
           >
             <template #append>
               <el-button :icon="ArrowRightBold" native-type="submit" />
@@ -59,49 +55,49 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'; // 【修正】引入 inject
-import { useI18n } from 'vue-i18n'; // 【新增】引入 i18n
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { ElInput, ElButton, ElMessage } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 import { subscribeMail } from '../api';
 
-const { t } = useI18n(); // 【新增】获取 t 函数
+const { t } = useI18n();
 const email = ref('');
 const emailError = ref('');
-const navigateTo = inject('navigateTo'); // 【修正】使用 inject 获取 navigateTo
 
+// ▼▼▼ MODIFIED THIS DATA STRUCTURE ▼▼▼
 const footerColumns = ref([
   {
     title: 'footer.about_title',
     links: [ 
-      { text: 'footer.links.about_us', action: () => navigateTo('about') },
-      { text: 'footer.links.blog', href: '#' },
-      { text: 'footer.links.privacy_policy', href: '#' },
-      { text: 'footer.links.terms_of_service', href: '#' }
+      { text: 'footer.links.about_us', to: '/about' },
+      { text: 'footer.links.blog', to: '/placeholder/Blog' },
+      { text: 'footer.links.privacy_policy', to: '/placeholder/Privacy-Policy' },
+      { text: 'footer.links.terms_of_service', to: '/placeholder/Terms-of-Service' }
     ]
   },
   {
     title: 'footer.support_title',
     links: [
-      { text: 'footer.links.faq', action: () => navigateTo('faq') },
-      // 假设 contact, tracking, app, return-policy 页面未来会创建
-      { text: 'footer.links.contact_us', action: () => navigateTo('contact') },
-      { text: 'footer.links.order_tracking', action: () => navigateTo('tracking') },
-      { text: 'footer.links.app_service', action: () => navigateTo('app') },
-      { text: 'footer.links.user_manual', href: '#' },
-      { text: 'footer.links.shipping_policy', href: '#' },
-      { text: 'footer.links.warranty_policy', href: '#' },
-      { text: 'footer.links.price_match_policy', href: '#' },
-      { text: 'footer.links.return_refund_policy', action: () => navigateTo('return-policy') }
+      { text: 'footer.links.faq', to: '/faq' },
+      { text: 'footer.links.contact_us', to: '/contact' },
+      { text: 'footer.links.order_tracking', to: '/order-tracking' },
+      { text: 'footer.links.app_service', to: '/app' },
+      { text: 'footer.links.user_manual', to: '/placeholder/User-Manual' },
+      { text: 'footer.links.shipping_policy', to: '/placeholder/Shipping-Policy' },
+      { text: 'footer.links.warranty_policy', to: '/placeholder/Warranty-Policy' },
+      { text: 'footer.links.price_match_policy', to: '/placeholder/Price-Match-Policy' },
+      { text: 'footer.links.return_refund_policy', to: '/return-policy' }
     ]
   },
   {
     title: 'footer.works_title',
     links: [
-      { text: 'footer.links.user_manual', href: '#' }
+      { text: 'footer.links.user_manual', to: '/placeholder/User-Manual' }
     ]
   }
 ]);
+// ▲▲▲ END OF MODIFICATION ▲▲▲
 
 const socialLinks = ref([
   { name: 'facebook', src: '/images/icons/facebook.png', link: 'https://www.facebook.com/' },
@@ -111,13 +107,9 @@ const socialLinks = ref([
   { name: 'youtube', src: '/images/icons/youtube.png', link: 'https://www.youtube.com/' }
 ]);
 
-// 【修改】处理订阅逻辑
 const handleSubscribe = async () => {
-  // 提交前先清空之前的错误
   emailError.value = ''; 
-
   if (!email.value || !/^\S+@\S+\.\S+$/.test(email.value)) {
-    // 【修改】不再使用 ElMessage，而是设置本地错误状态
     emailError.value = 'Please enter a valid email address.';
     return;
   }
@@ -132,7 +124,7 @@ const handleSubscribe = async () => {
 </script>
 
 <style scoped>
-/* 您的样式无需改动 */
+/* Your styles are correct and do not need to be changed */
 .app-footer {
   background-color: #000;
   color: #fff;
@@ -142,11 +134,11 @@ const handleSubscribe = async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 20px; /* 减小gap以适应更多内容 */
+  gap: 20px;
 }
 .links-section {
   display: flex;
-  gap: 160px; /* 减小gap */
+  gap: 160px;
   flex-grow: 1;
 }
 .footer-column h4 {
@@ -174,14 +166,14 @@ const handleSubscribe = async () => {
   color: #fff;
 }
 .subscribe-section {
-  flex-basis: 400px; /* 减小宽度 */
+  flex-basis: 400px;
   flex-shrink: 0;
 }
 .subscribe-section h4 {
   font-size: 36px;
   font-weight: 600;
   margin-bottom: 36px;
-  margin-top: -20px; /* 新增此行来调整上间距，可自行修改数值 */
+  margin-top: -20px;
 }
 .subscribe-form-new {
   position: relative;
@@ -219,10 +211,10 @@ const handleSubscribe = async () => {
   color: #f56c6c;
   font-size: 12px;
   line-height: 1;
-  padding: 4px 0 0 15px;
+  padding-top: 5px;
+  text-align: left;
   position: absolute;
-  top: 48px;
-  left: 0;
+  bottom: 0px;
 }
 .footer-bottom {
   border-top: 1px solid #000;
@@ -283,16 +275,5 @@ img[src*="pinterest.png"] {
 }
 .store-link:hover {
   transform: scale(1.05);
-}
-
-/* ▼▼▼ 【新增】错误信息的样式 ▼▼▼ */
-.error-message {
-  color: #f56c6c;
-  font-size: 12px;
-  line-height: 1;
-  padding-top: 5px; /* 与输入框的间距 */
-  text-align: left;  /* 确保文字左对齐 */
-  position: absolute;  /* 使用绝对定位，不影响其他元素布局 */
-  bottom: 0px;       /* 定位在表单底部 */
 }
 </style>

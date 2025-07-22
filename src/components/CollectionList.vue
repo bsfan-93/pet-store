@@ -4,7 +4,6 @@
       <div class="section-header">
         <h2>{{ t('collection_list.title') }}</h2>
       </div>
-
       <div class="collection-grid">
         <a 
           v-for="item in collections" 
@@ -15,7 +14,7 @@
         >
           <div class="image-wrapper">
             <img :src="item.url" :alt="item.name">
-            <h3>{{ t('products.' + item.name) }}</h3>
+            <h3>{{ t('products.' + item.name.replace(/\s/g, '').toLowerCase()) }}</h3>
             <el-icon class="arrow-icon"><ArrowRightBold /></el-icon>
           </div>
         </a>
@@ -25,13 +24,14 @@
 </template>
 
 <script setup>
-import { inject } from 'vue'; // 【修正】引入 inject
 import { useI18n } from 'vue-i18n'; // 【新增】引入 i18n
+import { useRouter } from 'vue-router'; // 【新增】导入 useRouter
 import { ElIcon } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 
 const { t } = useI18n(); // 【新增】获取 t 函数
 
+// 定义 props
 defineProps({
   collections: {
     type: Array,
@@ -39,8 +39,14 @@ defineProps({
   }
 });
 
-// ▼▼▼【修正】恢复使用项目原有的 navigateTo 函数 ▼▼▼
-const navigateTo = inject('navigateTo');
+// --- 【新增】使用 Vue Router 进行导航 ---
+const router = useRouter();
+const goToProduct = (productId) => {
+  if (productId) {
+    router.push({ path: `/product/${productId}` });
+  }
+};
+// --- 新增结束 ---
 </script>
 
 

@@ -12,10 +12,9 @@
       <nav class="main-nav">
         <div 
           class="nav-item-shop"
-          @mouseenter="showMenu"
-          @mouseleave="hideMenu"
+          @mouseenter="isMenuVisible = true"
         >
-          <a href="#">{{ $t('header.shop') }}</a>
+          <a href="#" @click.prevent>{{ $t('header.shop') }}</a>
         </div>
         <router-link to="/about">{{ $t('header.about_us') }}</router-link>
         <router-link to="/app">{{ $t('header.app') }}</router-link>
@@ -48,12 +47,12 @@
     
     <MegaMenu 
       :visible="isMenuVisible"
-      @mouseenter="showMenu"
-      @mouseleave="hideMenu"
+      @close="isMenuVisible = false"
     />
+
     <Teleport to="body">
       <SearchOverlay 
-        v-if="isSearchVisible" 
+        v-show="isSearchVisible" 
         @close="isSearchVisible = false" 
       />
     </Teleport>
@@ -64,79 +63,56 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router'; // 1. 导入 useRouter
+import { ref, computed, defineAsyncComponent, inject } from 'vue'; // 【修改】重新引入 inject
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
-import { storeToRefs } from 'pinia'; // 1. 导入 storeToRefs
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia'; 
 import MegaMenu from './MegaMenu.vue';
-import SearchOverlay from './SearchOverlay.vue';
 import ShoppingCartPanel from './ShoppingCartPanel.vue';
+
+const SearchOverlay = defineAsyncComponent(() => 
+  import('./SearchOverlay.vue')
+);
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
-const router = useRouter(); // 2. 获取 router 实例
+const router = useRouter(); 
 
-// 2. 使用 storeToRefs 来获取响应式的 isLoggedIn 状态
-const { isLoggedIn } = storeToRefs(authStore);
+// 【关键修改】确保 isLoggedIn 被正确解构，这里已经做对，保留。
+const { isLoggedIn } = storeToRefs(authStore); 
 
-// 3. 修改点击处理函数
-const handleUserIconClick = () => {
-  if (isLoggedIn.value) {
-    router.push('/account'); // 使用 router.push() 进行跳转
+// 【修复】重新引入 navigateTo 注入，因为它在 App.vue 中被提供，虽然在 AppHeader 内部使用 router.push 更好。
+// 但为了避免其他地方的 break，暂时保留注入并安全使用。
+const navigateTo = inject('navigateTo'); 
+
+const handleUserIconClick = async () => { 
+  if (isLoggedIn.value) { 
+    try {
+      await authStore.fetchUserInfo(); // 尝试获取用户信息
+      // 使用 router.push 进行导航
+      router.push('/account'); 
+    } catch (error) {
+      console.error("Failed to fetch user info or navigate to account:", error);
+      // 如果获取用户信息失败，也应该跳转到 account 页面，或者给用户提示
+      // 如果 authStore.fetchUserInfo 失败，后端可能返回 401，这里应该被 apiFetch 统一处理
+      // 最终跳转到 account 页面，让页面判断是否有用户信息并处理
+      router.push('/account'); 
+    }
   } else {
-    router.push('/login');
+    router.push('/login'); 
   }
 };
 
-// ▼▼▼ 【新增】About Us 下拉菜单的数据和处理函数 ▼▼▼
-const aboutMenu = ref([
-  { text: 'About Us', page: 'about' },
-  { text: 'FAQ', page: 'faq' },
-  { text: 'Contact Us', page: 'contact' },
-  { text: 'Order Tracking', page: 'tracking' },
-]);
-
-const handleAboutMenuCommand = (page) => {
-  // 注意：目前我们只创建了 'about' 页面，所以所有点击都会跳转到 about 页面
-  // 当您未来创建了 'faq', 'contact' 等页面后，这里的跳转会自动生效
-  if (page === 'about') {
-    navigateTo('about');
-  } else {
-    console.log(`准备跳转到: ${page}`);
-    // 临时跳转到 about 页作为占位
-    navigateTo('about');
-  }
-};
-
-
-defineProps({ isScrolled: Boolean });
-
-// ▼▼▼ 【核心修改】替换菜单显示/隐藏的逻辑 ▼▼▼
 const isMenuVisible = ref(false);
-let menuTimer = null; // 用于存放计时器
-
-// 显示菜单的函数
-const showMenu = () => {
-  clearTimeout(menuTimer); // 如果有关闭的计时器，先清除它
-  isMenuVisible.value = true;
-};
-
-// 隐藏菜单的函数（有延迟）
-const hideMenu = () => {
-  // 设置一个 300 毫秒的延迟，如果期间鼠标没有进入新区域，就关闭菜单
-  menuTimer = setTimeout(() => {
-    isMenuVisible.value = false;
-  }, 300);
-};
-// ▲▲▲ 修改结束 ▲▲▲
+const isSearchVisible = ref(false);
 
 const { locale } = useI18n();
 const languages = ref([
     { code: 'en', name: 'English', abbr: 'EN' },
     { code: 'zh', name: '简体中文', abbr: 'CN' },
-    { code: 'zh-Hant', name: '繁體中文', abbr: 'TW' },
+    { code: 'zh-Hant', name: '繁體中文', abbr: 'TW' }, 
     { code: 'ja', name: '日本語', abbr: 'JP' },
     { code: 'ko', name: '한국어', abbr: 'KR' },
     { code: 'de', name: 'Deutsch', abbr: 'DE' },
@@ -154,7 +130,12 @@ const currentLanguageAbbr = computed(() => {
 
 const changeLanguage = (langCode) => {
   locale.value = langCode;
+  localStorage.setItem('user-language', langCode); 
 };
+
+defineProps({
+  isScrolled: Boolean
+});
 </script>
 
 <style scoped>
