@@ -85,7 +85,7 @@
             </div>
           </div>
           <div class="action-buttons">
-            <el-button size="large" class="cart-btn" @click="handleAddToCart">
+            <el-button size="large" class="cart-btn" @click="handleAddToCart($event)" :loading="isAddingToCart" :disabled="isAddingToCart">
               <el-icon style="margin-right: 8px;"><ShoppingCart /></el-icon>
               {{ $t('product.add_to_cart') }}
             </el-button>
@@ -160,7 +160,6 @@
 <script setup>
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-// ▼▼▼ Ensure addToCart is imported ▼▼▼
 import { getGoodDetail, createCheckoutSession, addToCart } from '../api';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
@@ -172,32 +171,27 @@ import {
   ElRadioGroup, ElRadio, ElIcon, ElMessage
 } from 'element-plus';
 import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
-import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
+import { useI18n } from 'vue-i18n';
 
-// props and router
 const props = defineProps({
   id: String 
 });
 const route = useRoute();
 const router = useRouter(); 
-const { t } = useI18n(); // 【新增】获取 t 函数
+const { t } = useI18n(); 
 
-// Store
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 
-// 产品详情数据
 const productDetail = ref(null);
 const mainImage = ref('');
 
-// 放大镜功能相关
 const mainImageContainer = ref(null);
 const isMagnifierVisible = ref(false);
 const mouseX = ref(0);
 const mouseY = ref(0);
 const zoomLevel = ref(2); 
 
-// 表单数据
 const form = reactive({
   quantity: 1,
   size: '',
@@ -206,13 +200,14 @@ const form = reactive({
 });
 const showAddedFeedback = ref(false);
 let feedbackTimer = null; 
+const isAddingToCart = ref(false); // 确保这个 ref 变量已定义
 
 // --- Data Fetching ---
 const fetchProductData = async (goodId) => {
   if (!goodId) return;
   try {
     productDetail.value = null;
-    const data = await getGoodDetail(goodId);
+    const data = await getGoodDetail(goodId); 
     productDetail.value = data;
     if (data.goodPic && data.goodPic.length > 0) {
       mainImage.value = data.goodPic[0].url;
@@ -272,7 +267,6 @@ const magnifierStyle = computed(() => {
   };
 });
 
-
 // --- Methods ---
 const handleMouseMove = (event) => {
   if (!mainImageContainer.value) return;
@@ -289,45 +283,99 @@ const handleWheel = (event) => {
   }
 };
 
-// ▼▼▼ THIS IS THE CORRECTED FUNCTION ▼▼▼
-const handleAddToCart = async () => {
-  if (!productDetail.value) {
-    ElMessage.warning(t('product.product_details_not_loaded')); 
+const handleAddToCart = async (event) => { // + Pass event object
+  
+  // 阻止事件冒泡和同一事件监听器上的其他监听器被触发，这是最强力的事件防御
+  if (event) { // + 检查 event 是否存在，确保在没有事件对象时代码也能运行
+    event.stopImmediatePropagation(); // + 阻止事件立即传播
+  }
+
+ console.log('handleAddToCart called'); 
+  console.log('isAddingToCart state on entry:', isAddingToCart.value); 
+
+  // Prevent multiple calls if already in progress or if the button is disabled
+  if (isAddingToCart.value) {
+    console.log('handleAddToCart: Already adding, preventing duplicate call due to guard.');
     return;
   }
 
-  // Step 1: Update the local cart store for a responsive feel.
-  cartStore.addItem({
-    id: productDetail.value.good.id,
-    name: productDetail.value.good.name,
-    price: productDetail.value.good.price,
-    url: mainImage.value,
-    selectedSize: form.size,
-    selectedColor: form.color,
-    quantity: form.quantity
-  });
-  
-  // The unwanted ElMessage.success notification has been removed.
+  // Add a defensive check to disable the button immediately
+  if (event.target) {
+    event.target.disabled = true; // + Directly disable the clicked button element
+  }
 
-  // Step 2: If the user is logged in, send the update to the server.
-  if (authStore.isLoggedIn) {
-    const apiPayload = {
-      goodId: productDetail.value.good.id,
-      // Note: These values are hardcoded as per your API example.
-      // You will need to make these dynamic based on user selection.
-      spec: 3, 
-      color: 1, 
-      quantity: form.quantity
-    };
+  isAddingToCart.value = true; // Set loading state for Element Plus button
 
-    try {
-      await addToCart(apiPayload);
-    } catch (error) {
-      console.error("Failed to save cart to server:", error);
+  try {
+    if (!productDetail.value) {
+      ElMessage.warning(t('product.product_details_not_loaded')); 
+      return; // Return early if no product detail
     }
+
+    const selectedSizeValue = form.size;
+    const selectedColorValue = form.color;
+
+    const selectedSizeId = productDetail.value.specifications
+      .find(s => s.name === 'size')
+      ?.values.find(v => v.value === selectedSizeValue)
+      ?.id;
+
+    const selectedColorId = productDetail.value.specifications
+      .find(s => s.name === 'color')
+      ?.values.find(v => v.value === selectedColorValue)
+      ?.id;
+
+    // 【修正】更新本地购物车状态
+    cartStore.addItem({
+      id: productDetail.value.good.id, 
+      goodId: productDetail.value.good.id, 
+      name: productDetail.value.good.name,
+      price: productDetail.value.good.price,
+      url: mainImage.value,
+      quantity: form.quantity,
+      specId: selectedSizeId,
+      specName: selectedSizeValue,
+      colorId: selectedColorId,
+      colorName: selectedColorValue,
+    });
+
+    if (authStore.isLoggedIn) {
+      const apiPayload = {
+        goodId: productDetail.value.good.id,
+        spec: selectedSizeId,
+        color: selectedColorId,
+        quantity: form.quantity
+      };
+
+      if (selectedSizeId === undefined || selectedSizeId === null ||
+          selectedColorId === undefined || selectedColorId === null) {
+          ElMessage.error(t('product.select_options_error')); 
+          console.error("Missing spec or color ID in payload:", apiPayload);
+          return; 
+      }
+
+      await addToCart(apiPayload); // 实际发送 POST 请求到后端
+    }
+
+    // 显示添加成功反馈
+    showAddedFeedback.value = true;
+    clearTimeout(feedbackTimer);
+    feedbackTimer = setTimeout(() => {
+      showAddedFeedback.value = false;
+    }, 2000); // 确保这里有分号
+
+  } catch (error) { // 捕获整个操作中的任何错误
+    console.error("handleAddToCart Error:", error);
+    ElMessage.error(error.message || t('product.network_error_message') || '添加到购物车失败，请重试。');
+  } finally {
+    isAddingToCart.value = false; // 无论成功或失败，都重置为非加载状态
+  // Ensure the button is re-enabled if directly disabled earlier
+    if (event.target) {
+      event.target.disabled = false; // + Explicitly re-enable the button
+    }
+    console.log('handleAddToCart completed.'); // + Log completion
   }
 };
-// ▲▲▲ END OF CORRECTION ▲▲▲
 
 const handleBuyNow = async () => {
   if (!authStore.isLoggedIn) {
@@ -337,7 +385,7 @@ const handleBuyNow = async () => {
   }
   
   if (!productDetail.value) {
-    ElMessage.warning(t('product.product_details_not_loaded')); {/* 【修改】 */}
+    ElMessage.warning(t('product.product_details_not_loaded'));
     return;
   }
 
@@ -712,8 +760,8 @@ const handleBuyNow = async () => {
 /* ▼▼▼ 【修改部分】 ▼▼▼ */
 .specs-images-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: row;    /* 保持横向排列 */
+  justify-content: center;    /* 保持水平居中 */
   align-items: stretch; /* 关键：将 flex-start 改为 stretch，让两个框等高 */
   gap: 0;
   margin-bottom: 60px;

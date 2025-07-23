@@ -48,7 +48,7 @@ onMounted(() => {
 
   /* 使用padding来控制文字和边缘的距离 */
   box-sizing: border-box; /* 确保padding不会撑大元素 */
-  padding: 0 0 10vh 10%; /* 上 右 下 左, 你可以调整左和下的值 */
+  padding: 0 0 10vh 10vm; /* 调整：使内边距随视口宽度缩放 */
 }
 
 .content-overlay {
@@ -56,8 +56,8 @@ onMounted(() => {
 }
 
 .content-overlay h2 {
-  font-size: var(--font-size-title);
+  font-size: 2.5vw; /* 假设设计稿标题是 48px，基准宽度 1920px (48/1920*100) */
   text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* 可以适当加深阴影使其更清晰 */
-  max-width: 400px; /* 给文字一个最大宽度，避免在超宽屏上拉伸太长 */
+  max-width: 20.83vw; /* 假设原来 max-width 400px (400/1920*100) */
 }
 </style>

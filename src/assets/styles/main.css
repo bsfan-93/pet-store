@@ -9,16 +9,18 @@
 
   /* 字体大小 */
   --font-size-top-banner: 12px;
-  --font-size-nav: 14px;
+  --font-size-nav: 0.729vw; /* <-- 修改这里，使导航字体大小等比缩放 */
   --font-size-footer: 14px;
   --font-size-title: 48px;
   --font-size-body: 16px;
 
   /* 尺寸和间距 */
-  --header-height: 70px;             /* <-- 修改这个值来调整导航栏高度 */
-  --logo-width: 175px;               /* <-- 修改这个值来调整LOGO宽度 */    
-  --logo-height:66px;                /* <-- 修改这个值来调整LOGO高度 */
-  --icon-size: 16px;
+  --header-height: 70px;
+  /* 将 175px 转换为 vw，例如 175 / 19.2 = 9.11vw */
+  --logo-width: 9.11vw; /* <-- 修改这里，使 LOGO 宽度等比缩放 */
+  /* 将 66px 转换为 vw，例如 66 / 19.2 = 3.43vw */
+  --logo-height: 3.43vw;    /* <-- 修改这里，使 LOGO 高度等比缩放 */
+  --icon-size: 16px;        /* 图标大小通常可以保持 px 或根据实际情况调整 */
   --container-width: 1600px;        /* 页面内容主容器宽度 */
 }
 

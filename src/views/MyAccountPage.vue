@@ -16,20 +16,20 @@
 
         <div class="cards-wrapper">
           <div class="account-card">
-            <div class="card-header">
+            <div class="card-header" @click="router.push('/order-tracking')">
               <h3>{{ $t('account.order_card.title') }}</h3>
               <el-icon><ArrowRight /></el-icon>
             </div>
             <div class="card-body order-card-body">
               <p>{{ $t('account.order_card.no_orders') }}</p>
-              <el-button class="go-shopping-btn" @click="navigateTo('home')">
+              <el-button class="go-shopping-btn" @click="router.push('/')">
                 {{ $t('account.order_card.go_shopping') }}
               </el-button>
             </div>
           </div>
 
           <div class="account-card">
-            <div class="card-header">
+            <div class="card-header" @click="router.push('/placeholder/Account-Settings')">
               <h3>{{ $t('account.settings_card.title') }}</h3>
               <el-icon>
                 <ArrowRight />
@@ -37,12 +37,11 @@
             </div>
             <div class="card-body settings-card-body">
               <div v-if="authStore.userInfo">
-                <!-- <p class="user-name">{{ authStore.userInfo.nickname || authStore.userInfo.username }}</p> {/* 【修改】显示用户昵称或用户名 */}
-                <p class="user-email">{{ authStore.userInfo.email }}</p> {/* 【修改】显示用户邮箱 */} -->
+                <p class="user-name">{{ authStore.userInfo.nickname || authStore.userInfo.username }}</p>
+                <p class="user-email">{{ authStore.userInfo.email }}</p>
               </div>
               <div v-else>
-                <!-- 【新增】用户信息未加载时的提示 -->
-                <p>{{ $t('account.settings_card.user_info_not_available') }}</p> {/* 【修改】替换为国际化键 */}
+                <p>{{ $t('account.settings_card.user_info_not_available') }}</p>
               </div>
             </div>
           </div>
@@ -56,22 +55,20 @@
 
 <script setup>
 import { inject } from 'vue';
+import { useRouter } from 'vue-router';
 import { ElButton, ElIcon } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import { useAuthStore } from '../stores/auth';
 
+const router = useRouter();
 const authStore = useAuthStore();
 const navigateTo = inject('navigateTo');
 
-const logout = () => {
-  // 1. 调用 Pinia store 中的登出方法，清除 state 和 localStorage
-  authStore.handleLogout();
-  // 2. 强制刷新页面并跳转到首页
-  // This ensures all component states are reset completely.
+const logout = async () => {
+  await authStore.handleLogout();
   window.location.href = '/'; 
-
 };
 </script>
 
@@ -136,7 +133,16 @@ const logout = () => {
   padding: 20px;
   background-color: #e9ecef;
   border-radius: 8px 8px 0 0;
+  /* ▼▼▼ 3. 添加鼠標指針和過渡效果 ▼▼▼ */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
+/* ▼▼▼ 3. 添加懸停效果 ▼▼▼ */
+.card-header:hover {
+    background-color: #d8dcdf;
+}
+
 .card-header h3 {
   margin: 0;
   font-size: 14px;

@@ -140,9 +140,9 @@ const handleSubscribe = async () => {
   cursor: pointer;
 }
 h2 {
-  font-size: 48px;
+  font-size: 2.5vw; /* 48px/19.2 */
   font-weight: 700;
-  margin: 0 0 15px 0;
+  margin: 0 0 0.78vw 0; /* 15px/19.2 */
   color: #000;
   line-height: 1.4;
 }
@@ -151,9 +151,9 @@ h2 {
   color: #D32F2F;
 }
 p {
-  font-size: 18px;
+  font-size: 0.9375vw; /* 18px/19.2 */
   color: #555;
-  margin: 0 0 40px 0;
+  margin: 0 0 2.08vw 0; /* 40px/19.2 */
 }
 form {
   display: flex;

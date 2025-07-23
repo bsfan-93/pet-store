@@ -207,18 +207,18 @@ const features = computed(() => [
 
 /* ▼▼▼ START: CSS MODIFICATION FOR PARAGRAPH ▼▼▼ */
 .description {
-  font-size: 22px;
+  font-size: 1.145vw; /* 22px/19.2 */
   line-height: 1.8;
   color: #333;
-  margin: 0 0 24px 0; /* 统一段落的下边距 */
+  margin: 0 0 1.25vw 0; /* 24px/19.2 */
 }
 .signature-image {
   /* 控制点 1: 调整宽度来改变大小 */
-  width: 70px; 
+  width: 3.64vw; /* 70px/19.2 */
   height: auto;
   padding-left: 0px;
   /* 控制点 2: 调整上边距来改变与上方段落的距离 */
-  margin-top: -20px; 
+  margin-top: -1.04vw; /* -20px/19.2 */
 }
 /* ▲▲▲ END: CSS MODIFICATION FOR PARAGRAPH ▲▲▲ */
 
@@ -229,7 +229,7 @@ const features = computed(() => [
   flex-direction: column;
 }
 .tagline-line {
-  font-size: 60px;
+  font-size: 3.125vw; /* 60px/19.2 */
   font-weight: bold;
   letter-spacing: 2px;
   line-height: 1.2;
@@ -237,10 +237,10 @@ const features = computed(() => [
   white-space: nowrap;
 }
 .tagline-line:nth-child(1) {
-  margin-bottom: 90px; /* 拉大第一行和第二行的间距 */
+  margin-bottom: 4.68vw; /* 90px/19.2 */  /* 拉大第一行和第二行的间距 */
 }
 .tagline-line:nth-child(2) {
-  margin-bottom: 15px; /* 第二行和第三行的间距 */
+  margin-bottom: 0.78vw; /* 15px/19.2 */  /* 第二行和第三行的间距 */
 }
 /* ▲▲▲ END: CSS MODIFICATION FOR TAGLINE ▲▲▲ */
 
@@ -278,19 +278,19 @@ const features = computed(() => [
   text-align: center;
 }
 .feature-icon {
-  width: 160px;
-  height: 160px;
-  margin-bottom: 20px;
+  width: 8.33vw; /* 160px/19.2 */
+  height: 8.33vw; /* 160px/19.2 */
+  margin-bottom: 1.04vw; /* 20px/19.2 */
 }
 .feature-title {
-  font-size: 24px;
+  font-size: 1.25vw; /* 24px/19.2 */
   font-weight: bold;
   color: #000;
   margin: 0 0 10px 0;
   line-height: 1.4;
 }
 .feature-description {
-  font-size: 22px;
+  ffont-size: 1.145vw; /* 22px/19.2 */
   color: #555;
   line-height: 1.6;
   margin: 0;
@@ -331,19 +331,19 @@ lf-right {
 }
 
 .lf-title {
-  font-size: 60px;
+  font-size: 3.125vw; /* 60px/19.2 */
   font-weight: bold;
   color: #000;
   line-height: 1.3;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.04vw 0; /* 20px/19.2 */
   letter-spacing: 1px;
 }
 
 .lf-description {
-  font-size: 22px;
+  font-size: 1.145vw; /* 22px/19.2 */
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px 0;
+  margin: 0 0 1.25vw 0; /* 24px/19.2 */
 }
 
 .lf-stats {
@@ -359,16 +359,16 @@ lf-right {
 }
 
 .lf-stats .stat-value {
-  font-size: 36px;
+  font-size: 1.875vw; /* 36px/19.2 */
   font-weight: bold;
   color: #000;
   line-height: 1.1;
 }
 
 .lf-stats .stat-label {
-  font-size: 14px;
+  font-size: 0.73vw; /* 14px/19.2 */
   color: #666;
-  margin-top: 8px;
+  margin-top: 0.41vw; /* 8px/19.2 */
   white-space: nowrap;
 }
 
@@ -391,7 +391,7 @@ lf-right {
 }
 
 .ponti-subtitle {
-  font-size: 24px;
+  font-size: 1.25vw; /* 24px/19.2 */
   font-weight: bold;
   color: #555;
   letter-spacing: 1px;
@@ -400,19 +400,19 @@ lf-right {
 }
 
 .ponti-title {
-  font-size: 60px;
+  font-size: 3.125vw; /* 60px/19.2 */
   font-weight: bold;
   color: #000;
   line-height: 1.4;
   text-transform: uppercase;
-  margin: 0 0 30px 0;
+  margin: 0 0 1.56vw 0; /* 30px/19.2 */
 }
 
 .ponti-description {
-  font-size: 22px;
+  font-size: 1.145vw; /* 22px/19.2 */
   color: #666;
   line-height: 1.8;
-  margin: 0 0 20px 0;
+  margin: 0 0 1.04vw 0; /* 20px/19.2 */
 }
 
 .ponti-right {
@@ -433,7 +433,7 @@ lf-right {
   position: absolute;
   right: -50px;
   bottom: 20px;
-  font-size: 60px;
+  font-size: 3.125vw; /* 60px/19.2 */
   font-weight: bold;
   color: #e0e0e0;
   line-height: 0.9;
@@ -454,10 +454,10 @@ lf-right {
 }
 
 .clan-title {
-  font-size: 60px;
+  font-size: 3.125vw; /* 60px/19.2 */
   font-weight: bold;
   color: #000;
-  margin: 0 0 40px 0;
+  margin: 0 0 2.08vw 0; /* 40px/19.2 */
 }
 
 .clan-video-wrapper {
@@ -495,11 +495,11 @@ lf-right {
 }
 
 .play-icon {
-  font-size: 80px;
+  font-size: 4.16vw; /* 80px/19.2 */
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
-  padding: 20px;
+  padding: 1.04vw; /* 20px/19.2 */
   transition: transform 0.3s ease;
 }
 

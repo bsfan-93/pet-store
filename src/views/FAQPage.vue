@@ -46,32 +46,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n'; // 2. 引入 useI18n
 import { ElCollapse, ElCollapseItem, ElButton } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
 const activeNames = ref(0); 
+const { tm } = useI18n(); // 3. 获取 tm 函数以加载翻译模块
 
-const faqData = ref([
-    {
-    question: 'Where is your company located?',
-    answer: 'Our office is located at 1135 Walsh Ave, Santa Clara, California.'
-  },
-  {
-    question: 'Where do you ship from?',
-    answer: 'We ship from our partnered warehouses across the State. Please expect your items to be shipped separately (if you order more than one item) as different warehouses specialize in different areas of manufacturing.'
-  },
-  {
-    question: 'How long will it take for my items to arrive?',
-    answer: 'Ships from the shop within 2 business days. Transit time for standard shipping is 3-4 business days. Estimated arrival time is within 8 business days of the customer\'s order. In peak periods like holidays, Black Friday and Cyber Monday, please allow up to 5 business days for dispatch'
-  },
-   {
-    question: 'How long will it take for my items to arrive?',
-    answer: 'Ships from the shop within 2 business days. Transit time for standard shipping is 3-4 business days. Estimated arrival time is within 8 business days of the customer\'s order. In peak periods like holidays, Black Friday and Cyber Monday, please allow up to 5 business days for dispatch'
-  },
-]);
+// 4. 将写死的数据替换为从 i18n 文件中获取的计算属性
+const faqData = computed(() => tm('faq.items'));
 </script>
 
 <style scoped>

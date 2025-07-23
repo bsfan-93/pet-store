@@ -85,7 +85,7 @@ watch(() => props.visible, (newValue) => {
   padding-left: 170px;
   display: flex;
   align-items: flex-start;
-  gap: 130px;
+  gap: 180px;
 }
 .menu-links {
   width: var(--logo-width);
@@ -99,8 +99,8 @@ watch(() => props.visible, (newValue) => {
 }
 .menu-links li a {
   display: block;
-  padding: 12px 0;
-  font-size: 26px;
+  padding: 30px 0;   /* 12px */
+  font-size: 24px;
   font-weight: 600;
   color: var(--text-color);
   text-decoration: none;
@@ -113,7 +113,7 @@ watch(() => props.visible, (newValue) => {
   flex: 1;
   display: flex;
   justify-content: flex-start;
-  gap: 30px;
+  gap: 80px;
 }
 .product-item {
   display: block;

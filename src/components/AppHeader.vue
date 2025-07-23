@@ -12,7 +12,7 @@
       <nav class="main-nav">
         <div 
           class="nav-item-shop"
-          @mouseenter="isMenuVisible = true"
+          @mouseenter="openMenu()"            @mouseleave="closeMenuDelayed()"    
         >
           <a href="#" @click.prevent>{{ $t('header.shop') }}</a>
         </div>
@@ -47,7 +47,7 @@
     
     <MegaMenu 
       :visible="isMenuVisible"
-      @close="isMenuVisible = false"
+      @close="isMenuVisible = false"          @mouseenter="clearCloseTimer()"
     />
 
     <Teleport to="body">
@@ -106,6 +106,26 @@ const handleUserIconClick = async () => {
 };
 
 const isMenuVisible = ref(false);
+let closeMenuTimer = null; // + 用于存储计时器 ID
+
+// + 方法：立即打开菜单并清除任何关闭计时器
+const openMenu = () => {
+  clearTimeout(closeMenuTimer); // 清除可能正在进行的关闭计时器
+  isMenuVisible.value = true;
+};
+
+// + 方法：延迟关闭菜单（给鼠标一个移动到菜单的时间）
+const closeMenuDelayed = () => {
+  closeMenuTimer = setTimeout(() => {
+    isMenuVisible.value = false;
+  }, 200); // 200毫秒延迟，您可以根据需要调整此值
+};
+
+// + 方法：清除关闭计时器（当鼠标再次进入触发区域或菜单区域时）
+const clearCloseTimer = () => {
+  clearTimeout(closeMenuTimer);
+};
+
 const isSearchVisible = ref(false);
 
 const { locale } = useI18n();
@@ -154,28 +174,22 @@ defineProps({
 }
 .header-container {
   max-width: var(--container-width);
-  height: 100%;
+  height: 100%;    /* 继承父级 70px 高度 */
   margin: 0 auto;
   padding: 0 20px;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center;    /* 垂直居中内容 */
+  overflow: hidden; /* + 添加此行，裁剪任何超出容器高度的内容 */
 }
 
 /* --- Logo 智能切换样式 --- */
 
 /* 1. 让logo的容器成为定位的基准 */
-.logo {
-  position: relative;
-  width: var(--logo-width);
-  height: var(--logo-height);
-}
-
-/* 容器控制尺寸，这个我们刚修复好，保持不变 */
-.logo {
-  position: relative;
-  width: var(--logo-width);
-  height: var(--logo-height);
+.app-header .logo { /* + 确保这里是 .app-header .logo，而不是直接 .logo img */
+  position: relative; /* 保持相对定位 */
+  width: var(--logo-width); /* 使用 vw 单位的宽度 */
+  height: var(--logo-height); /* 使用 vw 单位的高度 */
 }
 
 /* 默认状态，使用滤镜将深色logo变为白色 */
@@ -183,7 +197,8 @@ defineProps({
   width: 100%;
   height: 100%;
   display: block; /* 使用 block 即可，不再需要 absolute 定位 */
-  filter: brightness(0) invert(1);
+  object-fit: contain; /* + 添加 object-fit: contain; 防止 Logo 变形 */
+  filter: brightness(0) invert(1);    /* 意图：默认状态下将 Logo 变为白色 */
   transition: filter 0.3s ease-in-out; /* 让颜色变化有平滑的动画效果 */
 }
 
@@ -193,9 +208,10 @@ defineProps({
   filter: none;
 }
 
-/* 导航栏间距 */
+/* 【修改】导航栏间距 */
+/* 将 460px 转换为 vw，例如 460 / 19.2 = 23.95vw */
 .main-nav {
-  margin-left: 460px;
+  margin-left: 23.95vw; /* 调整：左侧外边距等比缩放 */
 }
 .nav-item-shop {
   display: inline-block;

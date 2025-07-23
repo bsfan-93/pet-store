@@ -7,32 +7,38 @@
 
     <main class="main-content">
       <div class="contact-us-container">
-        <h1>CONTACT US</h1>
+        <h1>{{ t('contact_us.title') }}</h1>
         
         <div class="info-text">
-          <p>Our media team works closely with the media and social partners to solve issues regarding pets' life conditions. We aim to support with high-tech and healthy living styles for both humans and pets.</p>
-          <p>Customer Service:15380822206@163.com (We will reply to your email within 24 hours.)</p>
-          <p>Customer Service Phone: (86) 15380822206 (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)</p>
+          <p>{{ t('contact_us.p1') }}</p>
+          <p v-html="t('contact_us.p2')"></p>
+          <p v-html="t('contact_us.p3')"></p>
         </div>
 
         <div class="retail-service">
-          <h2>RETAIL SERVICE</h2>
-          <p>In addition to ensuring neat, clean, compliant and safe basic goods display requirements, we will try our best to comprehensively enrich product types and ensure sufficient quantity to meet customers' purchasing needs.</p>
+          <h2>{{ t('contact_us.retail_service_title') }}</h2>
+          <p>{{ t('contact_us.retail_service_p') }}</p>
         </div>
 
         <div class="form-section">
-          <h2>Do you have any question?</h2>
+          <h2>{{ t('contact_us.form_title') }}</h2>
           <div class="form-box">
             <form @submit.prevent="sendMessage">
-              <el-input v-model="form.email" placeholder="Email" size="large"></el-input>
+              <el-input 
+                v-model="form.email" 
+                :placeholder="t('contact_us.email_placeholder')" 
+                size="large">
+              </el-input>
               <el-input
                 v-model="form.message"
                 type="textarea"
                 :rows="6"
-                placeholder="Message"
+                :placeholder="t('contact_us.message_placeholder')"
                 size="large"
               ></el-input>
-              <el-button native-type="submit" class="send-button" size="large">Send Message</el-button>
+              <el-button native-type="submit" class="send-button" size="large">
+              {{ t('contact_us.send_button') }}
+            </el-button>
             </form>
           </div>
         </div>
@@ -46,10 +52,13 @@
 
 <script setup>
 import { reactive } from 'vue';
+import { useI18n } from 'vue-i18n'; // 1. 引入 useI18n
 import { ElInput, ElButton } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+
+const { t } = useI18n(); // 2. 获取 t 函数
 
 // 【修改】简化表单数据
 const form = reactive({
@@ -103,6 +112,7 @@ h1 {
   margin-bottom: 40px;
   /* 【关键修改】将大标题居中对齐 */
   text-align: center;
+  word-spacing: 10px; /* <-- 新增這一行來加大單詞間距 */
 }
 
 .info-text {
@@ -164,10 +174,12 @@ h1 {
 .send-button {
   background-color: #7CB342; /* 蓝色按钮 */
   color: #fff;
-  border-radius: 5px;
+  border-radius: 35px;
   height: 50px;
   border: none;
   font-weight: 500;
+  width: 70%;
+  align-self: center;
 }
 .send-button:hover {
   background-color: #7CB342;

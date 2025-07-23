@@ -3,7 +3,6 @@
     "promo": "新用戶註冊即享八折優惠！"
   },
   "header": {
-    "home": "首頁",
     "shop": "商店",
     "about_us": "關於我們",
     "app": "App"
@@ -14,39 +13,48 @@
     "shop_now": "即刻選購"
   },
   "search": {
-    "placeholder": "找商品"
+    "placeholder": "找商品",
+    "loading": "搜尋中...",
+    "no_results": "找不到相關商品"
   },
   "cart": {
     "title": "你的購物車",
     "empty_message": "你的購物車是空的",
     "continue_shopping": "繼續購物",
     "login_prompt": "已經有帳戶了？",
-    "login_link": "登入以更快地結帳。"
+    "login_link": "登入以更快地結帳。",
+    "welcome_back": "歡迎回來，{userName}！",
+    "start_Browse": "您的購物車目前是空的。開始瀏覽我們精彩的商品吧！",
+    "subtotal": "小計",
+    "checkout_button": "繼續結帳",
+    "checkout": "結帳",
+    "placeholder_items": "商品將顯示在此處..."
   },
   "footer": {
-  "about_title": "公司",
-  "support_title": "支援",
-  "works_title": "工作原理",
-  "join_title": "註冊以獲取首單九折優惠",
-  "placeholder_email": "您的郵箱",
-  "signup_button": "訂閱",
-  "download_app_title": "下載App",
-  "links": {
-    "about_us": "關於我們",
-    "blog": "部落格",
-    "privacy_policy": "隱私權政策",
-    "terms_of_service": "服務條款",
-    "faq": "常見問題",
-    "contact_us": "聯絡我們",
-    "order_tracking": "訂單追蹤",
-    "app_service": "App服務",
-    "user_manual": "使用者手冊",
-    "shipping_policy": "配送政策",
-    "warranty_policy": "保固政策",
-    "price_match_policy": "價格匹配政策",
-    "return_refund_policy": "退貨和退款政策"
-  }
-},
+    "about_title": "公司",
+    "support_title": "支援",
+    "works_title": "工作原理",
+    "join_title": "註冊以獲取首單九折優惠",
+    "placeholder_email": "您的郵箱",
+    "signup_button": "訂閱",
+    "download_app_title": "下載App",
+    "links": {
+      "about_us": "關於我們",
+      "blog": "部落格",
+      "privacy_policy": "隱私權政策",
+      "terms_of_service": "服務條款",
+      "faq": "常見問題",
+      "contact_us": "聯絡我們",
+      "order_tracking": "訂單追蹤",
+      "app_service": "App服務",
+      "user_manual": "使用者手冊",
+      "shipping_policy": "配送政策",
+      "warranty_policy": "保固政策",
+      "price_match_policy": "價格匹配政策",
+      "return_refund_policy": "退貨和退款政策",
+      "app": "App"
+    }
+  },
   "faq": {
     "title": "常見問題",
     "feedback": {
@@ -65,6 +73,10 @@
       },
       {
         "question": "我的商品需要多長時間才能到達？",
+        "answer": "商店在 2 個工作日內發貨。標準運輸的運輸時間為 3-4 個工作日。預計到達時間在客戶下單後的 8 個工作日內。"
+      },
+      {
+        "question": "我的商品需要多長時間才能到達？",
         "answer": "商店在 2 個工作日內發貨。標準運輸的運輸時間為 3-4 個工作日。預計到達時間在客戶下單後的 8 個工作日內。在節假日、黑色星期五和網絡星期一等高峰期，請允許最多 5 個工作日的發貨時間。"
       }
     ]
@@ -78,7 +90,8 @@
       "go_shopping": "去購物"
     },
     "settings_card": {
-      "title": "帳戶設定"
+      "title": "帳戶設定",
+      "user_info_not_available": "用戶資訊不可用。"
     }
   },
   "login": {
@@ -101,14 +114,16 @@
     "title": "建立帳戶",
     "subtitle": "獲取獨家功能及更多。",
     "name_label": "姓名",
+    "email_label": "電子郵件",
+    "password_label": "密碼",
     "create_button": "建立帳戶",
     "login_prompt": "已經有帳戶了？",
     "login_link": "登入",
     "validation": {
-        "name_required": "請輸入您的姓名",
-        "email_required": "請輸入您的電子郵件",
-        "email_format": "請輸入有效的電子郵件地址",
-        "password_required": "請輸入密碼"
+      "name_required": "請輸入您的姓名",
+      "email_required": "請輸入您的電子郵件",
+      "email_format": "請輸入有效的電子郵件地址",
+      "password_required": "請輸入密碼"
     },
     "success_message": "帳戶建立成功！",
     "error_message": "註冊失敗。"
@@ -121,10 +136,16 @@
     "select_placeholder": "選擇",
     "add_to_cart": "加入購物車",
     "buy_now": "立即購買",
+    "added_feedback": "已新增！",
     "usp_title": "獨特賣點",
     "specs_title": "產品規格",
     "params_title": "產品參數",
-    "loading": "載入中..."
+    "loading": "載入中...",
+    "login_to_purchase_message": "請登入以繼續購買。",
+    "product_details_not_loaded": "產品詳細資訊尚未載入。請稍候。",
+    "network_error_message": "網路連線失敗，請檢查您的網路。",
+    "payment_service_error_message": "付款服務暫時不可用，請稍後再試。",
+    "payment_session_failed_message": "建立付款階段作業失敗。"
   },
   "subscribe_popup": {
     "title": "立即解鎖您的訂單 <span class=\"highlight\">20%</span> 折扣",
@@ -132,7 +153,9 @@
     "email_label": "電子郵件",
     "subscribe_button": "訂閱",
     "no_thanks": "不，謝謝",
-    "error_email": "請輸入有效的電子郵件地址。"
+    "error_email": "請輸入有效的電子郵件地址。",
+    "subscription_successful": "訂閱成功！謝謝您。",
+    "subscription_failed": "訂閱失敗。請再試一次。"
   },
   "collection_list": {
     "title": "按類別選購"
@@ -142,34 +165,130 @@
     "new_arrivals": "新品上市",
     "best_sellers": "熱銷排行"
   },
+  "mega_menu": {
+    "feeder": "餵食器",
+    "fountains": "飲水機",
+    "leash": "牽引繩"
+  },
+  "products": {
+    "product-1": "智慧餵食器",
+    "product-2": "智慧飲水機",
+    "product-3": "互動玩具"
+  },
   "about_us": {
-  "hero": {
-    "alt": "歡迎來到 Pets Clan"
-  },
-  "intro": {
-    "tagline1": "PETS CLAN",
-    "tagline2": "輕鬆",
-    "tagline3": "寵物護理。",
-    "p1": "在 Pets Clan，我們致力於為每一位寵物主人帶來更智能、更環保、更便捷的寵物生活方式。我們堅信，技術和設計應以使用者需求為中心，創造出能真正提升生活品質的產品。",
-    "p2": "我們不僅是技術的推動者，更是寵物與主人之間的橋樑，幫助您與您的寵物建立更深層次的情感聯繫。",
-    "signature_alt": "Pets Clan 簽名"
-  },
-  "banner": {
-    "alt": "Pets Clan 橫幅"
-  },
-  "features": {
-    "feature1": {
-      "title": "環保與<br>可持續",
-      "description": "我們不僅關心寵物，也關心地球。我們使用環保材料和可持續的工藝，讓每一個選擇都為未來做出貢獻。"
+    "hero": {
+      "alt": "歡迎來到 Pets Clan"
     },
-    "feature2": {
-      "title": "設計驅動與<br>創新",
-      "description": "我們是一個以設計為驅動的品牌。從外觀到功能，每一個細節都經過精心打造，既實用又美觀，完美融入您的家居生活。"
+    "intro": {
+      "tagline1": "PETS CLAN",
+      "tagline2": "輕鬆",
+      "tagline3": "寵物護理。",
+      "p1": "在 Pets Clan，我們致力於為每一位寵物主人帶來更智能、更環保、更便捷的寵物生活方式。我們堅信，技術和設計應以使用者需求為中心，創造出能真正提升生活品質的產品。",
+      "p2": "我們不僅是技術的推動者，更是寵物與主人之間的橋樑，幫助您與您的寵物建立更深層次的情感聯繫。",
+      "signature_alt": "Pets Clan 簽名"
     },
-    "feature3": {
-      "title": "以寵物為中心<br>用心製作",
-      "description": "每一款產品都源於對寵物的熱愛。我們深入了解寵物及其主人的需求，用心創造真正有價值的產品。"
+    "banner": {
+      "alt": "Pets Clan 橫幅"
+    },
+    "features": {
+      "feature1": {
+        "title": "綠色生活，節能<br>環保",
+        "description": "無浪費設計，為寵物<br>和地球負責"
+      },
+      "feature2": {
+        "title": "智能控制，<br>隨時餵養",
+        "description": "遠程監控寵物健康<br>隨時為它們餵食"
+      },
+      "feature3": {
+        "title": "簡約設計，<br>零浪費",
+        "description": "無需額外耗材，<br>環保與智能並行"
+      },
+      "feature4": {
+        "title": "紅點設計，<br>品質之選",
+        "description": "屢獲殊榮的設計，<br>技術與美學的完美結合"
+      }
+    },
+    "lifelong": {
+      "image_alt": "Pets Clan 智能餵食器",
+      "title": "PETS CLAN,<br>餵養一生的友誼。",
+      "p1": "（此處為繁體中文佔位符段落）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
+      "p2": "（此處為繁體中文佔位符段落）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "stat1_label": "實驗測試結果",
+      "stat2_label": "精準餵養",
+      "stat3_label": "長效電池"
+    },
+    "ponti": {
+      "subtitle": "關於設計師 PONTI",
+      "title": "紅點設計獎<br>多次獲得者",
+      "p1": "（此處為繁體中文佔位符段落）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
+      "p2": "（此處為繁體中文佔位符段落）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "portrait_alt": "Ponti 肖像"
+    },
+    "clan": {
+      "title": "關於 Pets Clan",
+      "video_alt": "關於 Pets Clan 影片"
     }
+  },
+  "app_page": {
+    "hero": {
+      "ios": "IOS",
+      "android": "Android"
+    },
+    "all_in_one": {
+      "title": "多合一應用",
+      "description": "在一個應用中管理您的所有設備，<br>讓主人可以隨時查看寵物的狀態",
+      "alt": "多合一應用介面"
+    },
+    "data_service": {
+      "title": "免費寵物數據服務",
+      "description": "通過長期數據追踪，更好地了解您的毛茸茸夥伴",
+      "alt": "數據服務圖示"
+    },
+    "features": {
+      "feeder": {
+        "title": "餵食器",
+        "description": "通過長期數據追踪，<br>更好地了解您的毛茸茸夥伴"
+      },
+      "fountains": {
+        "title": "飲水機",
+        "description": "通過長期數據追踪，<br>更好地了解您的毛茸茸夥伴"
+      },
+      "leash": {
+        "title": "牽引繩",
+        "description": "通過長期數據追踪，<br>更好地了解您的毛茸茸夥伴"
+      }
+    },
+    "remote_control": {
+      "title": "通過互聯支持實現遠程控制",
+      "alt": "遠程控制支持"
+    }
+  },
+  "contact_us": {
+    "title": "聯絡我們",
+    "p1": "有任何問題或意見嗎？請使用下方的表格向我們發送訊息，或透過郵件聯絡我們：",
+    "p2": "support@petsclan.com",
+    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "retail_service_title": "零售服務",
+    "retail_service_p": "如需零售服務，請聯絡：sales@petsclan.com",
+    "form_title": "發送訊息給我們",
+    "email_placeholder": "您的電子郵件",
+    "message_placeholder": "您的訊息",
+    "send_button": "發送"
+  },
+  "order_tracking": {
+    "title": "訂單追蹤",
+    "placeholder": "輸入您的追蹤號碼",
+    "verify_prefix": "透過連結驗證 ",
+    "verify_link": "連結",
+    "track_button": "追蹤",
+    "service_email": "客戶服務電郵：support@petsclan.com",
+    "service_phone": "客戶服務電話：1-800-123-4567"
+  },
+  "return_refund_policy": {
+    "title": "退貨與退款政策",
+    "p1": "我們有 30 天的退貨政策，這意味著您在收到商品後的 30 天內可以要求退貨。",
+    "p2": "要符合退貨資格，您的商品必須處於與您收到時相同的狀態，未經穿戴或使用，帶有標籤，並在原始包裝中。您還需要收據或購買證明。",
+    "p3": "要開始退貨，您可以透過 support@petsclan.com 聯絡我們。如果您的退貨被接受，我們將向您發送退貨運送標籤，以及有關如何以及將包裹寄往何處的說明。",
+    "p4": "未經事先要求退貨而退回給我們的商品將不被接受。您可以隨時透過 support@petsclan.com 就任何退貨問題與我們聯絡。"
   }
-}
 }

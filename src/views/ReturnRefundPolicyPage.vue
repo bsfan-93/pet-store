@@ -7,13 +7,13 @@
 
     <main class="main-content">
       <div class="policy-container">
-        <h1>Return & Refund Policy</h1>
+        <h1>{{ t('return_refund_policy.title') }}</h1>
         
         <div class="policy-text">
-          <p>Our media team works closely with the media and social partners to solve issues regarding pets' life conditions. We aim to support with high-tech and healthy living styles for both humans and pets.</p>
-          <p>Customer Service:15380822206@163.com (We will reply to your email within 24 hours.)</p>
-          <p>Customer Service Phone: (86) 15380822206 (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)</p>
-          <p>In addition to ensuring neat, clean, compliant and safe basic goods display requirements, we will try our best to comprehensively enrich product types and ensure sufficient quantity to meet customers' purchasing needs.</p>
+          <p>{{ t('return_refund_policy.p1') }}</p>
+          <p v-html="t('return_refund_policy.p2')"></p>
+          <p v-html="t('return_refund_policy.p3')"></p>
+          <p>{{ t('return_refund_policy.p4') }}</p>
         </div>
       </div>
     </main>
@@ -23,9 +23,12 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'; // 1. 引入 useI18n
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+
+const { t } = useI18n(); // 2. 获取 t 函数
 </script>
 
 <style scoped>
@@ -64,6 +67,7 @@ h1 {
   color: #000;
   margin-bottom: 40px;
   text-align: center;
+  word-spacing: 10px; /* <-- 新增這一行來加大單詞間距 */
 }
 
 .policy-text {

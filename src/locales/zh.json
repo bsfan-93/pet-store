@@ -12,20 +12,6 @@
     "title2": "为爱宠",
     "shop_now": "即刻选购"
   },
-  "features": {
-    "camera_title": "Scout 智能摄像头",
-    "camera_desc": "随时关注您毛茸茸朋友的最佳方式。",
-    "feeder_title": "RFID 喂食器",
-    "feeder_desc": "为多宠物家庭提供个性化喂养方案。",
-    "fountain_title": "Dockstream 无线饮水机",
-    "fountain_desc": "新鲜流动的水，鼓励宠物多喝水。"
-  },
-  "gallery": {
-    "title": "关注我们获取更多"
-  },
-  "how_to": {
-    "title": "如何健康养宠"
-  },
   "search": {
     "placeholder": "找商品",
     "loading": "正在搜索...",
@@ -37,11 +23,11 @@
     "continue_shopping": "继续购物",
     "login_prompt": "已经有账户了？",
     "login_link": "登录以更快地结账。",
-    "login_benefit": "你的购物车内容将跨设备保存！",
     "welcome_back": "欢迎回来，{userName}！",
     "start_Browse": "你的购物车目前是空的，快去逛逛我们精彩的商品吧！",
     "subtotal": "小计",
-    "checkout": "继续结账",
+    "checkout_button": "继续结账",
+    "checkout": "结账",
     "placeholder_items": "这里将显示商品列表..."
   },
   "footer": {
@@ -53,19 +39,20 @@
     "signup_button": "订阅",
     "download_app_title": "下载App",
     "links": {
-        "about_us": "关于我们",
-        "blog": "博客",
-        "privacy_policy": "隐私政策",
-        "terms_of_service": "服务条款",
-        "faq": "常见问题",
-        "contact_us": "联系我们",
-        "app_service": "App服务",
-        "user_manual": "用户手册",
-        "shipping_policy": "配送政策",
-        "warranty_policy": "保修政策",
-        "price_match_policy": "价格匹配政策",
-        "return_refund_policy": "退货和退款政策",
-        "order_tracking": "订单追踪"
+      "about_us": "关于我们",
+      "blog": "博客",
+      "privacy_policy": "隐私政策",
+      "terms_of_service": "服务条款",
+      "faq": "常见问题",
+      "contact_us": "联系我们",
+      "order_tracking": "订单追踪",
+      "app_service": "App服务",
+      "user_manual": "用户手册",
+      "shipping_policy": "配送政策",
+      "warranty_policy": "保修政策",
+      "price_match_policy": "价格匹配政策",
+      "return_refund_policy": "退货和退款政策",
+      "app": "App"
     }
   },
   "faq": {
@@ -86,6 +73,10 @@
       },
       {
         "question": "我的商品需要多长时间才能到达？",
+        "answer": "商店在 2 个工作日内发货。标准运输的运输时间为 3-4 个工作日。预计到达时间在客户下单后的 8 个工作日内。"
+      },
+      {
+        "question": "我的商品需要多长时间才能到达？",
         "answer": "商店在 2 个工作日内发货。标准运输的运输时间为 3-4 个工作日。预计到达时间在客户下单后的 8 个工作日内。在节假日、黑色星期五和网络星期一等高峰期，请允许最多 5 个工作日的发货时间。"
       }
     ]
@@ -99,7 +90,8 @@
       "go_shopping": "去购物"
     },
     "settings_card": {
-      "title": "账户设置"
+      "title": "账户设置",
+      "user_info_not_available": "用户信息不可用。"
     }
   },
   "login": {
@@ -128,10 +120,10 @@
     "login_prompt": "已经有账户了？",
     "login_link": "登录",
     "validation": {
-        "name_required": "请输入您的姓名",
-        "email_required": "请输入您的电子邮箱",
-        "email_format": "请输入有效的电子邮箱地址",
-        "password_required": "请输入密码"
+      "name_required": "请输入您的姓名",
+      "email_required": "请输入您的电子邮箱",
+      "email_format": "请输入有效的电子邮箱地址",
+      "password_required": "请输入密码"
     },
     "success_message": "账户创建成功！",
     "error_message": "注册失败。"
@@ -144,10 +136,16 @@
     "select_placeholder": "选择",
     "add_to_cart": "加入购物车",
     "buy_now": "立即购买",
+    "added_feedback": "已添加！",
     "usp_title": "独特卖点",
     "specs_title": "产品规格",
     "params_title": "产品参数",
-    "loading": "加载中..."
+    "loading": "加载中...",
+    "login_to_purchase_message": "请登录以继续购买。",
+    "product_details_not_loaded": "产品详情尚未加载。请稍候。",
+    "network_error_message": "网络连接失败，请检查您的网络。",
+    "payment_service_error_message": "支付服务暂时不可用，请稍后再试。",
+    "payment_session_failed_message": "创建支付会话失败。"
   },
   "subscribe_popup": {
     "title": "立即解锁您的订单 <span class=\"highlight\">20%</span> 折扣",
@@ -155,7 +153,9 @@
     "email_label": "电子邮箱",
     "subscribe_button": "订阅",
     "no_thanks": "不，谢谢",
-    "error_email": "请输入有效的电子邮箱地址。"
+    "error_email": "请输入有效的电子邮箱地址。",
+    "subscription_successful": "订阅成功！谢谢您。",
+    "subscription_failed": "订阅失败。请再试一次。"
   },
   "collection_list": {
     "title": "按类别选购"
@@ -171,92 +171,124 @@
     "leash": "牵引绳"
   },
   "products": {
-    "product-1": "喂食器",
-    "product-2": "饮水机",
-    "product-3": "牵引绳"
+    "product-1": "智能喂食器",
+    "product-2": "智能饮水机",
+    "product-3": "互动玩具"
   },
   "about_us": {
-  "hero": { "alt": "欢迎来到 Pets Clan" },
-  "intro": {
-    "tagline1": "PETS CLAN",
-    "tagline2": "轻松",
-    "tagline3": "宠物护理。",
-    "p1": "在 Pets Clan，我们致力于为每一位宠物主人带来更智能、更环保、更便捷的宠物生活方式。我们坚信，技术和设计应以用户需求为中心，创造出能真正提升生活品质的产品。",
-    "p2": "我们不仅是技术的推动者，更是宠物与主人之间的桥梁，帮助您与您的宠物建立更深层次的情感联系。",
-    "signature_alt": "Pets Clan 签名"
-  },
-  "banner": { "alt": "Pets Clan 横幅" },
-  "features": {
-    "feature1": {
-      "title": "绿色生活，节能<br>环保",
-      "description": "无浪费设计，为宠物<br>和地球负责"
+    "hero": {
+      "alt": "欢迎来到 Pets Clan"
     },
-    "feature2": {
-      "title": "智能控制，<br>随时喂养",
-      "description": "远程监控宠物健康<br>随时为它们喂食"
+    "intro": {
+      "tagline1": "PETS CLAN",
+      "tagline2": "轻松",
+      "tagline3": "宠物护理。",
+      "p1": "在 Pets Clan，我们致力于为每一位宠物主人带来更智能、更环保、更便捷的宠物生活方式。我们坚信，技术和设计应以用户需求为中心，创造出能真正提升生活品质的产品。",
+      "p2": "我们不仅是技术的推动者，更是宠物与主人之间的桥梁，帮助您与您的宠物建立更深层次的情感联系。",
+      "signature_alt": "Pets Clan 签名"
     },
-    "feature3": {
-      "title": "简约设计，<br>零浪费",
-      "description": "无需额外耗材，<br>环保与智能并行"
+    "banner": {
+      "alt": "Pets Clan 横幅"
     },
-    "feature4": {
-      "title": "红点设计，<br>品质之选",
-      "description": "屡获殊荣的设计，<br>技术与美学的完美结合"
+    "features": {
+      "feature1": {
+        "title": "绿色生活，节能<br>环保",
+        "description": "无浪费设计，为宠物<br>和地球负责"
+      },
+      "feature2": {
+        "title": "智能控制，<br>随时喂养",
+        "description": "远程监控宠物健康<br>随时为它们喂食"
+      },
+      "feature3": {
+        "title": "简约设计，<br>零浪费",
+        "description": "无需额外耗材，<br>环保与智能并行"
+      },
+      "feature4": {
+        "title": "红点设计，<br>品质之选",
+        "description": "屡获殊荣的设计，<br>技术与美学的完美结合"
+      }
+    },
+    "lifelong": {
+      "image_alt": "Pets Clan 智能喂食器",
+      "title": "PETS CLAN,<br>喂养一生的友谊。",
+      "p1": "（此处为中文占位符段落）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
+      "p2": "（此处为中文占位符段落）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "stat1_label": "实验测试结果",
+      "stat2_label": "精准喂养",
+      "stat3_label": "长效电池"
+    },
+    "ponti": {
+      "subtitle": "关于设计师 PONTI",
+      "title": "红点设计奖<br>多次获得者",
+      "p1": "（此处为中文占位符段落）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
+      "p2": "（此处为中文占位符段落）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "portrait_alt": "Ponti 肖像"
+    },
+    "clan": {
+      "title": "关于 Pets Clan",
+      "video_alt": "关于 Pets Clan 视频"
     }
   },
-  "lifelong": {
-    "image_alt": "Pets Clan 智能喂食器",
-    "title": "PETS CLAN,<br>喂养一生的友谊。",
-    "p1": "（此处为中文占位符段落）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-    "p2": "（此处为中文占位符段落）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
-    "stat1_label": "实验测试结果",
-    "stat2_label": "精准喂养",
-    "stat3_label": "长效电池"
-  },
-  "ponti": {
-    "subtitle": "关于设计师 PONTI",
-    "title": "红点设计奖<br>多次获得者",
-    "p1": "（此处为中文占位符段落）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-    "p2": "（此处为中文占位符段落）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
-    "portrait_alt": "Ponti 肖像"
-  },
-  "clan": {
-    "title": "关于 Pets Clan",
-    "video_alt": "关于 Pets Clan 视频"
-  }
-},
-"app_page": {
-  "hero": {
-    "ios": "苹果系统",
-    "android": "安卓系统"
-  },
-  "all_in_one": {
-    "title": "多合一应用",
-    "description": "在一个应用中管理您的所有设备，<br>让主人可以随时查看宠物的状态",
-    "alt": "多合一应用界面"
-  },
-  "data_service": {
-    "title": "免费宠物数据服务",
-    "description": "通过长期数据追踪，更好地了解您的毛茸茸伙伴",
-    "alt": "数据服务图示"
-  },
-  "features": {
-    "feeder": {
-      "title": "喂食器",
-      "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+  "app_page": {
+    "hero": {
+      "ios": "苹果系统",
+      "android": "安卓系统"
     },
-    "fountains": {
-      "title": "饮水机",
-      "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+    "all_in_one": {
+      "title": "多合一应用",
+      "description": "在一个应用中管理您的所有设备，<br>让主人可以随时查看宠物的状态",
+      "alt": "多合一应用界面"
     },
-    "leash": {
-      "title": "牵引绳",
-      "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+    "data_service": {
+      "title": "免费宠物数据服务",
+      "description": "通过长期数据追踪，更好地了解您的毛茸茸伙伴",
+      "alt": "数据服务图示"
+    },
+    "features": {
+      "feeder": {
+        "title": "喂食器",
+        "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+      },
+      "fountains": {
+        "title": "饮水机",
+        "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+      },
+      "leash": {
+        "title": "牵引绳",
+        "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴"
+      }
+    },
+    "remote_control": {
+      "title": "通过互联支持实现远程控制",
+      "alt": "远程控制支持"
     }
   },
-  "remote_control": {
-    "title": "通过互联支持实现远程控制",
-    "alt": "远程控制支持"
+  "contact_us": {
+    "title": "联系我们",
+    "p1": "有任何问题或意见吗？请使用下方的表格向我们发送消息，或通过邮件联系我们：",
+    "p2": "support@petsclan.com",
+    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "retail_service_title": "零售服务",
+    "retail_service_p": "如需零售服务，请联系：sales@petsclan.com",
+    "form_title": "发送消息给我们",
+    "email_placeholder": "您的电子邮箱",
+    "message_placeholder": "您的消息",
+    "send_button": "发送"
+  },
+  "order_tracking": {
+    "title": "订单追踪",
+    "placeholder": "输入您的追踪号码",
+    "verify_prefix": "通过链接验证 ",
+    "verify_link": "链接",
+    "track_button": "追踪",
+    "service_email": "客户服务电邮：support@petsclan.com",
+    "service_phone": "客户服务电话：1-800-123-4567"
+  },
+  "return_refund_policy": {
+    "title": "退货与退款政策",
+    "p1": "我们有 30 天的退货政策，这意味着您在收到商品后的 30 天内可以要求退货。",
+    "p2": "要符合退货资格，您的商品必须处于与您收到时相同的状态，未经穿戴或使用，带有标签，并在原始包装中。您还需要收据或购买证明。",
+    "p3": "要开始退货，您可以通过 support@petsclan.com 联系我们。如果您的退货被接受，我们将向您发送退货运送标签，以及有关如何以及将包裹寄往何处的说明。",
+    "p4": "未经事先要求退货而退回给我们的商品将不被接受。您可以随时通过 support@petsclan.com 就任何退货问题与我们联系。"
   }
-}
 }

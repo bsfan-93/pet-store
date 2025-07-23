@@ -55,7 +55,7 @@
       "app": "App"
     }
   },
-  "faq": {
+    "faq": {
     "title": "FAQs",
     "feedback": {
       "title": "Is this page helpful to you?",
@@ -66,6 +66,18 @@
       {
         "question": "Where is your company located?",
         "answer": "Our office is located at 1135 Walsh Ave, Santa Clara, California."
+      },
+      {
+        "question": "Where do you ship from?",
+        "answer": "We ship from our partnered warehouses across the State. Please expect your items to be shipped separately (if you ordermore than one item)as different warehouses specialize in different areas of manufacturing."
+      },
+      {
+        "question": "How long will it take for my items to arrive?",
+        "answer": "Ships from the shop within 2 business days. Transit time for standard shipping is 3-4 business days. Estimated arrival time iswithin 8 business days of the customer's order."
+      },
+      {
+        "question": "How long will it take for my items to arrive?",
+        "answer": "Ships from the shop within 2 business days. Transit time for standard shipping is 3-4 business days. Estimated arrival time is within 8business days of the customer's order.in peak periods like holidays, Black Friday and Cyber Monday, please allow up to 5 businessdays for dispatch"
       }
     ]
   },
@@ -246,6 +258,33 @@
     "title": "Achieve remote control via interconnection support",
     "alt": "Remote control support"
   }
-}
-
+},
+  "contact_us": {
+    "title": "CONTACT  US",
+    "p1": "Our media team works closely with the media and social partners to solve issues regarding pets' life conditions. We aim to support with high-tech and healthy living styles for both humans and pets.",
+    "p2": "Customer Service:<b>15380822206@163.com</b> (We will reply to your email within 24 hours.)",
+    "p3": "Customer Service Phone:<b>(86)15380822206</b> (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)",
+    "retail_service_title": "Retail Service",
+    "retail_service_p": "In addition to ensuring neat, clean, compliant and safe basic goods display requirements, we will try our best to comprehensively enrich product types and ensure sufhcient quantity to meet customers' purchasing needs.",
+    "form_title": "Do you have any question?",
+    "email_placeholder": "Email",
+    "message_placeholder": "Message",
+    "send_button": "Send Message"
+  },
+  "order_tracking": {
+    "title": "Track your order",
+    "placeholder": "tracking",
+    "verify_prefix": "Verify by ",
+    "verify_link": "phone number",
+    "track_button": "Track",
+    "service_email": "Customer Service:15380822206@163.com(We will reply to your email within 24 hours.",
+    "service_phone": "Customer Service Phone: (86)15380822206 (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)"
+  },
+  "return_refund_policy": {
+    "title": "Return & Refund Policy",
+    "p1": "Our media team works closely with the media and social partners to solve issues regarding pets' life conditions. We aim to support with high-tech and healthy living styles for both humans and pets.",
+    "p2": "Customer Service:<b>15380822206@163.com</b> (We will reply to your email within 24 hours.)",
+    "p3": "Customer Service Phone:<b>(86)15380822206</b> (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)",
+    "p4": "In addition to ensuring neat, clean, compliant and safe basic goods display requirements, we wil try our best to comprehensivelyenrich product types and ensure suffcient quantity to meet customers' purchasing needs."
+  }
 }

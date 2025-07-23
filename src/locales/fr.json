@@ -3,7 +3,6 @@
     "promo": "20% de réduction pour les nouveaux utilisateurs lors de l'inscription !"
   },
   "header": {
-    "home": "Accueil",
     "shop": "Boutique",
     "about_us": "À propos",
     "app": "App"
@@ -14,39 +13,48 @@
     "shop_now": "Acheter maintenant"
   },
   "search": {
-    "placeholder": "Rechercher des produits"
+    "placeholder": "Rechercher des produits",
+    "loading": "Recherche...",
+    "no_results": "Aucun produit correspondant trouvé"
   },
   "cart": {
     "title": "Votre panier",
     "empty_message": "Votre panier est vide",
     "continue_shopping": "Continuer vos achats",
     "login_prompt": "Avez-vous un compte ?",
-    "login_link": "Connectez-vous pour passer à la caisse plus rapidement."
+    "login_link": "Connectez-vous pour passer à la caisse plus rapidement.",
+    "welcome_back": "Content de vous revoir, {userName} !",
+    "start_Browse": "Votre panier est actuellement vide. Commencez à parcourir nos produits incroyables !",
+    "subtotal": "Sous-total",
+    "checkout_button": "Passer à la caisse",
+    "checkout": "VALIDER",
+    "placeholder_items": "Les articles seront affichés ici..."
   },
   "footer": {
-  "about_title": "Entreprise",
-  "support_title": "Soutien",
-  "works_title": "Comment ça marche",
-  "join_title": "Inscrivez-vous pour 10% de réduction sur votre première commande",
-  "placeholder_email": "E-mail",
-  "signup_button": "S'abonner",
-  "download_app_title": "Télécharger l'application",
-  "links": {
-    "about_us": "À propos de nous",
-    "blog": "Blog",
-    "privacy_policy": "Politique de confidentialité",
-    "terms_of_service": "Conditions d'utilisation",
-    "faq": "FAQ",
-    "contact_us": "Contactez-nous",
-    "order_tracking": "Suivi de commande",
-    "app_service": "Service d'application",
-    "user_manual": "Manuel de l'utilisateur",
-    "shipping_policy": "Politique d'expédition",
-    "warranty_policy": "Politique de garantie",
-    "price_match_policy": "Politique d'alignement des prix",
-    "return_refund_policy": "Politique de retour et de remboursement"
-  }
-},
+    "about_title": "Entreprise",
+    "support_title": "Soutien",
+    "works_title": "Comment ça marche",
+    "join_title": "Inscrivez-vous pour 10% de réduction sur votre première commande",
+    "placeholder_email": "E-mail",
+    "signup_button": "S'abonner",
+    "download_app_title": "Télécharger l'application",
+    "links": {
+      "about_us": "À propos de nous",
+      "blog": "Blog",
+      "privacy_policy": "Politique de confidentialité",
+      "terms_of_service": "Conditions d'utilisation",
+      "faq": "FAQ",
+      "contact_us": "Contactez-nous",
+      "order_tracking": "Suivi de commande",
+      "app_service": "Service d'application",
+      "user_manual": "Manuel de l'utilisateur",
+      "shipping_policy": "Politique d'expédition",
+      "warranty_policy": "Politique de garantie",
+      "price_match_policy": "Politique d'alignement des prix",
+      "return_refund_policy": "Politique de retour et de remboursement",
+      "app": "App"
+    }
+  },
   "faq": {
     "title": "FAQ",
     "feedback": {
@@ -65,6 +73,10 @@
       },
       {
         "question": "Combien de temps faudra-t-il pour que mes articles arrivent ?",
+        "answer": "Expédié depuis la boutique sous 2 jours ouvrables. Le temps de transit pour l'expédition standard est de 3-4 jours ouvrables. Le délai de livraison estimé est de 8 jours ouvrables à compter de la commande du client."
+      },
+      {
+        "question": "Combien de temps faudra-t-il pour que mes articles arrivent ?",
         "answer": "Expédié depuis la boutique sous 2 jours ouvrables. Le temps de transit pour l'expédition standard est de 3-4 jours ouvrables. Le délai de livraison estimé est de 8 jours ouvrables à compter de la commande du client. Pendant les périodes de pointe comme les vacances, le Black Friday et le Cyber Monday, veuillez prévoir jusqu'à 5 jours ouvrables pour l'expédition."
       }
     ]
@@ -78,7 +90,8 @@
       "go_shopping": "ALLER FAIRE LES COURSES"
     },
     "settings_card": {
-      "title": "PARAMÈTRES DU COMPTE"
+      "title": "PARAMÈTRES DU COMPTE",
+      "user_info_not_available": "Informations utilisateur non disponibles."
     }
   },
   "login": {
@@ -101,14 +114,16 @@
     "title": "Créer un compte",
     "subtitle": "Accédez à des fonctionnalités exclusives et plus encore.",
     "name_label": "Nom",
+    "email_label": "E-mail",
+    "password_label": "Mot de passe",
     "create_button": "Créer un compte",
     "login_prompt": "Vous avez déjà un compte ?",
     "login_link": "Se connecter",
     "validation": {
-        "name_required": "Veuillez entrer votre nom",
-        "email_required": "Veuillez entrer votre e-mail",
-        "email_format": "Veuillez entrer une adresse e-mail valide",
-        "password_required": "Veuillez entrer un mot de passe"
+      "name_required": "Veuillez entrer votre nom",
+      "email_required": "Veuillez entrer votre e-mail",
+      "email_format": "Veuillez entrer une adresse e-mail valide",
+      "password_required": "Veuillez entrer un mot de passe"
     },
     "success_message": "Compte créé avec succès !",
     "error_message": "Échec de l'inscription."
@@ -121,10 +136,16 @@
     "select_placeholder": "Sélectionner",
     "add_to_cart": "Ajouter au panier",
     "buy_now": "Acheter maintenant",
+    "added_feedback": "Ajouté !",
     "usp_title": "Arguments de vente uniques",
     "specs_title": "Spécifications du produit",
     "params_title": "Paramètres du produit",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "login_to_purchase_message": "Veuillez vous connecter pour procéder à l'achat.",
+    "product_details_not_loaded": "Les détails du produit ne sont pas encore chargés. Veuillez patienter.",
+    "network_error_message": "La connexion réseau a échoué, veuillez vérifier votre réseau.",
+    "payment_service_error_message": "Le service de paiement est temporairement indisponible, veuillez réessayer plus tard.",
+    "payment_session_failed_message": "Échec de la création de la session de paiement."
   },
   "subscribe_popup": {
     "title": "Débloquez <span class=\"highlight\">20%</span> de réduction sur votre commande aujourd'hui",
@@ -132,7 +153,9 @@
     "email_label": "E-mail",
     "subscribe_button": "S'abonner pour",
     "no_thanks": "Non, merci",
-    "error_email": "Veuillez entrer une adresse e-mail valide."
+    "error_email": "Veuillez entrer une adresse e-mail valide.",
+    "subscription_successful": "Abonnement réussi ! Merci.",
+    "subscription_failed": "L'abonnement a échoué. Veuillez réessayer."
   },
   "collection_list": {
     "title": "Acheter par catégorie"
@@ -141,5 +164,131 @@
     "title": "Nouveau & Populaire",
     "new_arrivals": "Nouveautés",
     "best_sellers": "Meilleures ventes"
+  },
+  "mega_menu": {
+    "feeder": "Distributeur",
+    "fountains": "Fontaines",
+    "leash": "Laisse"
+  },
+  "products": {
+    "product-1": "Distributeur Intelligent",
+    "product-2": "Fontaines Intelligentes",
+    "product-3": "Jouet Interactif"
+  },
+  "about_us": {
+    "hero": {
+      "alt": "Bienvenue chez Pets Clan"
+    },
+    "intro": {
+      "tagline1": "PETS CLAN",
+      "tagline2": "SOINS DES ANIMAUX",
+      "tagline3": "SANS EFFORT.",
+      "p1": "Chez Pets Clan, nous nous engageons à offrir un mode de vie plus intelligent, plus écologique et plus pratique à chaque propriétaire d'animal de compagnie. Nous croyons fermement que la technologie et le design doivent être centrés sur les besoins des utilisateurs pour créer des produits qui peuvent vraiment améliorer la qualité de vie.",
+      "p2": "Nous ne sommes pas seulement un promoteur de la technologie, mais aussi un pont entre les animaux de compagnie et leurs propriétaires, vous aidant à établir un lien émotionnel plus profond avec votre animal.",
+      "signature_alt": "Signature de Pets Clan"
+    },
+    "banner": {
+      "alt": "Bannière de Pets Clan"
+    },
+    "features": {
+      "feature1": {
+        "title": "Vie écologique, économie d'énergie<br>et protection de l'environnement",
+        "description": "Conception sans déchets, responsable<br>envers les animaux et la planète"
+      },
+      "feature2": {
+        "title": "Contrôle intelligent,<br>alimentation à tout moment",
+        "description": "Surveillez la santé de votre animal à distance<br>et nourrissez-le à tout moment"
+      },
+      "feature3": {
+        "title": "Conception simple,<br>zéro déchet",
+        "description": "Pas besoin de consommables supplémentaires,<br>avec la protection de l'environnement<br>et l'intelligence main dans la main"
+      },
+      "feature4": {
+        "title": "Design Red Dot,<br>un choix de qualité",
+        "description": "Design primé, une parfaite<br>intégration de la technologie et de l'esthétique"
+      }
+    },
+    "lifelong": {
+      "image_alt": "Distributeur Intelligent Pets Clan",
+      "title": "PETS CLAN,<br>NOURRIR DES AMITIÉS POUR LA VIE.",
+      "p1": "(Texte de remplacement en français) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
+      "p2": "(Texte de remplacement en français) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "stat1_label": "résultats des tests expérimentaux",
+      "stat2_label": "Alimentation précise",
+      "stat3_label": "Batterie longue durée"
+    },
+    "ponti": {
+      "subtitle": "À PROPOS DE PONTI",
+      "title": "LAURÉAT DU PRIX<br>RED DOT DESIGN",
+      "p1": "(Texte de remplacement en français) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
+      "p2": "(Texte de remplacement en français) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "portrait_alt": "Portrait de Ponti"
+    },
+    "clan": {
+      "title": "À propos de Pets Clan",
+      "video_alt": "Vidéo À propos de Pets Clan"
+    }
+  },
+  "app_page": {
+    "hero": {
+      "ios": "IOS",
+      "android": "Android"
+    },
+    "all_in_one": {
+      "title": "Tout-en-un",
+      "description": "Gérez tous vos appareils dans une seule application,<br>permettant aux propriétaires de vérifier l'état de leurs animaux",
+      "alt": "Interface de l'application tout-en-un"
+    },
+    "data_service": {
+      "title": "Service de Données pour Animaux Gratuit",
+      "description": "Apprenez à connaître encore mieux vos amis à fourrure avec le suivi des données au fil du temps",
+      "alt": "Illustration du service de données"
+    },
+    "features": {
+      "feeder": {
+        "title": "Distributeur",
+        "description": "Apprenez à connaître encore mieux vos amis à fourrure<br>avec le suivi des données au fil du temps"
+      },
+      "fountains": {
+        "title": "Fontaines",
+        "description": "Apprenez à connaître encore mieux vos amis à fourrure<br>avec le suivi des données au fil du temps"
+      },
+      "leash": {
+        "title": "Laisse",
+        "description": "Apprenez à connaître encore mieux vos amis à fourrure<br>avec le suivi des données au fil du temps"
+      }
+    },
+    "remote_control": {
+      "title": "Réalisez un contrôle à distance via le support d'interconnexion",
+      "alt": "Support de contrôle à distance"
+    }
+  },
+  "contact_us": {
+    "title": "Contactez-nous",
+    "p1": "Vous avez une question ou un commentaire ? Utilisez le formulaire ci-dessous pour nous envoyer un message ou contactez-nous par courrier à :",
+    "p2": "support@petsclan.com",
+    "p3": "1135 Walsh Ave, Santa Clara, Californie",
+    "retail_service_title": "Service de Vente au Détail",
+    "retail_service_p": "Pour le service de vente au détail, veuillez contacter : sales@petsclan.com",
+    "form_title": "Envoyez-nous un message",
+    "email_placeholder": "Votre e-mail",
+    "message_placeholder": "Votre message",
+    "send_button": "Envoyer"
+  },
+  "order_tracking": {
+    "title": "Suivi de Commande",
+    "placeholder": "Entrez votre numéro de suivi",
+    "verify_prefix": "Vérifier par ",
+    "verify_link": "lien",
+    "track_button": "Suivre",
+    "service_email": "E-mail du Service Client : support@petsclan.com",
+    "service_phone": "Téléphone du Service Client : 1-800-123-4567"
+  },
+  "return_refund_policy": {
+    "title": "Politique de Retour et de Remboursement",
+    "p1": "Nous avons une politique de retour de 30 jours, ce qui signifie que vous avez 30 jours après réception de votre article pour demander un retour.",
+    "p2": "Pour être éligible à un retour, votre article doit être dans le même état que vous l'avez reçu, non porté ou non utilisé, avec les étiquettes et dans son emballage d'origine. Vous aurez également besoin du reçu ou de la preuve d'achat.",
+    "p3": "Pour commencer un retour, vous pouvez nous contacter à support@petsclan.com. Si votre retour est accepté, nous vous enverrons une étiquette d'expédition de retour, ainsi que des instructions sur comment et où envoyer votre colis.",
+    "p4": "Les articles renvoyés sans avoir préalablement demandé un retour ne seront pas acceptés. Vous pouvez toujours nous contacter pour toute question de retour à support@petsclan.com."
   }
 }

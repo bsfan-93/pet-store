@@ -8,30 +8,33 @@
     <main class="main-content">
       <div class="tracking-container">
         <div class="tracking-box">
-          <h2>Track your order</h2>
+          <h2>{{ t('order_tracking.title') }}</h2>
           
           <el-input
             v-model="trackingNumber"
-            placeholder="tracking"
+            :placeholder="t('order_tracking.placeholder')"
             size="large"
             class="tracking-input"
           />
           
           <div class="verify-link-wrapper">
-            <span>Verify by </span><a href="#">phone number</a>
+            <span>{{ t('order_tracking.verify_prefix') }}   
+            </span>
+            <a href="#">
+                {{ t('order_tracking.verify_link') }}</a>
           </div>
           
           <el-button 
             class="track-button"
             @click="handleTrack"
           >
-            Track
+            {{ t('order_tracking.track_button') }}
           </el-button>
         </div>
 
         <div class="customer-service-info">
-          <p>Customer Service:15380822206@163.com (We will reply to your email within 24 hours.)</p>
-          <p>Customer Service Phone: (86) 15380822206 (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)</p>
+          <p>{{ t('order_tracking.service_email') }}</p>
+          <p>{{ t('order_tracking.service_phone') }}</p>
         </div>
       </div>
     </main>
@@ -42,10 +45,13 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n'; // 1. 引入 useI18n
 import { ElInput, ElButton } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+
+const { t } = useI18n(); // 2. 获取 t 函数
 
 const trackingNumber = ref('');
 

@@ -6,7 +6,6 @@
           <h3>{{ $t('cart.title') }}</h3>
           <el-icon class="close-icon" @click="cartStore.closeCart()"><Close /></el-icon>
         </div>
-
         <div class="panel-content">
           <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
             <div v-if="!authStore.isLoggedIn" class="login-prompt">
@@ -19,15 +18,11 @@
               <p>{{ $t('cart.welcome_back', { userName: authStore.userInfo?.name || '' }) }}</p>
               <p>{{ $t('cart.start_Browse') }}</p>
             </div>
-            
             <button class="continue-btn" @click="cartStore.closeCart()">{{ $t('cart.continue_shopping') }}</button>
-            
           </div>
-
           <div v-else class="cart-items">
             <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
               <img :src="item.url || '/images/placeholder.png'" :alt="item.name" class="item-image">
-              
               <div class="item-details">
                 <p class="item-name">{{ item.name || item.goodName }}</p>
                 <p class="item-specs">{{ item.colorName || 'Default Color' }}/{{ item.specName || 'Default Size' }}</p>
@@ -38,7 +33,6 @@
                   :min="1"
                 />
               </div>
-
               <div class="item-actions">
                 <p class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}</p>
                 <el-icon class="item-remove" @click="cartStore.removeItems(item.id)"><Delete /></el-icon>
@@ -46,13 +40,14 @@
             </div>
           </div>
         </div>
-        
         <div v-if="cartStore.items.length > 0" class="panel-footer">
           <div class="subtotal">
             <span>{{ $t('cart.subtotal') }}</span>
             <span>$ {{ cartStore.subtotal }}</span>
           </div>
-          <button class="checkout-btn" @click="handleCheckout">{{ $t('cart.checkout') }}</button>
+          <button class="checkout-btn" @click="handleCheckout" :disabled="isLoading">
+            {{ isLoading ? 'Processing...' : t('cart.checkout') }}
+          </button>
         </div>
       </div>
     </div>
@@ -60,31 +55,78 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
-import { ElIcon, ElInputNumber, ElButton } from 'element-plus'; // ElButton 可以保留，因为它可能在其他地方被使用
+import { useI18n } from 'vue-i18n';
+import { ElIcon, ElInputNumber, ElMessage } from 'element-plus';
+import { createCheckoutSession } from '../api';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const navigateTo = inject('navigateTo');
+const { t } = useI18n();
+const isLoading = ref(false);
 
-// 定义统一的处理函数，用于跳转或结算
-const handleCheckout = () => {
-  if (authStore.isLoggedIn) {
-    console.log("用户已登录，可以进行结算。");
-  } else {
+// ▼▼▼【最終正確的 handleCheckout 函數】▼▼▼
+const handleCheckout = async () => {
+  if (!authStore.isLoggedIn) {
     cartStore.closeCart();
-    // 【修改】添加类型检查，确保 navigateTo 是一个函数
-    if (typeof navigateTo === 'function') {
-      navigateTo('login'); // 未登录时跳转到登录页面
-    } else {
-      console.error("Error: navigateTo function not available for redirection. Falling back to window.location.href.");
-      window.location.href = '/login'; // 备用方案：直接跳转到登录页
+    navigateTo('login');
+    return;
+  }
+  if (cartStore.items.length === 0) {
+    ElMessage.warning("Your cart is empty.");
+    return;
+  }
+  isLoading.value = true;
+  try {
+    // 1. 將購物車商品列表映射為API期望的【數組】格式
+    // 每個對象的結構都嚴格參考能夠成功運行的 "Buy Now" 邏輯
+    const checkoutItems = cartStore.items.map(item => {
+      // 確保價格有效
+      if (!item.price || item.price <= 0) {
+        console.warn(`Item "${item.name}" has invalid price and will be skipped.`, item);
+        return null;
+      }
+      return {
+        goodId: item.goodId || item.id,
+        quantity: item.quantity,
+        name: item.name || item.goodName,
+        amount: item.price, // 這個值由已修復的 cart.js 保證是正確的數字
+        goodImage: item.url,
+        currency: "USD",
+        description: `${item.name || item.goodName} - ${item.colorName || ''}/${item.specName || ''}`,
+        successUrl: "http://127.0.0.1/success",
+        cancelUrl: "http://127.0.0.1/cancel",
+        specification: JSON.stringify({ color: item.colorName, size: item.specName })
+      };
+    }).filter(Boolean); // 過濾掉所有為 null 的無效商品
+
+    if (checkoutItems.length === 0) {
+        ElMessage.error("Cart contains no items with a valid price.");
+        isLoading.value = false;
+        return;
     }
+
+    // 2. 將構造好的【數組】作為請求體發送
+    const checkoutUrl = await createCheckoutSession(checkoutItems);
+    
+    if (checkoutUrl) {
+      // 3. 重定向到支付頁面
+      window.location.href = checkoutUrl;
+    } else {
+      ElMessage.error(t('product.payment_session_failed_message'));
+    }
+  } catch (error) {
+    console.error("創建購物車支付會話失敗:", error);
+    ElMessage.error(error.message || t('product.payment_session_failed_message'));
+  } finally {
+    isLoading.value = false;
   }
 };
 </script>
+
 
 <style scoped>
 /* 您的其余样式保持不变 */
