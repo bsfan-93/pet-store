@@ -184,4 +184,20 @@ h1 {
 .send-button:hover {
   background-color: #7CB342;
 }
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 40px 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+        word-spacing: 0; /* 手機上移除單字間距 */
+    }
+
+    .form-box {
+        padding: 20px; /* 縮小表單容器的內邊距 */
+    }
+}
 </style>

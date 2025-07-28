@@ -1,3 +1,4 @@
+<!-- 弹窗 -->
 <template>
   <el-dialog
     v-model="dialogVisible"
@@ -13,7 +14,7 @@
       <div class="popup-content">
         <el-icon class="close-icon" @click="closeDialog"><Close /></el-icon>
         
-        <h2>{{ $t('subscribe_popup.title') }}</h2> 
+        <h2 v-html="$t('subscribe_popup.title')"></h2>  
         <p>{{ $t('subscribe_popup.subtitle') }}</p> 
         <form @submit.prevent="handleSubscribe">
           <label for="email-input">
@@ -50,6 +51,7 @@ import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { ElDialog, ElInput, ElButton, ElIcon, ElMessage } from 'element-plus';
 import { subscribeMail } from '../api';
+import { useSubscriptionStore } from '../stores/subscription';
 
 const { t } = useI18n();
 
@@ -58,6 +60,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+const subscriptionStore = useSubscriptionStore();
 
 const email = ref('');
 const isLoading = ref(false);
@@ -87,7 +90,9 @@ const handleSubscribe = async () => {
   try {
     await subscribeMail(email.value);
     ElMessage.success(t('subscribe_popup.subscription_successful')); 
-    localStorage.setItem('hasSubscribed', 'true');
+    
+    // ▼▼▼ 3. 订阅成功后，调用 store 的 action 来更新全局状态 ▼▼▼
+    subscriptionStore.subscribe();
     closeDialog();
   } catch (error) {
     ElMessage.error(error.message || t('subscribe_popup.subscription_failed')); 
@@ -207,4 +212,6 @@ label {
 :global(.subscribe-dialog .el-dialog__body) {
   padding: 0;
 }
+
+
 </style>

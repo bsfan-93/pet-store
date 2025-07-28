@@ -173,7 +173,10 @@ const productFeatures = computed(() => [
 .aio-image {
   display: block;
   width: 100%; /* 让图片铺满宽度 */
-  height: 100vh; /* 高度自动，保证图片不变形 */
+  /* height: 100vh; */ /* <-- 【刪除】移除固定的視窗高度 */
+  height: auto;      /* ▼▼▼ 【修改】讓高度自動計算 ▼▼▼ */
+  aspect-ratio: 2 / 1; /* <-- 【新增】設定一個合適的長寬比，例如 2:1 */
+  object-fit: cover; /* ▼▼▼ 【在這裡新增這一行】 ▼▼▼ */
 }
 
 .aio-text-overlay {
@@ -267,8 +270,11 @@ const productFeatures = computed(() => [
   display: block;
   width: 100%;
   /* max-width: 1450px; */
-  height: 100vh;
+  /* height: 100vh; */ /* <-- 【刪除】移除固定的視窗高度 */
+  height: auto;      /* ▼▼▼ 【修改】讓高度自動計算 ▼▼▼ */
+  aspect-ratio: 2 / 1; /* <-- 【新增】設定一個合適的長寬比 */
   border-radius: 0px;
+  object-fit: cover; /* ▼▼▼ 【在這裡新增這一行】 ▼▼▼ */
 }
 
 /* 三栏产品特性区 */

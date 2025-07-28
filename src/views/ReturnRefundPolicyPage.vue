@@ -62,7 +62,7 @@ const { t } = useI18n(); // 2. 获取 t 函数
 }
 
 h1 {
-  font-size: 32px;
+  font-size: 60px;
   font-weight: 600;
   color: #000;
   margin-bottom: 40px;
@@ -71,11 +71,27 @@ h1 {
 }
 
 .policy-text {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.8;
   text-align: left;
 }
 .policy-text p {
   margin: 0 0 1.5em 0;
+}
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 40px 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+        word-spacing: 0;
+    }
+
+    .policy-text {
+        font-size: 15px;
+    }
 }
 </style>

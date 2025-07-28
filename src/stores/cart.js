@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useAuthStore } from './auth';
 import { getCartItems, addToCart, updateCartItem, deleteCartItems } from '../api';
+import { ElMessage } from 'element-plus'; // 确保导入 ElMessage
 
 const LOCAL_STORAGE_KEY = 'pet-store-cart';
 
@@ -37,48 +38,47 @@ export const useCartStore = defineStore('cart', () => {
   // --- 核心 Actions ---
 
   // 1. 添加商品
-  async function addItem(product) {
-  console.log("Cart Store: Attempting to add item:", product);
-  const existingItem = items.value.find(item => item.id === product.id);
-  if (existingItem) {
-    existingItem.quantity += product.quantity || 1;
-  } else {
-    // 确保添加商品时，从 product 对象中捕获正确的价格
-    items.value.push({
-      ...product,
-      quantity: product.quantity || 1,
-      price: product.price || 0 // 确保 price 被正确捕获，如果 product.price 不存在，可以考虑给 0 或其他默认值
-    });
-  }
-  openCart(); // 立即打开购物车侧边栏
-
+ async function addItem(product) {
+  openCart();
   const authStore = useAuthStore();
+
   if (authStore.isLoggedIn) {
-    try {
-      const apiPayload = {
-        goodId: product.goodId || product.id,
-        spec: product.specId || null, // 确保从 ProductDetailPage 正确传递了这些 ID
-        color: product.colorId || null, // 确保从 ProductDetailPage 正确传递了这些 ID
-        quantity: product.quantity || 1
-      };
-      console.log("Cart Store: Adding to server cart with payload:", apiPayload);
-      await addToCart(apiPayload); // 向后端发送添加请求
+   try {
+    const apiPayload = {
+     goodId: product.goodId || product.id,
+     spec: product.specId,
+     color: product.colorId,
+     quantity: product.quantity || 1
+    };
+        
+        if (apiPayload.spec === undefined || apiPayload.color === undefined) {
+          ElMessage.error("请选择商品规格和颜色。");
+          closeCart();
+          return;
+        }
 
-      // 【临时修改】移除立即同步，等待后端修复 getCartItems
-      // 这样做意味着在添加商品后，购物车侧边栏不会立即显示从后端拉取的错误/重复数据
-      // 购物车内容将不会自动更新，直到页面刷新或执行下一次 syncCart (例如：删除操作)
-      // await syncCart(); // - 移除或注释掉这一行，取消在添加后立即同步
+    await addToCart(apiPayload);
+    await syncCart();
 
-      console.log("Cart Store: Item added to server. Cart will sync on next load/action (e.g., refresh/delete)."); // + 打印提示信息
-    } catch (error) {
-      console.error("Cart Store: Failed to add item to server cart:", error);
-      // 可选：如果服务器添加失败，考虑从本地购物车回滚该项
-      // items.value = items.value.filter(item => item.id !== product.id);
-    }
+   } catch (error) {
+    console.error("Cart Store: Failed to add item to server cart:", error);
+        ElMessage.error("添加到购物车失败，请重试。");
+   }
   } else {
-    saveLocalCart(); // 访客模式下仍然保存到本地存储
+      const cartId = `${product.id}_${product.specId || 'default'}_${product.colorId || 'default'}`;
+   const existingItem = items.value.find(item => item.cartId === cartId);
+   if (existingItem) {
+    existingItem.quantity += product.quantity || 1;
+   } else {
+    items.value.push({
+     ...product,
+          cartId: cartId,
+     quantity: product.quantity || 1,
+    });
+   }
+   saveLocalCart();
   }
-}
+ }
 
   // 2. 更新数量
   async function updateQuantity(cartItemId, newQuantity) {
@@ -112,93 +112,66 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   // 3. 删除商品 (支持单个或多个)
-  async function removeItems(ids) {
-    const authStore = useAuthStore();
-    const idArray = Array.isArray(ids) ? ids : [ids];
-    if (authStore.isLoggedIn) {
-      await deleteCartItems(idArray);
-      await syncCart();
-    } else {
-      items.value = items.value.filter(item => !idArray.includes(item.id));
-      saveLocalCart();
-    }
-  }
+  async function removeItems(itemToRemove) { // 參數從 ids 改為 itemToRemove
+  const authStore = useAuthStore();
   
-  // 4. 同步/查询购物车 (核心)
-async function syncCart() {
-  console.log("Cart Store: Starting cart sync...");
-  try {
-    const serverCart = await getCartItems();
-    console.log("Cart Store: Server cart raw response:", serverCart); // 打印原始后端响应
-
-    // 处理后端返回空对象 {} 或非数组的情况 (这部分逻辑已在您代码中修正过，保持不变)
-    if (!Array.isArray(serverCart) && typeof serverCart === 'object' && Object.keys(serverCart).length === 0) {
-      console.warn("Cart Store: Server cart response is an empty object, treating as empty array.");
-      items.value = [];
-      return;
-    }
-    if (!Array.isArray(serverCart)) {
-        console.error("Cart Store: Server cart response is not a valid array, clearing cart.");
-        items.value = [];
-        return;
-    }
-
-    // 【新增】处理后端返回重复条目的问题：按 goodId, spec, color 进行去重和数量汇总
-    const processedItems = new Map(); // 使用 Map 进行去重和汇总
-
-    serverCart.forEach(item => {
-      // 创建一个唯一的键来标识商品的 SKU (Stock Keeping Unit)
-      // 假设 goodId, spec, color 组合唯一标识一个商品 SKU
-      const itemKey = `${item.goodId}-${item.spec}-${item.color}`;
-
-      if (processedItems.has(itemKey)) {
-        // 如果 Map 中已存在该 SKU，则累加数量
-        const existingItem = processedItems.get(itemKey);
-        existingItem.quantity += item.quantity;
-        // 如果后端价格在不同条目中可能不一致，这里需要一个策略。
-        // 假设后端价格现在是正确的，且相同 goodId+spec+color 的 price 是一致的。
-      } else {
-        // 如果是新的 SKU，则添加到 Map
-        processedItems.set(itemKey, {
-          // 保留后端提供的 id。注意：如果后端继续为相同 SKU 创建新 id，
-          // 这里的 id 将始终是该 SKU 的“第一个”或“最后一个”条目的 id。
-          // 对于更新或删除操作，可能需要后端支持按 goodId+spec+color 或更灵活的删除方式。
-          id: item.id, 
-          goodId: item.goodId,
-          name: item.goodName,
-          url: item.goodImage,
-          price: item.price || 0, // 价格现在是正确的了，但依然保留 || 0 作为保险
-          quantity: item.quantity,
-          specName: item.specName,
-          colorName: item.colorName,
-        });
-      }
-    });
-
-    let syncedItems = Array.from(processedItems.values()); // 将 Map 的值转换为数组
-
-    // 【核心修正】重新添加过滤逻辑：不显示价格 <= 0 的商品
-    // 只有当 item.price 大于 0 时才显示该商品
-    syncedItems = syncedItems.filter(item => item.price > 0); // + 重新添加这行
-
-    items.value = Array.from(processedItems.values()); // 将 Map 的值转换为数组
-    console.log("Cart Store: Cart synced. Current items (deduplicated):", items.value);
-
-    // 如果仍然有价格 <= 0 的商品被过滤掉（这表明后端仍有此问题），可以保留警告
-    // 这里我们再次使用 syncedItems 变量，因为它包含了过滤前的所有商品信息，用于日志
-    const zeroOrMissingPriceItems = Array.from(processedItems.values()).filter(item => item.price <= 0);
-    if (zeroOrMissingPriceItems.length > 0) {
-      console.warn("Cart Store: Items with zero or missing price were found and filtered out:", zeroOrMissingPriceItems);
-      // 可选：使用 ElMessage 给用户一个提示，告知部分商品因价格问题被隐藏
-      // 例如：ElMessage.warning(t('cart.zero_price_items_hidden_message')); // 需要在语言文件中添加此键
-    }
-
-  } catch (error) {
-    console.error("Cart Store: Failed to sync cart:", error);
-    items.value = []; // 同步失败则清空
-    console.log("Cart Store: Cart sync failed. Items cleared:", items.value);
+  if (authStore.isLoggedIn) {
+    // 對於已登入用戶，我們使用後端返回的、唯一的購物車項目 ID (itemToRemove.id)
+    await deleteCartItems([itemToRemove.id]);
+    await syncCart(); // 完成後與後端同步
+  } else {
+    // 對於未登入的訪客，我們使用客戶端生成的、唯一的 cartId 來精準刪除
+    items.value = items.value.filter(item => item.cartId !== itemToRemove.cartId);
+    saveLocalCart();
   }
 }
+  
+  // 4. 同步/查询购物车 (核心)
+// ▼▼▼ 【核心修改】更新 syncCart 函數以生成唯一的客戶端 ID ▼▼▼
+  async function syncCart() {
+    console.log("Cart Store: Starting cart sync...");
+    try {
+      const serverCart = await getCartItems();
+      if (!Array.isArray(serverCart)) {
+       // 如果返回的不是数组 (可能是空对象等)，视为空购物车
+        items.value = [];
+        return;
+      }
+      const imageBaseUrl = 'http://192.168.2.9:9999';
+      // 將後端返回的商品列表轉換為我們需要的、帶有唯一 cartId 的格式
+      const processedItems = serverCart
+        .filter(item => item.price > 0) // 過濾掉價格無效的商品
+        .map(item => ({
+          id: item.id, // 這是後端購物車項目的 ID
+          cartId: `${item.goodId}_${item.spec || 'default'}_${item.color || 'default'}`, // 這是客戶端唯一的 ID
+          goodId: item.goodId,
+          name: item.goodName,
+          // url: item.goodImage,
+          url: imageBaseUrl + item.goodImage,
+          price: item.price,
+          quantity: item.quantity,
+          specId: item.spec,
+          specName: item.specName,
+          colorId: item.color,
+          colorName: item.colorName,
+        }));
+      
+      // 合併數量 (處理後端可能返回重複規格商品的情況)
+      const mergedItems = new Map();
+      processedItems.forEach(item => {
+        if (mergedItems.has(item.cartId)) {
+          mergedItems.get(item.cartId).quantity += item.quantity;
+        } else {
+          mergedItems.set(item.cartId, item);
+        }
+      });
+
+      items.value = Array.from(mergedItems.values());
+    } catch (error) {
+      console.error("Cart Store: Failed to sync cart:", error);
+      items.value = [];
+    }
+  }
   
   
   // --- 本地缓存 Actions ---

@@ -128,6 +128,14 @@
     "success_message": "账户创建成功！",
     "error_message": "注册失败。"
   },
+  "forgot_password": {
+    "title": "重置密码",
+    "subtitle": "我们将向您的电子邮箱发送重置密码的说明",
+    "email_label": "电子邮箱",
+    "recover_button": "发送重置链接",
+    "back_to_login": "返回登录",
+    "success_message": "如果该邮箱已注册，您将收到一封重置密码的邮件。"
+  },
   "product": {
     "quantity": "数量",
     "size": "尺寸",
@@ -136,7 +144,6 @@
     "select_placeholder": "选择",
     "add_to_cart": "加入购物车",
     "buy_now": "立即购买",
-    "added_feedback": "已添加！",
     "usp_title": "独特卖点",
     "specs_title": "产品规格",
     "params_title": "产品参数",
@@ -290,5 +297,79 @@
     "p2": "要符合退货资格，您的商品必须处于与您收到时相同的状态，未经穿戴或使用，带有标签，并在原始包装中。您还需要收据或购买证明。",
     "p3": "要开始退货，您可以通过 support@petsclan.com 联系我们。如果您的退货被接受，我们将向您发送退货运送标签，以及有关如何以及将包裹寄往何处的说明。",
     "p4": "未经事先要求退货而退回给我们的商品将不被接受。您可以随时通过 support@petsclan.com 就任何退货问题与我们联系。"
+  },
+  "top_banner": { "promo": "新用户注册即享八折优惠！" },
+  "header": { "shop": "商店", "about_us": "关于我们", "app": "App" },
+  "hero": { "title1": "科学 & 健康", "title2": "为爱宠", "shop_now": "即刻选购" },
+  "search": { "placeholder": "找商品", "loading": "正在搜索...", "no_results": "未找到相关商品" },
+  "cart": { "title": "你的购物车", "empty_message": "你的购物车是空的", "continue_shopping": "继续购物", "login_prompt": "已经有账户了？", "login_link": "登录以更快地结账。", "welcome_back": "欢迎回来，{userName}！", "start_Browse": "你的购物车目前是空的，快去逛逛我们精彩的商品吧！", "subtotal": "小计", "checkout_button": "继续结账", "checkout": "结账", "placeholder_items": "这里将显示商品列表..." },
+  "footer": { "about_title": "公司", "support_title": "支持", "works_title": "工作原理", "join_title": "注册以获取首单九折优惠", "placeholder_email": "您的邮箱", "signup_button": "订阅", "download_app_title": "下载App", "links": { "about_us": "关于我们", "blog": "博客", "privacy_policy": "隐私政策", "terms_of_service": "服务条款", "faq": "常见问题", "contact_us": "联系我们", "order_tracking": "订单追踪", "app_service": "App服务", "user_manual": "用户手册", "shipping_policy": "配送政策", "warranty_policy": "保修政策", "price_match_policy": "价格匹配政策", "return_refund_policy": "退货和退款政策", "app": "App" } },
+  "faq": { "title": "常见问题", "feedback": { "title": "此页面对您有帮助吗？", "yes": "是", "no": "否" }, "items": [ { "question": "贵公司位于何处？", "answer": "我们的办公室位于加州圣塔克拉拉市沃尔什大道 1135 号。" }, { "question": "你们从哪里发货？", "answer": "我们从遍布全州的合作仓库发货。由于不同的仓库专注于不同的制造领域，如果您订购多于一件商品，请预计您的商品将分开发货。" }, { "question": "我的商品需要多长时间才能到达？", "answer": "商店在 2 个工作日内发货。标准运输的运输时间为 3-4 个工作日。预计到达时间在客户下单后的 8 个工作日内。" }, { "question": "我的商品需要多长时间才能到达？", "answer": "商店在 2 个工作日内发货。标准运输的运输时间为 3-4 个工作日。预计到达时间在客户下单后的 8 个工作日内。在节假日、黑色星期五和网络星期一等高峰期，请允许最多 5 个工作日的发货时间。" } ] },
+  "account": { "title": "我的账户", "logout": "登出", "order_card": { "title": "我的订单", "no_orders": "您还没有订单", "go_shopping": "去购物" }, "settings_card": { "title": "账户设置", "user_info_not_available": "用户信息不可用。" } },
+  "login": { "title": "登录", "email_label": "电子邮箱", "password_label": "密码", "forgot_password": "忘记密码？", "login_button": "登录", "signup_prompt": "还没有账户？", "signup_link": "注册", "validation": { "email_required": "请输入电子邮箱地址", "email_format": "请输入正确的电子邮箱格式", "password_required": "请输入密码" }, "success_message": "登录成功！", "error_message": "登录失败。请检查您的凭据。" },
+  "register": { "title": "创建账户", "subtitle": "获取独家功能及更多。", "name_label": "姓名", "email_label": "电子邮箱", "password_label": "密码", "create_button": "创建账户", "login_prompt": "已经有账户了？", "login_link": "登录", "validation": { "name_required": "请输入您的姓名", "email_required": "请输入您的电子邮箱", "email_format": "请输入有效的电子邮箱地址", "password_required": "请输入密码" }, "success_message": "账户创建成功！", "error_message": "注册失败。" },
+  "product": { "quantity": "数量", "size": "尺寸", "color": "颜色", "standard": "标准", "select_placeholder": "选择", "add_to_cart": "加入购物车", "buy_now": "立即购买", "added_feedback": "已添加！", "usp_title": "独特卖点", "specs_title": "产品规格", "params_title": "产品参数", "loading": "加载中...", "login_to_purchase_message": "请登录以继续购买。", "product_details_not_loaded": "产品详情尚未加载。请稍候。", "network_error_message": "网络连接失败，请检查您的网络。", "payment_service_error_message": "支付服务暂时不可用，请稍后再试。", "payment_session_failed_message": "创建支付会话失败。" },
+  "subscribe_popup": { "title": "立即解锁您的订单 <span class=\"highlight\">20%</span> 折扣", "subtitle": "让宠物生活更便利", "email_label": "电子邮箱", "subscribe_button": "订阅", "no_thanks": "不，谢谢", "error_email": "请输入有效的电子邮箱地址。", "subscription_successful": "订阅成功！谢谢您。", "subscription_failed": "订阅失败。请再试一次。" },
+  "collection_list": { "title": "按类别选购" },
+  "new_popular": { "title": "新品与热销", "new_arrivals": "新品上市", "best_sellers": "热销排行" },
+  "mega_menu": { "feeder": "喂食器", "fountains": "饮水机", "leash": "牵引绳" },
+  "products": { "product-1": "智能喂食器", "product-2": "智能饮水机", "product-3": "互动玩具" },
+  "about_us": { "hero": { "alt": "欢迎来到 Pets Clan" }, "intro": { "tagline1": "PETS CLAN", "tagline2": "轻松", "tagline3": "宠物护理。", "p1": "在 Pets Clan，我们致力于为每一位宠物主人带来更智能、更环保、更便捷的宠物生活方式。我们坚信，技术和设计应以用户需求为中心，创造出能真正提升生活品质的产品。", "p2": "我们不仅是技术的推动者，更是宠物与主人之间的桥梁，帮助您与您的宠物建立更深层次的情感联系。", "signature_alt": "Pets Clan 签名" }, "banner": { "alt": "Pets Clan 横幅" }, "features": { "feature1": { "title": "绿色生活，节能<br>环保", "description": "无浪费设计，为宠物<br>和地球负责" }, "feature2": { "title": "智能控制，<br>随时喂养", "description": "远程监控宠物健康<br>随时为它们喂食" }, "feature3": { "title": "简约设计，<br>零浪费", "description": "无需额外耗材，<br>环保与智能并行" }, "feature4": { "title": "红点设计，<br>品质之选", "description": "屡获殊荣的设计，<br>技术与美学的完美结合" } }, "lifelong": { "image_alt": "Pets Clan 智能喂食器", "title": "PETS CLAN,<br>喂养一生的友谊。", "p1": "（此处为中文占位符段落）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA", "p2": "（此处为中文占位符段落）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI", "stat1_label": "实验测试结果", "stat2_label": "精准喂养", "stat3_label": "长效电池" }, "ponti": { "subtitle": "关于设计师 PONTI", "title": "红点设计奖<br>多次获得者", "p1": "（此处为中文占位符段落）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.", "p2": "（此处为中文占位符段落）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.", "portrait_alt": "Ponti 肖像" }, "clan": { "title": "关于 Pets Clan", "video_alt": "关于 Pets Clan 视频" } },
+  "app_page": { "hero": { "ios": "苹果系统", "android": "安卓系统" }, "all_in_one": { "title": "多合一应用", "description": "在一个应用中管理您的所有设备，<br>让主人可以随时查看宠物的状态", "alt": "多合一应用界面" }, "data_service": { "title": "免费宠物数据服务", "description": "通过长期数据追踪，更好地了解您的毛茸茸伙伴", "alt": "数据服务图示" }, "features": { "feeder": { "title": "喂食器", "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴" }, "fountains": { "title": "饮水机", "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴" }, "leash": { "title": "牵引绳", "description": "通过长期数据追踪，<br>更好地了解您的毛茸茸伙伴" } }, "remote_control": { "title": "通过互联支持实现远程控制", "alt": "远程控制支持" } },
+  "contact_us": { "title": "联系我们", "p1": "有任何问题或意见吗？请使用下方的表格向我们发送消息，或通过邮件联系我们：", "p2": "support@petsclan.com", "p3": "1135 Walsh Ave, Santa Clara, California", "retail_service_title": "零售服务", "retail_service_p": "如需零售服务，请联系：sales@petsclan.com", "form_title": "发送消息给我们", "email_placeholder": "您的电子邮箱", "message_placeholder": "您的消息", "send_button": "发送" },
+  "order_tracking": { "title": "订单追踪", "placeholder": "输入您的追踪号码", "verify_prefix": "通过链接验证 ", "verify_link": "链接", "track_button": "追踪", "service_email": "客户服务电邮：support@petsclan.com", "service_phone": "客户服务电话：1-800-123-4567" },
+  "return_refund_policy": { "title": "退货与退款政策", "p1": "我们有 30 天的退货政策，这意味着您在收到商品后的 30 天内可以要求退货。", "p2": "要符合退货资格，您的商品必须处于与您收到时相同的状态，未经穿戴或使用，带有标签，并在原始包装中。您还需要收据或购买证明。", "p3": "要开始退货，您可以通过 support@petsclan.com 联系我们。如果您的退货被接受，我们将向您发送退货运送标签，以及有关如何以及将包裹寄往何处的说明。", "p4": "未经事先要求退货而退回给我们的商品将不被接受。您可以随时通过 support@petsclan.com 就任何退货问题与我们联系。" },
+
+  "warranty_policy_page": {
+    "title": "WARRANTY POLICY",
+    "p1": "Pets Clan 为通过 Pets Clan 官方网站购买的所有产品提供一 (1) 年有限保修。此有限保修涵盖自交付之日起一 (1) 年内正常使用情况下出现的材料和工艺缺陷。如果在这———年保修期内，Pets Clan 产品因材料或工艺缺陷而出现故障，我们将免费为客户维修或更换。此有限保修不涵盖因滥用、滥用、正常磨损、未经授权的维修或改装产品而造成的损坏，或任何意外或间接损害。",
+    "discount_heading": "对于超过保修期两 (2) 个月内的客户，我们将提供 20% 的新产品购买折扣。",
+    "p2": "要提出保修索赔，客户应联系 Pets Clan 的客户服务团队 support@petsclan.com，并提供购买凭证和问题描述。",
+    "p3": "作为本保修的一项条件，双方同意本保修政策中提供的补救措施是客户的唯一补救措施，且 Pets Clan 在本保修项下承担的唯一责任。所有意外损坏的责任均不予承担。购买者同意保留原始购买凭证，以确定本保修的生效日期。如果 Pets Clan 或授权经销商在保修期内更换产品，则此更换将被视为原保修期内的交易，且不会延长原保修期。本保修不可转让。Pets Clan 致力于为客户提供高品质的产品和卓越的客户服务。",
+    "disclaimer": "除本保修政策中规定的保修外，Pets Clan 对产品不作任何保修，包括任何 (A) 适销性保修；或 (B) 特定用途适用性保修；无论是法律、交易过程、履行过程、贸易惯例或其他方式明示或暗示的保修。"
+  },
+  "terms_of_service_page": {
+    "title": "TERMS OF SERVICE",
+    "intro_1": "本服务条款<strong>（简称“条款”）</strong>列明了具有法律约束力的条款和条件。用于约束您对本网站的使用；访问或使用本网站即表示您（代表您本人或您所代表的实体）接受这些条款，并且您声明并保证您持有（代表您本人或您所代表的实体）签订这些条款的权利、权力和能力。使用由 Pets Clan 提供或通过 Pets Clan 提供的任何产品或服务（包括但不限于使用本网站），即表示您接受这些条款。如果您未满18周岁，则不得访问或使用本网站，亦不得接受本条款。如果您不同意本条款的全部内容，请勿访问和/或使用本网站。",
+    "intro_2": "请注意，这些条款的第 13.2 条包含有关如何解决您和我们之间产生的争议的规定，包括但不限于在您接受这些条款的生效日期之前产生或主张的任何争议。<strong>特别是：</strong><br>(1) 您只被允许以个人身份向我们提起争议或索赔并寻求救济，而不得作为任何集体或代表诉讼或程序中的原告或集体成员； (2) 您放弃向法院提起争议或索赔、寻求救济以及进行陪审团审判的权利。",
+    "section_1_title": "1. 账户/购买信息",
+    "s1_1_text": "<strong>1.1 创建帐户。</strong>为了使用本网站的某些功能，您可能需要注册一个帐户（“帐户”），并根据帐户注册表单的提示提供您的某些个人信息。如果您注册帐户，即表示您声明并保证：(a) 您提交的所有注册/帐户设置信息均真实准确；(b) 您将维护此类信息的准确性。您可以随时按照本网站上的说明，出于任何原因而删除您的帐户。Pets Clan 可根据第 11 条暂停或终止您的帐户。",
+    "s1_2_text": "<strong>1.2 帐户责任。</strong>您有责任维护您帐户登录信息的机密性，并对您帐户下发生的所有活动负全部责任。您同意立即通知 Pets Clan 任何未经授权使用您帐户的情况，或任何其他安全漏洞。Pets Clan 无法也不会对因您未能遵守上述要求而造成的任何损失或损害承担责任。",
+    "s1_3_text": "<strong>1.3 购买。</strong>当您通过本网站购买产品或服务时，无论您是通过帐户还是以访客身份（无帐户）进行购买，您均同意为在我们商店或通过我们商店进行的所有购买提供最新、完整且准确的购买信息。如果您拥有帐户，您同意向我们提供准确的帐户信息并保持您的帐户信息更新，包括但不限于您的电子邮件地址、信用卡号和到期日期，以便我们完成您的交易并在需要时与您联系。",
+    "s1_4_text": "<strong>1.4 个人信息。</strong>您通过本网站提交的个人信息受我们的隐私政策管辖。我们的隐私政策可在 https://petsclan.com 查看，并已纳入本条款。"
+  },
+  "privacy_policy_page": {
+    "title": "PRIVACY POLICY",
+    "update_date": "最后更新：2025年3月26日",
+    "intro": "Pets Clan 致力于保护您的隐私，并不断努力为您提供安全的在线体验。本“隐私政策”适用于 Pets Clan 并管辖其数据收集和使用。请阅读我们的隐私政策以获取更多信息。",
+    "section_1_title": "1. 定义",
+    "def_a": "A. “数据”包括非个人信息和个人身份信息。",
+    "def_b": "B. “非个人信息”是除个人身份信息（定义如下）之外的任何信息。非个人信息包括但不限于已匿名的个人身份信息。",
+    "def_c": "C. “个人信息”、“个人身份信息”、“PII”或“个人数据”将具有您所在司法管辖区适用的数据隐私和安全法律中规定的含义。一般而言，个人数据是我们从您使用本网站收到的非公开信息，可单独使用或与我们拥有的其他信息结合使用，以识别特定个人/个体。它可能包括姓名、地址、电话号码、健康和医疗相关信息以及您提供给我们的其他个人信息等。个人数据的示例包括但不限于：名字和姓氏、街道地址、电子邮件地址、电话号码、社会安全号码、IP地址和医疗保健相关信息。",
+    "def_d": "D. “Pets Clan”、“我们”和“我们的”指 Pets Clan。",
+    "def_e": "E. “网站”指 Pets Clan 的网站 www.petsclan.com 以及由 Pets Clan 维护的其他相关博客、域名、移动网站、在线服务和应用程序。",
+    "def_f": "F. “您”和“您的”指访问或使用本网站的个人或实体。",
+    "section_2_title": "2. 收集的信息和同意",
+    "section_2_para": "您无需提供任何个人身份信息即可浏览本网站的公开页面；但是，为了获取或使用通过本网站提供或可能提供的产品或服务，或我们可能在线或离线提供的其他服务（统称为“服务”），您可能需要注册和/或提供个人身份信息。",
+    "subsection_a_title": "A. 您提供给我们的个人数据",
+    "subsection_a_para": "我们可能通过多种方式向您收集个人数据，包括但不限于，当您 (i) 使用我们基于平台的服务时；(ii) 在网站上或线下填写表格或字段时；(iii) 完成通过本网站提供的产品或服务的申请时；(iv) 通过本网站或通过电子邮件、邮件、文本、电话、传真或其他电子方式与我们沟通时；(v) 处理付款时；(vi) 进行付款时；(vii) 向我们提供个人数据时；(viii) 参与由 Pets Clan 提供或通过其提供的活动或利用其资源时；或 (ix) 提交或授权第三方通过本网站或服务提交信息时。我们收集或可能向您收集的个人数据包括以下类别："
+  },
+  "shipping_policy_page": {
+    "title": "SHIPPING POLICY",
+    "p1": "所有订单将于周一至周五（当地时间上午 8 点至下午 5 点）收到订单后五 (5) 个工作日内发货。周五下午 4 点至 5 点（当地时间）下的订单将于下一周处理。我们使用美国邮政服务和联邦快递运送订单。如果承运商提供了追踪号，我们将在您的订单中更新追踪信息。",
+    "p2": "订单运费将根据订购商品的重量和送货地点而定。如果商品缺货，我们将在商品到货后分批发货。缺货商品无需额外支付运费。所有美国境内订单满 39 美元或以上，即可享受免运费。* 低于 39 美元的订单，将收取 5.99 美元的运费（自 2021 年 5 月 5 日起生效）。我们提供国际统一运费，该费用将在结账时计算。",
+    "p3": "我们无法运送至以下地点：阿拉斯加、关岛、夏威夷、波多黎各、美属维尔京群岛、美洲武装部队、欧洲武装部队和太平洋武装部队。",
+    "notice": "<em>* 请注意，我们无法运送到包含邮政信箱号码的地址。</em>",
+    "signature_title": "签名确认政策",
+    "signature_p1": "在 Pets Clan, 我们始终将顾客的安全和满意度放在首位。为了提升配送安全性，我们为自动猫砂盆系列和PETKIT AIRSALON 空气沙龙系列的所有产品提供签名服务。这确保您的商品在送达时安全收到。如果结账时未提供特殊说明，则所有符合条件的产品将默认采用此签名服务。",
+    "signature_p2": "如果您不想使用签名服务，可以提前留言告知我们，我们将相应地更新您的订单。",
+    "important_notice_title": "重要通知：",
+    "important_notice_p1": "如果您选择不接受签名服务，Pets Clan 将不承担因承运人确认已成功送达指定地址但收件人报告未收到货物而产生的索赔责任。在这种情况下，客户需要直接联系承运人解决问题。感谢您的理解与配合，帮助我们确保安全可靠的送货体验。"
+  },
+  "user_manual_page": {
+    "title": "用户手册",
+    "feeder": "喂食器",
+    "fountains": "饮水机",
+    "leash": "牵引绳"
   }
 }

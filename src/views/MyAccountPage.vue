@@ -191,4 +191,36 @@ const logout = async () => {
   color: #888;
   padding-bottom: 0; /* 最后一行不需要下边距 */
 }
+
+/* ▼▼▼ 【新增】針對平板和手機的響應式樣式 ▼▼▼ */
+
+/* --- 平板和手機樣式 (寬度 ≤ 992px) --- */
+@media (max-width: 992px) {
+  .cards-wrapper {
+    grid-template-columns: 1fr; /* 關鍵：將兩欄網格改為單欄 */
+    gap: 20px;
+  }
+}
+
+/* --- 僅手機樣式 (寬度 ≤ 767px) --- */
+@media (max-width: 767px) {
+  .main-content {
+    padding: 40px 20px; /* 縮小頁面邊距 */
+  }
+
+  .page-header {
+    flex-direction: column; /* 讓標題和登出連結垂直排列 */
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .page-header h1 {
+    font-size: 28px; /* 縮小標題字體 */
+  }
+
+  .order-card-body {
+    padding: 50px 20px; /* 調整卡片內部間距 */
+  }
+}
 </style>

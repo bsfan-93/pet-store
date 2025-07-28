@@ -1,3 +1,4 @@
+<!-- Shop by category”（按类别选购） -->
 <template>
   <section class="collection-section" v-if="collections.length > 0">
     <div class="container">
@@ -14,7 +15,7 @@
         >
           <div class="image-wrapper">
             <img :src="item.url" :alt="item.name">
-            <h3>{{ t('products.' + item.name.replace(/\s/g, '').toLowerCase()) }}</h3>
+            <h3>{{ t('products.' + item.name.toLowerCase()) }}</h3>
             <el-icon class="arrow-icon"><ArrowRightBold /></el-icon>
           </div>
         </a>
@@ -78,13 +79,17 @@ const goToProduct = (productId) => {
 
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  /* ▼▼▼ 【修改】將 auto-fit 改為固定的三欄 ▼▼▼ */
+  grid-template-columns: repeat(3, 1fr);
+  /* ▲▲▲ 修改結束 ▲▲▲ */
   gap: 30px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .collection-grid {
+    /* 在手機上，覆蓋為單欄佈局 */
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 }
 
@@ -132,7 +137,7 @@ const goToProduct = (productId) => {
   padding: 0;
   font-size: 20px;
   font-weight: 600;
-  color: white;
+  color: #fff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
@@ -141,7 +146,7 @@ const goToProduct = (productId) => {
   bottom: 25px;
   right: 25px;
   font-size: 18px;
-  color: white;
+  color: #fff;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
@@ -150,4 +155,6 @@ const goToProduct = (productId) => {
 .collection-item:hover .arrow-icon {
   opacity: 1;
 }
+
+
 </style>

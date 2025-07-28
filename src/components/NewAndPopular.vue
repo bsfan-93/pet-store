@@ -79,4 +79,19 @@ const activeTab = ref('new');
 :deep(.el-tabs__active-bar) {
   display: none;
 }
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+    .new-popular-section {
+        padding: 60px 0;
+    }
+    .section-title {
+        font-size: 28px;
+    }
+    :deep(.el-tabs__item) {
+        font-size: 14px;
+        padding: 0 15px;
+        height: 35px;
+    }
+}
 </style>

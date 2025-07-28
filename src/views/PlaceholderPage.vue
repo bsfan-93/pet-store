@@ -72,4 +72,14 @@ h1 {
   font-weight: bold; /* Bold text */
   text-align: center;
 }
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 60px 20px;
+    }
+    h1 {
+        font-size: 32px;
+    }
+}
 </style>

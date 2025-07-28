@@ -1,3 +1,4 @@
+<!-- 置顶优惠横幅 -->
 <template>
   <div class="top-banner">
     <p>{{ $t('top_banner.promo') }}</p>

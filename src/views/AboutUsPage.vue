@@ -181,7 +181,7 @@ const features = computed(() => [
 
 /* ▼▼▼ 2. 公司介绍区域 ▼▼▼ */
 .intro-section {
-  padding: 100px 20px;
+  padding: 100px 2%;
   background-color: #f8f8f8;
 }
 .intro-container {
@@ -205,7 +205,7 @@ const features = computed(() => [
   max-width: 600px;
 }
 
-/* ▼▼▼ START: CSS MODIFICATION FOR PARAGRAPH ▼▼▼ */
+/* 公司介绍区域的描述 */
 .description {
   font-size: 1.145vw; /* 22px/19.2 */
   line-height: 1.8;
@@ -505,5 +505,66 @@ lf-right {
 
 .clan-video-wrapper:hover .play-icon {
   transform: scale(1.1);
+}
+
+/* ▼▼▼ 【新增】針對平板和手機的響應式樣式 ▼▼▼ */
+
+/* --- 平板電腦樣式 (寬度 ≤ 1199px) --- */
+@media (max-width: 1199px) {
+  .intro-container,
+  .lifelong-friends-container,
+  .ponti-container {
+    flex-direction: column; /* 將左右佈局改為垂直堆疊 */
+    gap: 40px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .intro-left, .intro-right, .lf-left, .lf-right, .ponti-left, .ponti-right {
+    flex-basis: 100%;
+    max-width: 600px;
+  }
+
+  .intro-right, .ponti-left {
+    text-align: left;
+  }
+
+  .features-container {
+    grid-template-columns: repeat(2, 1fr); /* 特性區塊變為兩欄 */
+    gap: 40px;
+  }
+
+  .ponti-vertical-name {
+    display: none;
+  }
+}
+
+/* --- 手機樣式 (寬度 ≤ 767px) --- */
+@media (max-width: 767px) {
+  .hero-section, .intro-section, .features-section, .lifelong-friends-section, .about-ponti-section, .about-clan-section {
+    padding: 50px 20px; /* 縮小所有區塊的上下間距 */
+  }
+
+  /* 調整字體大小為固定像素，確保手機上的可讀性 */
+  .tagline-line { font-size: 32px; }
+  .description { font-size: 15px; line-height: 1.6; }
+  .feature-title { font-size: 20px; }
+  .feature-description { font-size: 14px; }
+  .lf-title, .ponti-title, .clan-title { font-size: 28px; }
+  .lf-description, .ponti-description { font-size: 15px; }
+  .lf-stats .stat-value { font-size: 24px; }
+  .lf-stats .stat-label { font-size: 12px; }
+
+  .features-container {
+    grid-template-columns: 1fr; /* 特性區塊變為單欄 */
+  }
+
+  .lifelong-friends-container, .ponti-container, .ponti-left {
+    text-align: center;
+  }
+
+  .lf-stats {
+    justify-content: center;
+  }
 }
 </style>

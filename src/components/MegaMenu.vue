@@ -1,3 +1,4 @@
+<!-- shop超级菜单 -->
 <template>
   <div class="mega-menu" v-show="visible" v-if="menuData">
     <div class="menu-container">
@@ -67,7 +68,6 @@ watch(() => props.visible, (newValue) => {
 </script>
 
 <style scoped>
-/* Your styles remain unchanged */
 .mega-menu {
   position: absolute;
   top: 100%;
@@ -124,7 +124,7 @@ watch(() => props.visible, (newValue) => {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: contain;
-  background-color: #f7f7f8;
+  background-color: #fff;
   border-radius: 8px;
   transition: box-shadow 0.2s;
 }
@@ -139,6 +139,12 @@ watch(() => props.visible, (newValue) => {
   100% {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 767px) {
+  .mega-menu {
+    display: none !important; /* 在手機上徹底隱藏 */
   }
 }
 </style>

@@ -1,3 +1,4 @@
+<!-- 搜索 -->
 <template>
   <div class="search-overlay" @click.self="close">
     <div class="search-content">
@@ -133,7 +134,7 @@ onMounted(() => {
   top: 40px;
   right: 40px;
   font-size: 28px;
-  color: #333;
+  color: #000;
   cursor: pointer;
 }
 .search-input-wrapper {
@@ -151,7 +152,7 @@ onMounted(() => {
   padding-right: 50px;
 }
 .search-input::placeholder {
-  color: #aaa;
+  color: #968C82;
 }
 .search-icon {
   position: absolute;
@@ -159,20 +160,20 @@ onMounted(() => {
   top: 50%;
   transform: translateY(-50%);
   font-size: 28px;
-  color: #333;
+  color: #000;
 }
 .search-results-list {
   margin-top: 30px;
   max-height: calc(80vh - 200px);
   overflow-y: auto;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #968C82;
   border-radius: 8px;
 }
 .result-item {
   display: flex;
   align-items: center;
   padding: 15px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #968C82;
   text-decoration: none;
   color: inherit;
   transition: background-color 0.2s;
@@ -181,7 +182,7 @@ onMounted(() => {
   border-bottom: none;
 }
 .result-item:hover {
-  background-color: #f7f7f7;
+  background-color: #fff;
 }
 .result-image {
   width: 70px;
@@ -202,16 +203,30 @@ onMounted(() => {
 }
 .result-price {
   font-size: 14px;
-  color: #555;
+  color: #000;
   font-weight: bold;
 }
 .status-text {
   margin-top: 30px;
   text-align: center;
-  color: #999;
+  color: #968C82;
 }
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+@media (max-width: 767px) {
+  .search-content {
+    margin-top: 15vh;
+    padding: 0 20px;
+  }
+  .search-input {
+    font-size: 24px; /* 縮小輸入框字體 */
+  }
+  .close-icon {
+    top: 20px;
+    right: 20px;
+  }
 }
 </style>

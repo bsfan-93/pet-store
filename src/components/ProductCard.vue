@@ -1,3 +1,4 @@
+<!-- 产品详情页 -->
 <template>
   <a :href="`/product/${product.id}`" class="product-card">
     <div class="image-container">
@@ -37,7 +38,7 @@ defineProps({
   position: relative; /* 作为浮层定位的基准 */
   overflow: hidden; /* 隐藏超出部分的浮层 */
   border-radius: 12px;
-  background-color: var(--light-gray-color);
+  background-color: #968C82;
   text-decoration: none;
   color: var(--text-color);
   /* 卡片上浮和阴影的过渡动画 */
@@ -78,7 +79,7 @@ defineProps({
   padding: 20px;
   box-sizing: border-box;
   background: var(--secondary-color);
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid #968C82;
   /* 默认状态下，浮层被移出卡片下方 */
   transform: translateY(100%);
   transition: transform 0.4s ease;

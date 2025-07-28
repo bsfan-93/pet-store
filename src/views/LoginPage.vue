@@ -34,7 +34,9 @@
             </el-form-item>
           </div>
           
-          <a href="#" class="forgot-password">{{ $t('login.forgot_password') }}</a>
+          <router-link to="/forgot-password" class="forgot-password">
+            {{ $t('login.forgot_password') }}
+          </router-link>
           
           <el-form-item>
             <el-button 
@@ -210,4 +212,5 @@ h1 {
 .sign-up-link:hover {
   text-decoration: underline;
 }
+
 </style>

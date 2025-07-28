@@ -224,4 +224,27 @@ h1 {
   height: 20px;
   margin-right: 8px;
 }
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+    .main-content {
+        padding: 40px 15px;
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    :deep(.el-collapse-item__header) {
+        padding: 20px 50px 20px 20px; /* 調整手風琴標題的內邊距 */
+        font-size: 15px;
+    }
+
+    .page-feedback {
+        flex-direction: column; /* 讓反饋區垂直排列 */
+        gap: 15px;
+        margin-top: 50px;
+    }
+}
 </style>

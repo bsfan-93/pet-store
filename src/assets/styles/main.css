@@ -9,7 +9,7 @@
 
   /* 字体大小 */
   --font-size-top-banner: 12px;
-  --font-size-nav: 0.729vw; /* <-- 修改这里，使导航字体大小等比缩放 */
+  --font-size-nav: 14px; /* <-- 修改这里，使导航字体大小等比缩放 */
   --font-size-footer: 14px;
   --font-size-title: 48px;
   --font-size-body: 16px;
@@ -36,3 +36,4 @@ a {
   text-decoration: none;
   color: inherit;
 }
+

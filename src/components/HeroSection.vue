@@ -1,3 +1,4 @@
+<!-- banner图 -->
 <template>
   <el-carousel 
     class="hero-section-carousel"
@@ -53,7 +54,7 @@ defineProps({
   width: 100%;
   height: 100%;
   background-size: cover;     /* 确保背景图覆盖整个区域并自适应 */
-  background-position: center;
+  background-position:  center center;
 }
 
 /* 【修改】文本和按钮的容器样式
@@ -64,7 +65,7 @@ defineProps({
   bottom: 3.125vw;       /* 调整：距离底部的位置，使其随视口宽度缩放 */
   left: 10vw;        /* 调整：距离左边的位置，使其随视口宽度缩放 */
   z-index: 10;        /* 新增：确保在图片上层 */
-  color: var(--secondary-color);
+  color: #fff;
 }
 
 /* <h1> 标签的具体样式 (保持不变) */
@@ -78,8 +79,8 @@ defineProps({
 
 /* "Shop Now" 按钮样式 (保持不变) */
 .shop-now-btn {
-  background-color: var(--primary-color);
-  border-color: var(--primary-color);
+  background-color: #92C45C;
+  border-color: #92C45C;
   color: var(--secondary-color);
   padding: 1.04vw 2.08vw; /* 20px/19.2vw 40px/19.2vw */
   border-radius:  2.6vw; /* 50px/19.2vw */
@@ -91,8 +92,8 @@ defineProps({
 }
 
 .shop-now-btn:hover {
-    background-color: var(--accent-color);
-    border-color: var(--accent-color);
+    background-color: #92C45C;
+    border-color: #92C45C;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
@@ -118,7 +119,7 @@ defineProps({
 :deep(.el-carousel__indicator--horizontal .el-carousel__button) {
   width: 40px;   /* 拉长宽度 */
   height: 4px;   /* 减小高度 */
-  background: rgba(255, 255, 255, 0.5); /* 未选中时的颜色 */
+  background: rgba(150, 140, 130, 0.5); /* 未选中时的颜色 */
   border-radius: 2px; /* 设置圆角 */
   border: none; /* 移除边框 */
   opacity: 1;
@@ -128,5 +129,27 @@ defineProps({
 */
 :deep(.el-carousel__indicator--horizontal.is-active .el-carousel__button) {
   background: var(--secondary-color); /* 选中时的颜色 (例如: 白色) */
+}
+
+/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+@media (max-width: 767px) {
+  .hero-content h1 {
+    font-size: 32px; /* 將 vw 單位改為固定像素 */
+    margin-bottom: 20px;
+  }
+
+  .hero-section-carousel {
+    height: 60vh; /* 在手機上，讓輪播圖只佔螢幕高度的 60% */
+  }
+  
+  .shop-now-btn {
+    font-size: 16px; /* 固定按鈕字體大小 */
+    padding: 12px 24px; /* 固定按鈕內邊距 */
+  }
+
+  /* 調整輪播指示器的位置，避免與內容重疊 */
+  :deep(.el-carousel__indicators--horizontal) {
+    bottom: 20px;
+  }
 }
 </style>

@@ -203,6 +203,7 @@ export const registerUser = (userData) => {
     password: password
   };
 
+
   return apiFetch('/api/standalones/register/email', {
     method: 'POST',
     body: JSON.stringify(payload)
@@ -213,6 +214,14 @@ export const registerUser = (userData) => {
 export const logoutApi = () => {
   return apiFetch('/api/auth/token/logout', { // 使用 /api 前缀以匹配 vite.config.js 中的代理规则
     method: 'DELETE',
+  });
+};
+
+// ▼▼▼ 【新增】重置密碼請求函數 ▼▼▼
+export const requestPasswordReset = (email) => {
+  return apiFetch('/api/standalones/mail/reset', {
+    method: 'POST',
+    body: JSON.stringify({ email })
   });
 };
 
@@ -227,3 +236,4 @@ export const createCheckoutSession = (checkoutData) => { // 接收一个对象�
 export const getUserInfo = () => {
   return apiFetch('/api/admin/user/info'); // 使用 /api 前缀以匹配 vite.config.js 中的代理规则
 };
+

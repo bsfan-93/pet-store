@@ -14,6 +14,12 @@ import ContactUsPage from '../views/ContactUsPage.vue';
 import ReturnRefundPolicyPage from '../views/ReturnRefundPolicyPage.vue';
 import AppPage from '../views/AppPage.vue';
 import PlaceholderPage from '../views/PlaceholderPage.vue';
+import WarrantyPolicyPage from '../views/WarrantyPolicyPage.vue'; // <-- 新增這一行
+import TermsOfServicePage from '../views/TermsOfServicePage.vue'; // <-- 新增這一行
+import PrivacyPolicyPage from '../views/PrivacyPolicyPage.vue'; // <-- 新增這一行
+import UserManualPage from '../views/UserManualPage.vue'; // <-- 新增這一行
+import ShippingPolicyPage from '../views/ShippingPolicyPage.vue';
+import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
 
 // 定义路由规则
 const routes = [
@@ -41,6 +47,11 @@ const routes = [
     path: '/register', 
     name: 'Register', 
     component: RegisterPage 
+  },
+  {
+    path: '/forgot-password',
+    name: 'ForgotPassword',
+    component: ForgotPasswordPage
   },
   { 
     path: '/account', 
@@ -90,9 +101,34 @@ const routes = [
     props: true 
   },
   {
+  path: '/privacy-policy', // <-- 新增的路徑
+  name: 'PrivacyPolicy',
+  component: PrivacyPolicyPage 
+},
+{
+  path: '/user-manual', // <-- 新增的路徑
+  name: 'UserManual',
+  component: UserManualPage 
+},
+  {
     path: '/placeholder/:topic', // e.g., /placeholder/Blog
     name: 'Placeholder',
     component: PlaceholderPage,
+  },
+  {
+  path: '/shipping-policy', // <-- 新增的路徑
+  name: 'ShippingPolicy',
+  component: ShippingPolicyPage 
+    },
+  {
+  path: '/terms-of-service', // <-- 新增的路徑
+  name: 'TermsOfService',
+  component: TermsOfServicePage 
+  },
+  {
+    path: '/warranty-policy',
+    name: 'WarrantyPolicy',
+    component: WarrantyPolicyPage
   }
 ];
 

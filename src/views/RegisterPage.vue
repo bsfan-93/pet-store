@@ -62,7 +62,8 @@
 </template>
 
 <script setup>
-import { reactive, ref, inject } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
@@ -70,7 +71,8 @@ import AppFooter from '../components/AppFooter.vue';
 import { registerUser } from '../api'; // 【新增】导入注册 API 函数
 import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
 
-const navigateTo = inject('navigateTo');
+// const navigateTo = inject('navigateTo');
+const router = useRouter(); // <--- 添加这一行
 const registerFormRef = ref(null);
 const isLoading = ref(false);
 const { t } = useI18n(); // 【新增】获取 t 函数
@@ -102,7 +104,8 @@ const submitForm = async (formEl) => {
         await registerUser(registerForm); 
         
         ElMessage.success(t('register.success_message'));
-        navigateTo('login'); // 注册成功后跳转到登录页
+        // navigateTo('login'); // 注册成功后跳转到登录页
+        router.push('/login'); // <--- 修改这一行
       } catch (error) {
         // API 失败时显示错误信息
         ElMessage.error(t('register.error_message'));
@@ -160,7 +163,7 @@ h1 {
 }
 
 .subtitle {
-  color: #666;
+  color: #92C45C;
   margin-bottom: 30px;
 }
 
@@ -190,4 +193,6 @@ h1 {
 .login-prompt a:hover {
   text-decoration: underline;
 }
+
+
 </style>
