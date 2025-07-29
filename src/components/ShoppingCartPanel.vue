@@ -9,18 +9,19 @@
         </div>
         <div class="panel-content">
           <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
-            <button class="continue-btn" @click="cartStore.closeCart()">{{ $t('cart.continue_shopping') }}</button>
             <div v-if="!authStore.isLoggedIn" class="login-prompt">
               <span class="login-prompt-text">{{ $t('cart.login_prompt') }}</span>
-              <a href="#" @click.prevent="handleLoginClick" class="login-link">
-                {{ $t('cart.login_link') }}
+              <a href="#" @click.prevent="handleCheckout" class="login-link">
+                {{ t('cart.login_link') }}
               </a>
             </div>
             <div v-else class="logged-in-empty-cart-message">
-              <p>{{ $t('cart.welcome_back', { userName: authStore.userInfo?.name || '' }) }}</p>
-              <p>{{ $t('cart.start_Browse') }}</p>
+              <p>{{ t('cart.welcome_back', { userName: authStore.userInfo?.name || authStore.userInfo?.username || '' }) }}</p>
+              <p>{{ t('cart.start_Browse') }}</p>
             </div>
-          </div>
+            <button class="continue-btn" @click="cartStore.closeCart()">{{ t('cart.continue_shopping') }}</button>
+        </div>
+
           <div v-else class="cart-items">
             <div v-for="item in cartStore.items" :key="item.cartid" class="cart-item">
               <img :src="item.url || '/images/placeholder.png'" :alt="item.name" class="item-image">
@@ -35,8 +36,14 @@
                 />
               </div>
               <div class="item-actions">
-                <p class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}</p>
-                <el-icon class="item-remove" @click="cartStore.removeItems(item)"><Delete /></el-icon>
+                <p 
+                class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}
+              </p>
+                <el-icon 
+                class="item-remove" 
+                @click="cartStore.removeItems(item.id)">
+                <Delete />
+              </el-icon>
               </div>
             </div>
           </div>

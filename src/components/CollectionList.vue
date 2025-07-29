@@ -7,7 +7,7 @@
       </div>
       <div class="collection-grid">
         <a 
-          v-for="item in collections" 
+          v-for="(item, index) in collections" 
           :key="item.id" 
           href="#" 
           @click.prevent="goToProduct(item.goodId)" 
@@ -15,7 +15,7 @@
         >
           <div class="image-wrapper">
             <img :src="item.url" :alt="item.name">
-            <h3>{{ t('products.' + item.name.toLowerCase()) }}</h3>
+            <h3>{{ t(categoryTranslationKeys[index]) }}</h3>
             <el-icon class="arrow-icon"><ArrowRightBold /></el-icon>
           </div>
         </a>
@@ -31,6 +31,13 @@ import { ElIcon } from 'element-plus';
 import { ArrowRightBold } from '@element-plus/icons-vue';
 
 const { t } = useI18n(); // 【新增】获取 t 函数
+
+// ▼▼▼ 1. 在前端定義一個包含翻譯鍵名的陣列 ▼▼▼
+const categoryTranslationKeys = [
+  'mega_menu.feeder',    // 對應 "Feeder"
+  'mega_menu.fountains', // 對應 "Fountains"
+  'mega_menu.leash'      // 對應 "Leash"
+];
 
 // 定义 props
 defineProps({
