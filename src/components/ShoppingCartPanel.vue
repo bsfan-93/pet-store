@@ -23,7 +23,7 @@
         </div>
 
           <div v-else class="cart-items">
-            <div v-for="item in cartStore.items" :key="item.cartid" class="cart-item">
+            <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
               <img :src="item.url || '/images/placeholder.png'" :alt="item.name" class="item-image">
               <div class="item-details">
                 <p class="item-name">{{ item.name || item.goodName }}</p>
@@ -36,14 +36,8 @@
                 />
               </div>
               <div class="item-actions">
-                <p 
-                class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}
-              </p>
-                <el-icon 
-                class="item-remove" 
-                @click="cartStore.removeItems(item.id)">
-                <Delete />
-              </el-icon>
+                <p class="item-total-price">${{ ((item.price || 0) * item.quantity).toFixed(2) }}</p>
+                <el-icon class="item-remove" @click="cartStore.removeItems(item.id)"><Delete /></el-icon>
               </div>
             </div>
           </div>
@@ -137,7 +131,7 @@ const handleCheckout = async () => {
     }
 
     // 2. 將構造好的【數組】作為請求體發送
-    const checkoutUrl = await createCheckoutSession(checkoutItems);
+    const checkoutUrl = await createCheckoutSession(checkoutItems[0]);
     
     if (checkoutUrl) {
       // 3. 重定向到支付頁面

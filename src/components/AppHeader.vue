@@ -350,6 +350,12 @@ defineProps({
   transform: translateY(-10px);
 }
 
+/* ▼▼▼ 【新增】移除語言選擇器的焦點外框 ▼▼▼ */
+.el-dropdown-link:focus,
+.el-dropdown-link:focus-visible {
+    outline: none;
+}
+
 /* 媒體查詢，控制電腦/手機版的顯示切換 */
 @media (max-width: 767px) {
   .main-nav, .header-actions .el-dropdown-link {

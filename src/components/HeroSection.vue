@@ -1,4 +1,5 @@
 <!-- banner图 -->
+
 <template>
   <el-carousel 
     class="hero-section-carousel"
@@ -16,10 +17,13 @@
             {{ t('hero.title1') }}<br>
             {{ t('hero.title2') }}
           </h1>
-          <el-button type="success" class="shop-now-btn">
-            {{ t('hero.shop_now') }}
-          </el-button>
-        </div>
+          
+          <router-link :to="`/product/${banner.goodId}`" v-if="banner.goodId">
+            <el-button type="success" class="shop-now-btn">
+              {{ t('hero.shop_now') }}
+            </el-button>
+          </router-link>
+          </div>
       </div>
     </el-carousel-item>
   </el-carousel>

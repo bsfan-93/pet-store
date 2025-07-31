@@ -91,6 +91,8 @@ const handleSubscribe = async () => {
     await subscribeMail(email.value);
     ElMessage.success(t('subscribe_popup.subscription_successful')); 
     
+    // ▼▼▼ 【核心修改】直接將訂閱狀態寫入 localStorage ▼▼▼
+    // localStorage.setItem('hasSubscribed', 'true');
     // ▼▼▼ 3. 订阅成功后，调用 store 的 action 来更新全局状态 ▼▼▼
     subscriptionStore.subscribe();
     closeDialog();

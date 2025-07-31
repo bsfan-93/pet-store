@@ -18,14 +18,20 @@
       </div>
 
       <div class="search-results-list" v-if="searchResults.length > 0">
-        <a v-for="item in searchResults" :key="item.id" :href="`/goods/${item.id}`" class="result-item">
+        <router-link 
+          v-for="item in searchResults" 
+          :key="item.id" 
+          :to="`/product/${item.id}`" 
+          class="result-item"
+          @click="close"
+        >
           <img :src="item.url" :alt="item.name" class="result-image">
           <div class="result-info">
             <span class="result-name">{{ item.name }}</span>
             <span class="result-price">$ {{ item.price }}</span>
           </div>
-        </a>
-      </div>
+        </router-link>
+        </div>
 
       <div class="status-text" v-if="statusText">{{ statusText }}</div>
     </div>

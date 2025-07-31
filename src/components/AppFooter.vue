@@ -129,8 +129,8 @@ const handleSubscribe = async () => {
   }
   try {
     await subscribeMail(email.value);
-    // ElMessage.success('Subscription successful! Thank you.');
-    // email.value = '';
+    ElMessage.success('Subscription successful! Thank you.');
+    email.value = '';
     // ▼▼▼ 3. 脚本修改：成功后不再弹出提示，而是改变状态 ▼▼▼
     //     isSubscribed.value = true;
     // ▼▼▼ 3. 脚本修改：订阅成功后，同样调用 store 的 action ▼▼▼

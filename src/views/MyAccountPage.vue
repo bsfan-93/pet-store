@@ -8,32 +8,39 @@
     <main class="main-content">
       <div class="account-container">
         <div class="page-header">
-          <h1>{{ $t('account.title') }}</h1>
+          <h1>{{ t('account.title') }}</h1>
           <a href="#" @click.prevent="logout" class="logout-link">
-            {{ $t('account.logout') }}
+            {{ t('account.logout') }}
           </a>
         </div>
 
         <div class="cards-wrapper">
           <div class="account-card">
-            <div class="card-header" @click="router.push('/order-tracking')">
-              <h3>{{ $t('account.order_card.title') }}</h3>
-              <el-icon><ArrowRight /></el-icon>
+            <div class="card-header">
+              <h3>{{ t('account.order_card.title') }}</h3>
             </div>
             <div class="card-body order-card-body">
-              <p>{{ $t('account.order_card.no_orders') }}</p>
-              <el-button class="go-shopping-btn" @click="router.push('/')">
-                {{ $t('account.order_card.go_shopping') }}
-              </el-button>
+              <div v-if="isLoadingOrders" class="loading-spinner">
+                Loading orders...
+              </div>
+              <div v-else-if="orders.length > 0" class="order-list">
+                <router-link v-for="order in orders" :key="order.id" :to="`/placeholder/orders/${order.id}`" class="order-item">
+                  <span class="order-text">{{ t('account.order_card.order_prefix') }} {{ order.name }}</span>
+                  <el-icon class="order-arrow-icon"><ArrowRightBold /></el-icon>
+                </router-link>
+              </div>
+              <div v-else class="no-orders-placeholder">
+                <p>{{ t('account.order_card.no_orders') }}</p>
+                <el-button class="go-shopping-btn" @click="router.push('/')">
+                  {{ t('account.order_card.go_shopping') }}
+                </el-button>
+              </div>
             </div>
           </div>
 
           <div class="account-card">
-            <div class="card-header" @click="router.push('/placeholder/Account-Settings')">
-              <h3>{{ $t('account.settings_card.title') }}</h3>
-              <el-icon>
-                <ArrowRight />
-              </el-icon>
+            <div class="card-header">
+              <h3>{{ t('account.settings_card.title') }}</h3>
             </div>
             <div class="card-body settings-card-body">
               <div v-if="authStore.userInfo">
@@ -54,17 +61,40 @@
 </template>
 
 <script setup>
-import { inject } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import { ElButton, ElIcon } from 'element-plus';
+import { ArrowRightBold } from '@element-plus/icons-vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import { useAuthStore } from '../stores/auth';
+import { getUserOrders } from '../api';
 
+const { t } = useI18n();
 const router = useRouter();
 const authStore = useAuthStore();
-const navigateTo = inject('navigateTo');
+const orders = ref([]);
+const isLoadingOrders = ref(true);
+
+const fetchOrders = async () => {
+  isLoadingOrders.value = true;
+  try {
+    const userOrders = await getUserOrders();
+    orders.value = userOrders;
+  } catch (error) {
+    console.error("Failed to fetch orders:", error);
+    orders.value = [];
+  } finally {
+    isLoadingOrders.value = false;
+  }
+};
+
+onMounted(() => {
+  authStore.fetchUserInfo();
+  fetchOrders();
+});
 
 const logout = async () => {
   await authStore.handleLogout();
@@ -73,154 +103,188 @@ const logout = async () => {
 </script>
 
 <style scoped>
-.account-page {
-  background-color: #f7f7f7;
-}
-.header-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #fff;
-  border-bottom: 1px solid #eee;
-}
-.header-wrapper :deep(.main-nav a),
-.header-wrapper :deep(.header-actions .el-icon),
-.header-wrapper :deep(.el-dropdown-link),
-.header-wrapper :deep(.logo img) {
-  color: var(--text-color);
-  filter: none;
-}
-.main-content {
-  padding: 80px 20px;
-}
-.account-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
-}
-.page-header h1 {
-  font-size: 36px;
-  font-weight: 600;
-  margin: 0;
-}
-.logout-link {
-  color: #666;
-  text-decoration: underline;
-  font-size: 14px;
-}
-.logout-link:hover {
-    color: #000;
-}
-.cards-wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-}
-.account-card {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  background-color: #e9ecef;
-  border-radius: 8px 8px 0 0;
-  /* ▼▼▼ 3. 添加鼠標指針和過渡效果 ▼▼▼ */
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-/* ▼▼▼ 3. 添加懸停效果 ▼▼▼ */
-.card-header:hover {
-    background-color: #d8dcdf;
-}
-
-.card-header h3 {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: #333;
-}
-.card-header .el-icon {
-  font-size: 16px;
-}
-.card-body {
-  padding: 30px;
-  font-size: 14px;
-}
-.order-card-body {
-  text-align: center;
-  padding: 70px 30px;
-  color: #666;
-}
-.go-shopping-btn {
-  background-color: #000;
-  color: #fff;
-  padding: 20px 40px;
-  height: auto;
-  border-radius: 30px;
-  margin-top: 10px;
-  font-weight: 500;
-}
-.go-shopping-btn:hover {
-  background-color: #333;
-}
-
-/* ▼▼▼ 【修改】账户设置卡片的样式 ▼▼▼ */
-.settings-card-body {
-  /* 让内容高度与另一张卡片对齐 */
-  min-height: 225px; 
-}
-.settings-card-body p {
-  margin: 0;
-  padding-bottom: 15px; /* 设置每行之间的间距 */
-}
-.settings-card-body .user-name {
-  font-weight: 500;
-}
-.settings-card-body .user-email {
-  color: #888;
-  padding-bottom: 0; /* 最后一行不需要下边距 */
-}
-
-/* ▼▼▼ 【新增】針對平板和手機的響應式樣式 ▼▼▼ */
-
-/* --- 平板和手機樣式 (寬度 ≤ 992px) --- */
-@media (max-width: 992px) {
-  .cards-wrapper {
-    grid-template-columns: 1fr; /* 關鍵：將兩欄網格改為單欄 */
-    gap: 20px;
+  /* --- 基礎樣式 --- */
+  .account-page {
+    background-color: #fff;
   }
-}
 
-/* --- 僅手機樣式 (寬度 ≤ 767px) --- */
-@media (max-width: 767px) {
+  .header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+  }
+
+  .header-wrapper :deep(.main-nav a),
+  .header-wrapper :deep(.header-actions .el-icon),
+  .header-wrapper :deep(.el-dropdown-link),
+  .header-wrapper :deep(.logo img) {
+    color: var(--text-color);
+    filter: none;
+  }
+
   .main-content {
-    padding: 40px 20px; /* 縮小頁面邊距 */
+    padding: 60px 20px;
+  }
+
+  .account-container {
+    max-width: 800px;
+    margin: 0 auto;
   }
 
   .page-header {
-    flex-direction: column; /* 讓標題和登出連結垂直排列 */
-    align-items: flex-start;
-    gap: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 30px;
   }
 
   .page-header h1 {
-    font-size: 28px; /* 縮小標題字體 */
+    font-size: 48px;
+    font-weight: 600;
+    margin: 0;
+    text-align: left;
   }
 
-  .order-card-body {
-    padding: 50px 20px; /* 調整卡片內部間距 */
+  .logout-link {
+    color: #666;
+    text-decoration: underline;
+    font-size: 14px;
   }
-}
+
+  /* --- 卡片佈局 --- */
+  .cards-wrapper {
+    display: flex;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .account-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .account-card + .account-card {
+    border-left: 1px solid #e0e0e0;
+  }
+
+  .card-header {
+    padding: 15px 20px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+  }
+
+  .card-header h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #555;
+    text-transform: uppercase;
+  }
+
+  .card-body {
+    padding: 0;
+    font-size: 14px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* --- 帳戶設定卡片 (右側) --- */
+  .settings-card-body {
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .settings-card-body p {
+    margin: 0;
+    padding-bottom: 8px;
+  }
+
+  .settings-card-body .user-name {
+    font-weight: 500;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .settings-card-body .user-email {
+    color: #555;
+    padding-bottom: 0;
+  }
+
+  /* --- 訂單卡片 (左側) --- */
+  .order-card-body {
+    align-items: stretch;
+    padding: 10px 25px;
+    justify-content: flex-start;
+  }
+
+  .no-orders-placeholder {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .no-orders-placeholder p {
+    margin-bottom: 20px;
+  }
+
+  .go-shopping-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 12px 35px;
+    height: auto;
+    border-radius: 30px;
+    font-weight: 500;
+    border: none;
+  }
+
+  .loading-spinner {
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+  }
+
+  .order-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
+    color: #333;
+  }
+
+  .order-item:last-child {
+    border-bottom: none;
+  }
+
+  .order-item span {
+    font-weight: normal;
+  }
+
+  /* --- 箭頭樣式 --- */
+  .order-arrow {
+    font-family: 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    color: #333;
+  }
 </style>

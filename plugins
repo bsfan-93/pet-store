@@ -1,0 +1,12 @@
+// src/plugins/errorHandler.js
+import { ElMessage } from 'element-plus';
+
+export default {
+  install: (app) => {
+    app.config.errorHandler = (err, instance, info) => {
+      console.error("Vue Error:", err, info);
+      ElMessage.error(`应用发生错误: ${err.message || '未知错误'}`);
+      // 可以在这里上报错误到监控系统
+    };
+  }
+};

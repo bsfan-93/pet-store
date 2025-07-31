@@ -8,7 +8,7 @@
     <main class="product-main-content">
       <div class="product-container">
         <div class="product-gallery">
-          <div 
+          <div
             class="main-image-container"
             ref="mainImageContainer"
             @mouseenter="isMagnifierVisible = true"
@@ -16,26 +16,26 @@
             @mousemove="handleMouseMove"
             @wheel.prevent="handleWheel" >
             <img :src="mainImage" alt="Main product image" class="main-image-content">
-            <div 
-              v-show="isMagnifierVisible" 
+            <div
+              v-show="isMagnifierVisible"
               class="magnifier-view"
               :style="magnifierStyle"
             ></div>
           </div>
-          
+
           <div class="thumbnail-carousel">
-            <el-icon class="arrow-icon"><ArrowLeft /></el-icon>
-            <div class="thumbnail-track">
-              <div 
-                v-for="img in productDetail.goodPic" 
-                :key="img.id" 
+            <el-icon class="arrow-icon" @click="scrollThumbnails('left')"><ArrowLeft /></el-icon>
+            <div class="thumbnail-track" ref="thumbnailTrackRef">
+              <div
+                v-for="img in productDetail.goodPic"
+                :key="img.id"
                 class="thumbnail-placeholder"
                 @click="mainImage = img.url"
               >
                 <img :src="img.url" :alt="img.name" class="thumbnail-image-content">
               </div>
             </div>
-            <el-icon class="arrow-icon"><ArrowRight /></el-icon>
+            <el-icon class="arrow-icon" @click="scrollThumbnails('right')"><ArrowRight /></el-icon>
           </div>
         </div>
         <div class="product-info">
@@ -56,56 +56,74 @@
               <div class="option-item">
                 <span class="option-label">{{ $t('product.size') }}</span>
                 <el-select v-model="form.size" :placeholder="$t('product.select_placeholder')" size="default">
-                    <el-option 
-                      v-for="size in sizeOptions" 
-                      :key="size.id" 
-                      :label="size.value" 
-                      :value="size.value" 
+                    <el-option
+                      v-for="size in sizeOptions"
+                      :key="size.id"
+                      :label="size.value"
+                      :value="size.value"
                     />
-                  </el-select>
+                </el-select>
               </div>
               <div class="option-item">
                 <span class="option-label">{{ $t('product.color') }}</span>
                 <el-radio-group v-model="form.color">
-                    <el-radio 
-                        v-for="color in colorOptions" 
-                        :key="color.id" 
-                        :value="color.value"  
+                    <el-radio
+                        v-for="color in colorOptions"
+                        :key="color.id"
+                        :value="color.value"
                         class="color-swatch"
                         :style="{ '--swatch-color': color.hex || '#ccc' }"
                     />
-                  </el-radio-group>
+                </el-radio-group>
               </div>
               <div class="option-item">
                 <span class="option-label">{{ $t('product.standard') }}</span>
                 <el-select v-model="form.standard" :placeholder="$t('product.select_placeholder')" size="default">
-                    <el-option label="OS" value="os" />
-                  </el-select>
+                    <el-option
+                        v-for="standard in standardOptions"
+                        :key="standard.id"
+                        :label="standard.value"
+                        :value="standard.value"
+                    />
+                </el-select>
               </div>
             </div>
           </div>
           <div class="action-buttons">
-            <el-button 
-              size="large" 
-              class="cart-btn" 
-              @click="handleAddToCart($event)" 
-              :loading="isAddingToCart" 
-              :disabled="!form.size || !form.color || isAddingToCart"
+            <el-button
+              size="large"
+              class="cart-btn"
+              @click="handleAddToCart($event)"
+              :loading="isAddingToCart"
+              :disabled="
+                isAddingToCart ||
+                (sizeOptions.length > 0 && !form.size) ||
+                (colorOptions.length > 0 && !form.color)
+              "
             >
               <el-icon style="margin-right: 8px;"><ShoppingCart /></el-icon>
               {{ $t('product.add_to_cart') }}
             </el-button>
-            
-            <el-button 
-              size="large" 
-              class="buy-now-btn" 
-              @click="handleBuyNow" 
+
+            <el-button
+              size="large"
+              class="buy-now-btn"
+              @click="handleBuyNow"
               type="default"
-              :disabled="!form.size || !form.color"
+              :disabled="
+                (sizeOptions.length > 0 && !form.size) ||
+                (colorOptions.length > 0 && !form.color)
+              "
             >
               {{ $t('product.buy_now') }}
             </el-button>
 
+            <transition name="fade">
+              <div v-if="showAddedFeedback" class="added-feedback">
+                <el-icon><Select /></el-icon>
+                <span>{{ $t('product.added_feedback') }}</span>
+              </div>
+            </transition>
             </div>
         </div>
       </div>
@@ -122,11 +140,11 @@
       <section class="feature-display-section" v-if="featureImages.length">
         <div class="feature-container">
           <div class="feature-hero-placeholder" v-if="featureImages[0]">
-            <img :src="featureImages[0]" alt="Feature image 1" class="feature-image-content">
+             <img :src="featureImages[0]" alt="Feature image 1" class="feature-image-content">
           </div>
           <div class="feature-grid" v-if="featureImages.length > 1">
             <div class="feature-item-placeholder" v-for="imgUrl in featureImages.slice(1)" :key="imgUrl">
-              <img :src="imgUrl" alt="Feature image" class="feature-image-content">
+               <img :src="imgUrl" alt="Feature image" class="feature-image-content">
             </div>
           </div>
         </div>
@@ -136,15 +154,15 @@
         <div class="section-container">
           <h2 class="section-title">{{ $t('product.specs_title') }}</h2>
           <div class="specs-images-container" v-if="productDetail.sizePic && productDetail.sizePic.length > 0">
-            <div 
-              v-for="pic in productDetail.sizePic" 
-              :key="pic.id" 
+            <div
+              v-for="pic in productDetail.sizePic"
+              :key="pic.id"
               class="spec-image-placeholder"
             >
               <img :src="pic.url" :alt="pic.name" class="spec-image-content">
             </div>
           </div>
-          
+
           <h2 class="section-title">{{ $t('product.params_title') }}</h2>
           <div class="params-table" v-if="productDetail.goodParameter && productDetail.goodParameter.length > 0">
             <div class="param-row" v-for="param in productDetail.goodParameter" :key="param.id">
@@ -166,7 +184,8 @@
 <script setup>
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getGoodDetail, createCheckoutSession, addToCart } from '../api';
+// 【移除】addToCart 的导入，因为现在只通过 cartStore.addItem 来处理
+import { getGoodDetail, createCheckoutSession } from '../api'; 
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import TopBanner from '../components/TopBanner.vue';
@@ -176,7 +195,8 @@ import {
   ElButton, ElTag, ElInputNumber, ElSelect, ElOption,
   ElRadioGroup, ElRadio, ElIcon, ElMessage
 } from 'element-plus';
-import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
+// 【修复】导入 Select 图标
+import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue'; 
 import { useI18n } from 'vue-i18n';
 
 // props and router
@@ -210,31 +230,79 @@ const form = reactive({
   standard: 'os'
 });
 
-const isAddingToCart = ref(false); // 确保这个 ref 变量已定义
+// 【重新启用】添加成功反馈的 state
+const showAddedFeedback = ref(false);
+let feedbackTimer = null;
+
+const isAddingToCart = ref(false);
+
+// 【新增】缩略图滚动相关
+const thumbnailTrackRef = ref(null);
+const scrollThumbnails = (direction) => {
+  if (!thumbnailTrackRef.value) {
+    console.warn("Thumbnail track element not found for scrolling.");
+    return;
+  }
+
+  // const scrollAmount = thumbnailTrackRef.value.clientWidth / 3; // 滚动三分之一的容器宽度，或者根据需要调整
+
+  // 获取第一个缩略图的实际宽度和其右侧的 gap (15px)
+  const firstThumbnail = thumbnailTrackRef.value.querySelector('.thumbnail-placeholder');
+  const scrollAmount = firstThumbnail ? firstThumbnail.offsetWidth + 15 : 150; // 确保获取到宽度，否则给个默认值
+
+  console.log('Current scrollLeft:', thumbnailTrackRef.value.scrollLeft); // 【调试】滚动前的位置
+  console.log('Scroll amount:', scrollAmount); // 【调试】滚动距离
+  console.log('Scroll width (total content width):', thumbnailTrackRef.value.scrollWidth); // 【调试】可滚动总宽度
+  console.log('Client width (visible width):', thumbnailTrackRef.value.clientWidth); // 【调试】可见宽度
+
+  if (direction === 'left') {
+    thumbnailTrackRef.value.scrollLeft -= scrollAmount;
+  } else {
+    thumbnailTrackRef.value.scrollLeft += scrollAmount;
+  }
+  console.log('New scrollLeft:', thumbnailTrackRef.value.scrollLeft); // 【调试】滚动后的位置
+};
 
 // --- Data Fetching ---
 const fetchProductData = async (goodId) => {
-  if (!goodId) return;
-  try {
+  if (!goodId) {
     productDetail.value = null;
+    return;
+  }
+  try {
+    productDetail.value = null; 
     const data = await getGoodDetail(goodId); 
     productDetail.value = data;
     if (data.goodPic && data.goodPic.length > 0) {
       mainImage.value = data.goodPic[0].url;
     }
-    // ▼▼▼ 2. 核心逻辑：在这里自动为用户选择第一个选项 ▼▼▼
-    const sizes = data.specifications?.find(s => s.name === 'size')?.values || [];
-    if (sizes.length > 0) {
+
+    // ▼▼▼ 【改进】确保在设置默认值前，options 数组存在且非空 ▼▼▼
+    // 先尝试自动选择，如果没选上，再将 form.size/color 置空以触发禁用或提示
+    const sizes = data.specifications?.find(s => s.name === 'size')?.values;
+    if (sizes && sizes.length > 0) {
+      // 尝试自动选择第一个，但如果后端返回的规格ID与值不符，可能需要更复杂的映射
       form.size = sizes[0].value;
+    } else {
+      form.size = ''; // 如果没有尺寸选项，确保重置为初始空值
     }
-    const colors = data.specifications?.find(s => s.name === 'color')?.values || [];
-    if (colors.length > 0) {
+
+    const colors = data.specifications?.find(s => s.name === 'color')?.values;
+    if (colors && colors.length > 0) {
       form.color = colors[0].value;
+    } else {
+      form.color = ''; // 如果没有颜色选项，确保重置为初始空值
     }
-    // ▲▲▲ 逻辑结束 ▲▲▲
+    // ▲▲▲ 改进结束 ▲▲▲
+
+    // 【新增调试】在数据获取后立即打印 productDetail 和 form 状态
+    console.log('fetchProductData completed. productDetail:', productDetail.value);
+    console.log('Initial form.size:', form.size, 'Initial form.color:', form.color);
+
   } catch (error) {
     console.error("Failed to fetch product details:", error);
     ElMessage.error(t('product.product_details_not_loaded'));
+    productDetail.value = null; 
   }
 };
 
@@ -256,6 +324,7 @@ const sizeOptions = computed(() => {
     if (!productDetail.value || !productDetail.value.specifications) return [];
     return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
 });
+
 
 const productVideo = computed(() => {
     if (!productDetail.value || !productDetail.value.detailPic) return null;
@@ -281,6 +350,12 @@ const magnifierStyle = computed(() => {
   };
 });
 
+// 【新增】standardOptions 计算属性
+const standardOptions = computed(() => {
+    if (!productDetail.value || !productDetail.value.specifications) return [];
+    return productDetail.value.specifications.find(s => s.name === 'standard')?.values || [];
+});
+
 // --- Methods ---
 const handleMouseMove = (event) => {
   if (!mainImageContainer.value) return;
@@ -297,25 +372,21 @@ const handleWheel = (event) => {
   }
 };
 
-const handleAddToCart = async (event) => { // 接收事件对象
-  // 调试用：查看方法是否被多次调用
+const handleAddToCart = async (event) => {
   console.log('handleAddToCart called. Current isAddingToCart:', isAddingToCart.value); 
-  console.log('Event target:', event?.target); // 打印触发事件的元素
+  console.log('Event target:', event?.target);
 
-  // 【核心防御 1】防止函数在同步操作进行中被重复调用
   if (isAddingToCart.value) { 
     console.log('handleAddToCart: Already adding, preventing duplicate call due to guard.');
-    // 再次尝试禁用按钮，以防万一
     if (event?.target) {
         event.target.disabled = true;
     }
     return;
   }
 
-  // 【核心防御 2】立即设置加载状态和禁用按钮
   isAddingToCart.value = true; 
-  if (event?.target) { // 确保 event.target 存在
-    event.target.disabled = true; // 直接禁用点击的按钮元素
+  if (event?.target) {
+    event.target.disabled = true;
   }
 
   try {
@@ -324,31 +395,43 @@ const handleAddToCart = async (event) => { // 接收事件对象
       return; 
     }
 
-    // 【新增】在访问 specifications 之前，进行严格的空值检查
+    console.log('handleAddToCart: productDetail.value.specifications:', productDetail.value.specifications);
     if (!productDetail.value.specifications || !Array.isArray(productDetail.value.specifications)) {
-      ElMessage.error(t('product.specifications_not_loaded_error')); // + 新增一个国际化键
+      ElMessage.error(t('product.specifications_not_loaded_error'));
       console.error("Product specifications are missing or not in expected array format.", productDetail.value);
-      return; // 如果规格信息不完整，阻止添加购物车操作
+      return;
     }
-
 
     const selectedSizeValue = form.size;
     const selectedColorValue = form.color;
 
-    const selectedSizeId = productDetail.value.specifications
-      .find(s => s.name === 'size')
-      ?.values.find(v => v.value === selectedSizeValue)
-      ?.id;
+    const sizeSpec = productDetail.value.specifications.find(s => s.name === 'size');
+    const colorSpec = productDetail.value.specifications.find(s => s.name === 'color');
 
-    const selectedColorId = productDetail.value.specifications
-      .find(s => s.name === 'color')
-      ?.values.find(v => v.value === selectedColorValue)
-      ?.id;
+    const selectedSizeId = sizeSpec?.values.find(v => v.value === selectedSizeValue)?.id;
+    const selectedColorId = colorSpec?.values.find(v => v.value === selectedColorValue)?.id;
 
-    // 【修正】更新本地购物车状态
-    cartStore.addItem({
-      id: productDetail.value.good.id, 
-      goodId: productDetail.value.good.id, 
+    console.log('handleAddToCart: form.size value:', selectedSizeValue, '-> ID:', selectedSizeId);
+    console.log('handleAddToCart: form.color value:', selectedColorValue, '-> ID:', selectedColorId);
+
+    // 【改进】动态验证：只有当存在该规格类型且其值未被正确选择时，才显示错误
+    let validationFailed = false;
+    if (sizeSpec && (selectedSizeId === undefined || selectedSizeId === null)) {
+      validationFailed = true;
+    }
+    if (colorSpec && (selectedColorId === undefined || selectedColorId === null)) {
+      validationFailed = true;
+    }
+    
+    if (validationFailed) {
+      ElMessage.error(t('product.select_options_error'));
+      console.error("Missing spec or color ID in payload for cart:", { selectedSizeId, selectedColorId, selectedSizeValue, selectedColorValue });
+      return;
+    }
+
+    console.log('handleAddToCart: Validation passed. Calling cartStore.addItem with product:', {
+      id: productDetail.value.good.id,
+      goodId: productDetail.value.good.id,
       name: productDetail.value.good.name,
       price: productDetail.value.good.price,
       url: mainImage.value,
@@ -359,38 +442,33 @@ const handleAddToCart = async (event) => { // 接收事件对象
       colorName: selectedColorValue,
     });
 
-    if (authStore.isLoggedIn) {
-      const apiPayload = {
-        goodId: productDetail.value.good.id,
-        spec: selectedSizeId,
-        color: selectedColorId,
-        quantity: form.quantity
-      };
+    await cartStore.addItem({
+      id: productDetail.value.good.id, 
+      goodId: productDetail.value.good.id, 
+      name: productDetail.value.good.name,
+      price: productDetail.value.good.price,
+      url: mainImage.value,
+      quantity: form.quantity,
+      specId: selectedSizeId, 
+      specName: selectedSizeValue,
+      colorId: selectedColorId, 
+      colorName: selectedColorValue,
+      standard: form.standard, // 【新增】传递 standard
+    });
 
-      if (selectedSizeId === undefined || selectedSizeId === null ||
-          selectedColorId === undefined || selectedColorId === null) {
-          ElMessage.error(t('product.select_options_error')); 
-          console.error("Missing spec or color ID in payload:", apiPayload);
-          return; 
-      }
-
-      await addToCart(apiPayload); // 实际发送 POST 请求到后端
-    }
-
-    // 显示添加成功反馈
-    // showAddedFeedback.value = true;
-    // clearTimeout(feedbackTimer);
-    // feedbackTimer = setTimeout(() => {
-    //   showAddedFeedback.value = false;
-    // }, 2000); 
+    showAddedFeedback.value = true;
+    clearTimeout(feedbackTimer);
+    feedbackTimer = setTimeout(() => {
+      showAddedFeedback.value = false;
+    }, 2000);
 
   } catch (error) {
     console.error("handleAddToCart Error:", error);
     ElMessage.error(error.message || t('product.network_error_message') || '添加到购物车失败，请重试。');
   } finally {
-    isAddingToCart.value = false; // 无论成功或失败，都重置为非加载状态
-    if (event?.target) { // 确保 event.target 存在
-      event.target.disabled = false; // 显式重新启用按钮
+    isAddingToCart.value = false;
+    if (event?.target) {
+      event.target.disabled = false;
     }
     console.log('handleAddToCart completed.'); 
   }
@@ -403,10 +481,41 @@ const handleBuyNow = async () => {
   return;
  }
  
- if (!productDetail.value) {
-  ElMessage.warning(t('product.product_details_not_loaded'));
-  return;
- }
+  // 【新增】在访问 specifications 之前，进行严格的空值检查
+  console.log('handleBuyNow: productDetail.value.specifications:', productDetail.value.specifications);
+  if (!productDetail.value.specifications || !Array.isArray(productDetail.value.specifications)) {
+    ElMessage.error(t('product.specifications_not_loaded_error'));
+    console.error("Product specifications are missing or not in expected array format.", productDetail.value);
+    return;
+  }
+
+  const selectedSizeValue = form.size;
+  const selectedColorValue = form.color;
+
+  const sizeSpec = productDetail.value.specifications.find(s => s.name === 'size');
+  const colorSpec = productDetail.value.specifications.find(s => s.name === 'color');
+
+  const selectedSizeId = sizeSpec?.values.find(v => v.value === selectedSizeValue)?.id;
+  const selectedColorId = colorSpec?.values.find(v => v.value === selectedColorValue)?.id;
+ 
+  console.log('handleBuyNow: form.size value:', selectedSizeValue, '-> ID:', selectedSizeId);
+  console.log('handleBuyNow: form.color value:', selectedColorValue, '-> ID:', selectedColorId);
+
+  // 【改进】动态验证：只有当存在该规格类型且其值未被正确选择时，才显示错误
+  let validationFailed = false;
+  if (sizeSpec && (selectedSizeId === undefined || selectedSizeId === null)) {
+    validationFailed = true;
+  }
+  if (colorSpec && (selectedColorId === undefined || selectedColorId === null)) {
+    validationFailed = true;
+  }
+  
+  if (validationFailed) {
+      ElMessage.error(t('product.select_options_error'));
+      console.error("Missing spec or color ID in payload for buy now:", { selectedSizeId, selectedColorId, selectedSizeValue, selectedColorValue });
+      return;
+  }
+
 
  const checkoutData = { 
   goodId: productDetail.value.good.id,
@@ -416,23 +525,22 @@ const handleBuyNow = async () => {
   goodImage: mainImage.value, 
   currency: "USD", 
   description: productDetail.value.good.name + (productDetail.value.good.description ? ' - ' + productDetail.value.good.description : ''), 
-  successUrl: "http://127.0.0.1/success",
-  cancelUrl: "http://127.0.0.1/cancel",
-  specification: "{}"
+  // 將規格資訊轉為 JSON 字符串
+  specification: JSON.stringify({ color: selectedColorValue, size: selectedSizeValue })
  };
  try {
   const checkoutUrl = await createCheckoutSession(checkoutData); 
   if (checkoutUrl) {
-   window.location.href = checkoutUrl;
+    window.location.href = checkoutUrl;
   }else {
-   ElMessage.error(t('product.payment_session_failed_message'));
+    ElMessage.error(t('product.payment_session_failed_message'));
   }
  } catch (error) {
   console.error("Failed to create checkout session:", error);
   const errorMessage = error.message.includes('Failed to fetch') ? t('product.network_error_message') :
-            (error.message.includes('401') ? t('product.login_to_purchase_message') : 
-            (error.message.includes('500') ? t('product.payment_service_error_message') : 
-            t('product.payment_session_failed_message'))); 
+                         (error.message.includes('401') ? t('product.login_to_purchase_message') : 
+                         (error.message.includes('500') ? t('product.payment_service_error_message') : 
+                         t('product.payment_session_failed_message'))); 
   ElMessage.error(errorMessage); 
  }
 };
@@ -471,7 +579,8 @@ const handleBuyNow = async () => {
  width: 500px;  /* 直接定义一个更大的宽度 */
  height: 500px; /* 直接定义一个更大的高度 */
  background-color: #fff;
- border: 1px solid var(--border-color);
+ /* border: 1px solid var(--border-color); */
+ border: none; /* 或者 border: 1px solid transparent; */
  z-index: 10;
  pointer-events: none;
  border-radius: 12px; /* 边角做得更圆润 */
@@ -538,12 +647,19 @@ const handleBuyNow = async () => {
  align-items: center;
  gap: 10px;
  width: 100%;
+ position: relative; /* 【新增】确保 z-index 生效 */
+ z-index: 20;       /* 【新增】确保在放大镜上层，可以被点击 */
 }
 .thumbnail-track {
- display: flex;
- gap: 15px;
- flex-grow: 1;
- overflow: hidden;
+  display: flex;
+  gap: 15px;
+  flex-grow: 1;
+  overflow-x: auto; /* 【保持】确保横向滚动 */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.thumbnail-track::-webkit-scrollbar {
+  display: none;
 }
 .thumbnail-placeholder {
  width: 22%;

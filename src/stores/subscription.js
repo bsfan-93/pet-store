@@ -4,14 +4,14 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useSubscriptionStore = defineStore('subscription', () => {
-  // 1. 从 localStorage 读取初始状态，这样刷新页面也能保持
-  const isSubscribed = ref(localStorage.getItem('userHasSubscribed') === 'true');
+  // 1. 從 localStorage 讀取初始狀態，確保鍵名是小寫的 'hasSubscribed'
+  const isSubscribed = ref(localStorage.getItem('hasSubscribed') === 'true');
 
-  // 2. 定义一个动作（action）
+  // 2. 定義一個動作 (action)
   function subscribe() {
     isSubscribed.value = true;
-    // 将状态保存到 localStorage
-    localStorage.setItem('userHasSubscribed', 'true');
+    // 將狀態保存到 localStorage，也使用小寫的 'hasSubscribed'
+    localStorage.setItem('hasSubscribed', 'true');
   }
 
   return { isSubscribed, subscribe };

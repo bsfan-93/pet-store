@@ -25,7 +25,7 @@ const getStartingLocale = () => {
   // 2. 为中文地区做特别的、精确的映射
   const lowerBrowserLang = browserLang.toLowerCase();
   if (lowerBrowserLang === 'zh-cn' || lowerBrowserLang === 'zh') {
-    return 'zh-Hans'; // 简体中文
+    return 'zh'; // 简体中文
   }
   if (lowerBrowserLang === 'zh-tw' || lowerBrowserLang === 'zh-hk') {
     return 'zh-Hant'; // 繁体中文

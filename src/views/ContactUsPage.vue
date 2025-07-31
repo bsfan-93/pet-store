@@ -11,8 +11,8 @@
         
         <div class="info-text">
           <p>{{ t('contact_us.p1') }}</p>
-          <p v-html="t('contact_us.p2')"></p>
-          <p v-html="t('contact_us.p3')"></p>
+          <p v-html="t('contact_us.p2', { email: '15380822206@163.com' })"></p>
+          <p v-html="t('contact_us.p3', { phone: '(86)15380822206', hours: '9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.' })"></p>
         </div>
 
         <div class="retail-service">
@@ -23,52 +23,94 @@
         <div class="form-section">
           <h2>{{ t('contact_us.form_title') }}</h2>
           <div class="form-box">
-            <form @submit.prevent="sendMessage">
-              <el-input 
-                v-model="form.email" 
-                :placeholder="t('contact_us.email_placeholder')" 
-                size="large">
-              </el-input>
-              <el-input
-                v-model="form.message"
-                type="textarea"
-                :rows="6"
-                :placeholder="t('contact_us.message_placeholder')"
+            <el-form
+              ref="formRef"
+              :model="form"
+              :rules="rules"
+              @submit.prevent="sendMessage(formRef)"
+            >
+              <el-form-item prop="email">
+                <el-input 
+                  v-model="form.email" 
+                  :placeholder="t('contact_us.email_placeholder')" 
+                  size="large">
+                </el-input>
+              </el-form-item>
+              <el-form-item prop="message">
+                <el-input
+                  v-model="form.message"
+                  type="textarea"
+                  :rows="6"
+                  :placeholder="t('contact_us.message_placeholder')"
+                  size="large"
+                ></el-input>
+              </el-form-item>
+              <el-button 
+                native-type="submit" 
+                class="send-button" 
                 size="large"
-              ></el-input>
-              <el-button native-type="submit" class="send-button" size="large">
-              {{ t('contact_us.send_button') }}
-            </el-button>
-            </form>
-          </div>
+                :loading="isLoading"
+              >
+                {{ t('contact_us.send_button') }}
+              </el-button>
+            </el-form>
+            </div>
         </div>
-
       </div>
     </main>
-
     <AppFooter />
   </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useI18n } from 'vue-i18n'; // 1. 引入 useI18n
-import { ElInput, ElButton } from 'element-plus';
+import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+import { sendContactMessage } from '../api'; 
 
 const { t } = useI18n(); // 2. 获取 t 函数
 
-// 【修改】简化表单数据
+// ▼▼▼ 3. 更新 script 邏輯 ▼▼▼
+const formRef = ref(null);
+const isLoading = ref(false);
 const form = reactive({
   email: '',
   message: ''
 });
 
-const sendMessage = () => {
-  console.log('Form submitted:', form);
-  // 在这里可以添加实际的 API 调用逻辑来发送消息
+// 新增表單驗證規則
+const rules = reactive({
+  email: [
+    { required: true, message: 'Please enter your email address', trigger: 'blur' },
+    { type: 'email', message: 'Please enter a valid email address', trigger: ['blur', 'change'] }
+  ],
+  message: [
+    { required: true, message: 'Please enter your message', trigger: 'blur' }
+  ]
+});
+
+// 更新發送消息的函數
+const sendMessage = async (formEl) => {
+  if (!formEl) return;
+  await formEl.validate(async (valid) => {
+    if (valid) {
+      isLoading.value = true;
+      try {
+        await sendContactMessage(form.email, form.message);
+        ElMessage.success('Your message has been sent successfully!');
+        // 清空表單
+        form.email = '';
+        form.message = '';
+      } catch (error) {
+        ElMessage.error(error.message || 'Failed to send message. Please try again.');
+      } finally {
+        isLoading.value = false;
+      }
+    }
+  });
 };
 </script>
 
