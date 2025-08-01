@@ -51,9 +51,9 @@
         </el-form>
         <div class="login-prompt">
           <span>{{ $t('register.login_prompt') }}</span>
-          <a href="#" @click.prevent="navigateTo('login')">
+          <router-link to="/login" class="sign-up-link">
             {{ $t('register.login_link') }}
-          </a>
+          </router-link>
         </div>
       </div>
     </main>

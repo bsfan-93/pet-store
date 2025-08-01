@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "20% de réduction pour les nouveaux utilisateurs lors de l'inscription !"
+    "promo": "15% de réduction pour les nouveaux utilisateurs lors de l'inscription !"
   },
   "header": {
     "shop": "Boutique",
@@ -147,7 +147,7 @@
     "payment_session_failed_message": "Échec de la création de la session de paiement."
   },
   "subscribe_popup": {
-    "title": "Débloquez <span class=\"highlight\">20%</span> de réduction sur votre commande aujourd'hui",
+    "title": "Débloquez <span class=\"highlight\">15%</span> de réduction sur votre commande aujourd'hui",
     "subtitle": "Rendez-le plus pratique pour les animaux de compagnie",
     "email_label": "E-mail",
     "subscribe_button": "S'abonner pour",
@@ -294,7 +294,7 @@
   "warranty_policy_page": {
     "title": "POLITIQUE DE GARANTIE",
     "p1": "Pets Clan offre une garantie limitée d'un (1) an sur tous les produits achetés sur le site officiel de Pets Clan. Cette garantie limitée couvre les défauts de matériaux et de fabrication qui surviennent dans des conditions d'utilisation normales pendant une période d'un (1) an à compter de la date de livraison. Si un produit Pets Clan tombe en panne en raison d'un défaut de matériaux ou de fabrication pendant cette période de garantie d'un an, nous le réparerons ou le remplacerons gratuitement pour le client. Cette garantie limitée ne couvre pas les dommages causés par une mauvaise utilisation, un abus, une usure normale, des réparations ou des modifications non autorisées du produit, ni les dommages accessoires ou consécutifs.",
-    "discount_heading": "Pour les clients dont la période de garantie a expiré depuis moins de deux (2) mois, nous offrirons une réduction de 20% sur l'achat d'un nouveau produit.",
+    "discount_heading": "Pour les clients dont la période de garantie a expiré depuis moins de deux (2) mois, nous offrirons une réduction de 15% sur l'achat d'un nouveau produit.",
     "p2": "Pour faire une réclamation au titre de la garantie, les clients doivent contacter le service clientèle de Pets Clan à l'adresse support@petsclan.com et fournir une preuve d'achat ainsi qu'une description du problème.",
     "p3": "Comme condition de cette garantie, les deux parties conviennent que les recours prévus dans cette politique de garantie sont les seuls et uniques recours du client et que la seule responsabilité de Pets Clan en vertu de cette garantie. Tous les dommages accessoires sont exclus par la présente. L'acheteur s'engage à conserver la preuve d'achat originale pour déterminer la date d'entrée en vigueur de cette garantie. Si Pets Clan ou un revendeur agréé remplace un produit pendant la période de garantie, ce remplacement sera considéré comme une transaction dans le cadre de la garantie originale et ne prolongera pas la période de garantie originale. Cette garantie n'est pas transférable. Pets Clan s'engage à fournir à ses clients des produits de haute qualité et un excellent service client.",
     "disclaimer": "À l'exception des garanties énoncées dans cette politique de garantie, Pets Clan n'offre aucune autre garantie que ce soit concernant les produits, y compris toute (A) garantie de qualité marchande ; ou (B) garantie d'adéquation à un usage particulier ; qu'elle soit expresse ou implicite par la loi, les usages commerciaux, l'exécution des contrats, les usages du commerce ou autre."

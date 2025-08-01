@@ -9,9 +9,9 @@
       <HeroSection :banners="bannerData"/>
       <CollectionList :collections="collectionData" />
 
-      <!-- <InteractiveShowcase 
+      <InteractiveShowcase 
         :items="showcaseItemsData"
-      /> -->
+      />
 
       <GalleryCarousel />
       <HowToSection />
@@ -34,6 +34,7 @@ import HowToSection from '../components/HowToSection.vue';
 import AppFooter from '../components/AppFooter.vue';
 import SubscribePopup from '../components/SubscribePopup.vue';
 import { useAuthStore } from '../stores/auth';
+import InteractiveShowcase from '../components/InteractiveShowcase.vue';
 
 const isPopupVisible = ref(false);
 const authStore = useAuthStore();

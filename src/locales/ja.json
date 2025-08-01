@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "新規ユーザー登録で20%オフ！"
+    "promo": "新規ユーザー登録で15%オフ！"
   },
   "header": {
     "shop": "ショップ",
@@ -147,7 +147,7 @@
     "payment_session_failed_message": "支払いセッションの作成に失敗しました。"
   },
   "subscribe_popup": {
-    "title": "今日の注文で<span class=\"highlight\">20%</span>オフをアンロック",
+    "title": "今日の注文で<span class=\"highlight\">15%</span>オフをアンロック",
     "subtitle": "ペットにとってより便利に",
     "email_label": "メールアドレス",
     "subscribe_button": "購読する",

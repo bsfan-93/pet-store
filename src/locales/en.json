@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "20% Off for New Users Upon Registration!"
+    "promo": "15% Off for New Users Upon Registration!"
   },
   "header": {
     "shop": "Shop",
@@ -31,7 +31,7 @@
     "placeholder_items": "Items will be displayed here..."
   },
   "footer": {
-    "join_title": "Sign up for 20% off your first order",
+    "join_title": "Sign up for 15% off your first order",
     "subscription_success": "You have been subscribed to our newsletter.",
     "placeholder_email": "E-mail",
     "signup_button": "Subscribe",
@@ -154,7 +154,7 @@
     "specifications_not_loaded_error": "Product specifications could not be loaded. Please try again." 
   },
   "subscribe_popup": {
-    "title": "Unlock <span class=\"highlight\">20%</span> OFF Your order Today",
+    "title": "Unlock <span class=\"highlight\">15%</span> OFF Your order Today",
     "subtitle": "Make it more convenient for pets",
     "email_label": "Email",
     "subscribe_button": "Subscribe For",
@@ -296,7 +296,7 @@
   "warranty_policy_page": {
     "title": "WARRANTY POLICY",
     "p1": "Pets Clan provides a one (1) year limited warranty on all products purchased through the official Pets Clan website. This limited warranty covers defects in materials and workmanship that occur under normal use for a period of one (1) year from the date of delivery. If a Pets Clan product fails due to a defect in materials or workmanship within this one-year warranty period, we will repair or replace it for the customer free of charge. This limited warranty does not cover damage caused by misuse, abuse, normal wear and tear, unauthorized repairs or modifications to the product, or any incidental or consequential damages.",
-    "discount_heading": "For customers within two (2) months past the warranty period, we will offer a 20% discount on the purchase of a new product.",
+    "discount_heading": "For customers within two (2) months past the warranty period, we will offer a discount on the purchase of a new product.",
     "p2": "To make a warranty claim, customers should contact the Pets Clan customer service team at support@petsclan.com and provide proof of purchase and a description of the issue.",
     "p3": "As a condition of this warranty, both parties agree that the remedies provided in this warranty policy are the customer's sole and exclusive remedies and that Pets Clan's sole liability under this warranty. All incidental damages are hereby disclaimed. The purchaser agrees to retain the original proof of purchase to determine the effective date of this warranty. If Pets Clan or an authorized dealer replaces a product during the warranty period, this replacement shall be considered a transaction under the original warranty and will not extend the original warranty period. This warranty is non-transferable. Pets Clan is committed to providing customers with high-quality products and excellent customer service.",
     "disclaimer": "Except for the warranties set forth in this warranty policy, Pets Clan makes no warranty whatsoever with respect to the products, including any (A) warranty of merchantability; or (B) warranty of fitness for a particular purpose; whether express or implied by law, course of dealing, course of performance, usage of trade or otherwise."

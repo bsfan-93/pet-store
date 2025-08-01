@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "Diskaun 20% untuk Pengguna Baru selepas Pendaftaran!"
+    "promo": "Diskaun 15% untuk Pengguna Baru selepas Pendaftaran!"
   },
   "header": {
     "shop": "Kedai",
@@ -147,7 +147,7 @@
     "payment_session_failed_message": "Gagal membuat sesi pembayaran."
   },
   "subscribe_popup": {
-    "title": "Buka kunci diskaun <span class=\"highlight\">20%</span> untuk pesanan anda hari ini",
+    "title": "Buka kunci diskaun <span class=\"highlight\">15%</span> untuk pesanan anda hari ini",
     "subtitle": "Jadikannya lebih mudah untuk haiwan kesayangan",
     "email_label": "E-mel",
     "subscribe_button": "Langgan Untuk",
@@ -294,7 +294,7 @@
   "warranty_policy_page": {
     "title": "DASAR WARANTI",
     "p1": "Pets Clan menyediakan waranti terhad selama satu (1) tahun ke atas semua produk yang dibeli melalui laman web rasmi Pets Clan. Waranti terhad ini melindungi kecacatan pada bahan dan mutu kerja yang berlaku di bawah penggunaan biasa untuk tempoh satu (1) tahun dari tarikh penghantaran. Jika produk Pets Clan gagal disebabkan oleh kecacatan pada bahan atau mutu kerja dalam tempoh waranti satu tahun ini, kami akan membaiki atau menggantikannya untuk pelanggan secara percuma. Waranti terhad ini tidak melindungi kerosakan yang disebabkan oleh penyalahgunaan, penyalahgunaan, haus dan lusuh biasa, pembaikan atau pengubahsuaian produk yang tidak dibenarkan, atau sebarang kerosakan sampingan atau berbangkit.",
-    "discount_heading": "Bagi pelanggan dalam tempoh dua (2) bulan selepas tempoh waranti, kami akan menawarkan diskaun 20% untuk pembelian produk baru.",
+    "discount_heading": "Bagi pelanggan dalam tempoh dua (2) bulan selepas tempoh waranti, kami akan menawarkan diskaun 15% untuk pembelian produk baru.",
     "p2": "Untuk membuat tuntutan waranti, pelanggan hendaklah menghubungi pasukan perkhidmatan pelanggan Pets Clan di support@petsclan.com dan memberikan bukti pembelian serta penerangan tentang isu tersebut.",
     "p3": "Sebagai syarat waranti ini, kedua-dua pihak bersetuju bahawa remedi yang disediakan dalam dasar waranti ini adalah remedi tunggal dan eksklusif pelanggan dan liabiliti tunggal Pets Clan di bawah waranti ini. Semua kerosakan sampingan dengan ini dinafikan. Pembeli bersetuju untuk menyimpan bukti pembelian asal untuk menentukan tarikh kuat kuasa waranti ini. Jika Pets Clan atau pengedar sah menggantikan produk semasa tempoh waranti, penggantian ini akan dianggap sebagai transaksi di bawah waranti asal dan tidak akan memanjangkan tempoh waranti asal. Waranti ini tidak boleh dipindah milik. Pets Clan komited untuk menyediakan pelanggan dengan produk berkualiti tinggi dan perkhidmatan pelanggan yang cemerlang.",
     "disclaimer": "Kecuali bagi waranti yang dinyatakan dalam dasar waranti ini, Pets Clan tidak membuat sebarang waranti sama sekali berkenaan dengan produk, termasuk mana-mana (A) waranti kebolehdagangan; atau (B) waranti kesesuaian untuk tujuan tertentu; sama ada nyata atau tersirat oleh undang-undang, urusan urus niaga, perjalanan prestasi, penggunaan perdagangan atau sebaliknya."

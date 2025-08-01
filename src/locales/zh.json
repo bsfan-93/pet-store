@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "新用户注册即享八折优惠！"
+    "promo": "新用户注册即享85折优惠！"
   },
   "header": {
     "shop": "商店",
@@ -34,7 +34,7 @@
     "about_title": "公司",
     "support_title": "支持",
     "works_title": "工作原理",
-    "join_title": "注册以获取首单九折优惠",
+    "join_title": "注册以获取首单85折优惠",
     "placeholder_email": "您的邮箱",
     "signup_button": "订阅",
     "download_app_title": "下载App",
@@ -156,7 +156,7 @@
     "payment_session_failed_message": "创建支付会话失败。"
   },
   "subscribe_popup": {
-    "title": "立即解锁您的订单 <span class=\"highlight\">20%</span> 折扣",
+    "title": "立即解锁您的订单 <span class=\"highlight\">15%</span> 折扣",
     "subtitle": "让宠物生活更便利",
     "email_label": "电子邮箱",
     "subscribe_button": "订阅",
@@ -303,7 +303,7 @@
   "warranty_policy_page": {
     "title": "WARRANTY POLICY",
     "p1": "Pets Clan 为通过 Pets Clan 官方网站购买的所有产品提供一 (1) 年有限保修。此有限保修涵盖自交付之日起一 (1) 年内正常使用情况下出现的材料和工艺缺陷。如果在这———年保修期内，Pets Clan 产品因材料或工艺缺陷而出现故障，我们将免费为客户维修或更换。此有限保修不涵盖因滥用、滥用、正常磨损、未经授权的维修或改装产品而造成的损坏，或任何意外或间接损害。",
-    "discount_heading": "对于超过保修期两 (2) 个月内的客户，我们将提供 20% 的新产品购买折扣。",
+    "discount_heading": "对于超过保修期两 (2) 个月内的客户，我们将提供 15% 的新产品购买折扣。",
     "p2": "要提出保修索赔，客户应联系 Pets Clan 的客户服务团队 support@petsclan.com，并提供购买凭证和问题描述。",
     "p3": "作为本保修的一项条件，双方同意本保修政策中提供的补救措施是客户的唯一补救措施，且 Pets Clan 在本保修项下承担的唯一责任。所有意外损坏的责任均不予承担。购买者同意保留原始购买凭证，以确定本保修的生效日期。如果 Pets Clan 或授权经销商在保修期内更换产品，则此更换将被视为原保修期内的交易，且不会延长原保修期。本保修不可转让。Pets Clan 致力于为客户提供高品质的产品和卓越的客户服务。",
     "disclaimer": "除本保修政策中规定的保修外，Pets Clan 对产品不作任何保修，包括任何 (A) 适销性保修；或 (B) 特定用途适用性保修；无论是法律、交易过程、履行过程、贸易惯例或其他方式明示或暗示的保修。"

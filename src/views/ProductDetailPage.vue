@@ -238,30 +238,27 @@ const isAddingToCart = ref(false);
 
 // 【新增】缩略图滚动相关
 const thumbnailTrackRef = ref(null);
+// / ▼▼▼ 【核心修改】请使用这个最终版本的函数 ▼▼▼
 const scrollThumbnails = (direction) => {
-  if (!thumbnailTrackRef.value) {
-    console.warn("Thumbnail track element not found for scrolling.");
+  const container = thumbnailTrackRef.value;
+  if (!container) return;
+
+  // 检查是否可以滚动
+  if (container.scrollWidth <= container.clientWidth) {
+    // 如果内容没有溢出，则不执行任何操作
     return;
   }
-
-  // const scrollAmount = thumbnailTrackRef.value.clientWidth / 3; // 滚动三分之一的容器宽度，或者根据需要调整
-
-  // 获取第一个缩略图的实际宽度和其右侧的 gap (15px)
-  const firstThumbnail = thumbnailTrackRef.value.querySelector('.thumbnail-placeholder');
-  const scrollAmount = firstThumbnail ? firstThumbnail.offsetWidth + 15 : 150; // 确保获取到宽度，否则给个默认值
-
-  console.log('Current scrollLeft:', thumbnailTrackRef.value.scrollLeft); // 【调试】滚动前的位置
-  console.log('Scroll amount:', scrollAmount); // 【调试】滚动距离
-  console.log('Scroll width (total content width):', thumbnailTrackRef.value.scrollWidth); // 【调试】可滚动总宽度
-  console.log('Client width (visible width):', thumbnailTrackRef.value.clientWidth); // 【调试】可见宽度
+  
+  // 每次滚动两个缩略图的距离，你可以根据需要调整这个数值
+  const scrollAmount = (container.clientWidth / 2);
 
   if (direction === 'left') {
-    thumbnailTrackRef.value.scrollLeft -= scrollAmount;
+    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
   } else {
-    thumbnailTrackRef.value.scrollLeft += scrollAmount;
+    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }
-  console.log('New scrollLeft:', thumbnailTrackRef.value.scrollLeft); // 【调试】滚动后的位置
 };
+
 
 // --- Data Fetching ---
 const fetchProductData = async (goodId) => {
@@ -526,8 +523,11 @@ const handleBuyNow = async () => {
   currency: "USD", 
   description: productDetail.value.good.name + (productDetail.value.good.description ? ' - ' + productDetail.value.good.description : ''), 
   // 將規格資訊轉為 JSON 字符串
-  specification: JSON.stringify({ color: selectedColorValue, size: selectedSizeValue })
- };
+  specification: JSON.stringify({ color: selectedColorValue, size: selectedSizeValue }),
+  // / ▼▼▼ 【新增这两行】 ▼▼▼
+  successUrl: `${window.location.origin}/success`, // 支付成功后的跳转地址
+  cancelUrl: `${window.location.origin}/cancel`    // 取消支付后的跳转地址
+};
  try {
   const checkoutUrl = await createCheckoutSession(checkoutData); 
   if (checkoutUrl) {
@@ -657,12 +657,17 @@ const handleBuyNow = async () => {
   overflow-x: auto; /* 【保持】确保横向滚动 */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  /* 新增：确保 flex 子项不会被压缩 */
+  flex-shrink: 1;
+  min-width: 0; /* 允许容器在 flex 布局中收缩 */
 }
 .thumbnail-track::-webkit-scrollbar {
   display: none;
 }
 .thumbnail-placeholder {
- width: 22%;
+ width: 120px;
+ /* 确保它不会被 flex 布局压缩 */
+  flex-shrink: 0;
  aspect-ratio: 1/1;
  background-color: var(--light-gray-color);
  border-radius: 8px;

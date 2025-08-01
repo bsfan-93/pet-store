@@ -1,6 +1,6 @@
 {
   "top_banner": {
-    "promo": "20% Rabatt für neue Benutzer bei der Registrierung!"
+    "promo": "15% Rabatt für neue Benutzer bei der Registrierung!"
   },
   "header": {
     "shop": "Shop",
@@ -147,7 +147,7 @@
     "payment_session_failed_message": "Erstellung der Zahlungssitzung fehlgeschlagen."
   },
   "subscribe_popup": {
-    "title": "Schalten Sie <span class=\"highlight\">20%</span> Rabatt auf Ihre heutige Bestellung frei",
+    "title": "Schalten Sie <span class=\"highlight\">15%</span> Rabatt auf Ihre heutige Bestellung frei",
     "subtitle": "Machen Sie es für Haustiere bequemer",
     "email_label": "E-Mail",
     "subscribe_button": "Abonnieren für",
@@ -294,7 +294,7 @@
   "warranty_policy_page": {
     "title": "GARANTIEBESTIMMUNGEN",
     "p1": "Pets Clan bietet eine ein (1) Jahr begrenzte Garantie auf alle Produkte, die über die offizielle Pets Clan Website gekauft wurden. Diese begrenzte Garantie deckt Material- und Verarbeitungsfehler ab, die bei normalem Gebrauch innerhalb eines (1) Jahres ab Lieferdatum auftreten. Sollte ein Pets Clan Produkt aufgrund eines Material- oder Verarbeitungsfehlers innerhalb dieser einjährigen Garantiezeit ausfallen, werden wir es für den Kunden kostenlos reparieren oder ersetzen. Diese begrenzte Garantie deckt keine Schäden ab, die durch Missbrauch, unsachgemäße Verwendung, normalen Verschleiß, nicht autorisierte Reparaturen oder Änderungen am Produkt oder durch zufällige oder Folgeschäden verursacht wurden.",
-    "discount_heading": "Für Kunden, deren Garantiezeit um bis zu zwei (2) Monate abgelaufen ist, bieten wir einen Rabatt von 20% auf den Kauf eines neuen Produkts an.",
+    "discount_heading": "Für Kunden, deren Garantiezeit um bis zu zwei (2) Monate abgelaufen ist, bieten wir einen Rabatt von 15% auf den Kauf eines neuen Produkts an.",
     "p2": "Um einen Garantieanspruch geltend zu machen, sollten sich Kunden an das Pets Clan Kundenservice-Team unter support@petsclan.com wenden und einen Kaufnachweis sowie eine Beschreibung des Problems vorlegen.",
     "p3": "Als Bedingung dieser Garantie stimmen beide Parteien zu, dass die in dieser Garantierichtlinie vorgesehenen Rechtsbehelfe die einzigen und ausschließlichen Rechtsbehelfe des Kunden sind und dass die alleinige Haftung von Pets Clan im Rahmen dieser Garantie besteht. Alle zufälligen Schäden werden hiermit ausgeschlossen. Der Käufer erklärt sich damit einverstanden, den Original-Kaufbeleg aufzubewahren, um das Gültigkeitsdatum dieser Garantie zu bestimmen. Wenn Pets Clan oder ein autorisierter Händler ein Produkt während der Garantiezeit ersetzt, gilt dieser Ersatz als Transaktion im Rahmen der ursprünglichen Garantie und verlängert nicht die ursprüngliche Garantiezeit. Diese Garantie ist nicht übertragbar. Pets Clan ist bestrebt, seinen Kunden qualitativ hochwertige Produkte und einen ausgezeichneten Kundenservice zu bieten.",
     "disclaimer": "Mit Ausnahme der in dieser Garantierichtlinie dargelegten Garantien gibt Pets Clan keinerlei Garantien in Bezug auf die Produkte, einschließlich (A) der Garantie der Marktgängigkeit; oder (B) der Garantie der Eignung für einen bestimmten Zweck; sei es ausdrücklich oder stillschweigend durch Gesetz, Handelsbrauch, Leistungsverlauf, Handelsbräuche oder auf andere Weise."
