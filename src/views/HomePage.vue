@@ -1,5 +1,5 @@
 <template>
-  <div class="home-page">
+  <div class="home-page home-page-container"> 
     <div class="header-wrapper">
       <TopBanner v-show="showTopBanner" />
       <AppHeader :is-scrolled="isHeaderScrolled" />
@@ -90,7 +90,6 @@ onUnmounted(() => {
 });
 </script>
 
-
 <style scoped>
 .header-wrapper {
   position: fixed;
@@ -99,5 +98,5 @@ onUnmounted(() => {
   width: 100%;
   z-index: 1000;
 }
-main { }
+main {}
 </style>

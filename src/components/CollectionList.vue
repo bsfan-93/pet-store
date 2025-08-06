@@ -61,7 +61,7 @@ const goToProduct = (productId) => {
 <style scoped>
 /* 样式无需修改 */
 .collection-section {
-  padding: 120px 0;
+  padding: 150px 0;
   background-color: var(--secondary-color);
 }
 

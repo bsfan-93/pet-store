@@ -1,23 +1,23 @@
 <template>
-  <section class="interactive-showcase-section">
-    <div 
-      class="showcase-container" 
-      ref="containerRef"
-      @wheel="handleWheel"
-    >
+  <section class="interactive-showcase-section" ref="containerRef">
+    <div class="showcase-container">
       <div class="image-container">
-        <img
-          v-for="(item, index) in allItems"
-          :key="item.id"
-          :src="item.url"
-          :alt="item.name"
-          class="showcase-image"
-          :class="{ active: currentIndex === index }"
-        />
+        <transition-group :name="transitionName">
+          <img
+            v-for="(item, index) in allItems"
+            v-show="currentIndex === index"
+            :key="item.id"
+            :src="item.url"
+            :alt="item.name"
+            class="showcase-image"
+          />
+        </transition-group>
       </div>
-
       <div class="nav-container">
-        <ul>
+        <div class="custom-scrollbar">
+          <div class="scrollbar-thumb" :style="thumbStyle"></div>
+        </div>
+        <ul ref="navListRef">
           <li
             v-for="(item, index) in allItems"
             :key="item.id"
@@ -25,12 +25,21 @@
             :class="{ active: currentIndex === index }"
             @mouseenter="updateActiveItem(index)"
           >
-            <h3>{{ item.name }}</h3>
-            <div class="item-details">
-              <span v-if="item.tag" class="tag" :class="item.tag.type">{{ item.tag.text }}</span>
-              <p>{{ item.description }}</p>
-              <button class="buy-now" @click="goToProduct(item.goodId)">{{ t('product.buy_now') }}</button>
-            </div>
+            <transition name="fade-effect">
+              <div v-if="currentIndex === index" class="active-details">
+                <span v-if="item.tag" class="tag">{{ item.tag.text }}</span>
+                <h3 class="product-title">{{ item.name }}</h3>
+                <p class="product-description">{{ item.description }}</p>
+                <button class="buy-now" @click="goToProduct(item.goodId)">
+                  {{ t("product.buy_now") }}
+                </button>
+              </div>
+            </transition>
+            <transition name="fade-effect">
+              <h3 v-if="currentIndex !== index" class="inactive-title">
+                {{ item.name }}
+              </h3>
+            </transition>
           </li>
         </ul>
       </div>
@@ -39,201 +48,153 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const router = useRouter();
 
 const allItems = ref([
-  {
-    id: 1,
-    name: 'Scout Smart Camera',
-    description: 'Goodbye worries. Hello Scout.',
-    url: 'https://images.unsplash.com/photo-1583511655826-05700d52f4d9?q=80&w=2487&auto=format&fit=crop', 
-    goodId: 'your-product-id-1',
-    tag: { type: 'new', text: 'New' }
-  },
-  {
-    id: 2,
-    name: 'Granary Series',
-    description: 'Award-winning automatic feeders.',
-    url: 'https://images.unsplash.com/photo-1596492784533-2c15_d440da2?q=80&w=2564&auto=format&fit=crop',
-    goodId: 'your-product-id-2',
-    tag: { type: 'bestseller', text: 'Best Seller' }
-  },
-  {
-    id: 3,
-    name: 'One RFID Feeder',
-    description: 'Feeding made personal for multiple-pet families.',
-    url: 'https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?q=80&w=2487&auto=format&fit=crop',
-    goodId: 'your-product-id-3'
-  },
-  {
-    id: 4,
-    name: 'Dockstream Cordless Fountain',
-    description: 'Battery-operated for hydration anywhere.',
-    url: 'https://images.unsplash.com/photo-1583512603805-3cc6b41f3edb?q=80&w=2532&auto=format&fit=crop',
-    goodId: 'your-product-id-4'
-  }
+  { id: 1, name: 'Pets Clan Feeder Pro', description: 'New ways of pet feeding', url: '/images/manual_feeder4.png', goodId: 'your-product-id-1', tag: { type: 'new', text: 'New' } },
+  { id: 2, name: 'Water feeder series', description: 'Fresh, clean water for your pets.', url: '/images/manual_fountain2.png', goodId: 'your-product-id-2', tag: null },
+  { id: 3, name: 'Cute Pet Family Series', description: 'Smart leash for modern pet owners.', url: '/images/manual_leash1.png', goodId: 'your-product-id-3', tag: null }
 ]);
 
 const currentIndex = ref(0);
 const containerRef = ref(null);
+const navListRef = ref(null);
+const thumbStyle = ref({});
+const transitionDirection = ref("down");
+const transitionName = computed(() => `fly-${transitionDirection.value}`);
+let isAnimating = false;
+const animationCooldown = 800;
+let isHijacked = false; 
 
-let isScrolling = false;
-const scrollCooldown = 800;
+const updateThumbPosition = async () => {
+  await nextTick();
+  const listElement = navListRef.value;
+  if (!listElement || !listElement.children[currentIndex.value]) return;
+  const activeItemElement = listElement.children[currentIndex.value];
+  thumbStyle.value = {
+    height: `${activeItemElement.offsetHeight}px`,
+    transform: `translateY(${activeItemElement.offsetTop}px)`,
+  };
+};
 
 const updateActiveItem = (newIndex) => {
-  if (newIndex >= 0 && newIndex < allItems.value.length) {
-    currentIndex.value = newIndex;
-  }
-};
-
-// ▼▼▼ 【核心修改】更新 handleWheel 函数的逻辑 ▼▼▼
-const handleWheel = (event) => {
-  // 如果动画正在播放（冷却期），则阻止任何滚动以避免抖动
-  if (isScrolling) {
-    event.preventDefault();
+  if (
+    isAnimating ||
+    newIndex === currentIndex.value ||
+    newIndex < 0 ||
+    newIndex >= allItems.value.length
+  ) {
     return;
   }
-  
-  const isScrollingDown = event.deltaY > 0;
-  const isAtTop = currentIndex.value === 0;
-  const isAtBottom = currentIndex.value === allItems.value.length - 1;
+  transitionDirection.value = newIndex > currentIndex.value ? "down" : "up";
+  isAnimating = true;
+  setTimeout(() => {
+    isAnimating = false;
+  }, animationCooldown);
+  currentIndex.value = newIndex;
+};
 
-  // 检查是否在边界：如果是，则不阻止默认滚动并退出函数
-  if ((isScrollingDown && isAtBottom) || (!isScrollingDown && isAtTop)) {
-    return; // 允许页面滚动
+const handleWheel = (event) => {
+  if (!isHijacked) return;
+
+  const isScrollingDown = event.deltaY > 0;
+
+  if (
+    (currentIndex.value === 0 && !isScrollingDown) ||
+    (currentIndex.value === allItems.value.length - 1 && isScrollingDown)
+  ) {
+    // 在边界处，不阻止默认事件，让浏览器自然滚动
+    return;
   }
-  
-  // 如果不在边界，则阻止页面滚动，并执行组件内部的切换
+
   event.preventDefault();
 
-  isScrolling = true;
-  setTimeout(() => { isScrolling = false; }, scrollCooldown);
+  if (isAnimating) return;
 
-  let newIndex = currentIndex.value + (isScrollingDown ? 1 : -1);
+  const newIndex = currentIndex.value + (isScrollingDown ? 1 : -1);
   updateActiveItem(newIndex);
 };
-// ▲▲▲ 修改结束 ▲▲▲
 
 const goToProduct = (goodId) => {
-  if (goodId && goodId.startsWith('your-product-id')) {
-      console.warn("Please replace placeholder goodId before navigating.");
-      return;
+  if (goodId && goodId.startsWith("your-product-id")) {
+    console.warn("Please replace placeholder goodId before navigating.");
+    return;
   }
   if (goodId) {
     router.push(`/product/${goodId}`);
   }
 };
 
+watch(currentIndex, updateThumbPosition);
+
 onMounted(() => {
-  updateActiveItem(0);
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      // 当组件完全进入视窗时，我们才开始“劫持”滚轮事件
+      isHijacked = entry.isIntersecting;
+    },
+    { threshold: 1.0 } // 阈值设为1.0，表示完全可见时才劫持
+  );
+
+  if (containerRef.value) {
+    observer.observe(containerRef.value);
+    window.addEventListener("wheel", handleWheel, { passive: false });
+  }
+
+  updateThumbPosition();
+
+  onUnmounted(() => {
+    if (containerRef.value) {
+      observer.unobserve(containerRef.value);
+    }
+    window.removeEventListener("wheel", handleWheel);
+  });
 });
 </script>
 
 <style scoped>
-/* 样式部分无需任何修改 */
 .interactive-showcase-section {
-    padding: 100px 0;
-    background-color: #968C82;
+  height: 100vh;
+  padding: 0;
+  background-color: #f5f5f3;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.showcase-container {
-    display: flex;
-    width: 100%;
-    max-width: var(--container-width, 1920px);
-    margin: 0 auto;
-    background-color: transparent;
-    padding: 0 40px;
+/* --- 其他所有样式保持不变 --- */
+.showcase-container { 
+    display: flex; 
+    align-items: center; 
+    width: 100%; 
+    margin: 0 auto; 
+    padding: 0 5%;
+    box-sizing: border-box; 
 }
-.image-container {
-    flex: 1;
-    position: relative;
-    min-height: 500px;
-    overflow: hidden;
-    border-radius: 8px;
-}
-.showcase-image {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
-}
-.showcase-image.active {
-    opacity: 1;
-    transform: translateY(0);
-}
-.nav-container {
-    flex: 1;
-    padding-left: 60px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-.nav-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-.nav-item {
-    padding: 60px 0;
-    cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
-    transition: color 0.3s ease;
-}
-.nav-item h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-}
-.nav-item.active {
-    color: #FFFFFF;
-}
-.item-details {
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transition: all 0.5s ease-out;
-}
-.nav-item.active .item-details {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 10px;
-}
-.item-details p {
-    margin: 8px 0;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 1rem;
-}
-.tag {
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 3px 8px;
-    border-radius: 5px;
-    color: #fff;
-    display: inline-block;
-    margin-bottom: 8px;
-}
-.tag.new { background-color: #007bff; }
-.tag.bestseller { background-color: #28a745; }
-.buy-now {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
-}
-.buy-now:hover {
-    background-color: #218838;
-}
+.image-container { flex: 1.2; position: relative; height: 600px; }
+.showcase-image { position: absolute; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1)); }
+.fly-down-enter-active, .fly-down-leave-active, .fly-up-enter-active, .fly-up-leave-active { transition: all 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55); position: absolute; }
+.fly-down-enter-from { opacity: 0; transform: translate(-200px, 200px) scale(0.8); }
+.fly-down-leave-to { opacity: 0; transform: translate(200px, -200px) scale(1.2); }
+.fly-up-enter-from { opacity: 0; transform: translate(200px, -200px) scale(0.8); }
+.fly-up-leave-to { opacity: 0; transform: translate(-200px, 200px) scale(1.2); }
+.fade-effect-enter-active, .fade-effect-leave-active { transition: opacity 0.5s ease-in-out; }
+.fade-effect-enter-from, .fade-effect-leave-to { opacity: 0; }
+.nav-container { flex: 1; padding-left: 10%; display: flex; gap: 20px; align-items: center; }
+.custom-scrollbar { width: 2px; height: 450px; background-color: #000000; position: relative; }
+.scrollbar-thumb { width: 6px; background-color: #4A5C44; position: absolute; left: 50%; top: 0; transform: translateX(-50%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
+.nav-container ul { list-style: none; padding: 0; margin: 0; flex-grow: 1; position: relative; }
+.nav-item { min-height: 150px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; }
+.active-details .tag { font-size: 14px; font-weight: 500; color: #92C45C; margin-bottom: 8px; }
+.active-details .product-title { font-size: 32px; font-weight: bold; color: #000; margin: 0; }
+.active-details .product-description { font-size: 16px; color: #333; margin: 8px 0 20px 0; }
+.active-details .buy-now { background-color: #92C45C; color: #000; border: none; padding: 10px 25px; font-size: 14px; font-weight: 500; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; align-self: flex-start; }
+.active-details .buy-now:hover { background-color: #82b350; }
+.inactive-title { font-size: 22px; font-weight: 500; color: #888; margin: 0; transition: color 0.3s ease; }
+.nav-item:hover .inactive-title { color: #000; }
 </style>
