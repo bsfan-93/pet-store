@@ -10,12 +10,13 @@
       </router-link>
       
       <nav class="main-nav">
-        <div 
+        <router-link
+          to="/"
           class="nav-item-shop"
-          @mouseenter="openMenu()"            @mouseleave="closeMenuDelayed()"    
+          @mouseenter="openMenu()" @mouseleave="closeMenuDelayed()"
         >
-          <a href="#" @click.prevent>{{ $t('header.shop') }}</a>
-        </div>
+          {{ $t('header.shop') }}
+        </router-link>
         <router-link to="/about">{{ $t('header.about_us') }}</router-link>
         <router-link to="/app">{{ $t('header.app') }}</router-link>
       </nav>

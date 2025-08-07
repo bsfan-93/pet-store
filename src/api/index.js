@@ -229,19 +229,12 @@ export const requestPasswordReset = (email) => {
   });
 };
 
-// ▼▼▼ 【新增】模擬獲取用戶訂單列表的 API 函數 ▼▼▼
 export const getUserOrders = () => {
-  // 模擬 API 延遲返回數據
+  // 在API接口准备好之前，返回一个空的订单列表
   return new Promise(resolve => {
     setTimeout(() => {
-      // 這是模擬的訂單數據，您可以替換為真實 API 的返回結果
-      const mockOrders = [
-        { id: 'PETS-1001', name: 'Order: #PETS-1001' },
-        { id: 'PETS-1002', name: 'Order: #PETS-1002' },
-        { id: 'PETS-1003', name: 'Order: #PETS-1003' },
-      ];
-      resolve(mockOrders);
-    }, 1000); // 模擬 1 秒的網絡延遲
+      resolve([]); // 直接返回空数组
+    }, 100); // 模拟少量延迟
   });
 };
 

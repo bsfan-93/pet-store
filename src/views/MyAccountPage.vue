@@ -8,48 +8,75 @@
     <main class="main-content">
       <div class="account-container">
         <div class="page-header">
-          <h1>{{ t('account.title') }}</h1>
-          <a href="#" @click.prevent="logout" class="logout-link">
-            {{ t('account.logout') }}
-          </a>
+          <h1 class="page-title">{{ t('account.title') }}</h1>
+          <div v-if="authStore.userInfo" class="user-info-wrapper">
+            <div class="user-info">
+              <span class="user-name">{{ authStore.userInfo.nickname || authStore.userInfo.username }}</span>
+              <span class="user-email">{{ authStore.userInfo.email }}</span>
+            </div>
+            <a href="#" @click.prevent="logout" class="logout-link">
+              {{ t('account.logout') }}
+            </a>
+          </div>
         </div>
 
-        <div class="cards-wrapper">
-          <div class="account-card">
-            <div class="card-header">
-              <h3>{{ t('account.order_card.title') }}</h3>
-            </div>
-            <div class="card-body order-card-body">
-              <div v-if="isLoadingOrders" class="loading-spinner">
-                Loading orders...
-              </div>
-              <div v-else-if="orders.length > 0" class="order-list">
-                <router-link v-for="order in orders" :key="order.id" :to="`/placeholder/orders/${order.id}`" class="order-item">
-                  <span class="order-text">{{ t('account.order_card.order_prefix') }} {{ order.name }}</span>
-                  <el-icon class="order-arrow-icon"><ArrowRightBold /></el-icon>
-                </router-link>
-              </div>
-              <div v-else class="no-orders-placeholder">
-                <p>{{ t('account.order_card.no_orders') }}</p>
-                <el-button class="go-shopping-btn" @click="router.push('/')">
-                  {{ t('account.order_card.go_shopping') }}
-                </el-button>
-              </div>
-            </div>
+        <div class="card-wrapper">
+          <div class="card-header">
+            <h3>{{ t('account.order_card.title') }}</h3>
           </div>
-
-          <div class="account-card">
-            <div class="card-header">
-              <h3>{{ t('account.settings_card.title') }}</h3>
+          <div class="card-body">
+            <div v-if="isLoadingOrders" class="loading-spinner">
+              Loading orders...
             </div>
-            <div class="card-body settings-card-body">
-              <div v-if="authStore.userInfo">
-                <p class="user-name">{{ authStore.userInfo.nickname || authStore.userInfo.username }}</p>
-                <p class="user-email">{{ authStore.userInfo.email }}</p>
-              </div>
-              <div v-else>
-                <p>{{ $t('account.settings_card.user_info_not_available') }}</p>
-              </div>
+            <div v-else-if="orders.length > 0" class="order-list">
+              <template v-for="(order, index) in orders" :key="order.id">
+                <a
+                  v-if="order.status !== 'completed'"
+                  :href="`/order-tracking?orderId=${order.id}`"
+                  class="order-item"
+                >
+                  <div class="order-info">
+                    <p class="order-id-text">
+                      {{ t('account.order_card.order_prefix') }} {{ index + 1 }}You have no orders yet
+                    </p>
+                    <p class="order-date-line">
+                      <span class="status-dot"></span>
+                      <span class="order-date-text">{{ order.date }}</span>
+                    </p>
+                    <div class="product-details-line">
+                      <span class="product-name">{{ order.productName }}</span>
+                      <span class="product-specs">{{ order.specs }}</span>
+                      <span class="product-quantity">x1</span>
+                    </div>
+                    <p class="order-status in-progress">In Transit</p>
+                  </div>
+                  <el-icon class="order-arrow-icon"><ArrowRightBold /></el-icon>
+                </a>
+                <div v-else class="order-item disabled">
+                  <div class="order-info">
+                    <p class="order-id-text">
+                      {{ t('account.order_card.order_prefix') }} {{ index + 1 }}You have no orders yet
+                    </p>
+                    <p class="order-date-line">
+                      <span class="status-dot grey"></span>
+                      <span class="order-date-text">{{ order.date }}</span>
+                    </p>
+                    <p class="order-products-line">
+                      <span class="product-name">{{ order.productName }}</span>
+                      <span class="product-specs">{{ order.specs }}</span>
+                      <span class="product-quantity">x1</span>
+                    </p>
+                    <p class="order-status completed">Delivered</p>
+                  </div>
+                  <el-icon class="order-arrow-icon"><ArrowRightBold /></el-icon>
+                </div>
+              </template>
+            </div>
+            <div v-else class="no-orders-placeholder">
+              <p>{{ t('account.order_card.no_orders') }}</p>
+              <el-button class="go-shopping-btn" @click="router.push('/')">
+                {{ t('account.order_card.go_shopping') }}
+              </el-button>
             </div>
           </div>
         </div>
@@ -76,19 +103,30 @@ const { t } = useI18n();
 const router = useRouter();
 const authStore = useAuthStore();
 const orders = ref([]);
-const isLoadingOrders = ref(true);
+const isLoadingOrders = ref(false);
 
 const fetchOrders = async () => {
   isLoadingOrders.value = true;
   try {
     const userOrders = await getUserOrders();
-    orders.value = userOrders;
+    // 模拟从API返回的订单数据
+    orders.value = userOrders.map((order, index) => ({
+      ...order,
+      date: '2025/6/4',
+      productName: index % 2 === 0 ? 'Pets clan Feeder' : 'Pets clan Fountains',
+      specs: 'blue/big',
+      status: index % 2 === 0 ? 'in-progress' : 'completed',
+    }));
   } catch (error) {
     console.error("Failed to fetch orders:", error);
     orders.value = [];
   } finally {
     isLoadingOrders.value = false;
   }
+};
+
+const goToOrderTracking = (orderId) => {
+  router.push({ path: '/order-tracking', query: { orderId } });
 };
 
 onMounted(() => {
@@ -98,193 +136,240 @@ onMounted(() => {
 
 const logout = async () => {
   await authStore.handleLogout();
-  window.location.href = '/'; 
+  window.location.href = '/';
 };
 </script>
 
 <style scoped>
-  /* --- 基礎樣式 --- */
-  .account-page {
-    background-color: #fff;
-  }
+.account-page {
+  background-color: #fff;
+}
+.header-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background-color: #fff;
+  border-bottom: 1px solid #eee;
+}
+.header-wrapper :deep(.main-nav a),
+.header-wrapper :deep(.header-actions .el-icon),
+.header-wrapper :deep(.el-dropdown-link),
+.header-wrapper :deep(.logo img) {
+  color: var(--text-color);
+  filter: none;
+}
+.main-content {
+  padding: 60px 20px;
+}
+.account-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 5px;
+}
+.user-info-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* <-- 这一行是关键 */
+  align-items: center;
+  margin-bottom: 20px;
+}
+.page-title {
+  font-size: 48px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  text-align: left;
+}
+.user-info {
+  font-size: 20px;
+  color: #000;
+}
+.user-info .user-name {
+  /* font-weight: bold; */
+  margin-right: 25px;
+}
+.user-info .user-email {
+  font-weight: normal;
+  color: #000;
+}
+.logout-link {
+  color: #666;
+  text-decoration: underline;
+  font-size: 12px;
+}
 
-  .header-wrapper {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #fff;
-    border-bottom: 1px solid #eee;
-  }
+/* 卡片样式 */
+.card-wrapper {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+.card-header {
+  background-color: #f7f7f7;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: center;
+}
+.card-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #000;
+  text-transform: uppercase;
+}
+.card-body {
+  padding: 0;
+}
+.order-list {
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+}
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid #f0f0f0;
+  text-decoration: none;
+  color: #000;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+.order-item:last-child {
+  font-size: 12px;
+  border-bottom: none;
+}
+.order-item:hover {
+  background-color: #f9f9f9;
+}
+.order-item.disabled {
+  font-size: 12px;
+  cursor: default;
+  color: #888;
+  pointer-events: none;
+}
+.order-item.disabled .order-arrow-icon {
+  color: #ccc;
+}
+.order-item.disabled .order-info > * {
+  color: #888;
+}
+.order-info {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  flex-grow: 1;
+}
+.order-date-line {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+  font-size: 12px;
+  color: #888;
+  margin: 0 0 5px 0;
+}
+.order-id-text {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+.order-date-text {
+  margin-left: 5px;
+}
+/* .order-products-line {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
+} */
 
-  .header-wrapper :deep(.main-nav a),
-  .header-wrapper :deep(.header-actions .el-icon),
-  .header-wrapper :deep(.el-dropdown-link),
-  .header-wrapper :deep(.logo img) {
-    color: var(--text-color);
-    filter: none;
-  }
+.product-name {
+  /* font-weight: 500; */
+  color: #888;
+}
+.product-specs {
+  color: #888;
+  /* 设置一个固定的宽度，以保证垂直对齐 */
+  width: 100px;
+  text-align: left;
+  flex-shrink: 0;
+  margin-left: 50px; /* 减小间距 */
+}
+.product-quantity {
+  color: #888;
+  /* 设置一个固定的宽度，以保证垂直对齐 */
+  width: 30px;
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 50px; /* 减小间距 */
+}
+.order-status {
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 10px;
+  color: #888;
+}
+.order-status.in-progress {
+  color: #92C45C;
+}
+.order-status.completed {
+  color: #888;
+}
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #92C45C;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.status-dot.grey {
+  background-color: #888;
+}
+.order-arrow-icon {
+  font-size: 20px;
+  color: #000;
+}
+.order-item.disabled .order-arrow-icon {
+  color: #ccc;
+}
+.no-orders-placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 20px;
+  text-align: center;
+}
+.no-orders-placeholder p {
+  font-size: 18px; /* 控制字体大小 */
+  color: #000;    /* 控制字体颜色 */
+  font-weight: 500; /* 控制字体粗细 */
+  margin-bottom: 40px; /* 控制文本与按钮之间的间距 */
+}
+.go-shopping-btn {
+  font-size: 12px;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 25px;
+  height: auto;
+  border-radius: 30px;
+  font-weight: 700;
+  border: none;
+}
 
-  .main-content {
-    padding: 60px 20px;
+@media (max-width: 767px) {
+  .page-title {
+    font-size: 32px;
   }
-
-  .account-container {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-
-  .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-
-  .page-header h1 {
-    font-size: 48px;
-    font-weight: 600;
-    margin: 0;
-    text-align: left;
-  }
-
-  .logout-link {
-    color: #666;
-    text-decoration: underline;
-    font-size: 14px;
-  }
-
-  /* --- 卡片佈局 --- */
-  .cards-wrapper {
-    display: flex;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #fff;
-    overflow: hidden;
-  }
-
-  .account-card {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .account-card + .account-card {
-    border-left: 1px solid #e0e0e0;
-  }
-
-  .card-header {
-    padding: 15px 20px;
-    background-color: #f7f7f7;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-  }
-
-  .card-header h3 {
-    margin: 0;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: #555;
-    text-transform: uppercase;
-  }
-
-  .card-body {
-    padding: 0;
-    font-size: 14px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* --- 帳戶設定卡片 (右側) --- */
-  .settings-card-body {
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    text-align: center;
-  }
-
-  .settings-card-body p {
-    margin: 0;
-    padding-bottom: 8px;
-  }
-
-  .settings-card-body .user-name {
-    font-weight: 500;
-    font-size: 16px;
-    text-transform: uppercase;
-  }
-
-  .settings-card-body .user-email {
-    color: #555;
-    padding-bottom: 0;
-  }
-
-  /* --- 訂單卡片 (左側) --- */
-  .order-card-body {
-    align-items: stretch;
-    padding: 10px 25px;
-    justify-content: flex-start;
-  }
-
-  .no-orders-placeholder {
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-  }
-
-  .no-orders-placeholder p {
-    margin-bottom: 20px;
-  }
-
-  .go-shopping-btn {
-    background-color: #000;
-    color: #fff;
-    padding: 12px 35px;
-    height: auto;
-    border-radius: 30px;
-    font-weight: 500;
-    border: none;
-  }
-
-  .loading-spinner {
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-  }
-
-  .order-list {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-
   .order-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 0;
-    border-bottom: 1px solid #f0f0f0;
-    text-decoration: none;
-    color: #333;
+    padding: 15px 20px;
   }
-
-  .order-item:last-child {
-    border-bottom: none;
-  }
-
-  .order-item span {
-    font-weight: normal;
-  }
-
-  /* --- 箭頭樣式 --- */
-  .order-arrow {
-    font-family: 'Arial', sans-serif;
-    font-size: 20px;
-    font-weight: normal;
-    color: #333;
-  }
+}
 </style>
