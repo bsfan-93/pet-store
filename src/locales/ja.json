@@ -128,6 +128,14 @@
     "success_message": "アカウントが正常に作成されました！",
     "error_message": "登録に失敗しました。"
   },
+  "verification": {
+    "title": "アカウントを作成",
+    "subtitle": "限定機能などへのアクセスを取得します。",
+    "placeholder": "認証コードを入力してください",
+    "button": "アカウントを作成",
+    "prompt": "すでにアカウントをお持ちですか？",
+    "login_link": "ログイン"
+  },
   "product": {
     "quantity": "数量",
     "size": "サイズ",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "注文追跡",
     "placeholder": "追跡番号を入力してください",
-    "verify_prefix": "リンクで確認 ",
-    "verify_link": "リンク",
     "track_button": "追跡",
     "service_email": "カスタマーサービスメール：support@petsclan.com",
     "service_phone": "カスタマーサービス電話：1-800-123-4567"

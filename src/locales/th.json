@@ -128,6 +128,14 @@
     "success_message": "สร้างบัญชีสำเร็จ!",
     "error_message": "การลงทะเบียนล้มเหลว"
   },
+  "verification": {
+    "title": "สร้างบัญชี",
+    "subtitle": "เข้าถึงคุณสมบัติพิเศษและอีกมากมาย",
+    "placeholder": "ป้อนรหัสยืนยัน",
+    "button": "สร้างบัญชี",
+    "prompt": "มีบัญชีอยู่แล้ว?",
+    "login_link": "เข้าสู่ระบบ"
+  },
   "product": {
     "quantity": "จำนวน",
     "size": "ขนาด",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "ติดตามคำสั่งซื้อ",
     "placeholder": "ป้อนหมายเลขติดตามของคุณ",
-    "verify_prefix": "ยืนยันโดย ",
-    "verify_link": "ลิงก์",
     "track_button": "ติดตาม",
     "service_email": "อีเมลฝ่ายบริการลูกค้า: support@petsclan.com",
     "service_phone": "โทรศัพท์ฝ่ายบริการลูกค้า: 1-800-123-4567"

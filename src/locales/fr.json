@@ -128,6 +128,14 @@
     "success_message": "Compte créé avec succès !",
     "error_message": "Échec de l'inscription."
   },
+  "verification": {
+    "title": "Créer un compte",
+    "subtitle": "Accédez à des fonctionnalités exclusives et plus encore.",
+    "placeholder": "Entrez le code de vérification",
+    "button": "Créer un compte",
+    "prompt": "Vous avez déjà un compte ?",
+    "login_link": "Se connecter"
+  },
   "product": {
     "quantity": "Quantité",
     "size": "Taille",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "Suivi de Commande",
     "placeholder": "Entrez votre numéro de suivi",
-    "verify_prefix": "Vérifier par ",
-    "verify_link": "lien",
     "track_button": "Suivre",
     "service_email": "E-mail du Service Client : support@petsclan.com",
     "service_phone": "Téléphone du Service Client : 1-800-123-4567"

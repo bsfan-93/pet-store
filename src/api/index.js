@@ -265,3 +265,37 @@ export const createCartCheckoutSession = (checkoutItemsArray) => {
     body: JSON.stringify(checkoutItemsArray) // 直接發送整個商品陣列
   });
 };
+
+// ▼▼▼ 请用这段代码替换您文件里现有的 trackOrder 函数 ▼▼▼
+export const trackOrder = (trackingNumber) => {
+  // 模拟 API 延迟和逻辑
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      // 为了演示，我们假设只有 '123456' 是正确的订单号
+      if (trackingNumber === '123456') {
+        resolve([
+          {
+            timestamp: '08-04 11:11',
+            title: '已揽件',
+            description: '顺丰速运已收取快递，您的期待，我们定竭诚守护，不负所托',
+          },
+          {
+            timestamp: '08-04 11:11',
+            title: '运输中',
+            description: '快递在[南京转运中心]完成分拣，准备发往下一站',
+          }
+        ]);
+      } else {
+        // 如果订单号不正确，则返回错误
+        reject(new Error('Order not found. Please check the tracking number.'));
+      }
+    }, 1500); // 模拟 1.5 秒的网络延迟
+  });
+};
+
+// ▼▼▼ START: 在文件末尾追加此函数 ▼▼▼
+export const getAllGoods = () => {
+  // 我们复用 searchGoods 接口，传入一个空字符串通常会返回所有商品
+  return searchGoods('');
+};
+// ▲▲▲ END: 追加函数 ▲▲▲

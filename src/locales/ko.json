@@ -128,6 +128,14 @@
     "success_message": "계정이 성공적으로 생성되었습니다!",
     "error_message": "등록에 실패했습니다."
   },
+  "verification": {
+    "title": "계정 만들기",
+    "subtitle": "독점 기능 등에 액세스하세요.",
+    "placeholder": "인증 코드 입력",
+    "button": "계정 만들기",
+    "prompt": "이미 계정이 있으신가요?",
+    "login_link": "로그인"
+  },
   "product": {
     "quantity": "수량",
     "size": "사이즈",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "주문 추적",
     "placeholder": "추적 번호를 입력하세요",
-    "verify_prefix": "링크로 확인 ",
-    "verify_link": "링크",
     "track_button": "추적",
     "service_email": "고객 서비스 이메일: support@petsclan.com",
     "service_phone": "고객 서비스 전화: 1-800-123-4567"

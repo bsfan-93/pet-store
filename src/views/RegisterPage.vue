@@ -45,7 +45,7 @@
               type="primary" 
               native-type="submit"
             >
-              {{ $t('register.create_button') }}
+              {{ $t('register.next_button') }}
             </el-button>
           </el-form-item>
         </el-form>
@@ -68,7 +68,7 @@ import { ElForm, ElFormItem, ElInput, ElButton, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
-import { registerUser } from '../api'; // 【新增】导入注册 API 函数
+// import { registerUser } from '../api'; // 【新增】导入注册 API 函数
 import { useI18n } from 'vue-i18n'; // 【新增】导入 useI18n
 
 // const navigateTo = inject('navigateTo');
@@ -93,23 +93,26 @@ const registerRules = reactive({
 });
 
 
-// ▼▼▼ 【修改】更新 submitForm 函数以调用 API ▼▼▼
+// ▼▼▼ 核心修改点 2 - 更新 submitForm 函数的逻辑 ▼▼▼
 const submitForm = async (formEl) => {
   if (!formEl) return;
   await formEl.validate(async (valid) => {
     if (valid) {
       isLoading.value = true;
       try {
-        // 调用我们刚刚创建的注册API函数
-        await registerUser(registerForm); 
+        // 在这里将来可以调用发送验证码的API
+        console.log('Form is valid, ready to send verification code for:', registerForm.email);
         
-        ElMessage.success(t('register.success_message'));
-        // navigateTo('login'); // 注册成功后跳转到登录页
-        router.push('/login'); // <--- 修改这一行
+        // 模拟API调用延迟
+        setTimeout(() => {
+          ElMessage.success('Verification code sent to your email!');
+          // 跳转到验证页面
+          router.push('/verify-email'); 
+          isLoading.value = false;
+        }, 1000);
+
       } catch (error) {
-        // API 失败时显示错误信息
         ElMessage.error(t('register.error_message'));
-      } finally {
         isLoading.value = false;
       }
     }

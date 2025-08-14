@@ -1,3 +1,4 @@
+<!-- banner -->
 <template>
   <div class="hero-section-wrapper">
     <el-carousel 
@@ -44,10 +45,12 @@ defineProps({
 </script>
 
 <style scoped>
-/* ▼▼▼ 2. 新增 wrapper 的样式 ▼▼▼ */
 .hero-section-wrapper {
   width: 100%;
-  height: 100vh;
+  /* 1. 调整桌面端的 Banner 高度 */
+  /* 100vh 代表整个屏幕的高度，您可以改成一个固定的像素值，比如 800px */
+  /* 或者一个较小比例的 vh 值，比如 80vh */
+  height: 100vh; 
 }
 
 /* --- 您原有的样式保持不变 --- */

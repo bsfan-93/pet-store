@@ -128,6 +128,14 @@
     "success_message": "帳戶建立成功！",
     "error_message": "註冊失敗。"
   },
+  "verification": {
+    "title": "建立帳戶",
+    "subtitle": "獲取獨家功能及更多。",
+    "placeholder": "輸入驗證碼",
+    "button": "建立帳戶",
+    "prompt": "已經有帳戶了？",
+    "login_link": "登入"
+  },
   "product": {
     "quantity": "數量",
     "size": "尺寸",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "訂單追蹤",
     "placeholder": "輸入您的追蹤號碼",
-    "verify_prefix": "透過連結驗證 ",
-    "verify_link": "連結",
     "track_button": "追蹤",
     "service_email": "客戶服務電郵：support@petsclan.com",
     "service_phone": "客戶服務電話：1-800-123-4567"

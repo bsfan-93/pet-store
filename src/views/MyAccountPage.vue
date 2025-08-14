@@ -74,7 +74,7 @@
             </div>
             <div v-else class="no-orders-placeholder">
               <p>{{ t('account.order_card.no_orders') }}</p>
-              <el-button class="go-shopping-btn" @click="router.push('/')">
+              <el-button class="go-shopping-btn" @click="router.push('/shop/all')">
                 {{ t('account.order_card.go_shopping') }}
               </el-button>
             </div>
@@ -82,7 +82,6 @@
         </div>
       </div>
     </main>
-
     <AppFooter />
   </div>
 </template>

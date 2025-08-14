@@ -109,21 +109,21 @@ onMounted(() => {
 
 <style scoped>
 .gallery-section {
-  padding: 90px 0;
+  padding: 110px 0;
   background-color: #fff;
   overflow: hidden;
 }
 
 .swiper-container {
   position: relative;
-  max-width: 1600px;
+  max-width: var(--container-width, 1200px);
   margin: 0 auto;
 }
 
 .my-swiper {
   /* 2. 設定一個固定的高度來鎖定尺寸 */
-  height: 520px; 
-  padding-bottom: 20px; /* 為下方的圓點留出空間 */
+  height: 700px; 
+  padding-bottom: 40px; /* 為下方的圓點留出空間 */
 }
 
 .swiper-slide {

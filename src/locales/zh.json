@@ -119,6 +119,7 @@
     "password_label": "密码",
     "create_button": "创建账户",
     "login_prompt": "已经有账户了？",
+    "next_button": "下一步",
     "login_link": "登录",
     "validation": {
       "name_required": "请输入您的姓名",
@@ -128,6 +129,14 @@
     },
     "success_message": "账户创建成功！",
     "error_message": "注册失败。"
+  },
+  "verification": {
+    "title": "创建账户",
+    "subtitle": "获取独家功能及更多。",
+    "placeholder": "输入验证码",
+    "button": "创建账户",
+    "prompt": "已经有账户了？",
+    "login_link": "登录"
   },
   "forgot_password": {
     "title": "重置密码",
@@ -286,11 +295,9 @@
   "order_tracking": {
     "title": "订单追踪",
     "placeholder": "输入您的追踪号码",
-    "verify_prefix": "通过链接验证 ",
-    "verify_link": "链接",
     "track_button": "追踪",
-    "service_email": "客户服务电邮：support@petsclan.com",
-    "service_phone": "客户服务电话：1-800-123-4567"
+    "service_email": "客服邮箱：<b>{email}</b> (我们会在24小时内回复您的邮件。)",
+    "service_phone": "客服电话：<b>{phone}</b> (周一至周日 9:00am-12:00pm & 1:00pm-18:00pm)"
   },
   "return_refund_policy": {
     "title": "退货与退款政策",
@@ -351,5 +358,9 @@
     "feeder": "喂食器",
     "fountains": "饮水机",
     "leash": "牵引绳"
+  },
+  "shop_page": {
+    "all_products_title": "所有商品",
+    "filters_button": "筛选"
   }
 }

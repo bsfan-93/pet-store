@@ -60,6 +60,8 @@ const fetchHomePageData = async () => {
       getPhotoDetails(2)
     ]);
     bannerData.value = banners;
+    
+     // 直接将从 API 获取的 collections 数据赋值
     collectionData.value = collections;
   } catch (error) {
     console.error("获取首页数据失败:", error);

@@ -30,13 +30,39 @@
         <div class="page-feedback">
             <h3>{{ $t('faq.feedback.title') }}</h3>
             <div class="feedback-buttons">
-                <el-button class="feedback-btn no-btn" round>
+                <el-button class="feedback-btn no-btn" round @click="showFeedbackForm">
                     <img src="/images/sad.png" alt="Sad face" class="feedback-icon"/> {{ $t('faq.feedback.no') }}
                 </el-button>
-                <el-button class="feedback-btn yes-btn" round>
+                <el-button class="feedback-btn yes-btn" round @click="showSubscribeForm">
                     <img src="/images/happy.png" alt="Happy face" class="feedback-icon"/> {{ $t('faq.feedback.yes') }}
                 </el-button>
             </div>
+        </div>
+
+        <div v-if="isFeedbackFormVisible" class="feedback-form-container">
+            <h4>Please enter your question</h4>
+            <el-input
+              v-model="feedbackQuestion"
+              placeholder="question"
+              size="large"
+              class="feedback-input"
+            />
+            <el-button class="submit-feedback-btn" @click="submitFeedback">
+              Track
+            </el-button>
+        </div>
+
+        <div v-if="isSubscribeFormVisible" class="feedback-form-container">
+            <h4>Enter email</h4>
+            <el-input
+              v-model="subscribeEmail"
+              placeholder="Email"
+              size="large"
+              class="feedback-input"
+            />
+            <el-button class="submit-feedback-btn" @click="submitSubscription">
+              Track
+            </el-button>
         </div>
       </div>
     </main>
@@ -48,16 +74,81 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n'; // 2. 引入 useI18n
-import { ElCollapse, ElCollapseItem, ElButton } from 'element-plus';
+import { ElCollapse, ElCollapseItem, ElButton, ElInput, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+// ▼▼▼ START: 核心修改点 3 - 引入 API 函数 ▼▼▼
+import { subscribeMail } from '../api';
+// ▲▲▲ END: 核心修改点 3 ▲▲▲
 
 const activeNames = ref(0); 
 const { tm } = useI18n(); // 3. 获取 tm 函数以加载翻译模块
 
 // 4. 将写死的数据替换为从 i18n 文件中获取的计算属性
 const faqData = computed(() => tm('faq.items'));
+
+// ▼▼▼ START: 核心修改点 3 - 添加新的 script 逻辑 ▼▼▼
+const isFeedbackFormVisible = ref(false);
+const feedbackQuestion = ref('');
+
+// “YES”按钮表单的状态
+const isSubscribeFormVisible = ref(false);
+const subscribeEmail = ref('');
+
+// ▼▼▼ START: 核心修改区域 ▼▼▼
+// 点击 "NO" 按钮时调用的函数
+const showFeedbackForm = () => {
+  isSubscribeFormVisible.value = false; // 隐藏 "YES" 表单
+  isFeedbackFormVisible.value = true;   // 显示 "NO" 表单
+};
+
+// 点击 "YES" 按钮时调用的函数
+const showSubscribeForm = () => {
+  isFeedbackFormVisible.value = false;   // 隐藏 "NO" 表单
+  isSubscribeFormVisible.value = true;    // 显示 "YES" 表单
+};
+// ▲▲▲ END: 核心修改区域 ▲▲▲
+
+// 点击 "NO" 按钮时调用的函数
+const submitFeedback = () => {
+  if (!feedbackQuestion.value) {
+    ElMessage.warning('Please enter your question before submitting.');
+    return;
+  }
+  
+  // 在这里可以将来可以添加调用API的逻辑
+  console.log('Feedback submitted:', feedbackQuestion.value);
+  
+  ElMessage.success('Thank you for your feedback!');
+  
+  // 提交后清空并隐藏表单
+  isFeedbackFormVisible.value = false;
+  feedbackQuestion.value = '';
+};
+// ▲▲▲ END: 核心修改点 3 ▲▲▲
+
+// 提交 "YES" 表单 (Email) 的函数
+const submitSubscription = async () => {
+  // 简单的邮箱格式验证
+  if (!subscribeEmail.value || !/^\S+@\S+\.\S+$/.test(subscribeEmail.value)) {
+    ElMessage.warning('Please enter a valid email address.');
+    return;
+  }
+  
+  try {
+    // 调用订阅 API
+    await subscribeMail(subscribeEmail.value);
+    ElMessage.success('Subscription successful! Thank you.');
+    
+    // 成功后清空并隐藏表单
+    isSubscribeFormVisible.value = false;
+    subscribeEmail.value = '';
+  } catch (error) {
+    ElMessage.error(error.message || 'An error occurred. Please try again.');
+  }
+};
+// ▲▲▲ END: 核心修改点 4 ▲▲▲
 </script>
 
 <style scoped>
@@ -223,6 +314,73 @@ h1 {
   width: 20px;
   height: 20px;
   margin-right: 8px;
+}
+
+/* ▼▼▼ START: 核心修改区域 ▼▼▼ */
+.feedback-form-container {
+  background-color: #ececec;
+  border-radius: 0px;
+  /* 【高低差】调整 padding 可以控制灰色框内部的整体间距 */
+  padding: 40px; 
+  max-width: 600px;
+  margin: 20px auto 0;
+  text-align: center;
+}
+.feedback-form-container h4 {
+  /* 【字体大小粗细】调整这里的 font-size 和 font-weight */
+  font-size: 32px;
+  font-weight: 600; /* 700是粗体，500是正常 */
+  /* 【高低差】调整 margin-bottom 可以控制标题和输入框的距离 */
+  margin: 0 0 35px 0; 
+}
+.feedback-input {
+  /* 【高低差】调整 margin-bottom 可以控制输入框和按钮的距离 */
+  margin-bottom: 35px; 
+}
+/* 【长短】通过 :deep() 选择器可以调整输入框的宽度 */
+.feedback-input :deep(.el-input__wrapper) {
+  /* 【高度可调】调整这个 height 值来改变输入框的高度 */
+  height: 65px; 
+  border-radius: 8px;
+  /*
+    【宽度相等】
+    移除具体的 width 属性，让输入框默认撑满父容器宽度 (100%)
+  */
+}
+
+/* ▼▼▼ START: 核心修改点 ▼▼▼ */
+/* 使用 :deep() 和 .el-input__inner 来选中真正的 input 元素 */
+.feedback-input :deep(.el-input__inner) {
+  /* 在这里调整字体大小 */
+  font-size: 20px; 
+}
+/* ▲▲▲ END: 核心修改点 ▲▲▲ */
+
+.submit-feedback-btn {
+  /*
+    【宽度相等】
+    让按钮也撑满父容器宽度 (100%)，这样就和上面的输入框等宽了
+  */
+  width: 100%;
+  /* 【高度可调】调整这个 height 值来改变按钮的高度 */
+  height: 65px;
+
+  background-color: #7CB342;
+  color: #fff;
+  border-color: #7CB342;
+  font-size: 24px;
+  font-weight: 600; /* 700是粗体，500是正常 */
+  padding: 12px 50px;
+}
+.submit-feedback-btn:hover {
+  background-color: #8bc34a;
+  border-color: #8bc34a;
+}
+/* ▲▲▲ END: 核心修改区域 ▲▲▲ */
+
+/* 样式部分无需修改，新的表单可以复用之前的样式 */
+.faq-page {
+  background-color: #fff;
 }
 
 /* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */

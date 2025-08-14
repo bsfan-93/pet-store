@@ -1,4 +1,3 @@
-<!-- Shop by category”（按类别选购） -->
 <template>
   <section class="collection-section" v-if="collections.length > 0">
     <div class="container">
@@ -10,13 +9,12 @@
           v-for="(item, index) in collections" 
           :key="item.id" 
           href="#" 
-          @click.prevent="goToProduct(item.goodId)" 
+          @click.prevent="goToCategory(categoryTranslationKeys[index])" 
           class="collection-item"
         >
           <div class="image-wrapper">
             <img :src="item.url" :alt="item.name">
             <h3>{{ t(categoryTranslationKeys[index]) }}</h3>
-            <el-icon class="arrow-icon"><ArrowRightBold /></el-icon>
           </div>
         </a>
       </div>
@@ -25,21 +23,18 @@
 </template>
 
 <script setup>
-import { useI18n } from 'vue-i18n'; // 【新增】引入 i18n
-import { useRouter } from 'vue-router'; // 【新增】导入 useRouter
-import { ElIcon } from 'element-plus';
-import { ArrowRightBold } from '@element-plus/icons-vue';
+import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
+// 删除了 ElIcon 和 ArrowRightBold 的导入，因为不再需要了
 
-const { t } = useI18n(); // 【新增】获取 t 函数
+const { t } = useI18n();
 
-// ▼▼▼ 1. 在前端定義一個包含翻譯鍵名的陣列 ▼▼▼
 const categoryTranslationKeys = [
-  'mega_menu.feeder',    // 對應 "Feeder"
-  'mega_menu.fountains', // 對應 "Fountains"
-  'mega_menu.leash'      // 對應 "Leash"
+  'mega_menu.feeder',
+  'mega_menu.fountains',
+  'mega_menu.leash'
 ];
 
-// 定义 props
 defineProps({
   collections: {
     type: Array,
@@ -47,21 +42,31 @@ defineProps({
   }
 });
 
-// --- 【新增】使用 Vue Router 进行导航 ---
 const router = useRouter();
-const goToProduct = (productId) => {
-  if (productId) {
-    router.push({ path: `/product/${productId}` });
+
+// ▼▼▼ START: 核心修改点 1 - 修改了跳转逻辑 ▼▼▼
+const goToCategory = (categoryKey) => {
+  // categoryKey 的值会是 'mega_menu.feeder' 或 'mega_menu.fountains'
+  if (categoryKey) {
+    // 我们从 "mega_menu.feeder" 中提取出 "feeder"
+    const category = categoryKey.split('.')[1];
+    // 然后跳转到对应的分类页面，例如 /shop/feeder
+    router.push({ path: `/shop/${category}` });
   }
 };
-// --- 新增结束 ---
+// ▲▲▲ END: 核心修改点 1 ▲▲▲
+
+// const goToProduct = (productId) => {
+//   if (productId) {
+//     router.push({ path: `/product/${productId}` });
+//   }
+// };
 </script>
 
 
 <style scoped>
-/* 样式无需修改 */
 .collection-section {
-  padding: 150px 0;
+  padding: 140px 0;
   background-color: var(--secondary-color);
 }
 
@@ -71,54 +76,40 @@ const goToProduct = (productId) => {
   padding: 0 20px;
 }
 
+/* ▼▼▼ START: 样式修改部分 ▼▼▼ */
+
 .section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 40px;
+  /* 移除了 display: flex 等属性，让 h2 默认左对齐 */
+  margin-bottom: 70px;
 }
 
 .section-header h2 {
-  font-size: 42px;
-  font-weight: 700;
+  font-size: 48px; /* 将标题调小一点以匹配设计图 */
+  font-weight: 600; /* 字体加粗一些 */
   margin: 0;
 }
 
 .collection-grid {
   display: grid;
-  /* ▼▼▼ 【修改】將 auto-fit 改為固定的三欄 ▼▼▼ */
-  grid-template-columns: repeat(3, 1fr);
-  /* ▲▲▲ 修改結束 ▲▲▲ */
-  gap: 30px;
-}
-
-@media (max-width: 767px) {
-  .collection-grid {
-    /* 在手機上，覆蓋為單欄佈局 */
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-}
-
-@media (max-width: 480px) {
-  .section-header h2 {
-    font-size: 24px;
-  }
+  grid-template-columns: repeat(2, 1fr);
+  gap: 80px;
 }
 
 .collection-item {
   text-decoration: none;
   display: block;
+  /* 移除了卡片向上浮动的动画 */
   transition: transform 0.3s ease;
 }
 
+/* 卡片悬停时不再向上移动 */
 .collection-item:hover {
-    transform: translateY(-5px);
+    transform: none; 
 }
 
 .image-wrapper {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -136,32 +127,30 @@ const goToProduct = (productId) => {
   transform: scale(1.05);
 }
 
+/* 将文字标题定位到右下角，并调整样式 */
 .collection-item h3 {
   position: absolute;
   bottom: 20px;
-  left: 20px;
+  right: 25px; /* 从 left 改为 right */
   margin: 0;
   padding: 0;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px; /* 字体调小 */
+  font-weight: 500; /* 字体变细 */
   color: #fff;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.arrow-icon {
-  position: absolute;
-  bottom: 25px;
-  right: 25px;
-  font-size: 18px;
-  color: #fff;
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+/* 删除了 .arrow-icon 和 .collection-item:hover .arrow-icon 样式 */
+
+/* ▲▲▲ END: 样式修改部分 ▲▲▲ */
+
+@media (max-width: 767px) {
+  .section-header h2 {
+    font-size: 28px;
+  }
+  .collection-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
-
-.collection-item:hover .arrow-icon {
-  opacity: 1;
-}
-
-
 </style>

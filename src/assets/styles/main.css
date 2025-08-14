@@ -21,7 +21,7 @@
   /* 将 66px 转换为 vw，例如 66 / 19.2 = 3.43vw */
   --logo-height: 3.43vw;    /* <-- 修改这里，使 LOGO 高度等比缩放 */
   --icon-size: 16px;        /* 图标大小通常可以保持 px 或根据实际情况调整 */
-  --container-width: 1600px;        /* 页面内容主容器宽度 */
+  --container-width: 1750px;        /* 页面内容主容器宽度 */
 }
 
 /* 全局重置和基础样式 */
@@ -37,3 +37,75 @@ a {
   color: inherit;
 }
 
+/* ▼▼▼ START: 全局 Shop 下拉菜单样式 (最终版) ▼▼▼ */
+
+/* 隐藏小箭头 */
+.shop-dropdown-grey .el-popper__arrow {
+  display: none !important;
+}
+
+/* 修改菜单的容器样式 */
+.shop-dropdown-grey.el-popper {
+  border: none !important;
+  border-radius: 8px !important; /* 1. 菜单圆角 */
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1) !important;
+  margin-top: 0 !important;
+}
+
+/* 修改菜单本身的背景色 */
+.shop-dropdown-grey .el-dropdown-menu {
+  background-color: #e9e9e9 !important; /* 2. 颜色再深一些 */
+  padding: 0 !important;
+  border-radius: 8px !important; /* 1. 确保菜单也有圆角 */
+}
+
+/* 修改菜单项的样式 */
+.shop-dropdown-grey .el-dropdown-menu__item {
+  padding: 12px 20px !important;
+  font-size: 16px !important;
+  color: #303133 !important;
+  border-bottom: none !important;
+  position: relative !important;
+  justify-content: center !important; /* 3. 菜单内的文字居中 */
+}
+
+/* 分割线样式 */
+.shop-dropdown-grey .el-dropdown-menu__item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1px;
+  background-color: #dcdcdc; /* 加深分割线颜色以匹配背景 */
+}
+
+/* 移除最后一个菜单项的分割线 */
+.shop-dropdown-grey .el-dropdown-menu__item:last-child::after {
+  display: none;
+}
+
+/* 覆盖悬停和聚焦时的样式 */
+.shop-dropdown-grey .el-dropdown-menu__item:hover,
+.shop-dropdown-grey .el-dropdown-menu__item:focus {
+  background-color: #e9e9e9 !important; /* 悬停时背景色保持不变 */
+  color: #303133 !important;
+}
+/* ▲▲▲ END: 全局 Shop 下拉菜单样式 (最终版) ▲▲▲ */
+
+/* ▼▼▼ START: 在文件末尾追加这段代码以修复圆角问题 ▼▼▼ */
+
+/* 为第一个菜单项添加顶部圆角 */
+.shop-dropdown-grey .el-dropdown-menu__item:first-child {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
+/* 为最后一个菜单项添加底部圆角 */
+.shop-dropdown-grey .el-dropdown-menu__item:last-child {
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+}
+
+/* ▲▲▲ END: 追加代码 ▲▲▲ */

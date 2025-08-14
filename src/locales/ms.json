@@ -128,6 +128,14 @@
     "success_message": "Akaun berjaya dicipta!",
     "error_message": "Pendaftaran gagal."
   },
+  "verification": {
+    "title": "Buat Akaun",
+    "subtitle": "Dapatkan akses kepada ciri eksklusif dan banyak lagi.",
+    "placeholder": "Masukkan Kod Pengesahan",
+    "button": "Buat Akaun",
+    "prompt": "Sudah mempunyai akaun?",
+    "login_link": "Log masuk"
+  },
   "product": {
     "quantity": "Kuantiti",
     "size": "Saiz",
@@ -277,8 +285,6 @@
   "order_tracking": {
     "title": "Penjejakan Pesanan",
     "placeholder": "Masukkan nombor penjejakan anda",
-    "verify_prefix": "Sahkan melalui ",
-    "verify_link": "pautan",
     "track_button": "Jejak",
     "service_email": "E-mel Perkhidmatan Pelanggan: support@petsclan.com",
     "service_phone": "Telefon Perkhidmatan Pelanggan: 1-800-123-4567"

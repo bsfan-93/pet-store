@@ -114,6 +114,7 @@
     "email_label": "Email",
     "password_label": "Password",
     "create_button": "Create Account",
+    "next_button": "Next", 
     "login_prompt": "Already have an account?",
     "login_link": "Log in",
     "validation": {
@@ -124,6 +125,14 @@
     },
     "success_message": "Account created successfully!",
     "error_message": "Registration failed."
+  },
+  "verification": {
+    "title": "Create Account",
+    "subtitle": "Get access to exclusive features and more.",
+    "placeholder": "Enter Verification Code",
+    "button": "Create Account",
+    "prompt": "Already have an account?",
+    "login_link": "Log in"
   },
   "forgot_password": {
     "title": "Recover password",
@@ -172,6 +181,7 @@
     "best_sellers": "Best Sellers"
   },
   "mega_menu": {
+    "all": "All",
     "feeder": "Feeder",
     "fountains": "Fountains",
     "leash": "Leash"
@@ -280,11 +290,9 @@
   "order_tracking": {
     "title": "Track your order",
     "placeholder": "tracking",
-    "verify_prefix": "Verify by ",
-    "verify_link": "phone number",
     "track_button": "Track",
-    "service_email": "Customer Service:15380822206@163.com(We will reply to your email within 24 hours.",
-    "service_phone": "Customer Service Phone: (86)15380822206 (9:00am-12:00pm & 1:00pm-18:00pm Mon.-Sun.)"
+    "service_email": "Customer Service:<b>{email}</b> (We will reply to your email within 24 hours.)",
+    "service_phone": "Customer Service Phone:<b>{phone}</b>(9:00am-12:00pm &1:00pm-18:00pmMon.-Sun.)"
   },
   "return_refund_policy": {
     "title": "Return & Refund Policy",
@@ -344,5 +352,9 @@
     "feeder": "Feeder",
     "fountains": "Fountains",
     "leash": "Leash"
+  },
+  "shop_page": {
+    "all_products_title": "All products",
+    "filters_button": "Filters"
   }
 }

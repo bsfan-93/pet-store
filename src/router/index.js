@@ -20,6 +20,8 @@ import PrivacyPolicyPage from '../views/PrivacyPolicyPage.vue'; // <-- 新增這
 import UserManualPage from '../views/UserManualPage.vue'; // <-- 新增這一行
 import ShippingPolicyPage from '../views/ShippingPolicyPage.vue';
 import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
+import ShopPage from '../views/ShopPage.vue';
+import VerificationPage from '../views/VerificationPage.vue'; // <-- 1. 导入新页面
 
 // 定义路由规则
 const routes = [
@@ -47,6 +49,11 @@ const routes = [
     path: '/register', 
     name: 'Register', 
     component: RegisterPage 
+  },
+  { 
+    path: '/verify-email', 
+    name: 'Verification', 
+    component: VerificationPage 
   },
   {
     path: '/forgot-password',
@@ -91,6 +98,12 @@ const routes = [
     name: 'ProductDetail',
     component: ProductDetailPage,
     props: true // 这会将 URL 中的 :productId 作为 prop 传递给页面组件，非常方便
+  },
+  {
+    path: '/shop/:category',
+    name: 'ShopCategory',
+    component: ShopPage,
+    props: true
   },
   { 
     // 定义带有动态参数 'id' 的路由
