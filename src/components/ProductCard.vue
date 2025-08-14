@@ -131,7 +131,7 @@ const addToCart = () => {
 .color-swatch {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  /* border-radius: 50%; */
   margin-right: 8px;
   border: 1px solid #eee;
 }
