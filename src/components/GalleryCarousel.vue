@@ -1,4 +1,5 @@
-<!-- 轮播图 -->
+<!-- 首页的画廊轮播图，以富有视觉冲击力的方式展示产品图片。 -->
+
 <template>
   <section class="gallery-section" v-if="images.length > 0">
     <div class="swiper-container">

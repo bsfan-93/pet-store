@@ -1,3 +1,5 @@
+<!-- “App 下载” 页面，展示应用的特色功能并提供下载链接 -->
+
 <template>
   <div class="app-page">
     <div class="header-wrapper">

@@ -1,3 +1,5 @@
+<!-- 商品卡片组件，用于在商店页和首页以网格形式展示单个商品。 -->
+
 <template>
   <router-link :to="`/product/${product.id}`" class="product-card">
     <div class="image-container">

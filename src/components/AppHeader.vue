@@ -1,3 +1,5 @@
+<!-- 网站的通用页头，包含 Logo、主导航和用户操作图标，出现在每个页面的顶部。 -->
+
 <template>
   <header 
     class="app-header" 

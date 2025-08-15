@@ -1,3 +1,5 @@
+<!-- 网站的通用页脚，包含链接和订阅表单，出现在每个页面的底部。 -->
+
 <template>
   <footer class="app-footer">
     <div class="footer-container">

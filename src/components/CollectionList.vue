@@ -1,3 +1,5 @@
+<!-- 首页的**“按分类选购”**模块，展示主要的商品分类入口。 -->
+
 <template>
   <section class="collection-section" v-if="collections.length > 0">
     <div class="container">

@@ -1,3 +1,5 @@
+<!-- 购物车侧边栏，点击购物车图标时从右侧滑出的面板。 -->
+
 <template>
   <transition name="slide" >
     <div v-if="cartStore.isCartVisible" class="cart-overlay" @click.self="cartStore.closeCart()">
@@ -8,23 +10,22 @@
         </div>
         <div class="panel-content">
           <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
+            <button class="continue-btn" @click="handleContinueShopping">{{ t('cart.continue_shopping') }}</button>
             <div v-if="!authStore.isLoggedIn" class="login-prompt">
               <span class="login-prompt-text">{{ $t('cart.login_prompt') }}</span>
               <a href="#" @click.prevent="handleLoginClick" class="login-link">
-                {{ t('cart.login_link') }}
+                {{ $t('cart.login_link') }}
               </a>
             </div>
             <div v-else class="logged-in-empty-cart-message">
               <p>{{ t('cart.welcome_back', { userName: authStore.userInfo?.nickname || authStore.userInfo?.username || '' }) }}</p>
               <p>{{ t('cart.start_Browse') }}</p>
             </div>
-            <button class="continue-btn" @click="handleContinueShopping">{{ t('cart.continue_shopping') }}</button>
           </div>
-
           <div v-else class="cart-items">
             <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
-              <el-checkbox 
-                :model-value="item.selected" 
+              <el-checkbox
+                :model-value="item.selected"
                 @change="() => cartStore.toggleItemSelection(item.id)"
                 size="large"
               />
@@ -32,7 +33,7 @@
               <div class="item-details">
                 <p class="item-name">{{ item.name || item.goodName }}</p>
                 <p class="item-specs">{{ item.colorName || 'Default Color' }}/{{ item.specName || 'Default Size' }}</p>
-                <el-input-number 
+                <el-input-number
                   size="small"
                   :model-value="item.quantity"
                   @change="(currentValue) => cartStore.updateQuantity(item.id, currentValue)"
@@ -174,22 +175,32 @@ const handleCheckout = async () => {
 }
 .panel-header h3 { margin: 0; font-size: 18px; }
 .close-icon { font-size: 24px; cursor: pointer; }
+/* ▼▼▼ START: CSS 修改的核心区域 ▼▼▼ */
 .panel-content {
   flex-grow: 1;
   overflow-y: auto;
   padding: 20px;
-}
-.cart-empty {
+  /* 关键改动 1: 将面板内容设为 Flex 布局 */
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: center; /* 让所有子元素水平居中 */
+}
+
+/* ▼▼▼ START: CSS 修改的核心区域 ▼▼▼ */
+/* 1. 空购物车容器样式 */
+.cart-empty {
+  display: flex;
+  flex-direction: column; /* 保持垂直排列 */
+  align-items: center;   /* 水平居中 */
+  justify-content: center; /* 垂直居中 */
   height: 100%;
-  padding: 30px 20px;
+  padding: 30px;
   box-sizing: border-box;
 }
+
+/* 2. "继续购物" 按钮样式 */
 .continue-btn {
-  width: 80%;
+  width: 100%;
   max-width: 300px;
   padding: 14px;
   background-color: #000;
@@ -197,16 +208,29 @@ const handleCheckout = async () => {
   border: none;
   border-radius: 4px;
   font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  margin-bottom: 30px;
+  flex-shrink: 0; /* 防止按钮被压缩 */
 }
+/* 关键改动 2: 添加一个“弹簧”元素，自动撑开所有可用空间 */
+.spacer {
+  flex-grow: 1;
+}
+
+.continue-btn:hover {
+  opacity: 0.8;
+}
+
+/* 3. 登录提示样式 */
 .login-prompt {
   text-align: center;
-  margin-top: 20px;
   font-size: 14px;
+  color: #000;
+  flex-shrink: 0; /* 防止文字被压缩 */
+  /* ✨ 您可以在这里调整按钮和文字的间距 ✨ */
+  margin-top: 20px; 
 }
 .login-prompt-text {
-  color: #000;
   margin-right: 5px;
 }
 .login-link {
@@ -214,30 +238,24 @@ const handleCheckout = async () => {
   text-decoration: underline;
   font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s ease;
 }
 .login-link:hover {
-  color: #968C82;
+  color: #6a9edc;
 }
+
+/* 4. 已登录用户的空购物车提示 */
 .logged-in-empty-cart-message {
-  width: 80%;
-  max-width: 350px;
-  margin: 0 auto;
-  padding: 30px 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  border: none;
   text-align: center;
+  color: #666;
+  /* ✨ 您也可以在这里调整登录后提示语和按钮的间距 ✨ */
+  margin-bottom: 20px;
 }
 .logged-in-empty-cart-message p {
-  font-size: 16px;
+  margin: 0 0 10px;
   line-height: 1.6;
-  color: #968C82;
-  margin-bottom: 15px;
 }
-.logged-in-empty-cart-message p:last-child {
-  margin-bottom: 0;
-}
+/* ▲▲▲ END: CSS 修改的核心区域 ▲▲▲ */
+
 .cart-items {
   display: flex;
   flex-direction: column;

@@ -1,3 +1,5 @@
+<!-- “用户手册” 页面，提供产品的电子版使用说明书。 -->
+
 <template>
   <div class="manual-page">
     <div class="header-wrapper">

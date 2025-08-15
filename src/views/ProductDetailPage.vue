@@ -1,3 +1,5 @@
+<!-- “商品详情” 页面，展示单个商品的详细信息、图片和购买选项。 -->
+
 <template>
   <div class="product-detail-page" v-if="productDetail">
     <div class="header-wrapper">

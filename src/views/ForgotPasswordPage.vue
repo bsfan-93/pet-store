@@ -1,3 +1,5 @@
+<!-- “忘记密码” 页面，让用户可以通过邮箱重置密码。 -->
+
 <template>
   <div class="forgot-password-page">
     <div class="header-wrapper">

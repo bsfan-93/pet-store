@@ -1,3 +1,5 @@
+<!-- “常见问题” 页面，解答用户的常见疑问。 -->
+
 <template>
   <div class="faq-page">
     <div class="header-wrapper">

@@ -1,3 +1,5 @@
+<!-- “退货与退款政策” 页面，说明相关的条款和流程。 -->
+
 <template>
   <div class="policy-page">
     <div class="header-wrapper">

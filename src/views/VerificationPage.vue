@@ -1,4 +1,4 @@
-<!-- 验证页 -->
+<!-- “邮箱验证” 页面，用户注册后需要在此输入验证码以激活账户。 -->
  
 <template>
   <div class="verification-page">

@@ -1,4 +1,5 @@
-<!-- 搜索 -->
+<!-- 全屏搜索组件，点击搜索图标时弹出的覆盖层。 -->
+
 <template>
   <div class="search-overlay" @click.self="close">
     <div class="search-content">

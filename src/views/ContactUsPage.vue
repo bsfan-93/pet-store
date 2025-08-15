@@ -1,3 +1,5 @@
+<!-- “联系我们” 页面，包含联系方式和反馈表单。 -->
+
 <template>
   <div class="contact-us-page">
     <div class="header-wrapper">

@@ -1,3 +1,5 @@
+<!-- “关于我们” 页面，用于介绍品牌故事和团队信息。 -->
+
 <template>
   <div class="about-us-page">
     <div class="header-wrapper">

@@ -1,4 +1,5 @@
-<!-- 页脚上方介绍页 -->
+<!-- 首页的一个图文介绍模块。 -->
+
 <template>
   <section 
     v-if="imageUrl"

@@ -1,3 +1,5 @@
+<!-- “保修政策” 页面，详细说明产品的保修条款。 -->
+
 <template>
   <div class="policy-page">
     <div class="header-wrapper">

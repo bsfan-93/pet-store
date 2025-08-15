@@ -1,3 +1,5 @@
+<!-- 配送政策说明书 -->
+
 <template>
   <div class="policy-page">
     <div class="header-wrapper">

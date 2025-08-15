@@ -1,4 +1,4 @@
-// src/views/PlaceholderPage.vue
+<!-- 一个通用的占位页面，用于临时展示尚未完成的页面内容。 -->
 
 <template>
   <div class="placeholder-page">

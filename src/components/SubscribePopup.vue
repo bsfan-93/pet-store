@@ -1,4 +1,5 @@
-<!-- 弹窗 -->
+<!-- 订阅弹窗，当新用户首次访问网站时弹出的邮件订阅窗口。 -->
+
 <template>
   <el-dialog
     v-model="dialogVisible"

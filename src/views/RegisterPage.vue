@@ -1,3 +1,5 @@
+<!-- “注册” 页面，供新用户创建账户。 -->
+
 <template>
   <div class="register-page">
     <div class="header-wrapper">

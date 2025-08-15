@@ -1,3 +1,5 @@
+<!-- “隐私政策” 页面，阐述网站如何收集和使用用户数据。 -->
+
 <template>
   <div class="policy-page">
     <div class="header-wrapper">

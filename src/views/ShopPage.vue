@@ -1,3 +1,5 @@
+<!-- “商店/分类” 页面，一个动态页面，用于展示所有商品或特定分类（如 Feeder, Fountains）的商品列表。 -->
+
 <template>
   <div class="shop-page">
     <div class="header-wrapper">

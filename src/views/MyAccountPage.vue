@@ -1,3 +1,5 @@
+<!-- “我的账户” 页面，登录后用户可以在这里查看订单和个人信息。 -->
+
 <template>
   <div class="account-page">
     <div class="header-wrapper">

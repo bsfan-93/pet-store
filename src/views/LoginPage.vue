@@ -1,3 +1,5 @@
+<!-- “登录” 页面，供已有用户登录账户。 -->
+
 <template>
   <div class="login-page">
     <div class="header-wrapper">

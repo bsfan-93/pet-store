@@ -1,3 +1,5 @@
+<!-- “服务条款” 页面，列出网站的使用规则和条款。 -->
+
 <template>
   <div class="policy-page">
     <div class="header-wrapper">

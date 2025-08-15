@@ -9,6 +9,9 @@ const LOCAL_STORAGE_KEY = 'pet-store-cart';
 export const useCartStore = defineStore('cart', () => {
   const items = ref([]); 
   const isCartVisible = ref(false);
+  
+  // ▼▼▼ 修正点 1：在这里只声明一次 authStore ▼▼▼
+  const authStore = useAuthStore();
 
   // --- Getters ---
   const selectedItems = computed(() => items.value.filter(item => item.selected));
@@ -35,7 +38,7 @@ export const useCartStore = defineStore('cart', () => {
 
   async function addItem(product) {
     openCart();
-    const authStore = useAuthStore();
+    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     
     const selectedSpecId = product.specId;
     const selectedColorId = product.colorId;
@@ -61,26 +64,36 @@ export const useCartStore = defineStore('cart', () => {
         ElMessage.error("添加到购物车失败，请重试。");
       }
     } else {
-      const newLocalItemId = `local_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      items.value.push({
-        id: newLocalItemId,
-        goodId: product.goodId || product.id,
-        name: product.name,
-        url: product.url,
-        price: product.price || 0,
-        quantity: product.quantity || 1,
-        specId: selectedSpecId,
-        specName: product.specName,
-        colorId: selectedColorId,
-        colorName: product.colorName,
-        selected: true // 默认为未选中
-      });
+      const existingItem = items.value.find(item => 
+        item.goodId === (product.goodId || product.id) &&
+        item.specId === selectedSpecId &&
+        item.colorId === selectedColorId
+      );
+
+      if (existingItem) {
+        existingItem.quantity += (product.quantity || 1);
+      } else {
+        const newLocalItemId = `local_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+        items.value.push({
+          id: newLocalItemId,
+          goodId: product.goodId || product.id,
+          name: product.name,
+          url: product.url,
+          price: product.price || 0,
+          quantity: product.quantity || 1,
+          specId: selectedSpecId,
+          specName: product.specName,
+          colorId: selectedColorId,
+          colorName: product.colorName,
+          selected: true
+        });
+      }
       saveLocalCart();
     }
   }
 
   async function updateQuantity(cartItemId, newQuantity) {
-    const authStore = useAuthStore();
+    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     const item = items.value.find(i => i.id === cartItemId);
     if (!item) return;
 
@@ -104,7 +117,7 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   async function removeItems(ids) {
-    const authStore = useAuthStore();
+    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     const idArray = Array.isArray(ids) ? ids : [ids];
 
     if (authStore.isLoggedIn) {
@@ -142,7 +155,7 @@ export const useCartStore = defineStore('cart', () => {
         specName: item.specName,
         colorId: item.color,
         colorName: item.colorName,
-        selected: true // 默认为未选中
+        selected: true
       }));
 
       items.value = formattedCart.filter(item => item.price > 0);
@@ -163,7 +176,7 @@ export const useCartStore = defineStore('cart', () => {
 
   function openCart() {
     isCartVisible.value = true;
-    const authStore = useAuthStore();
+    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     if (authStore.isLoggedIn) {
       syncCart();
     }
@@ -171,8 +184,15 @@ export const useCartStore = defineStore('cart', () => {
 
   function closeCart() { isCartVisible.value = false; }
   
+  async function clearSelectedItems() {
+    const idsToRemove = selectedItems.value.map(item => item.id);
+    if (idsToRemove.length > 0) {
+      await removeItems(idsToRemove);
+    }
+  }
+
   loadLocalCart();
-  const authStore = useAuthStore();
+  // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
   if (authStore.isLoggedIn) {
     syncCart();
   }
@@ -183,6 +203,7 @@ export const useCartStore = defineStore('cart', () => {
     syncCart, loadLocalCart,
     openCart, closeCart,
     selectedItems,
-    toggleItemSelection
+    toggleItemSelection,
+    clearSelectedItems
   };
 });

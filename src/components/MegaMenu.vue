@@ -1,3 +1,5 @@
+<!-- 下拉菜单组件，当鼠标悬停在“Shop”导航上时出现。 -->
+
 <template>
   <div class="mega-menu" v-show="visible" v-if="menuData" @mouseenter="clearCloseTimer()" @mouseleave="$emit('close')">
     <ul class="menu-list">

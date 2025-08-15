@@ -1,3 +1,5 @@
+<!-- 网站的首页，是用户进入网站后看到的第一个页面。 -->
+
 <template>
   <div class="home-page home-page-container"> 
     <div class="header-wrapper">

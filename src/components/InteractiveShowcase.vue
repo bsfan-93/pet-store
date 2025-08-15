@@ -1,3 +1,5 @@
+<!-- 首页的交互式产品展示模块，当鼠标悬停或滚动时会切换展示不同的产品。 -->
+
 <template>
   <section class="interactive-showcase-section" ref="containerRef">
     <div class="showcase-container">

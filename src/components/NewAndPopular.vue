@@ -1,3 +1,5 @@
+<!-- 首页的**“新品与热销”**模块，通过标签页切换展示不同列表的商品。 -->
+
 <template>
   <section class="new-popular-section">
     <div class="container">

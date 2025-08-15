@@ -22,6 +22,7 @@ import ShippingPolicyPage from '../views/ShippingPolicyPage.vue';
 import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
 import ShopPage from '../views/ShopPage.vue';
 import VerificationPage from '../views/VerificationPage.vue'; // <-- 1. 导入新页面
+import SuccessPage from '../views/SuccessPage.vue'; // <-- 1. 导入新页面
 
 // 定义路由规则
 const routes = [
@@ -142,7 +143,11 @@ const routes = [
     path: '/warranty-policy',
     name: 'WarrantyPolicy',
     component: WarrantyPolicyPage
-  }
+  },
+  { path: '/success',
+    name: 'Success',
+    component: SuccessPage 
+  } // <-- 2. 添加新路由
 ];
 
 // 创建路由实例

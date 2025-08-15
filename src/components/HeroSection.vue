@@ -1,4 +1,5 @@
-<!-- banner -->
+<!-- 首页顶部的主视觉图 (Banner) 区域。 -->
+ 
 <template>
   <div class="hero-section-wrapper">
     <el-carousel 

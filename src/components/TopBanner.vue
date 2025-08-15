@@ -1,4 +1,5 @@
-<!-- 置顶优惠横幅 -->
+<!-- 网站最顶部的优惠信息横幅。 -->
+
 <template>
   <div class="top-banner">
     <p>{{ $t('top_banner.promo') }}</p>
