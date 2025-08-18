@@ -1,13 +1,11 @@
-<!-- 首页的交互式产品展示模块，当鼠标悬停或滚动时会切换展示不同的产品。 -->
-
 <template>
-  <section class="interactive-showcase-section" ref="containerRef">
+  <section class="interactive-showcase-section">
     <div class="showcase-container">
       <div class="image-container">
-        <transition-group :name="transitionName">
+        <transition-group name="fade-slow">
           <img
             v-for="(item, index) in allItems"
-            v-show="currentIndex === index"
+            v-show="activeIndex === index"
             :key="item.id"
             :src="item.url"
             :alt="item.name"
@@ -16,32 +14,22 @@
         </transition-group>
       </div>
       <div class="nav-container">
-        <div class="custom-scrollbar">
-          <div class="scrollbar-thumb" :style="thumbStyle"></div>
-        </div>
-        <ul ref="navListRef">
+        <ul>
           <li
             v-for="(item, index) in allItems"
             :key="item.id"
             class="nav-item"
-            :class="{ active: currentIndex === index }"
-            @mouseenter="updateActiveItem(index)"
+            ref="navItemsRef"
           >
-            <transition name="fade-effect">
-              <div v-if="currentIndex === index" class="active-details">
-                <span v-if="item.tag" class="tag">{{ item.tag.text }}</span>
-                <h3 class="product-title">{{ item.name }}</h3>
-                <p class="product-description">{{ item.description }}</p>
-                <button class="buy-now" @click="goToProduct(item.goodId)">
-                  {{ t("product.buy_now") }}
-                </button>
+            <div class="content-wrapper" :class="{ active: activeIndex === index }">
+              <span v-if="item.tag" class="tag">{{ item.tag }}</span>
+              <span class="nav-item-title">{{ item.name }}</span>
+              <p class="nav-item-description">{{ item.description }}</p>
+              <div class="nav-item-actions">
+                <button class="buy-now" @click="goToProduct(item.goodId)">{{ t('product.buy_now') }}</button>
+                <a href="#" @click.prevent="goToProduct(item.goodId)" class="learn-more">Learn More →</a>
               </div>
-            </transition>
-            <transition name="fade-effect">
-              <h3 v-if="currentIndex !== index" class="inactive-title">
-                {{ item.name }}
-              </h3>
-            </transition>
+            </div>
           </li>
         </ul>
       </div>
@@ -50,153 +38,186 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed, watch, nextTick } from "vue";
-import { useRouter } from "vue-router";
-import { useI18n } from "vue-i18n";
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 const router = useRouter();
 
 const allItems = ref([
-  { id: 1, name: 'Pets Clan Feeder Pro', description: 'New ways of pet feeding', url: '/images/manual_feeder4.png', goodId: 'your-product-id-1', tag: { type: 'new', text: 'New' } },
-  { id: 2, name: 'Water feeder series', description: 'Fresh, clean water for your pets.', url: '/images/manual_fountain2.png', goodId: 'your-product-id-2', tag: null },
-  { id: 3, name: 'Cute Pet Family Series', description: 'Smart leash for modern pet owners.', url: '/images/manual_leash1.png', goodId: 'your-product-id-3', tag: null }
+  { id: 1, name: 'Dockstream 2 Smart Fountain', description: 'The next generation of pet hydration', url: '/images/manual_fountain2.png', goodId: 'your-product-id-2', tag: 'New' },
+  { id: 2, name: 'Scout Smart Camera', description: 'Goodbye worries, Hello Scout.', url: '/images/feature-camera.jpg', goodId: 'your-product-id-camera', tag: null },
+  { id: 3, name: 'Granary Series', description: 'Award-winning automatic feeders', url: '/images/pet-feeder-promo.png', goodId: 'your-product-id-feeder', tag: null },
+  { id: 4, name: 'One RFID Feeder', description: 'Feeding made personal for multiple-pet families', url: '/images/manual_feeder2.png', goodId: 'your-product-id-rfid', tag: null },
 ]);
 
-const currentIndex = ref(0);
-const containerRef = ref(null);
-const navListRef = ref(null);
-const thumbStyle = ref({});
-const transitionDirection = ref("down");
-const transitionName = computed(() => `fly-${transitionDirection.value}`);
-let isAnimating = false;
-const animationCooldown = 800;
-let isHijacked = false; 
-
-const updateThumbPosition = async () => {
-  await nextTick();
-  const listElement = navListRef.value;
-  if (!listElement || !listElement.children[currentIndex.value]) return;
-  const activeItemElement = listElement.children[currentIndex.value];
-  thumbStyle.value = {
-    height: `${activeItemElement.offsetHeight}px`,
-    transform: `translateY(${activeItemElement.offsetTop}px)`,
-  };
-};
-
-const updateActiveItem = (newIndex) => {
-  if (
-    isAnimating ||
-    newIndex === currentIndex.value ||
-    newIndex < 0 ||
-    newIndex >= allItems.value.length
-  ) {
-    return;
-  }
-  transitionDirection.value = newIndex > currentIndex.value ? "down" : "up";
-  isAnimating = true;
-  setTimeout(() => {
-    isAnimating = false;
-  }, animationCooldown);
-  currentIndex.value = newIndex;
-};
-
-const handleWheel = (event) => {
-  if (!isHijacked) return;
-
-  const isScrollingDown = event.deltaY > 0;
-
-  if (
-    (currentIndex.value === 0 && !isScrollingDown) ||
-    (currentIndex.value === allItems.value.length - 1 && isScrollingDown)
-  ) {
-    // 在边界处，不阻止默认事件，让浏览器自然滚动
-    return;
-  }
-
-  event.preventDefault();
-
-  if (isAnimating) return;
-
-  const newIndex = currentIndex.value + (isScrollingDown ? 1 : -1);
-  updateActiveItem(newIndex);
-};
+const activeIndex = ref(0);
+const navItemsRef = ref([]);
+let observer = null;
 
 const goToProduct = (goodId) => {
-  if (goodId && goodId.startsWith("your-product-id")) {
-    console.warn("Please replace placeholder goodId before navigating.");
-    return;
-  }
-  if (goodId) {
-    router.push(`/product/${goodId}`);
-  }
+  if (goodId) router.push(`/product/${goodId}`);
 };
 
-watch(currentIndex, updateThumbPosition);
-
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      // 当组件完全进入视窗时，我们才开始“劫持”滚轮事件
-      isHijacked = entry.isIntersecting;
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const newIndex = parseInt(entry.target.dataset.index, 10);
+          activeIndex.value = newIndex;
+        }
+      });
     },
-    { threshold: 1.0 } // 阈值设为1.0，表示完全可见时才劫持
+    {
+      root: null,
+      rootMargin: "-50% 0px -50% 0px", // 觸發線在視窗垂直正中央
+      threshold: 0,
+    }
   );
 
-  if (containerRef.value) {
-    observer.observe(containerRef.value);
-    window.addEventListener("wheel", handleWheel, { passive: false });
-  }
-
-  updateThumbPosition();
-
-  onUnmounted(() => {
-    if (containerRef.value) {
-      observer.unobserve(containerRef.value);
-    }
-    window.removeEventListener("wheel", handleWheel);
+  navItemsRef.value.forEach((item, index) => {
+    item.dataset.index = index;
+    observer.observe(item);
   });
+});
+
+onUnmounted(() => {
+  if (observer) observer.disconnect();
 });
 </script>
 
 <style scoped>
+/* 整體佈局 */
 .interactive-showcase-section {
-  height: 100vh;
-  padding: 0;
+  padding: 120px 0;
   background-color: #f5f5f3;
+}
+.showcase-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 80px;
+  align-items: flex-start; /* 讓 sticky 佈局正常工作 */
+}
+
+/* 左側圖片容器 */
+.image-container {
+  flex: 1.2; /* 讓圖片區更寬一點 */
+  height: 600px;
+  position: sticky;
+  top: calc(50vh - 300px); /* 垂直置中鎖定 */
+}
+.showcase-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* 右側導覽列表 */
+.nav-container {
+  flex: 1;
+}
+.nav-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 列表項 */
+.nav-item {
+  /* 關鍵：讓每個 li 高度由內容決定，但有一個最小高度 */
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 讓內容在 li 內部垂直置中 */
+}
+/* 關鍵：為列表的頂部和底部增加緩衝區 */
+.nav-container ul::before,
+.nav-container ul::after {
+  content: '';
+  display: block;
+  height: calc(50vh - 150px); /* 50%視窗高度 - 項目最小高度的一半 */
+}
+
+/* 內容區塊的樣式和動畫 */
+.content-wrapper {
+  transition: all 0.5s ease;
+  opacity: 0.4;
+  filter: blur(2px);
+}
+.content-wrapper.active {
+  opacity: 1;
+  filter: blur(0);
+}
+.tag, .nav-item-description, .nav-item-actions {
+  transition: all 0.4s ease;
+  max-height: 0;
   overflow: hidden;
+  opacity: 0;
+}
+.content-wrapper.active .tag,
+.content-wrapper.active .nav-item-description,
+.content-wrapper.active .nav-item-actions {
+  max-height: 100px; /* 給一個足夠大的值 */
+  opacity: 1;
+}
+
+/* 文字和按鈕樣式 */
+.tag {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.nav-item-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  display: block;
+  transition: font-size 0.4s ease;
+}
+.content-wrapper.active .nav-item-title {
+  font-size: 28px;
+}
+.nav-item-description {
+  font-size: 16px;
+  color: #666;
+}
+.nav-item-actions {
+  margin-top: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 20px;
 }
-/* --- 其他所有样式保持不变 --- */
-.showcase-container { 
-    display: flex; 
-    align-items: center; 
-    width: 100%; 
-    margin: 0 auto; 
-    padding: 0 5%;
-    box-sizing: border-box; 
+.buy-now {
+  background-color: #92C45C;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 20px;
+  cursor: pointer;
 }
-.image-container { flex: 1.2; position: relative; height: 600px; }
-.showcase-image { position: absolute; width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1)); }
-.fly-down-enter-active, .fly-down-leave-active, .fly-up-enter-active, .fly-up-leave-active { transition: all 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55); position: absolute; }
-.fly-down-enter-from { opacity: 0; transform: translate(-200px, 200px) scale(0.8); }
-.fly-down-leave-to { opacity: 0; transform: translate(200px, -200px) scale(1.2); }
-.fly-up-enter-from { opacity: 0; transform: translate(200px, -200px) scale(0.8); }
-.fly-up-leave-to { opacity: 0; transform: translate(-200px, 200px) scale(1.2); }
-.fade-effect-enter-active, .fade-effect-leave-active { transition: opacity 0.5s ease-in-out; }
-.fade-effect-enter-from, .fade-effect-leave-to { opacity: 0; }
-.nav-container { flex: 1; padding-left: 10%; display: flex; gap: 20px; align-items: center; }
-.custom-scrollbar { width: 2px; height: 450px; background-color: #000000; position: relative; }
-.scrollbar-thumb { width: 6px; background-color: #4A5C44; position: absolute; left: 50%; top: 0; transform: translateX(-50%); transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), height 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-.nav-container ul { list-style: none; padding: 0; margin: 0; flex-grow: 1; position: relative; }
-.nav-item { min-height: 150px; display: flex; flex-direction: column; justify-content: center; cursor: pointer; }
-.active-details .tag { font-size: 14px; font-weight: 500; color: #92C45C; margin-bottom: 8px; }
-.active-details .product-title { font-size: 32px; font-weight: bold; color: #000; margin: 0; }
-.active-details .product-description { font-size: 16px; color: #333; margin: 8px 0 20px 0; }
-.active-details .buy-now { background-color: #92C45C; color: #000; border: none; padding: 10px 25px; font-size: 14px; font-weight: 500; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease; align-self: flex-start; }
-.active-details .buy-now:hover { background-color: #82b350; }
-.inactive-title { font-size: 22px; font-weight: 500; color: #888; margin: 0; transition: color 0.3s ease; }
-.nav-item:hover .inactive-title { color: #000; }
+.learn-more {
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* 圖片切換動畫 */
+.fade-slow-enter-active,
+.fade-slow-leave-active {
+  transition: opacity 0.8s ease;
+}
+.fade-slow-enter-from,
+.fade-slow-leave-to {
+  opacity: 0;
+}
 </style>
