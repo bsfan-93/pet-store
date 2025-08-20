@@ -1,5 +1,3 @@
-<!-- 首页顶部的主视觉图 (Banner) 区域。 -->
- 
 <template>
   <div class="hero-section-wrapper">
     <el-carousel 
@@ -8,7 +6,7 @@
       arrow="never"
       :interval="5000"
     >
-      <el-carousel-item v-for="banner in banners" :key="banner.id">
+      <el-carousel-item v-for="(banner, index) in banners" :key="banner.id">
         <div 
           class="carousel-slide" 
           :style="{ backgroundImage: `url(${banner.url})` }"
@@ -19,8 +17,8 @@
               {{ t('hero.title2') }}
             </h1>
             
-            <router-link :to="`/product/${banner.goodId}`" v-if="banner.goodId">
-              <el-button type="success" class="shop-now-btn">
+            <router-link :to="index === 0 ? '/shop/all' : `/product/${banner.goodId}`">
+              <el-button v-if="index === 0 || banner.goodId" type="success" class="shop-now-btn">
                 {{ t('hero.shop_now') }}
               </el-button>
             </router-link>
@@ -48,13 +46,8 @@ defineProps({
 <style scoped>
 .hero-section-wrapper {
   width: 100%;
-  /* 1. 调整桌面端的 Banner 高度 */
-  /* 100vh 代表整个屏幕的高度，您可以改成一个固定的像素值，比如 800px */
-  /* 或者一个较小比例的 vh 值，比如 80vh */
   height: 100vh; 
 }
-
-/* --- 您原有的样式保持不变 --- */
 .hero-section-carousel {
   height: 100vh;
 }
@@ -121,13 +114,10 @@ defineProps({
     font-size: 32px;
     margin-bottom: 20px;
   }
-
-  /* ▼▼▼ 3. 确保 wrapper 在手机端也正确适应 ▼▼▼ */
   .hero-section-wrapper,
   .hero-section-carousel {
     height: 60vh;
   }
-  
   .shop-now-btn {
     font-size: 16px;
     padding: 12px 24px;
