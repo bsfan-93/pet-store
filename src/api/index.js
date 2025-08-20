@@ -293,6 +293,11 @@ export const trackOrder = (trackingNumber) => {
   });
 };
 
+// 【新增】获取 InteractiveShowcase 数据
+export const getShowcaseData = () => {
+  return apiFetch(`/api/standalones/photo/details?type=10`);
+};
+
 // ▼▼▼ START: 在文件末尾追加此函数 ▼▼▼
 export const getAllGoods = () => {
   // 我们复用 searchGoods 接口，传入一个空字符串通常会返回所有商品

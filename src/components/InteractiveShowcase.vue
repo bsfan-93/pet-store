@@ -41,16 +41,14 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+// 【新增】导入 getShowcaseData API 函数
+import { getShowcaseData } from '../api'; 
 
 const { t } = useI18n();
 const router = useRouter();
 
-const allItems = ref([
-  { id: 1, name: 'Dockstream 2 Smart Fountain', description: 'The next generation of pet hydration', url: '/images/manual_fountain2.png', goodId: 'your-product-id-2', tag: 'New' },
-  { id: 2, name: 'Scout Smart Camera', description: 'Goodbye worries, Hello Scout.', url: '/images/feature-camera.jpg', goodId: 'your-product-id-camera', tag: null },
-  { id: 3, name: 'Granary Series', description: 'Award-winning automatic feeders', url: '/images/pet-feeder-promo.png', goodId: 'your-product-id-feeder', tag: null },
-  { id: 4, name: 'One RFID Feeder', description: 'Feeding made personal for multiple-pet families', url: '/images/manual_feeder2.png', goodId: 'your-product-id-rfid', tag: null },
-]);
+// 【修改】将 allItems 初始化为空数组
+const allItems = ref([]);
 
 const activeIndex = ref(0);
 const navItemsRef = ref([]);
@@ -60,27 +58,65 @@ const goToProduct = (goodId) => {
   if (goodId) router.push(`/product/${goodId}`);
 };
 
-onMounted(() => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const newIndex = parseInt(entry.target.dataset.index, 10);
-          activeIndex.value = newIndex;
-        }
-      });
-    },
-    {
-      root: null,
-      rootMargin: "-50% 0px -50% 0px", // 觸發線在視窗垂直正中央
-      threshold: 0,
-    }
-  );
+// 【新增】获取并处理 showcase 数据的函数
+const fetchShowcaseData = async () => {
+  try {
+    const data = await getShowcaseData();
+    // 将从API获取的数据映射到组件所需的格式
+    allItems.value = data.map(item => ({
+      id: item.id,
+      name: item.name, // 使用API返回的 name
+      description: item.name, // 同样使用 name 作为描述，您可以根据需要修改
+      url: item.url,
+      goodId: item.goodId,
+      tag: null // API中没有tag字段，所以设为null
+    }));
 
-  navItemsRef.value.forEach((item, index) => {
-    item.dataset.index = index;
-    observer.observe(item);
-  });
+    // 数据加载后重新设置 IntersectionObserver
+    setupObserver();
+  } catch (error) {
+    console.error("获取 Showcase 数据失败:", error);
+    allItems.value = []; // 如果出错，则设置为空数组
+  }
+};
+
+// 【新增】设置 IntersectionObserver 的函数
+const setupObserver = () => {
+  // 在更新DOM后执行
+  setTimeout(() => {
+    if (observer) {
+      observer.disconnect();
+    }
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const newIndex = parseInt(entry.target.dataset.index, 10);
+            activeIndex.value = newIndex;
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-50% 0px -50% 0px",
+        threshold: 0,
+      }
+    );
+
+    navItemsRef.value.forEach((item, index) => {
+      if (item) {
+        item.dataset.index = index;
+        observer.observe(item);
+      }
+    });
+  }, 0);
+};
+
+
+onMounted(() => {
+  // 【修改】在组件挂载时调用新的数据获取函数
+  fetchShowcaseData();
 });
 
 onUnmounted(() => {
