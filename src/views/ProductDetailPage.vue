@@ -11,18 +11,17 @@
           <div
             class="main-image-container"
             ref="mainImageContainer"
-            @mouseenter="isMagnifierVisible = true"
-            @mouseleave="isMagnifierVisible = false"
             @mousemove="handleMouseMove"
-            @wheel.prevent="handleWheel" >
-            <img :src="mainImage" alt="Main product image" class="main-image-content">
-            <div
-              v-show="isMagnifierVisible"
-              class="magnifier-view"
-              :style="magnifierStyle"
-            ></div>
+            @mouseleave="resetImageTransform"
+            @wheel.prevent="handleWheel"
+          >
+            <img
+              :src="mainImage"
+              alt="Main product image"
+              class="main-image-content"
+              :style="mainImageStyle"
+            >
           </div>
-
           <div class="thumbnail-carousel">
             <el-icon class="arrow-icon" @click="scrollThumbnails('left')"><ArrowLeft /></el-icon>
             <div class="thumbnail-track" ref="thumbnailTrackRef">
@@ -78,8 +77,8 @@
               <div class="option-item">
                 <span class="option-label">{{ $t('product.color') }}</span>
                 <div v-if="colorOptions.length > 0" class="color-display-wrapper">
-                   <div 
-                     class="color-display-box" 
+                   <div
+                     class="color-display-box"
                      :style="{ backgroundColor: colorOptions[0].hex || '#ccc' }">
                    </div>
                 </div>
@@ -179,10 +178,9 @@
 </template>
 
 <script setup>
-// Script 部分无需修改
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getGoodDetail, createCheckoutSession } from '../api'; 
+import { getGoodDetail, createCheckoutSession } from '../api';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import TopBanner from '../components/TopBanner.vue';
@@ -192,24 +190,62 @@ import {
   ElButton, ElTag, ElInputNumber, ElSelect, ElOption,
   ElRadioGroup, ElRadio, ElIcon, ElMessage
 } from 'element-plus';
-import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue'; 
+import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
 
+
 const props = defineProps({
-  id: String 
+  id: String
 });
+
 const route = useRoute();
-const router = useRouter(); 
-const { t } = useI18n(); 
+const router = useRouter();
+const { t } = useI18n();
 const cartStore = useCartStore();
 const authStore = useAuthStore();
 const productDetail = ref(null);
 const mainImage = ref('');
 const mainImageContainer = ref(null);
-const isMagnifierVisible = ref(false);
-const mouseX = ref(0);
-const mouseY = ref(0);
-const zoomLevel = ref(2); 
+
+// ▼▼▼ START: 核心修改区域 2 - 脚本部分 ▼▼▼
+const isZoomActive = ref(false); // 新增：追踪鼠标是否在图片上
+const zoomLevel = ref(1.8);      // 新增：初始放大倍率
+const transformOrigin = ref('center center'); // 新增：控制缩放中心
+
+// 将 mainImageStyle 改为计算属性，动态生成样式
+const mainImageStyle = computed(() => ({
+  transformOrigin: transformOrigin.value,
+  transform: `scale(${isZoomActive.value ? zoomLevel.value : 1})`,
+}));
+
+const handleMouseMove = (event) => {
+  if (!mainImageContainer.value) return;
+  isZoomActive.value = true; // 鼠标进入，激活缩放
+  const rect = mainImageContainer.value.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const xPercent = (x / rect.width) * 100;
+  const yPercent = (y / rect.height) * 100;
+  transformOrigin.value = `${xPercent}% ${yPercent}%`;
+};
+
+const resetImageTransform = () => {
+  isZoomActive.value = false; // 鼠标移出，取消缩放
+  zoomLevel.value = 1.8;      // 重置放大倍率
+};
+
+// 新增：处理鼠标滚轮事件
+const handleWheel = (event) => {
+  if (isZoomActive.value) {
+    // event.deltaY < 0 表示向上滚动（放大）
+    // event.deltaY > 0 表示向下滚动（缩小）
+    const zoomFactor = event.deltaY < 0 ? 0.2 : -0.2;
+    // 更新 zoomLevel，并限制最小为 1 (原图)，最大为 4
+    zoomLevel.value = Math.max(1, Math.min(zoomLevel.value + zoomFactor, 4));
+  }
+};
+// ▲▲▲ END: 核心修改区域 2 ▲▲▲
+
 const form = reactive({
   quantity: 1,
   size: '',
@@ -220,20 +256,23 @@ const showAddedFeedback = ref(false);
 let feedbackTimer = null;
 const isAddingToCart = ref(false);
 const thumbnailTrackRef = ref(null);
+
+
 const scrollThumbnails = (direction) => {
   const container = thumbnailTrackRef.value;
   if (!container || container.scrollWidth <= container.clientWidth) return;
   const scrollAmount = (container.clientWidth / 2);
   container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
 };
+
 const fetchProductData = async (goodId) => {
   if (!goodId) {
     productDetail.value = null;
     return;
   }
   try {
-    productDetail.value = null; 
-    const data = await getGoodDetail(goodId); 
+    productDetail.value = null;
+    const data = await getGoodDetail(goodId);
     productDetail.value = data;
     if (data.goodPic && data.goodPic.length > 0) {
       mainImage.value = data.goodPic[0].url;
@@ -253,7 +292,7 @@ const fetchProductData = async (goodId) => {
   } catch (error) {
     console.error("Failed to fetch product details:", error);
     ElMessage.error(t('product.product_details_not_loaded'));
-    productDetail.value = null; 
+    productDetail.value = null;
   }
 };
 watch(() => route.params.id, (newId) => {
@@ -277,39 +316,15 @@ const featureImages = computed(() => {
     if (!productDetail.value || !productDetail.value.detailPic) return [];
     return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
 });
-const magnifierStyle = computed(() => {
-  if (!mainImageContainer.value) return {};
-  const container = mainImageContainer.value;
-  const containerWidth = container.clientWidth;
-  const containerHeight = container.clientHeight;
-  const bgPosX = -(mouseX.value * zoomLevel.value - containerWidth / 2);
-  const bgPosY = -(mouseY.value * zoomLevel.value - containerHeight / 2);
-  return {
-    backgroundImage: `url(${mainImage.value})`,
-    backgroundSize: `${containerWidth * zoomLevel.value}px ${containerHeight * zoomLevel.value}px`,
-    backgroundPosition: `${bgPosX}px ${bgPosY}px`,
-  };
-});
+
 const standardOptions = computed(() => {
     if (!productDetail.value || !productDetail.value.specifications) return [];
     return productDetail.value.specifications.find(s => s.name === 'standard')?.values || [];
 });
-const handleMouseMove = (event) => {
-  if (!mainImageContainer.value) return;
-  const rect = mainImageContainer.value.getBoundingClientRect();
-  mouseX.value = event.clientX - rect.left;
-  mouseY.value = event.clientY - rect.top;
-};
-const handleWheel = (event) => {
-  if (event.deltaY < 0) {
-    zoomLevel.value = Math.min(zoomLevel.value + 0.5, 5);
-  } else {
-    zoomLevel.value = Math.max(zoomLevel.value - 0.5, 1.5);
-  }
-};
+
 const handleAddToCart = async (event) => {
   if (isAddingToCart.value) return;
-  isAddingToCart.value = true; 
+  isAddingToCart.value = true;
   try {
     if (!productDetail.value?.specifications) {
       ElMessage.error(t('product.specifications_not_loaded_error'));
@@ -327,15 +342,15 @@ const handleAddToCart = async (event) => {
       return;
     }
     await cartStore.addItem({
-      id: productDetail.value.good.id, 
-      goodId: productDetail.value.good.id, 
+      id: productDetail.value.good.id,
+      goodId: productDetail.value.good.id,
       name: productDetail.value.good.name,
       price: productDetail.value.good.price,
       url: mainImage.value,
       quantity: form.quantity,
-      specId: selectedSizeId, 
+      specId: selectedSizeId,
       specName: selectedSizeValue,
-      colorId: selectedColorId, 
+      colorId: selectedColorId,
       colorName: selectedColorValue,
       standard: form.standard,
     });
@@ -369,20 +384,20 @@ const handleBuyNow = async () => {
       ElMessage.error(t('product.select_options_error'));
       return;
   }
- const checkoutData = { 
+ const checkoutData = {
   goodId: productDetail.value.good.id,
   quantity: form.quantity,
   name: productDetail.value.good.name,
-  amount: productDetail.value.good.price, 
-  goodImage: mainImage.value, 
-  currency: "USD", 
-  description: `${productDetail.value.good.name} - ${productDetail.value.good.description || ''}`, 
+  amount: productDetail.value.good.price,
+  goodImage: mainImage.value,
+  currency: "USD",
+  description: `${productDetail.value.good.name} - ${productDetail.value.good.description || ''}`,
   specification: JSON.stringify({ color: selectedColorValue, size: selectedSizeValue }),
   successUrl: `${window.location.origin}/success`,
   cancelUrl: `${window.location.origin}/cancel`
 };
  try {
-  const checkoutUrl = await createCheckoutSession(checkoutData); 
+  const checkoutUrl = await createCheckoutSession(checkoutData);
   if (checkoutUrl) {
     window.location.href = checkoutUrl;
   } else {
@@ -390,10 +405,10 @@ const handleBuyNow = async () => {
   }
  } catch (error) {
   const errorMessage = error.message.includes('Failed to fetch') ? t('product.network_error_message') :
-                         (error.message.includes('401') ? t('product.login_to_purchase_message') : 
-                         (error.message.includes('500') ? t('product.payment_service_error_message') : 
-                         t('product.payment_session_failed_message'))); 
-  ElMessage.error(errorMessage); 
+                         (error.message.includes('401') ? t('product.login_to_purchase_message') :
+                         (error.message.includes('500') ? t('product.payment_service_error_message') :
+                         t('product.payment_session_failed_message')));
+  ElMessage.error(errorMessage);
  }
 };
 </script>
@@ -404,35 +419,26 @@ const handleBuyNow = async () => {
  flex-shrink: 0;
 }
 .main-image-container {
- position: relative;
- width: 100%;
- aspect-ratio: 1 / 1;
- background-color: var(--light-gray-color);
- border-radius: 12px;
- margin-bottom: 20px;
- cursor: crosshair;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: var(--light-gray-color);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  cursor: zoom-in;
 }
 .main-image-content {
- width: 100%;
- height: 100%;
- object-fit: cover;
- border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  /* ▼▼▼ START: 核心修改区域 3 - 样式部分 ▼▼▼ */
+  /* 让 transform 和 transform-origin 的变化都产生过渡效果 */
+  transition: transform 0.3s ease, transform-origin 0.1s ease;
+  /* ▲▲▲ END: 核心修改区域 3 ▲▲▲ */
 }
-.magnifier-view {
- display: block; 
- position: absolute;
- top: 0;
- left: 105%;
- width: 500px;
- height: 500px;
- background-color: #fff;
- border: none;
- z-index: 10;
- pointer-events: none;
- border-radius: 12px;
- box-shadow: 0 8px 24px rgba(0,0,0,0.15);
- background-repeat: no-repeat;
-}
+
 .loading-state {
  display: flex;
  justify-content: center;
@@ -605,9 +611,9 @@ const handleBuyNow = async () => {
   color: white;
   flex-grow: 1;
   flex-basis: 0;
-  padding-left: 19px; 
-  padding-right: 19px; 
-  padding-top: 12px; 
+  padding-left: 19px;
+  padding-right: 19px;
+  padding-top: 12px;
   padding-bottom: 12px;
 }
 .buy-now-btn:hover {
@@ -738,18 +744,13 @@ const handleBuyNow = async () => {
 .param-label {
   font-weight: 600;
   color: #000;
-  border-right: none; 
+  border-right: none;
 }
 .param-value {
   font-weight: 600;
   color: #000;
-  text-align: right; 
+  text-align: right;
 }
-
-/* ▼▼▼ START: 核心修改区域 (恢复初始样式) ▼▼▼ */
-/* 这里不再需要任何针对 el-input-number 的覆盖样式 */
-/* ▲▲▲ END: 核心修改区域 ▲▲▲ */
-
 @media (max-width: 767px) {
  .product-main-content {
   padding: 30px 15px;
@@ -788,13 +789,13 @@ const handleBuyNow = async () => {
 .sale-tag {
   border-radius: 16px;
   border: none;
-  background-color: #e53935; /* 更深的红色 */
+  background-color: #e53935;
   color: white;
-  display: inline-flex; /* 使用 flex 布局实现垂直居中 */
-  align-items: center; /* 垂直居中 */
-  justify-content: center; /* 水平居中（如果需要的话） */
-  padding: 6px 10px; /* 调整内边距，保持视觉平衡 */
-  font-size: 12px; /* 统一字体大小，可以根据需要调整 */
-  line-height: 1; /* 确保行高不会影响垂直居中 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  font-size: 12px;
+  line-height: 1;
 }
 </style>

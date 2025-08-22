@@ -64,10 +64,13 @@
 
       <section class="remote-control-section">
         <h2>{{ t('app_page.remote_control.title') }}</h2>
-        <img src="/images/app-remote-control.png" :alt="t('app_page.remote_control.alt')" class="section-image-large remote-control-image">
+        <video
+          :src="'/videos/remote-control.mp4'"
+          controls
+          class="section-video"
+        ></video>
       </section>
-
-    </main>
+      </main>
 
     <AppFooter />
   </div>
@@ -341,6 +344,16 @@ const productFeatures = computed(() => [
   font-weight: 500;
   color: #000;
   margin-bottom: 2.6vw; /* 50px/19.2 */
+}
+/* 新增 video 标签的样式 */
+.section-video {
+  display: block;
+  width: 100%;
+  max-width: 1500px;
+  max-height: 80vh;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 12px; /* 可以给视频也加上圆角 */
 }
 .remote-control-image {
   max-width: 1500px;

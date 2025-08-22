@@ -89,10 +89,11 @@
         <div class="clan-container">
           <h2 class="clan-title">{{ t('about_us.clan.title') }}</h2>
           <div class="clan-video-wrapper">
-            <img src="/images/about-clan-video-thumb.jpg" :alt="t('about_us.clan.video_alt')" class="video-thumbnail">
-            <div class="play-button-overlay">
-              <el-icon class="play-icon"><VideoPlay /></el-icon>
-            </div>
+            <video
+              src="/videos/about-us-video.mp4"
+              controls
+              class="video-player"
+            ></video>
           </div>
         </div>
       </section>
