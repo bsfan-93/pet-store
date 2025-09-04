@@ -10,18 +10,19 @@
         </div>
         <div class="panel-content">
           <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
-            <button class="continue-btn" @click="handleContinueShopping">{{ t('cart.continue_shopping') }}</button>
+  
             <div v-if="!authStore.isLoggedIn" class="login-prompt">
-              <span class="login-prompt-text">{{ $t('cart.login_prompt') }}</span>
+              <span class="login-prompt-text">{{ t('cart.login_prompt') }}</span>
               <a href="#" @click.prevent="handleLoginClick" class="login-link">
-                {{ $t('cart.login_link') }}
+                {{ t('cart.login_link') }}
               </a>
             </div>
             <div v-else class="logged-in-empty-cart-message">
               <p>{{ t('cart.welcome_back', { userName: authStore.userInfo?.nickname || authStore.userInfo?.username || '' }) }}</p>
               <p>{{ t('cart.start_Browse') }}</p>
             </div>
-          </div>
+            <button class="continue-btn" @click="handleContinueShopping">{{ t('cart.continue_shopping') }}</button>
+            </div>
           <div v-else class="cart-items">
             <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
               <el-checkbox

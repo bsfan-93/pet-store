@@ -35,7 +35,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(ElementPlus)
 app.use(i18n)
-app.use(pinia)
 app.use(router) // 2. 在 Vue 应用中使用路由
 
 app.mount('#app')

@@ -6,9 +6,7 @@
     class="how-to-section"
     :style="{ backgroundImage: `url(${imageUrl})` }"
   >
-    <div class="content-overlay">
-      <h2>{{ t('how_to.title') }}</h2>
-    </div>
+  
   </section>
 </template>
 

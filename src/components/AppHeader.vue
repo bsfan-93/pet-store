@@ -18,10 +18,13 @@
           </span>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item command="all">{{ t('mega_menu.all') }}</el-dropdown-item>
-              <el-dropdown-item command="feeder">{{ t('mega_menu.feeder') }}</el-dropdown-item>
-              <el-dropdown-item command="fountains">{{ t('mega_menu.fountains') }}</el-dropdown-item>
-              <el-dropdown-item command="leash">{{ t('mega_menu.leash') }}</el-dropdown-item>
+              <el-dropdown-item
+                v-for="category in menuCategories"
+                :key="category.id"
+                :command="category.routeName"
+              >
+                {{ t(category.i18nKey) }}
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -68,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref, computed, defineAsyncComponent } from 'vue';
+import { ref, computed, defineAsyncComponent, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
@@ -76,6 +79,8 @@ import { useRouter } from 'vue-router';
 import { storeToRefs } from 'pinia'; 
 import ShoppingCartPanel from './ShoppingCartPanel.vue';
 import { Search, User, ShoppingCart, ArrowDown } from '@element-plus/icons-vue';
+// 【新增】导入API函数
+import { getAllCategories } from '../api';
 
 const SearchOverlay = defineAsyncComponent(() => 
   import('./SearchOverlay.vue')
@@ -89,6 +94,40 @@ const { t, locale } = useI18n();
 const { isLoggedIn } = storeToRefs(authStore); 
 
 const isSearchVisible = ref(false);
+
+// 【新增】用于存储从API获取的分类数据
+const menuCategories = ref([]);
+
+// 【新增】创建一个从API返回的ID到前端路由和国际化键名的映射
+const categoryMap = {
+  '0': { routeName: 'all', i18nKey: 'mega_menu.all' },
+  '1': { routeName: 'feeder', i18nKey: 'mega_menu.feeder' }, // 对应 "喂食器"
+  '2': { routeName: 'fountains', i18nKey: 'mega_menu.fountains' }, // 对应 "饮水机"
+  '3': { routeName: 'leash', i18nKey: 'mega_menu.leash' }  // 对应 "牵引绳"
+};
+
+
+// 【新增】获取并处理分类数据的函数
+const fetchMenuCategories = async () => {
+  try {
+    const rawCategories = await getAllCategories();
+    // 过滤掉API返回结果中没有在映射表里定义的分类
+    // 并将API数据转换为模板需要的数据结构
+    menuCategories.value = rawCategories
+      .map(cat => {
+        const mapping = categoryMap[cat.id];
+        return mapping ? { id: cat.id, ...mapping } : null;
+      })
+      .filter(Boolean); // 移除所有为null的项
+
+  } catch (error) {
+    console.error("Failed to fetch menu categories:", error);
+    // 如果API失败，可以提供一个默认的菜单作为备用
+    menuCategories.value = [
+        { id: '0', routeName: 'all', i18nKey: 'mega_menu.all' }
+    ];
+  }
+};
 
 const handleMenuCommand = (command) => {
   router.push(`/shop/${command}`);
@@ -141,6 +180,11 @@ const changeLanguage = (langCode) => {
 
 defineProps({
   isScrolled: Boolean
+});
+
+// 【新增】在组件挂载时调用API获取菜单数据
+onMounted(() => {
+  fetchMenuCategories();
 });
 </script>
 

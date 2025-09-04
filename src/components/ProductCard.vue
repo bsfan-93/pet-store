@@ -95,13 +95,13 @@ const addToCart = () => {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: #f7f7f7;
+  background-color: #fff;
 }
 .product-image {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 10px;
+  padding: 0;
   box-sizing: border-box;
 }
 .tag {
@@ -124,6 +124,7 @@ const addToCart = () => {
 .info-container {
   padding: 15px;
   text-align: left;
+  border-top: 1px solid #f0f0f0; 
 }
 .color-info {
   display: flex;

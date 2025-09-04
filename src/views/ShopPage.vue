@@ -1,5 +1,3 @@
-<!-- “商店/分类” 页面，一个动态页面，用于展示所有商品或特定分类（如 Feeder, Fountains）的商品列表。 -->
-
 <template>
   <div class="shop-page">
     <div class="header-wrapper">
@@ -16,6 +14,7 @@
             <el-icon class="filter-icon"><Sort /></el-icon>
           </el-button>
         </div>
+
         <div v-if="isLoading" class="loading-state">
           <p>Loading products...</p>
         </div>
@@ -24,12 +23,12 @@
           <ProductCard 
             v-for="product in products" 
             :key="product.id" 
-            :product="product"
+            :product="mapProductData(product)"
           />
         </div>
 
         <div v-else class="empty-state">
-          <p>No products found.</p>
+          <p>No products found in this category.</p>
         </div>
 
       </div>
@@ -43,102 +42,97 @@
 import { ref, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+
+// Component Imports
 import { ElButton, ElIcon } from 'element-plus';
 import { Sort } from '@element-plus/icons-vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 import ProductCard from '../components/ProductCard.vue';
+import { getGoodsByPage } from '../api';
 
+// Composables
 const { t } = useI18n();
 const route = useRoute();
-const isLoading = ref(false);
+
+// State
+const isLoading = ref(true);
 const products = ref([]);
+// 【核心】用于控制排序方向的状态，true为升序，false为降序
+const sortAsc = ref(true); 
 
-const mockProducts = [
-  { id: '1', url: '/images/manual_feeder1.png', tag: 'New', colorName: 'Blue', colorHex: '#a0c7e4', name: 'Pets Clan smart feeder', subtitle: 'New product launch', price: '133.5' },
-  { id: '2', url: '/images/manual_feeder3.png', tag: 'HOT', colorName: 'Gree', colorHex: '#a9b3a9', name: 'Pets Clan smart feeder', subtitle: 'personalized feeding', price: '133.5' },
-  { id: '3', url: '/images/manual_feeder2.png', tag: null, colorName: 'White', colorHex: '#ffffff', name: 'Pets Clan smart feeder', subtitle: 'personalized feeding', price: '133.5' },
-  { id: '4', url: '/images/manual_fountain3.png', tag: 'New', colorName: 'Gree', colorHex: '#a9b3a9', name: 'Pets Clan smart Fountains', subtitle: 'A clear view into your cat’s hydration', price: '49.9' },
-  { id: '5', url: '/images/manual_fountain1.png', tag: 'HOT', colorName: 'White', colorHex: '#ffffff', name: 'Pets Clan smart Fountains', subtitle: 'Effortless detach and clean process', price: '49.9' },
-  { id: '6', url: '/images/manual_fountain2.png', tag: null, colorName: 'Blue', colorHex: '#3b5998', name: 'Pets Clan smart Fountains', subtitle: 'Effortless detach and clean process', price: '49.9' },
-  // ▼▼▼ START: 修正 Leash 商品数据 ▼▼▼
-  { id: '7', url: '/images/manual_leash1.png', tag: 'New', colorName: 'Cute Pet Family Series', colorHex: '#d2b48c', name: 'Pets Clan smart Leash', subtitle: 'Changing the new way of pet travel', price: '100.9' },
-  { id: '8', url: '/images/app-feature-leash.png', tag: 'HOT', colorName: 'Cute Pet Family Series', colorHex: '#4a4a4a', name: 'Pets Clan smart Leash', subtitle: 'Effortless detach and clean process', price: '100.9' },
-  // 这里使用了已有的图片路径来修复裂图问题
-  { id: '9', url: '/images/manual_leash1.png', tag: null, colorName: 'Cute Pet Family Series', colorHex: '#808080', name: 'Pets Clan smart Leash', subtitle: 'Effortless detach and clean process', price: '100.9' },
-  { id: '10', url: '/images/manual_leash2.png', tag: null, colorName: 'Cute Pet Family Series', colorHex: '#00ced1', name: 'Pets Clan smart Leash', subtitle: 'Changing the new way of pet travel', price: '100.9' },
-  // ▲▲▲ END: 修正 Leash 商品数据 ▲▲▲
-];
+// Mappings
+const categoryIdMap = {
+  'all': '0',
+  'feeder': '1',
+  'fountains': '2',
+  'leash': '3'
+};
 
-const category = computed(() => route.params.category);
+// Computed Properties
+const currentCategory = computed(() => route.params.category);
 
 const pageTitle = computed(() => {
-  const cat = category.value;
+  const cat = currentCategory.value;
   if (cat && cat !== 'all') {
     const titleKey = `mega_menu.${cat}`;
     const translated = t(titleKey);
-    // 如果找不到翻译，就用路由参数并首字母大写
     return translated.startsWith('mega_menu.') ? (cat.charAt(0).toUpperCase() + cat.slice(1)) : translated;
   }
   return t('shop_page.all_products_title');
 });
 
-const getPriority = (tag) => {
-  if (tag === 'New') return 1;
-  if (tag === 'HOT') return 2;
-  return 3;
-};
-
-// 监听路由变化，并根据分类筛选商品
-watch(category, (newCategory) => {
+// Functions
+const fetchProducts = async () => {
   isLoading.value = true;
-  let filtered;
-  if (newCategory && newCategory !== 'all') {
-    // 修正了筛选逻辑，使其更准确
-    const categoryKeyword = newCategory.replace(/s$/, ''); // 处理 "fountains" -> "fountain"
-    filtered = mockProducts.filter(p => p.name.toLowerCase().includes(categoryKeyword));
-  } else {
-    filtered = [...mockProducts];
+  products.value = [];
+  try {
+    const categoryId = categoryIdMap[currentCategory.value] || '0';
+    // 【核心】调用API时，传入当前的排序方向
+    const results = await getGoodsByPage(categoryId, sortAsc.value);
+    products.value = results || [];
+  } catch (error) {
+    console.error(`Failed to fetch products for category: ${currentCategory.value}`, error);
+    products.value = [];
+  } finally {
+    isLoading.value = false;
   }
-  
-  // 默认排序
-  filtered.sort((a, b) => {
-    const priorityA = getPriority(a.tag);
-    const priorityB = getPriority(b.tag);
-    if (priorityA !== priorityB) {
-      return priorityA - priorityB;
-    }
-    return parseFloat(a.price) - parseFloat(b.price);
-  });
-  
-  products.value = filtered;
-  isLoading.value = false;
-}, { immediate: true });
-
-
-const sortAscending = ref(true);
-
-const sortProducts = () => {
-  products.value.sort((a, b) => {
-    const priorityA = getPriority(a.tag);
-    const priorityB = getPriority(b.tag);
-    if (priorityA !== priorityB) {
-      return priorityA - priorityB;
-    }
-
-    const priceA = parseFloat(a.price);
-    const priceB = parseFloat(b.price);
-    
-    return sortAscending.value ? priceA - priceB : priceB - priceA;
-  });
-
-  sortAscending.value = !sortAscending.value;
 };
 
+const mapProductData = (product) => {
+  return {
+    id: product.id,
+    url: product.coverImageUrl || '/images/placeholder.png',
+    tag: null,
+    colorName: product.color ? product.color.name : 'Default',
+    colorHex: product.color ? product.color.code : '#ccc',
+    name: product.name,
+    subtitle: product.subtitle,
+    price: product.price
+  };
+};
+
+// 【核心】"Filters" 按钮的点击事件处理函数
+const sortProducts = () => {
+  // 1. 切换排序方向
+  sortAsc.value = !sortAsc.value;
+  // 2. 重新调用API，从后端获取已排序的数据
+  fetchProducts();
+};
+
+// Watchers
+watch(currentCategory, (newCategory) => {
+  if (newCategory) {
+    // 当分类切换时，重置为默认的升序排序，并获取数据
+    sortAsc.value = true;
+    fetchProducts();
+  }
+}, { immediate: true });
 </script>
 
 <style scoped>
+/* 样式部分保持不变 */
 .shop-page {
   background-color: #fff;
 }
@@ -189,8 +183,8 @@ const sortProducts = () => {
   align-items: center;
 }
 .filter-button:hover, .filter-button:focus {
-  background-color: #f5f5f5;
-  border-color: #888;
+  background-color: #fff;
+  border-color: #fff;
   color: #333;
 }
 
