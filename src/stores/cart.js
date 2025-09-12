@@ -1,7 +1,9 @@
+// src/stores/cart.js
+
 import { defineStore } from 'pinia';
 import { ref, computed } from 'vue';
 import { useAuthStore } from './auth';
-import { getCartItems, addToCart, updateCartItem, deleteCartItems, IMAGE_BASE_URL } from '../api';
+import { getCartItems, addToCart, updateCartItem, deleteCartItems, IMAGE_BASE_URL, getGoodDetail } from '../api';
 import { ElMessage } from 'element-plus';
 
 const LOCAL_STORAGE_KEY = 'pet-store-cart';
@@ -10,10 +12,8 @@ export const useCartStore = defineStore('cart', () => {
   const items = ref([]); 
   const isCartVisible = ref(false);
   
-  // ▼▼▼ 修正点 1：在这里只声明一次 authStore ▼▼▼
   const authStore = useAuthStore();
 
-  // --- Getters ---
   const selectedItems = computed(() => items.value.filter(item => item.selected));
 
   const totalItems = computed(() => {
@@ -27,7 +27,6 @@ export const useCartStore = defineStore('cart', () => {
     }, 0).toFixed(2);
   });
 
-  // --- Actions ---
   function toggleItemSelection(itemId) {
     const item = items.value.find(i => i.id === itemId);
     if (item) {
@@ -38,25 +37,42 @@ export const useCartStore = defineStore('cart', () => {
 
   async function addItem(product) {
     openCart();
-    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     
     const selectedSpecId = product.specId;
     const selectedColorId = product.colorId;
 
     if (authStore.isLoggedIn) {
       try {
+        let finalSpecId = selectedSpecId;
+        let finalColorId = selectedColorId;
+
+        // 如果 specId 或 colorId 为 null，说明是从列表页添加的，需要获取默认值
+        if (finalSpecId === null || finalColorId === null) {
+          const productDetails = await getGoodDetail(product.goodId);
+          const sizeSpec = productDetails.specifications?.find(s => s.name === 'size')?.values;
+          const colorSpec = productDetails.specifications?.find(s => s.name === 'color')?.values;
+          
+          if (sizeSpec && sizeSpec.length > 0) {
+            finalSpecId = sizeSpec[0].id;
+          }
+          if (colorSpec && colorSpec.length > 0) {
+            finalColorId = colorSpec[0].id;
+          }
+        }
+
         const apiPayload = {
           goodId: product.goodId || product.id,
-          spec: selectedSpecId,
-          color: selectedColorId,
+          spec: finalSpecId,
+          color: finalColorId,
           quantity: product.quantity || 1
         };
             
-        if (apiPayload.spec === undefined || apiPayload.color === undefined) {
-          ElMessage.error("请选择商品规格和颜色。");
+        if (apiPayload.spec === undefined || apiPayload.color === undefined || apiPayload.spec === null || apiPayload.color === null) {
+          ElMessage.error("添加到购物车失败，缺少产品规格。");
           closeCart();
           return;
         }
+
         await addToCart(apiPayload);
         await syncCart();
       } catch (error) {
@@ -93,7 +109,6 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   async function updateQuantity(cartItemId, newQuantity) {
-    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     const item = items.value.find(i => i.id === cartItemId);
     if (!item) return;
 
@@ -117,7 +132,6 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   async function removeItems(ids) {
-    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     const idArray = Array.isArray(ids) ? ids : [ids];
 
     if (authStore.isLoggedIn) {
@@ -176,7 +190,6 @@ export const useCartStore = defineStore('cart', () => {
 
   function openCart() {
     isCartVisible.value = true;
-    // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
     if (authStore.isLoggedIn) {
       syncCart();
     }
@@ -192,7 +205,6 @@ export const useCartStore = defineStore('cart', () => {
   }
 
   loadLocalCart();
-  // ▲▲▲ 修正点 2：移除这里的 const authStore = useAuthStore(); ▲▲▲
   if (authStore.isLoggedIn) {
     syncCart();
   }

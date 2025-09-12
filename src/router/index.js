@@ -3,6 +3,7 @@ import { useAuthStore } from '../stores/auth'; // 引入 auth store
 
 // 导入所有页面组件
 import HomePage from '../views/HomePage.vue';
+import CheckoutPage from '../views/CheckoutPage.vue';
 import ProductDetailPage from '../views/ProductDetailPage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import RegisterPage from '../views/RegisterPage.vue';
@@ -14,15 +15,15 @@ import ContactUsPage from '../views/ContactUsPage.vue';
 import ReturnRefundPolicyPage from '../views/ReturnRefundPolicyPage.vue';
 import AppPage from '../views/AppPage.vue';
 import PlaceholderPage from '../views/PlaceholderPage.vue';
-import WarrantyPolicyPage from '../views/WarrantyPolicyPage.vue'; // <-- 新增這一行
-import TermsOfServicePage from '../views/TermsOfServicePage.vue'; // <-- 新增這一行
-import PrivacyPolicyPage from '../views/PrivacyPolicyPage.vue'; // <-- 新增這一行
-import UserManualPage from '../views/UserManualPage.vue'; // <-- 新增這一行
+import WarrantyPolicyPage from '../views/WarrantyPolicyPage.vue';
+import TermsOfServicePage from '../views/TermsOfServicePage.vue';
+import PrivacyPolicyPage from '../views/PrivacyPolicyPage.vue';
+import UserManualPage from '../views/UserManualPage.vue';
 import ShippingPolicyPage from '../views/ShippingPolicyPage.vue';
 import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
 import ShopPage from '../views/ShopPage.vue';
-import VerificationPage from '../views/VerificationPage.vue'; // <-- 1. 导入新页面
-import SuccessPage from '../views/SuccessPage.vue'; // <-- 1. 导入新页面
+import VerificationPage from '../views/VerificationPage.vue';
+import SuccessPage from '../views/SuccessPage.vue';
 
 // 定义路由规则
 const routes = [
@@ -72,7 +73,6 @@ const routes = [
     name: 'OrderTracking', 
     component: OrderTrackingPage 
   },
-  // 2. 添加新的路由规则
   {
     path: '/contact',
     name: 'ContactUs',
@@ -115,39 +115,47 @@ const routes = [
     props: true 
   },
   {
-  path: '/privacy-policy', // <-- 新增的路徑
-  name: 'PrivacyPolicy',
-  component: PrivacyPolicyPage 
-},
-{
-  path: '/user-manual', // <-- 新增的路徑
-  name: 'UserManual',
-  component: UserManualPage 
-},
+    path: '/privacy-policy',
+    name: 'PrivacyPolicy',
+    component: PrivacyPolicyPage 
+  },
   {
-    path: '/placeholder/:topic', // e.g., /placeholder/Blog
+    path: '/user-manual',
+    name: 'UserManual',
+    component: UserManualPage 
+  },
+  {
+    path: '/placeholder/:topic',
     name: 'Placeholder',
     component: PlaceholderPage,
   },
   {
-  path: '/shipping-policy', // <-- 新增的路徑
-  name: 'ShippingPolicy',
-  component: ShippingPolicyPage 
-    },
+    path: '/shipping-policy',
+    name: 'ShippingPolicy',
+    component: ShippingPolicyPage 
+  },
   {
-  path: '/terms-of-service', // <-- 新增的路徑
-  name: 'TermsOfService',
-  component: TermsOfServicePage 
+    path: '/terms-of-service',
+    name: 'TermsOfService',
+    component: TermsOfServicePage 
   },
   {
     path: '/warranty-policy',
     name: 'WarrantyPolicy',
     component: WarrantyPolicyPage
   },
-  { path: '/success',
+  { 
+    path: '/success',
     name: 'Success',
     component: SuccessPage 
-  } // <-- 2. 添加新路由
+  },
+  // ▼▼▼ 修正后的 Checkout 路由定义 ▼▼▼
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: CheckoutPage
+  }
+  // ▲▲▲ 修改结束 ▲▲▲
 ];
 
 // 创建路由实例

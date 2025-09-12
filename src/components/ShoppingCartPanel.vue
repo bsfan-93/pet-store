@@ -1,5 +1,3 @@
-<!-- 购物车侧边栏，点击购物车图标时从右侧滑出的面板。 -->
-
 <template>
   <transition name="slide" >
     <div v-if="cartStore.isCartVisible" class="cart-overlay" @click.self="cartStore.closeCart()">
@@ -10,7 +8,6 @@
         </div>
         <div class="panel-content">
           <div v-if="!cartStore.items || cartStore.items.length === 0" class="cart-empty">
-  
             <div v-if="!authStore.isLoggedIn" class="login-prompt">
               <span class="login-prompt-text">{{ t('cart.login_prompt') }}</span>
               <a href="#" @click.prevent="handleLoginClick" class="login-link">
@@ -70,7 +67,8 @@ import { useAuthStore } from '../stores/auth';
 import { useI18n } from 'vue-i18n';
 import { ElIcon, ElInputNumber, ElMessage, ElCheckbox } from 'element-plus';
 import { Close, Delete } from '@element-plus/icons-vue';
-import { createCartCheckoutSession } from '../api';
+// 移除 createCartCheckoutSession 的导入，因为支付逻辑已转移到 CheckoutPage
+// import { createCartCheckoutSession } from '../api';
 
 const cartStore = useCartStore();
 const authStore = useAuthStore();
@@ -88,7 +86,7 @@ const handleContinueShopping = () => {
   cartStore.closeCart();
 };
 
-const handleCheckout = async () => {
+const handleCheckout = () => {
   if (!authStore.isLoggedIn) {
     cartStore.closeCart();
     router.push('/login');
@@ -100,46 +98,41 @@ const handleCheckout = async () => {
     return;
   }
   
-  isLoading.value = true;
-  try {
-    const checkoutItems = cartStore.selectedItems.map(item => {
-      if (!item.price || item.price <= 0) {
-        console.warn(`Item "${item.name}" has invalid price and will be skipped.`, item);
-        return null;
-      }
-      return {
-        goodId: item.goodId || item.id,
-        quantity: item.quantity,
-        name: item.name || item.goodName,
-        amount: item.price,
-        goodImage: item.url,
-        currency: "USD",
-        description: `${item.name || item.goodName} - ${item.colorName || ''}/${item.specName || ''}`,
-        successUrl: `${window.location.origin}/success`,
-        cancelUrl: `${window.location.origin}/cancel`,
-        specification: JSON.stringify({ color: item.colorName, size: item.specName })
-      };
-    }).filter(Boolean);
+  // ▼▼▼ 核心修改：移除重复定义并修正路由跳转 ▼▼▼
+  const checkoutItems = cartStore.selectedItems.map(item => {
+    // 确保 item 有有效价格
+    if (!item.price || item.price <= 0) {
+      console.warn(`Item "${item.name}" has invalid price and will be skipped.`, item);
+      return null;
+    }
+    return {
+      goodId: item.goodId || item.id,
+      quantity: item.quantity,
+      name: item.name || item.goodName,
+      amount: item.price,
+      goodImage: item.url,
+      currency: "USD",
+      description: `${item.name || item.goodName} - ${item.colorName || ''}/${item.specName || ''}`,
+      successUrl: `${window.location.origin}/success`,
+      cancelUrl: `${window.location.origin}/cancel`,
+      specification: JSON.stringify({ color: item.colorName, size: item.specName })
+    };
+  }).filter(Boolean);
 
-    if (checkoutItems.length === 0) {
-      ElMessage.error("Selected items have no valid price.");
-      isLoading.value = false;
-      return;
-    }
-    
-    const checkoutUrl = await createCartCheckoutSession(checkoutItems);
-    
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
-    } else {
-      ElMessage.error(t('product.payment_session_failed_message'));
-    }
-  } catch (error) {
-    console.error("创建购物车支付会话失败:", error);
-    ElMessage.error(error.message || t('product.payment_session_failed_message'));
-  } finally {
+  if (checkoutItems.length === 0) {
+    ElMessage.error("Selected items have no valid price.");
     isLoading.value = false;
+    return;
   }
+  
+  cartStore.closeCart();
+  router.push({
+    name: 'Checkout',
+    params: {
+      items: JSON.stringify(checkoutItems)
+    }
+  });
+  // ▲▲▲ 修改结束 ▲▲▲
 };
 </script>
 

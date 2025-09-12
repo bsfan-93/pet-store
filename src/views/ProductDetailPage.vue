@@ -363,12 +363,12 @@ const handleAddToCart = async (event) => {
     isAddingToCart.value = false;
   }
 };
-const handleBuyNow = async () => {
- if (!authStore.isLoggedIn) {
-  ElMessage.info(t('product.login_to_purchase_message'));
-  router.push('/login');
-  return;
- }
+const handleBuyNow = () => {
+  if (!authStore.isLoggedIn) {
+    ElMessage.info(t('product.login_to_purchase_message'));
+    router.push('/login');
+    return;
+  }
   if (!productDetail.value?.specifications) {
     ElMessage.error(t('product.specifications_not_loaded_error'));
     return;
@@ -396,20 +396,14 @@ const handleBuyNow = async () => {
   successUrl: `${window.location.origin}/success`,
   cancelUrl: `${window.location.origin}/cancel`
 };
- try {
-  const checkoutUrl = await createCheckoutSession(checkoutData);
-  if (checkoutUrl) {
-    window.location.href = checkoutUrl;
-  } else {
-    ElMessage.error(t('product.payment_session_failed_message'));
-  }
- } catch (error) {
-  const errorMessage = error.message.includes('Failed to fetch') ? t('product.network_error_message') :
-                         (error.message.includes('401') ? t('product.login_to_purchase_message') :
-                         (error.message.includes('500') ? t('product.payment_service_error_message') :
-                         t('product.payment_session_failed_message')));
-  ElMessage.error(errorMessage);
- }
+  // ▼▼▼ 核心修改：将支付逻辑替换为路由跳转，使用 query 传递数据 ▼▼▼
+  router.push({
+    name: 'Checkout',
+    query: {
+      items: JSON.stringify([checkoutData])
+    }
+  });
+  // ▲▲▲ 修改结束 ▲▲▲
 };
 </script>
 
