@@ -48,7 +48,7 @@
           </div>
           <div class="options-section">
             <div class="options-grid">
-              <div class="option-item">
+              <div class="option-item" v-if="sizeOptions.length > 0">
                 <span class="option-label">{{ $t('product.size') }}</span>
                 <el-select v-model="form.size" :placeholder="$t('product.select_placeholder')" size="default">
                     <el-option
@@ -63,7 +63,7 @@
                 <span class="option-label">{{ $t('product.quantity') }}</span>
                 <el-input-number v-model="form.quantity" :min="1" size="default" />
               </div>
-              <div class="option-item">
+              <div class="option-item" v-if="standardOptions.length > 0">
                 <span class="option-label">{{ $t('product.standard') }}</span>
                 <el-select v-model="form.standard" :placeholder="$t('product.select_placeholder')" size="default">
                     <el-option
@@ -74,16 +74,30 @@
                     />
                 </el-select>
               </div>
-              <div class="option-item">
+              
+              <div class="option-item" v-if="colorOptions.length > 0">
                 <span class="option-label">{{ $t('product.color') }}</span>
-                <div v-if="colorOptions.length > 0" class="color-display-wrapper">
-                   <div
-                     class="color-display-box"
-                     :style="{ backgroundColor: colorOptions[0].hex || '#ccc' }">
-                   </div>
+                 <div class="color-options-wrapper">
+                    <div
+                      v-for="color in colorOptions"
+                      :key="color.id"
+                      class="color-swatch"
+                      :class="{ 'is-active': form.color === color.value }"
+                      :style="{ backgroundColor: color.code }"
+                      @click="form.color = color.value"
+                    ></div>
                 </div>
               </div>
-            </div>
+              <div class="option-item" v-else-if="singleColorOption">
+                <span class="option-label">{{ $t('product.color') }}</span>
+                <div class="color-options-wrapper">
+                  <div
+                    class="color-swatch-display"
+                    :style="{ backgroundColor: singleColorOption.code }"
+                    ></div>
+                </div>
+              </div>
+              </div>
           </div>
           <div class="action-buttons">
             <el-button
@@ -91,11 +105,7 @@
               class="cart-btn"
               @click="handleAddToCart($event)"
               :loading="isAddingToCart"
-              :disabled="
-                isAddingToCart ||
-                (sizeOptions.length > 0 && !form.size) ||
-                (colorOptions.length > 0 && !form.color)
-              "
+              :disabled="isAddingToCart || !isOptionsSelected"
             >
               <el-icon style="margin-right: 8px;"><ShoppingCart /></el-icon>
               {{ $t('product.add_to_cart') }}
@@ -106,10 +116,7 @@
               class="buy-now-btn"
               @click="handleBuyNow"
               type="default"
-              :disabled="
-                (sizeOptions.length > 0 && !form.size) ||
-                (colorOptions.length > 0 && !form.color)
-              "
+              :disabled="!isOptionsSelected"
             >
               {{ $t('product.buy_now') }}
             </el-button>
@@ -180,7 +187,7 @@
 <script setup>
 import { ref, reactive, computed, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getGoodDetail, createCheckoutSession } from '../api';
+import { getGoodDetail } from '../api';
 import { useCartStore } from '../stores/cart';
 import { useAuthStore } from '../stores/auth';
 import TopBanner from '../components/TopBanner.vue';
@@ -192,7 +199,6 @@ import {
 } from 'element-plus';
 import { ArrowLeft, ArrowRight, ShoppingCart, Select } from '@element-plus/icons-vue';
 import { useI18n } from 'vue-i18n';
-
 
 const props = defineProps({
   id: String
@@ -207,12 +213,10 @@ const productDetail = ref(null);
 const mainImage = ref('');
 const mainImageContainer = ref(null);
 
-// ▼▼▼ START: 核心修改区域 2 - 脚本部分 ▼▼▼
-const isZoomActive = ref(false); // 新增：追踪鼠标是否在图片上
-const zoomLevel = ref(1.8);      // 新增：初始放大倍率
-const transformOrigin = ref('center center'); // 新增：控制缩放中心
+const isZoomActive = ref(false);
+const zoomLevel = ref(1.8);
+const transformOrigin = ref('center center');
 
-// 将 mainImageStyle 改为计算属性，动态生成样式
 const mainImageStyle = computed(() => ({
   transformOrigin: transformOrigin.value,
   transform: `scale(${isZoomActive.value ? zoomLevel.value : 1})`,
@@ -220,7 +224,7 @@ const mainImageStyle = computed(() => ({
 
 const handleMouseMove = (event) => {
   if (!mainImageContainer.value) return;
-  isZoomActive.value = true; // 鼠标进入，激活缩放
+  isZoomActive.value = true;
   const rect = mainImageContainer.value.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
@@ -230,33 +234,28 @@ const handleMouseMove = (event) => {
 };
 
 const resetImageTransform = () => {
-  isZoomActive.value = false; // 鼠标移出，取消缩放
-  zoomLevel.value = 1.8;      // 重置放大倍率
+  isZoomActive.value = false;
+  zoomLevel.value = 1.8;
 };
 
-// 新增：处理鼠标滚轮事件
 const handleWheel = (event) => {
   if (isZoomActive.value) {
-    // event.deltaY < 0 表示向上滚动（放大）
-    // event.deltaY > 0 表示向下滚动（缩小）
     const zoomFactor = event.deltaY < 0 ? 0.2 : -0.2;
-    // 更新 zoomLevel，并限制最小为 1 (原图)，最大为 4
     zoomLevel.value = Math.max(1, Math.min(zoomLevel.value + zoomFactor, 4));
   }
 };
-// ▲▲▲ END: 核心修改区域 2 ▲▲▲
 
 const form = reactive({
   quantity: 1,
   size: '',
   color: '',
-  standard: 'os'
+  standard: ''
 });
+
 const showAddedFeedback = ref(false);
 let feedbackTimer = null;
 const isAddingToCart = ref(false);
 const thumbnailTrackRef = ref(null);
-
 
 const scrollThumbnails = (direction) => {
   const container = thumbnailTrackRef.value;
@@ -277,17 +276,28 @@ const fetchProductData = async (goodId) => {
     if (data.goodPic && data.goodPic.length > 0) {
       mainImage.value = data.goodPic[0].url;
     }
+
     const sizes = data.specifications?.find(s => s.name === 'size')?.values;
     if (sizes && sizes.length > 0) {
       form.size = sizes[0].value;
     } else {
       form.size = '';
     }
+
     const colors = data.specifications?.find(s => s.name === 'color')?.values;
     if (colors && colors.length > 0) {
       form.color = colors[0].value;
+    } else if (data.good.color) {
+      form.color = data.good.color.name;
     } else {
       form.color = '';
+    }
+
+    const standards = data.specifications?.find(s => s.name === 'standard')?.values;
+    if (standards && standards.length > 0) {
+        form.standard = standards[0].value;
+    } else {
+        form.standard = '';
     }
   } catch (error) {
     console.error("Failed to fetch product details:", error);
@@ -295,31 +305,57 @@ const fetchProductData = async (goodId) => {
     productDetail.value = null;
   }
 };
+
 watch(() => route.params.id, (newId) => {
   if (newId) fetchProductData(newId);
 }, { immediate: true });
+
+// 改进后的 colorOptions 计算属性，优先使用 specifications
 const colorOptions = computed(() => {
     if (!productDetail.value || !productDetail.value.specifications) return [];
     const colors = productDetail.value.specifications.find(s => s.name === 'color')?.values || [];
-    const colorMap = { 'red': '#D32F2F', 'blue': '#1976D2', 'green': '#689F38', 'gray': '#E0E0E0' };
-    return colors.map(c => ({...c, hex: colorMap[c.value.toLowerCase()] || '#ccc'}));
+    return colors.length > 0 ? colors : [];
 });
+
+// 新增的单色选项计算属性
+const singleColorOption = computed(() => {
+    if (productDetail.value && productDetail.value.good.color && colorOptions.value.length === 0) {
+        return productDetail.value.good.color;
+    }
+    return null;
+});
+
+// 新增计算属性来简化按钮的 disabled 状态
+const isOptionsSelected = computed(() => {
+    const needsSize = sizeOptions.value.length > 0;
+    const needsColor = colorOptions.value.length > 0;
+    const needsStandard = standardOptions.value.length > 0;
+    
+    let isSizeSelected = needsSize ? !!form.size : true;
+    let isColorSelected = needsColor ? !!form.color : (singleColorOption.value ? true : true);
+    let isStandardSelected = needsStandard ? !!form.standard : true;
+
+    return isSizeSelected && isColorSelected && isStandardSelected;
+});
+
 const sizeOptions = computed(() => {
     if (!productDetail.value || !productDetail.value.specifications) return [];
     return productDetail.value.specifications.find(s => s.name === 'size')?.values || [];
-});
-const productVideo = computed(() => {
-    if (!productDetail.value || !productDetail.value.detailPic) return null;
-    return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
-});
-const featureImages = computed(() => {
-    if (!productDetail.value || !productDetail.value.detailPic) return [];
-    return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
 });
 
 const standardOptions = computed(() => {
     if (!productDetail.value || !productDetail.value.specifications) return [];
     return productDetail.value.specifications.find(s => s.name === 'standard')?.values || [];
+});
+
+const productVideo = computed(() => {
+    if (!productDetail.value || !productDetail.value.detailPic) return null;
+    return productDetail.value.detailPic.find(p => p.isVideo)?.url || null;
+});
+
+const featureImages = computed(() => {
+    if (!productDetail.value || !productDetail.value.detailPic) return [];
+    return productDetail.value.detailPic.filter(p => !p.isVideo).map(p => p.url);
 });
 
 const handleAddToCart = async (event) => {
@@ -332,15 +368,39 @@ const handleAddToCart = async (event) => {
     }
     const selectedSizeValue = form.size;
     const selectedColorValue = form.color;
+    const selectedStandardValue = form.standard;
     const sizeSpec = productDetail.value.specifications.find(s => s.name === 'size');
     const colorSpec = productDetail.value.specifications.find(s => s.name === 'color');
+    const standardSpec = productDetail.value.specifications.find(s => s.name === 'standard');
+    
     const selectedSizeId = sizeSpec?.values.find(v => v.value === selectedSizeValue)?.id;
-    const selectedColorId = colorSpec?.values.find(v => v.value === selectedColorValue)?.id;
-    let validationFailed = (sizeSpec && selectedSizeId == null) || (colorSpec && selectedColorId == null);
+    let selectedColorId, selectedColorName;
+
+    if (colorSpec) {
+      const selectedColor = colorSpec.values.find(v => v.value === selectedColorValue);
+      selectedColorId = selectedColor?.id;
+      selectedColorName = selectedColor?.value;
+    } else if (singleColorOption.value) {
+      selectedColorId = singleColorOption.value.id;
+      selectedColorName = singleColorOption.value.name;
+    }
+    
+    const selectedStandardId = standardSpec?.values.find(v => v.value === selectedStandardValue)?.id;
+
+    const needsSize = !!sizeSpec;
+    const needsColor = !!(colorSpec || singleColorOption.value);
+    const needsStandard = !!standardSpec;
+    
+    let validationFailed =
+      (needsSize && !selectedSizeId) ||
+      (needsColor && !selectedColorId) ||
+      (needsStandard && !selectedStandardId);
+
     if (validationFailed) {
       ElMessage.error(t('product.select_options_error'));
       return;
     }
+
     await cartStore.addItem({
       id: productDetail.value.good.id,
       goodId: productDetail.value.good.id,
@@ -351,8 +411,9 @@ const handleAddToCart = async (event) => {
       specId: selectedSizeId,
       specName: selectedSizeValue,
       colorId: selectedColorId,
-      colorName: selectedColorValue,
-      standard: form.standard,
+      colorName: selectedColorName,
+      standardId: selectedStandardId,
+      standardName: selectedStandardValue,
     });
     showAddedFeedback.value = true;
     clearTimeout(feedbackTimer);
@@ -363,6 +424,7 @@ const handleAddToCart = async (event) => {
     isAddingToCart.value = false;
   }
 };
+
 const handleBuyNow = () => {
   if (!authStore.isLoggedIn) {
     ElMessage.info(t('product.login_to_purchase_message'));
@@ -375,35 +437,56 @@ const handleBuyNow = () => {
   }
   const selectedSizeValue = form.size;
   const selectedColorValue = form.color;
+  const selectedStandardValue = form.standard;
   const sizeSpec = productDetail.value.specifications.find(s => s.name === 'size');
   const colorSpec = productDetail.value.specifications.find(s => s.name === 'color');
+  const standardSpec = productDetail.value.specifications.find(s => s.name === 'standard');
+
   const selectedSizeId = sizeSpec?.values.find(v => v.value === selectedSizeValue)?.id;
-  const selectedColorId = colorSpec?.values.find(v => v.value === selectedColorValue)?.id;
-  let validationFailed = (sizeSpec && selectedSizeId == null) || (colorSpec && selectedColorId == null);
+  let selectedColorId, selectedColorName;
+
+    if (colorSpec) {
+      const selectedColor = colorSpec.values.find(v => v.value === selectedColorValue);
+      selectedColorId = selectedColor?.id;
+      selectedColorName = selectedColor?.value;
+    } else if (singleColorOption.value) {
+      selectedColorId = singleColorOption.value.id;
+      selectedColorName = singleColorOption.value.name;
+    }
+
+  const selectedStandardId = standardSpec?.values.find(v => v.value === selectedStandardValue)?.id;
+
+  const needsSize = !!sizeSpec;
+  const needsColor = !!(colorSpec || singleColorOption.value);
+  const needsStandard = !!standardSpec;
+
+  let validationFailed =
+    (needsSize && !selectedSizeId) ||
+    (needsColor && !selectedColorId) ||
+    (needsStandard && !selectedStandardId);
+
   if (validationFailed) {
       ElMessage.error(t('product.select_options_error'));
       return;
   }
- const checkoutData = {
-  goodId: productDetail.value.good.id,
-  quantity: form.quantity,
-  name: productDetail.value.good.name,
-  amount: productDetail.value.good.price,
-  goodImage: mainImage.value,
-  currency: "USD",
-  description: `${productDetail.value.good.name} - ${productDetail.value.good.description || ''}`,
-  specification: JSON.stringify({ color: selectedColorValue, size: selectedSizeValue }),
-  successUrl: `${window.location.origin}/success`,
-  cancelUrl: `${window.location.origin}/cancel`
-};
-  // ▼▼▼ 核心修改：将支付逻辑替换为路由跳转，使用 query 传递数据 ▼▼▼
+  const checkoutData = {
+    goodId: productDetail.value.good.id,
+    quantity: form.quantity,
+    name: productDetail.value.good.name,
+    amount: productDetail.value.good.price,
+    goodImage: mainImage.value,
+    currency: "USD",
+    description: `${productDetail.value.good.name} - ${selectedColorName || ''}/${selectedSizeValue || ''}`,
+    specification: JSON.stringify({ color: selectedColorName, size: selectedSizeValue }),
+    successUrl: `${window.location.origin}/success`,
+    cancelUrl: `${window.location.origin}/cancel`
+  };
   router.push({
     name: 'Checkout',
     query: {
       items: JSON.stringify([checkoutData])
     }
   });
-  // ▲▲▲ 修改结束 ▲▲▲
 };
 </script>
 
@@ -427,10 +510,7 @@ const handleBuyNow = () => {
   height: 100%;
   object-fit: cover;
   border-radius: 12px;
-  /* ▼▼▼ START: 核心修改区域 3 - 样式部分 ▼▼▼ */
-  /* 让 transform 和 transform-origin 的变化都产生过渡效果 */
   transition: transform 0.3s ease, transform-origin 0.1s ease;
-  /* ▲▲▲ END: 核心修改区域 3 ▲▲▲ */
 }
 
 .loading-state {
@@ -571,17 +651,44 @@ const handleBuyNow = () => {
 .option-item > * {
  flex-grow: 1;
 }
-.color-display-wrapper {
-  flex-grow: 1;
+
+/* 新的颜色选择器样式 */
+.color-options-wrapper {
   display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   align-items: center;
 }
-.color-display-box {
+.color-swatch {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 150px;
-  height: 32px;
-  border-radius: 8px;
+  height: 30px;
+  padding: 0 10px;
+  box-sizing: border-box;
   border: 1px solid #dcdfe6;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
+.color-swatch.is-active {
+  border-color: #000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+.color-swatch-display {
+  width: 150px;
+  height: 30px;
+  border: 1px solid #dcdfe6;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+
 .action-buttons {
  display: flex;
  gap: 20px;
