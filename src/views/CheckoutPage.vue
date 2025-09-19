@@ -24,8 +24,14 @@
                 <div class="item-price-info">
                   <span class="item-quantity">x{{ item.quantity }}</span>
                   <div class="price-group">
-                    <span class="original-price">${{ item.originalAmount || item.amount }}</span>
-                    <span class="discounted-price">${{ item.amount }}</span>
+                    <span
+                      class="original-price"
+                      v-if="item.originalAmount > item.amount"
+                    >${{ (item.originalAmount).toFixed(2) }}</span>
+                    <span
+                      class="discounted-price"
+                      :class="{ 'no-discount': item.originalAmount <= item.amount }"
+                    >${{ item.amount.toFixed(2) }}</span>
                   </div>
                 </div>
               </div>
@@ -33,8 +39,14 @@
             <div class="total-price-section">
               <span>Total Price:</span>
               <div class="price-group">
-                <span class="original-total-price">${{ originalTotalPrice.toFixed(2) }}</span>
-                <span class="discounted-total-price">${{ totalPrice.toFixed(2) }}</span>
+                <span
+                  class="original-total-price"
+                  v-if="originalTotalPrice > totalPrice"
+                >${{ originalTotalPrice.toFixed(2) }}</span>
+                <span
+                  class="discounted-total-price"
+                  :class="{ 'no-discount': originalTotalPrice === totalPrice }"
+                >${{ totalPrice.toFixed(2) }}</span>
               </div>
             </div>
           </div>
@@ -85,9 +97,10 @@ const dialogVisible = ref(true);
 
 onMounted(() => {
   try {
-    if (route.query.items) {
-      checkoutItems.value = JSON.parse(route.query.items);
-      sessionStorage.setItem('checkoutItems', route.query.items);
+    const items = route.query.items;
+    if (items) {
+      checkoutItems.value = JSON.parse(items);
+      sessionStorage.setItem('checkoutItems', items);
     } else {
       const storedItems = sessionStorage.getItem('checkoutItems');
       if (storedItems) {
@@ -98,6 +111,7 @@ onMounted(() => {
       }
     }
   } catch (e) {
+    console.error("无法解析订单信息:", e);
     ElMessage.error("无法解析订单信息。");
     router.push('/');
   }
@@ -114,15 +128,16 @@ const processedItems = computed(() => {
 
     const formattedSpecs = [];
     if (specificationObject.color) {
-      formattedSpecs.push(`color: "${specificationObject.color}"`);
+      formattedSpecs.push(`${specificationObject.color}`);
     }
     if (specificationObject.size) {
-      formattedSpecs.push(`size: "${specificationObject.size}"`);
+      formattedSpecs.push(`${specificationObject.size}`);
     }
 
     return {
       ...item,
-      specificationFormatted: formattedSpecs.length > 0 ? formattedSpecs.join(", ") : ''
+      // 关键修改：使用 / 连接颜色和尺寸，并转为小写
+      specificationFormatted: formattedSpecs.length > 0 ? formattedSpecs.join("/").toLowerCase() : ''
     };
   });
 });
@@ -140,16 +155,18 @@ const handlePayment = async (method) => {
     ElMessage.info('PayPal 支付功能尚未集成。');
     return;
   }
+  
+  if (checkoutItems.value.length === 0) {
+      ElMessage.warning("请选择商品进行结账。");
+      return;
+  }
 
   isProcessing.value = true;
   try {
     let checkoutUrl;
-    if (checkoutItems.value.length === 1) {
-      checkoutUrl = await createCheckoutSession(checkoutItems.value[0]);
-    } else {
-      checkoutUrl = await createCartCheckoutSession(checkoutItems.value);
-    }
-
+    // 确保 API 调用能够处理多个商品
+    checkoutUrl = await createCartCheckoutSession(checkoutItems.value);
+    
     if (checkoutUrl) {
       window.location.href = checkoutUrl;
     } else {
@@ -353,11 +370,17 @@ const closeDialog = () => {
   text-decoration: line-through;
 }
 
+.original-price.no-discount {
+  text-decoration: none; /* 移除划线 */
+  color: #000; /* 设置为黑色 */
+  font-weight: bold; /* 保持加粗 */
+}
+
 .discounted-price,
 .discounted-total-price {
   font-size: 14px;
   font-weight: bold;
-  color: #ff0000;
+  color: #000;
 }
 
 .total-price-section {

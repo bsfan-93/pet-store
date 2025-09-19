@@ -1,49 +1,45 @@
 <template>
-  <div class="success-page-container">
+  <div class="failed-page-container">
     <div class="header-wrapper">
       <TopBanner />
       <AppHeader :is-scrolled="true" />
     </div>
 
     <main class="main-content">
-      <div class="success-container">
-        <div class="success-header-content">
-          <img src="/images/check.png" alt="success" class="success-icon" />
-          <h1>Payment Successful</h1>
+      <div class="failed-container">
+        <!-- 头部：图标 + 标题 -->
+        <div class="failed-header-content">
+          <img src="/images/failed.png" alt="failed" class="failed-icon" />
+          <h1>Payment Failed</h1>
         </div>
-        <el-button class="check-order-btn" @click="goToHome">Check the Order</el-button>
-        <p>Please be patient while we prepare your package. We'll speed up the packing process for you.</p>
+
+        <!-- 按钮 -->
+        <el-button class="retry-btn" @click="goToShopAllPage">My Account</el-button>
+
+        <!-- 提示文案 -->
+        <p>To complete your payment, please go to “My Account” page.</p>
       </div>
     </main>
-    
+
     <AppFooter />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useCartStore } from '../stores/cart';
-import { ElButton, ElIcon } from 'element-plus';
-// import { Select } from '@element-plus/icons-vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
 
 const router = useRouter();
-const cartStore = useCartStore();
 
-onMounted(() => {
-  cartStore.clearSelectedItems();
-});
-
-const goToHome = () => {
-  router.push('/account');
+const goToShopAllPage = () => {
+  router.push('/shop/all');
 };
 </script>
 
 <style scoped>
-.success-page-container {
+.failed-page-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -66,7 +62,7 @@ const goToHome = () => {
   padding: 60px 20px;
 }
 
-.success-container {
+.failed-container {
   text-align: center;
   background-color: #fff;
   padding: 100px;
@@ -76,7 +72,7 @@ const goToHome = () => {
   width: 100%;
 }
 
-.success-header-content {
+.failed-header-content {
   display: flex;
   flex-direction: row;   /* 横排 */
   align-items: center;   /* 垂直居中 */
@@ -85,11 +81,11 @@ const goToHome = () => {
   margin-bottom: 50px;
 }
 
-h1 {
-  font-size: 45px;
+.failed-header-content h1 {
+  font-size: 50px;
   font-weight: 500;
   margin: 0;
-  color: #000;
+  color: #000; /* 红色标题 */
 }
 
 p {
@@ -98,7 +94,7 @@ p {
   font-size: 14px;
 }
 
-.check-order-btn {
+.retry-btn {
   background-color: #92C45C;
   color: #fff;
   border: none;
@@ -110,8 +106,8 @@ p {
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
-.success-icon {
-  width: 50px;   /* 你可以调大小 */
+.failed-icon {
+  width: 50px;
   height: 50px;
 }
 </style>

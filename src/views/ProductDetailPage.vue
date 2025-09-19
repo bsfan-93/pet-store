@@ -1,3 +1,5 @@
+<!-- 产品详情页 -->
+
 <template>
   <div class="product-detail-page" v-if="productDetail">
     <div class="header-wrapper">
@@ -445,20 +447,20 @@ const handleBuyNow = () => {
   const selectedSizeId = sizeSpec?.values.find(v => v.value === selectedSizeValue)?.id;
   let selectedColorId, selectedColorName;
 
-    if (colorSpec) {
-      const selectedColor = colorSpec.values.find(v => v.value === selectedColorValue);
+    if (colorOptions.value.length > 0) { // 使用 colorOptions 检查是否存在多个颜色
+      const selectedColor = colorOptions.value.find(v => v.value === selectedColorValue);
       selectedColorId = selectedColor?.id;
       selectedColorName = selectedColor?.value;
-    } else if (singleColorOption.value) {
+    } else if (singleColorOption.value) { // 检查是否存在单个颜色
       selectedColorId = singleColorOption.value.id;
       selectedColorName = singleColorOption.value.name;
     }
 
   const selectedStandardId = standardSpec?.values.find(v => v.value === selectedStandardValue)?.id;
 
-  const needsSize = !!sizeSpec;
-  const needsColor = !!(colorSpec || singleColorOption.value);
-  const needsStandard = !!standardSpec;
+  const needsSize = !!sizeOptions.value.length;
+  const needsColor = !!(colorOptions.value.length || singleColorOption.value);
+  const needsStandard = !!standardOptions.value.length;
 
   let validationFailed =
     (needsSize && !selectedSizeId) ||
@@ -479,7 +481,7 @@ const handleBuyNow = () => {
     description: `${productDetail.value.good.name} - ${selectedColorName || ''}/${selectedSizeValue || ''}`,
     specification: JSON.stringify({ color: selectedColorName, size: selectedSizeValue }),
     successUrl: `${window.location.origin}/success`,
-    cancelUrl: `${window.location.origin}/cancel`
+    cancelUrl: `${window.location.origin}/payment-failed`
   };
   router.push({
     name: 'Checkout',

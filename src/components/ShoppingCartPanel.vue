@@ -121,14 +121,13 @@ const handleCheckout = () => {
 
   if (checkoutItems.length === 0) {
     ElMessage.error("Selected items have no valid price.");
-    isLoading.value = false;
     return;
   }
   
   cartStore.closeCart();
   router.push({
     name: 'Checkout',
-    params: {
+    query: {
       items: JSON.stringify(checkoutItems)
     }
   });

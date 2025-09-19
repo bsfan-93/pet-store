@@ -24,6 +24,7 @@ import ForgotPasswordPage from '../views/ForgotPasswordPage.vue';
 import ShopPage from '../views/ShopPage.vue';
 import VerificationPage from '../views/VerificationPage.vue';
 import SuccessPage from '../views/SuccessPage.vue';
+import PaymentFailedPage from '../views/PaymentFailedPage.vue';
 
 // 定义路由规则
 const routes = [
@@ -144,18 +145,22 @@ const routes = [
     name: 'WarrantyPolicy',
     component: WarrantyPolicyPage
   },
-  { 
-    path: '/success',
-    name: 'Success',
-    component: SuccessPage 
-  },
   // ▼▼▼ 修正后的 Checkout 路由定义 ▼▼▼
   {
     path: '/checkout',
     name: 'Checkout',
     component: CheckoutPage
+  },
+  { 
+    path: '/success',
+    name: 'Success',
+    component: SuccessPage 
+  },
+  {
+    path: '/payment-failed',
+    name: 'PaymentFailed',
+    component: PaymentFailedPage
   }
-  // ▲▲▲ 修改结束 ▲▲▲
 ];
 
 // 创建路由实例
