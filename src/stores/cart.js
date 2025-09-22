@@ -40,17 +40,20 @@ export const useCartStore = defineStore('cart', () => {
     
     const selectedSpecId = product.specId;
     const selectedColorId = product.colorId;
+    const selectedStandardId = product.standardId; // 新增：获取 standardId
 
     if (authStore.isLoggedIn) {
       try {
         let finalSpecId = selectedSpecId;
         let finalColorId = selectedColorId;
+        let finalStandardId = selectedStandardId; // 新增：保存 standardId
 
         // 如果 specId 或 colorId 为 null，说明是从列表页添加的，需要获取默认值
         if (finalSpecId === null || finalColorId === null) {
           const productDetails = await getGoodDetail(product.goodId);
           const sizeSpec = productDetails.specifications?.find(s => s.name === 'size')?.values;
           const colorSpec = productDetails.specifications?.find(s => s.name === 'color')?.values;
+          const standardSpec = productDetails.specifications?.find(s => s.name === 'standard')?.values;
           
           if (sizeSpec && sizeSpec.length > 0) {
             finalSpecId = sizeSpec[0].id;
@@ -58,16 +61,21 @@ export const useCartStore = defineStore('cart', () => {
           if (colorSpec && colorSpec.length > 0) {
             finalColorId = colorSpec[0].id;
           }
+          if (standardSpec && standardSpec.length > 0) {
+            finalStandardId = standardSpec[0].id; // 新增：获取默认 standardId
+          }
         }
 
         const apiPayload = {
           goodId: product.goodId || product.id,
-          spec: finalSpecId,
-          color: finalColorId,
+          specId: finalSpecId,
+          colorId: finalColorId,
+          standardId: finalStandardId, // 新增：传递 standardId
           quantity: product.quantity || 1
         };
             
-        if (apiPayload.spec === undefined || apiPayload.color === undefined || apiPayload.spec === null || apiPayload.color === null) {
+        // ▼▼▼ 核心修复：这里将键名从 spec 和 color 改为 specId 和 colorId ▼▼▼
+        if (apiPayload.specId === undefined || apiPayload.colorId === undefined || apiPayload.specId === null || apiPayload.colorId === null) {
           ElMessage.error("添加到购物车失败，缺少产品规格。");
           closeCart();
           return;
@@ -107,7 +115,7 @@ export const useCartStore = defineStore('cart', () => {
       saveLocalCart();
     }
   }
-
+  
   async function updateQuantity(cartItemId, newQuantity) {
     const item = items.value.find(i => i.id === cartItemId);
     if (!item) return;
