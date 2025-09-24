@@ -1,3 +1,5 @@
+// src/views/CheckoutPage.vue
+
 <template>
   <div class="checkout-page">
     <div class="header-wrapper">
@@ -26,12 +28,12 @@
                   <div class="price-group">
                     <span
                       class="original-price"
-                      v-if="item.originalAmount > item.amount"
-                    >${{ (item.originalAmount).toFixed(2) }}</span>
+                      v-if="isFirstPurchaseStatus"
+                    >${{ (item.amount).toFixed(2) }}</span>
                     <span
                       class="discounted-price"
-                      :class="{ 'no-discount': item.originalAmount <= item.amount }"
-                    >${{ item.amount.toFixed(2) }}</span>
+                      :class="{ 'no-discount': !isFirstPurchaseStatus }"
+                    >${{ (isFirstPurchaseStatus ? item.amount * 0.85 : item.amount).toFixed(2) }}</span>
                   </div>
                 </div>
               </div>
@@ -39,14 +41,14 @@
             <div class="total-price-section">
               <span>Total Price:</span>
               <div class="price-group">
-                <span
+                 <span
                   class="original-total-price"
-                  v-if="originalTotalPrice > totalPrice"
-                >${{ originalTotalPrice.toFixed(2) }}</span>
+                  v-if="isFirstPurchaseStatus"
+                >${{ undiscountedTotalPrice.toFixed(2) }}</span>
                 <span
                   class="discounted-total-price"
-                  :class="{ 'no-discount': originalTotalPrice === totalPrice }"
-                >${{ totalPrice.toFixed(2) }}</span>
+                  :class="{ 'no-discount': !isFirstPurchaseStatus }"
+                >${{ finalTotalPrice.toFixed(2) }}</span>
               </div>
             </div>
           </div>
@@ -80,12 +82,13 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { createCheckoutSession, createCartCheckoutSession } from '../api';
+import { createStripeCheckoutSession, createPaypalOrder, isFirstPurchase } from '../api';
 import { ElMessage, ElButton, ElIcon, ElDialog } from 'element-plus';
 import { Close } from '@element-plus/icons-vue';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
+import { useAuthStore } from '../stores/auth';
 
 const router = useRouter();
 const route = useRoute();
@@ -95,7 +98,11 @@ const isProcessing = ref(false);
 const checkoutItems = ref([]);
 const dialogVisible = ref(true);
 
-onMounted(() => {
+const authStore = useAuthStore();
+const isFirstPurchaseStatus = ref(false);
+
+
+onMounted(async () => {
   try {
     const items = route.query.items;
     if (items) {
@@ -110,6 +117,17 @@ onMounted(() => {
         router.push('/');
       }
     }
+
+    if (authStore.isLoggedIn) {
+      try {
+        const result = await isFirstPurchase();
+        isFirstPurchaseStatus.value = result;
+        console.log('Is first purchase:', isFirstPurchaseStatus.value);
+      } catch (error) {
+        console.error("Failed to check if it's the first purchase:", error);
+      }
+    }
+
   } catch (e) {
     console.error("无法解析订单信息:", e);
     ElMessage.error("无法解析订单信息。");
@@ -121,7 +139,9 @@ const processedItems = computed(() => {
   return checkoutItems.value.map(item => {
     let specificationObject = {};
     try {
-      specificationObject = JSON.parse(item.specification);
+      if (item.specification && typeof item.specification === 'string') {
+        specificationObject = JSON.parse(item.specification);
+      }
     } catch (e) {
       console.error("Failed to parse specification JSON:", e);
     }
@@ -136,26 +156,28 @@ const processedItems = computed(() => {
 
     return {
       ...item,
-      // 关键修改：使用 / 连接颜色和尺寸，并转为小写
       specificationFormatted: formattedSpecs.length > 0 ? formattedSpecs.join("/").toLowerCase() : ''
     };
   });
 });
 
-const totalPrice = computed(() => {
+
+// 【修改】这个计算属性现在只计算总价，不应用折扣
+const undiscountedTotalPrice = computed(() => {
   return checkoutItems.value.reduce((total, item) => total + (item.amount * item.quantity), 0);
 });
 
+// 【新增】这个计算属性用于应用折扣，得到最终支付价格
+const finalTotalPrice = computed(() => {
+  return isFirstPurchaseStatus.value ? undiscountedTotalPrice.value * 0.85 : undiscountedTotalPrice.value;
+});
+
 const originalTotalPrice = computed(() => {
+  // 这部分逻辑保持不变，用于总价的划线价
   return checkoutItems.value.reduce((total, item) => total + ((item.originalAmount || item.amount) * item.quantity), 0);
 });
 
 const handlePayment = async (method) => {
-  if (method === 'paypal') {
-    ElMessage.info('PayPal 支付功能尚未集成。');
-    return;
-  }
-  
   if (checkoutItems.value.length === 0) {
       ElMessage.warning("请选择商品进行结账。");
       return;
@@ -164,8 +186,27 @@ const handlePayment = async (method) => {
   isProcessing.value = true;
   try {
     let checkoutUrl;
-    // 确保 API 调用能够处理多个商品
-    checkoutUrl = await createCartCheckoutSession(checkoutItems.value);
+    
+    // 构建新的请求体，匹配新的接口
+    const payload = {
+      items: checkoutItems.value.map(item => ({
+        goodId: item.goodId,
+        specId: item.specId,
+        colorId: item.colorId,
+        standardId: item.standardId,
+        quantity: item.quantity,
+        imageUrl: item.imageUrl
+      })),
+      currency: "USD",
+      // 【修改】使用动态计算的最终总价
+      totalAmount: finalTotalPrice.value
+    };
+
+    if (method === 'stripe') {
+      checkoutUrl = await createStripeCheckoutSession(payload);
+    } else if (method === 'paypal') {
+      checkoutUrl = await createPaypalOrder(payload);
+    }
     
     if (checkoutUrl) {
       window.location.href = checkoutUrl;
@@ -366,7 +407,7 @@ const closeDialog = () => {
 .original-price,
 .original-total-price {
   font-size: 14px;
-  color: #000;
+  color: #666;
   text-decoration: line-through;
 }
 
@@ -380,7 +421,7 @@ const closeDialog = () => {
 .discounted-total-price {
   font-size: 14px;
   font-weight: bold;
-  color: #000;
+  color: #e64545;
 }
 
 .total-price-section {

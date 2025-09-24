@@ -1,3 +1,5 @@
+// src/api/index.js
+
 import CryptoJS from 'crypto-js';
 
 // 加密函数 (保持不变)
@@ -218,45 +220,38 @@ export const deleteCartItems = (ids) => {
 };
 
 // --- 订单和支付 API ---
-export const createCheckoutSession = (checkoutData) => {
+export const createStripeCheckoutSession = (checkoutData) => {
+  // checkoutData 应该包含 { items, currency, totalAmount }
   return apiFetch('/api/order/stripe/create-checkout-session', {
     method: 'POST',
     body: JSON.stringify(checkoutData)
   });
 };
 
-export const createCartCheckoutSession = (checkoutItemsArray) => {
-  return apiFetch('/api/order/stripe/create-cart-checkout-session', {
+export const createPaypalOrder = (checkoutData) => {
+  return apiFetch('/api/order/paypal/create-order', {
     method: 'POST',
-    body: JSON.stringify(checkoutItemsArray)
+    body: JSON.stringify(checkoutData)
   });
+};
+
+// 【新增】判断用户是否首次购买的API函数
+export const isFirstPurchase = () => {
+  return apiFetch('/api/order/order-master/isfirst', {
+    method: 'GET',
+  });
+};
+
+// 【修改】这是新的物流追踪接口函数，参数名为 orderNumber
+export const trackOrder = (orderNumber) => {
+  return apiFetch(`/api/order/track/order/${orderNumber}`);
 };
 
 export const getUserOrders = () => {
   return new Promise(resolve => setTimeout(() => resolve([]), 100));
 };
 
-export const trackOrder = (trackingNumber) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (trackingNumber === '123456') {
-        resolve([{
-          timestamp: '08-04 11:11',
-          title: '已揽件',
-          description: '顺丰速运已收取快递...',
-        }, {
-          timestamp: '08-04 11:11',
-          title: '运输中',
-          description: '快递在[南京转运中心]...',
-        }]);
-      } else {
-        reject(new Error('Order not found.'));
-      }
-    }, 1500);
-  });
-};
 
-// --- 其他 API ---
 export const subscribeMail = (email) => {
   return apiFetch('/api/standalones/mail/subscribe', {
     method: 'POST',

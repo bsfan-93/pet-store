@@ -1,4 +1,4 @@
- <!-- “订单追踪” 页面，用于查询订单的物流状态。 -->
+// src/views/OrderTrackingPage.vue
 
 <template>
   <div class="tracking-page">
@@ -29,7 +29,7 @@
           </el-button>
         </div>
 
-         <div v-if="logisticsDetails" class="logistics-details">
+        <div v-if="logisticsDetails && logisticsDetails.length > 0" class="logistics-details">
           <h3>Logistics details</h3>
           <el-timeline>
             <el-timeline-item
@@ -37,8 +37,7 @@
               :key="index"
               hide-timestamp
             >
-              <p class="timeline-title">{{ activity.title }} {{ activity.timestamp }}</p>
-              <p class="timeline-description">{{ activity.description }}</p>
+              <p class="timeline-description">{{ activity }}</p>
             </el-timeline-item>
           </el-timeline>
           </div>
@@ -60,49 +59,47 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'; // 1. 引入 useI18n
+import { useI18n } from 'vue-i18n';
 import { ElInput, ElButton, ElTimeline, ElTimelineItem, ElMessage } from 'element-plus';
 import TopBanner from '../components/TopBanner.vue';
 import AppHeader from '../components/AppHeader.vue';
 import AppFooter from '../components/AppFooter.vue';
-// 引入新的 API 函数
+// 【修改】导入新的 API 函数
 import { trackOrder } from '../api';
 
-const { t } = useI18n(); // 2. 获取 t 函数
+const { t } = useI18n();
 
 const trackingNumber = ref('');
-
-// ▼▼▼ START: 新增状态变量 ▼▼▼
 const isLoading = ref(false);
+// 【修改】logisticsDetails 现在将存储一个字符串数组
 const logisticsDetails = ref(null);
 const errorMessage = ref('');
-// ▲▲▲ END: 新增状态变量 ▲▲▲
 
-// ▼▼▼ START: 修改 handleTrack 函数 ▼▼▼
+// 【修改】更新 handleTrack 函数以调用新 API
 const handleTrack = async () => {
   if (!trackingNumber.value) {
     ElMessage.warning('Please enter a tracking number.');
     return;
   }
   
-  // 开始查询，进入加载状态
   isLoading.value = true;
-  logisticsDetails.value = null; // 清空上一次的查询结果
-  errorMessage.value = '';     // 清空上一次的错误信息
+  logisticsDetails.value = null;
+  errorMessage.value = '';
 
   try {
-    // 调用 API 函数
     const result = await trackOrder(trackingNumber.value);
-    logisticsDetails.value = result;
+    // 新的 API 返回一个字符串数组
+    if (Array.isArray(result) && result.length > 0) {
+      logisticsDetails.value = result;
+    } else {
+      errorMessage.value = 'Order not found or no logistics information available.';
+    }
   } catch (error) {
-    // 捕获 API 抛出的错误
-    errorMessage.value = error.message;
+    errorMessage.value = error.message || 'An error occurred while tracking the order.';
   } finally {
-    // 结束加载状态
     isLoading.value = false;
   }
 };
-// ▲▲▲ END: 修改 handleTrack 函数 ▲▲▲
 </script>
 
 <style scoped>
@@ -267,5 +264,4 @@ h2 {
   line-height: 1.6;
   text-align: left;
 }
-
 </style>
