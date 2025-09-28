@@ -14,8 +14,8 @@
       >
         <div class="hero-content">
           <div class="os-buttons">
-            <a href="#" class="os-button">{{ t('app_page.hero.ios') }}</a>
-            <a href="#" class="os-button">{{ t('app_page.hero.android') }}</a>
+              <a href="https://www.apple.com/" target="_blank" class="os-button">{{ t('app_page.hero.ios') }}</a>
+              <a href="https://www.mi.com/" target="_blank" class="os-button">{{ t('app_page.hero.android') }}</a>
           </div>
         </div>
       </section>
