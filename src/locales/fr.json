@@ -60,7 +60,13 @@
     "feedback": {
       "title": "Cette page vous est-elle utile ?",
       "yes": "OUI",
-      "no": "NON"
+      "no": "NON",
+      "no_form_title": "Veuillez entrer votre question",
+      "no_form_placeholder": "question",
+      "no_form_button": "Soumettre",
+      "yes_form_title": "Entrez l'e-mail",
+      "yes_form_placeholder": "E-mail",
+      "yes_form_button": "S'abonner"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "Ajouter au panier",
     "added_feedback": "Ajouté au panier !",
     "buy_now": "Acheter maintenant",
+    "learn_more":"En savoir plus",
     "usp_title": "Arguments de vente uniques",
     "specs_title": "Spécifications du produit",
     "params_title": "Paramètres du produit",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Distributeur Intelligent Pets Clan",
       "title": "PETS CLAN,<br>NOURRIR DES AMITIÉS POUR LA VIE.",
-      "p1": "(Texte de remplacement en français) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(Texte de remplacement en français) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan se consacre au bien-être de vos animaux de compagnie bien-aimés. Nos produits sont l'aboutissement d'une recherche scientifique experte et d'un design réfléchi, garantissant que vos animaux mènent une vie heureuse et saine。", 
+      "p2": "Des distributeurs intelligents aux fontaines à eau de pointe, nous fournissons des solutions fiables et durables qui vous permettent de prendre soin de votre animal sans effort, favorisant un lien plus profond entre vous deux。",
       "stat1_label": "résultats des tests expérimentaux",
       "stat2_label": "Alimentation précise",
       "stat3_label": "Batterie longue durée"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "À PROPOS DE PONTI",
       "title": "LAURÉAT DU PRIX<br>RED DOT DESIGN",
-      "p1": "(Texte de remplacement en français) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(Texte de remplacement en français) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "Notre designer principal, Andres Ponti, est un artisan basé à Hong Kong avec une profonde expérience dans le design de produits et industriel. Ses pièces combinent les lignes épurées du design industriel avec la légèreté du minimalisme japonais。", 
+      "p2": "Diplômé de l'École polytechnique de Milan, Ponti a passé sept ans au Japon entre 2006 et 2011. Il a commencé comme chercheur en design industriel et des transports à l'Université de Kyushu avant de travailler sous la direction des maîtres designers japonais Chiyuki Murata et Junzo Yamashits。", 
       "portrait_alt": "Portrait de Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "Contactez-nous",
     "p1": "Vous avez une question ou un commentaire ? Utilisez le formulaire ci-dessous pour nous envoyer un message ou contactez-nous par courrier à :",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, Californie",
+    "p3": "Adresse: 1135 Walsh Ave, Santa Clara, Californie",
     "retail_service_title": "Service de Vente au Détail",
     "retail_service_p": "Pour le service de vente au détail, veuillez contacter : sales@petsclan.com",
     "form_title": "Envoyez-nous un message",
@@ -349,6 +356,7 @@
     "title": "Manuel de l'utilisateur",
     "feeder": "Distributeur",
     "fountains": "Fontaines",
-    "leash": "Laisse"
+    "leash": "Laisse",
+    "product_name": "Appareil Intelligent Pets Clan"
   }
 }

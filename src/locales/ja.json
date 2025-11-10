@@ -60,7 +60,13 @@
     "feedback": {
       "title": "このページは役に立ちましたか？",
       "yes": "はい",
-      "no": "いいえ"
+      "no": "いいえ",
+      "no_form_title": "ご質問を入力してください",
+      "no_form_placeholder": "質問",
+      "no_form_button": "送信",
+      "yes_form_title": "メールアドレスを入力してください",
+      "yes_form_placeholder": "メールアドレス",
+      "yes_form_button": "購読する"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "カートに追加",
     "added_feedback": "カートに追加しました！",
     "buy_now": "今すぐ購入",
+    "learn_more":"さらに詳しく",
     "usp_title": "ユニークなセールスポイント",
     "specs_title": "製品仕様",
     "params_title": "製品パラメータ",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Pets Clan スマート給餌器",
       "title": "PETS CLAN,<br>生涯の友情を育む。",
-      "p1": "（日本語のプレースホルダーテキスト）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "（日本語のプレースホルダーテキスト）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan は、あなたの大切なペットの健康と幸福を願っています。当社の製品は、専門的な科学的研究と思慮深いデザインの集大成であり、あなたのペットが幸せで健康的な生活を送れるようにします。", 
+      "p2": "スマート給餌器から最先端の給水器まで、私たちは信頼性が高く持続可能なソリューションを提供し、あなたが手間なくペットの世話をすることを可能にし、二人の間に深い絆を育みます。", 
       "stat1_label": "実験テスト結果",
       "stat2_label": "正確な給餌",
       "stat3_label": "長持ちバッテリー"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "PONTIについて",
       "title": "レッドドットデザイン賞<br>複数回受賞者",
-      "p1": "（日本語のプレースホルダーテキスト）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "（日本語のプレースホルダーテキスト）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "当社の主任デザイナーである Andres Ponti は、香港を拠点とする職人で、製品および工業デザインにおいて深い経験を持っています。彼の作品は、インダストリアルデザインのクリーンなラインと、日本のミニマリズムの軽やかさを組み合わせています。", 
+      "p2": "ミラノ工科大学を卒業した Ponti は、2006年から2011年の間に日本で7年間過ごしました。彼は九州大学で工業デザインおよび交通デザインの研究者としてキャリアをスタートさせ、その後、大阪の日本人デザインマスターChiyuki Murata氏と京都のJunzo Yamashits氏の指導のもとで働きました。", 
       "portrait_alt": "Pontiの肖像画"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "お問い合わせ",
     "p1": "ご質問やご意見がありますか？下記フォームからメッセージを送信するか、メールでお問い合わせください：",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "住所: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "小売サービス",
     "retail_service_p": "小売サービスについては、こちらまでお問い合わせください： sales@petsclan.com",
     "form_title": "メッセージを送信",
@@ -349,6 +356,7 @@
     "title": "ユーザーマニュアル",
     "feeder": "給餌器",
     "fountains": "給水器",
-    "leash": "リード"
+    "leash": "リード",
+    "product_name": "Pets Clan スマートデバイス"
   }
 }

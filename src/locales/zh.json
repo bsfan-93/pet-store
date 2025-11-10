@@ -60,7 +60,13 @@
     "feedback": {
       "title": "此页面对您有帮助吗？",
       "yes": "是",
-      "no": "否"
+      "no": "否",
+      "no_form_title": "请输入您的问题",
+      "no_form_placeholder": "问题描述",
+      "no_form_button": "提交",
+      "yes_form_title": "请输入电子邮箱",
+      "yes_form_placeholder": "电子邮箱",
+      "yes_form_button": "订阅"
     },
     "items": [
       {
@@ -155,6 +161,7 @@
     "add_to_cart": "加入购物车",
     "added_feedback": "已成功添加到购物车！",
     "buy_now": "立即购买",
+    "learn_more": "了解更多",
     "usp_title": "独特卖点",
     "specs_title": "产品规格",
     "params_title": "产品参数",
@@ -229,8 +236,8 @@
     "lifelong": {
       "image_alt": "Pets Clan 智能喂食器",
       "title": "PETS CLAN,<br>喂养一生的友谊。",
-      "p1": "（此处为中文占位符段落）ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "（此处为中文占位符段落）GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan 致力于呵护您心爱的宠物。我们的产品是专家科学研究和精心设计的结晶，确保您的宠物过上幸福、健康的生活。",
+      "p2": "从智能喂食器到先进的饮水机，我们提供可靠且可持续的解决方案，让您轻松照顾您的爱宠，从而在彼此间建立更深层次的联系。",
       "stat1_label": "实验测试结果",
       "stat2_label": "精准喂养",
       "stat3_label": "长效电池"
@@ -238,8 +245,8 @@
     "ponti": {
       "subtitle": "关于设计师 PONTI",
       "title": "红点设计奖<br>多次获得者",
-      "p1": "（此处为中文占位符段落）Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "（此处为中文占位符段落）A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "我们的首席设计师 Andres Ponti 是一位常驻香港的工匠，在产品和工业设计领域拥有深厚的经验。他的作品将工业设计的简洁线条与日式极简主义的轻盈感巧妙地结合。", 
+      "p2": "Ponti 毕业于米兰理工大学，于 2006 年至 2011 年间在日本度过了七年。他最初在九州大学担任工业和运输设计研究员，随后在大阪的日本设计大师 Chiyuki Murata 和京都的 Junzo Yamashits 的指导下工作。", 
       "portrait_alt": "Ponti 肖像"
     },
     "clan": {
@@ -285,7 +292,7 @@
     "title": "联系我们",
     "p1": "有任何问题或意见吗？请使用下方的表格向我们发送消息，或通过邮件联系我们：",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "地址：1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "零售服务",
     "retail_service_p": "如需零售服务，请联系：sales@petsclan.com",
     "form_title": "发送消息给我们",
@@ -309,7 +316,7 @@
   },
   
   "warranty_policy_page": {
-    "title": "WARRANTY POLICY",
+    "title": "保修政策",
     "p1": "Pets Clan 为通过 Pets Clan 官方网站购买的所有产品提供一 (1) 年有限保修。此有限保修涵盖自交付之日起一 (1) 年内正常使用情况下出现的材料和工艺缺陷。如果在这———年保修期内，Pets Clan 产品因材料或工艺缺陷而出现故障，我们将免费为客户维修或更换。此有限保修不涵盖因滥用、滥用、正常磨损、未经授权的维修或改装产品而造成的损坏，或任何意外或间接损害。",
     "discount_heading": "对于超过保修期两 (2) 个月内的客户，我们将提供 15% 的新产品购买折扣。",
     "p2": "要提出保修索赔，客户应联系 Pets Clan 的客户服务团队 support@petsclan.com，并提供购买凭证和问题描述。",
@@ -317,7 +324,7 @@
     "disclaimer": "除本保修政策中规定的保修外，Pets Clan 对产品不作任何保修，包括任何 (A) 适销性保修；或 (B) 特定用途适用性保修；无论是法律、交易过程、履行过程、贸易惯例或其他方式明示或暗示的保修。"
   },
   "terms_of_service_page": {
-    "title": "TERMS OF SERVICE",
+    "title": "服务条款",
     "intro_1": "本服务条款<strong>（简称“条款”）</strong>列明了具有法律约束力的条款和条件。用于约束您对本网站的使用；访问或使用本网站即表示您（代表您本人或您所代表的实体）接受这些条款，并且您声明并保证您持有（代表您本人或您所代表的实体）签订这些条款的权利、权力和能力。使用由 Pets Clan 提供或通过 Pets Clan 提供的任何产品或服务（包括但不限于使用本网站），即表示您接受这些条款。如果您未满18周岁，则不得访问或使用本网站，亦不得接受本条款。如果您不同意本条款的全部内容，请勿访问和/或使用本网站。",
     "intro_2": "请注意，这些条款的第 13.2 条包含有关如何解决您和我们之间产生的争议的规定，包括但不限于在您接受这些条款的生效日期之前产生或主张的任何争议。<strong>特别是：</strong><br>(1) 您只被允许以个人身份向我们提起争议或索赔并寻求救济，而不得作为任何集体或代表诉讼或程序中的原告或集体成员； (2) 您放弃向法院提起争议或索赔、寻求救济以及进行陪审团审判的权利。",
     "section_1_title": "1. 账户/购买信息",
@@ -327,7 +334,7 @@
     "s1_4_text": "<strong>1.4 个人信息。</strong>您通过本网站提交的个人信息受我们的隐私政策管辖。我们的隐私政策可在 https://petsclan.com 查看，并已纳入本条款。"
   },
   "privacy_policy_page": {
-    "title": "PRIVACY POLICY",
+    "title": "隐私政策",
     "update_date": "最后更新：2025年3月26日",
     "intro": "Pets Clan 致力于保护您的隐私，并不断努力为您提供安全的在线体验。本“隐私政策”适用于 Pets Clan 并管辖其数据收集和使用。请阅读我们的隐私政策以获取更多信息。",
     "section_1_title": "1. 定义",
@@ -343,7 +350,7 @@
     "subsection_a_para": "我们可能通过多种方式向您收集个人数据，包括但不限于，当您 (i) 使用我们基于平台的服务时；(ii) 在网站上或线下填写表格或字段时；(iii) 完成通过本网站提供的产品或服务的申请时；(iv) 通过本网站或通过电子邮件、邮件、文本、电话、传真或其他电子方式与我们沟通时；(v) 处理付款时；(vi) 进行付款时；(vii) 向我们提供个人数据时；(viii) 参与由 Pets Clan 提供或通过其提供的活动或利用其资源时；或 (ix) 提交或授权第三方通过本网站或服务提交信息时。我们收集或可能向您收集的个人数据包括以下类别："
   },
   "shipping_policy_page": {
-    "title": "SHIPPING POLICY",
+    "title": "配送政策",
     "p1": "所有订单将于周一至周五（当地时间上午 8 点至下午 5 点）收到订单后五 (5) 个工作日内发货。周五下午 4 点至 5 点（当地时间）下的订单将于下一周处理。我们使用美国邮政服务和联邦快递运送订单。如果承运商提供了追踪号，我们将在您的订单中更新追踪信息。",
     "p2": "订单运费将根据订购商品的重量和送货地点而定。如果商品缺货，我们将在商品到货后分批发货。缺货商品无需额外支付运费。所有美国境内订单满 39 美元或以上，即可享受免运费。* 低于 39 美元的订单，将收取 5.99 美元的运费（自 2021 年 5 月 5 日起生效）。我们提供国际统一运费，该费用将在结账时计算。",
     "p3": "我们无法运送至以下地点：阿拉斯加、关岛、夏威夷、波多黎各、美属维尔京群岛、美洲武装部队、欧洲武装部队和太平洋武装部队。",
@@ -358,7 +365,8 @@
     "title": "用户手册",
     "feeder": "喂食器",
     "fountains": "饮水机",
-    "leash": "牵引绳"
+    "leash": "牵引绳",
+    "product_name": "Pets Clan 智能设备"
   },
   "shop_page": {
     "all_products_title": "所有商品",

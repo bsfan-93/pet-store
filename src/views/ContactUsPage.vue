@@ -156,20 +156,22 @@ h1 {
   margin-bottom: 40px;
   /* 【关键修改】将大标题居中对齐 */
   text-align: center;
-  word-spacing: 10px; /* <-- 新增這一行來加大單詞間距 */
+  word-spacing: 1=px; /* <-- 新增這一行來加大單詞間距 */
 }
 
 .info-text {
   font-size: 14px;
-  line-height: 1.8;
-  margin-bottom: 60px;
+  line-height: 1.2; /* <--- 调整: 缩小容器行高 */
+  margin-bottom: 20px;
 }
+
+/* ▼▼▼ 新增此规则：移除 <p> 标签的默认边距 ▼▼▼ */
 .info-text p {
-  margin: 0 0 1em 0;
+  margin: 0 0 5px 0; /* 移除默认的上下边距，只保留底部 5px 间距 */
 }
 
 .retail-service {
-  margin-bottom: 60px;
+  margin-bottom: 20px;
 }
 
 .retail-service h2 {

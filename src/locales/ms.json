@@ -60,7 +60,13 @@
     "feedback": {
       "title": "Adakah halaman ini membantu anda?",
       "yes": "YA",
-      "no": "TIDAK"
+      "no": "TIDAK",
+      "no_form_title": "Sila masukkan soalan anda",
+      "no_form_placeholder": "soalan",
+      "no_form_button": "Hantar",
+      "yes_form_title": "Masukkan e-mel",
+      "yes_form_placeholder": "E-mel",
+      "yes_form_button": "Langgan"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "Tambah ke Troli",
     "added_feedback": "Berjaya ditambah ke troli!",
     "buy_now": "Beli Sekarang",
+    "learn_more":"Ketahui Lebih Lanjut",
     "usp_title": "Nilai Jualan Unik",
     "specs_title": "Spesifikasi Produk",
     "params_title": "Parameter Produk",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Pemberi Makan Pintar Pets Clan",
       "title": "PETS CLAN,<br>MEMELIHARA PERSAHABATAN SEPANJANG HAYAT.",
-      "p1": "(Teks penanda letak dalam Bahasa Melayu) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(Teks penanda letak dalam Bahasa Melayu) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan berdedikasi untuk kesejahteraan haiwan kesayangan anda. Produk kami adalah kemuncak penyelidikan saintifik pakar dan reka bentuk yang teliti, memastikan haiwan kesayangan anda menjalani kehidupan yang gembira dan sihat。", 
+      "p2": "Daripada pemberi makan pintar kepada pancutan air terkini, kami menyediakan penyelesaian yang boleh dipercayai dan mampan yang membolehkan anda menjaga haiwan kesayangan anda dengan mudah, memupuk ikatan yang lebih mendalam antara anda berdua。", 
       "stat1_label": "keputusan ujian eksperimen",
       "stat2_label": "Pemberian makan yang tepat",
       "stat3_label": "Bateri tahan lama"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "TENTANG PONTI",
       "title": "PEMENANG ANUGERAH<br>REKA BENTUK RED DOT",
-      "p1": "(Teks penanda letak dalam Bahasa Melayu) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(Teks penanda letak dalam Bahasa Melayu) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "Pereka utama kami, Andres Ponti, ialah seorang artisan yang berpangkalan di Long Kong dengan pengalaman mendalam dalam reka bentuk produk dan industri. Hasil kerjanya menggabungkan garis bersih reka bentuk industri dengan keringanan minimalis Jepun。", 
+      "p2": "Graduan Politeknik Milan, Ponti menghabiskan tujuh tahun di Jepun antara 2006 dan 2011. Beliau bermula sebagai penyelidik dalam reka bentuk industri dan pengangkutan di Kyushu University sebelum bekerja di bawah bimbingan guru reka bentuk Jepun Chiyuki Murata dan Junzo Yamashits。", 
       "portrait_alt": "Potret Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "Hubungi Kami",
     "p1": "Ada soalan atau komen? Gunakan borang di bawah untuk menghantar mesej kepada kami atau hubungi kami melalui e-mel di:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "Alamat: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "Perkhidmatan Runcit",
     "retail_service_p": "Untuk perkhidmatan runcit, sila hubungi: sales@petsclan.com",
     "form_title": "Hantarkan mesej kepada kami",
@@ -349,6 +356,7 @@
     "title": "Manual Pengguna",
     "feeder": "Pemberi Makan",
     "fountains": "Pancutan Air",
-    "leash": "Tali"
+    "leash": "Tali",
+    "product_name": "Peranti Pintar Pets Clan"
   }
 }

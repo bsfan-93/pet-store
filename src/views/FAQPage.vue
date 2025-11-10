@@ -42,28 +42,28 @@
         </div>
 
         <div v-if="isFeedbackFormVisible" class="feedback-form-container">
-            <h4>Please enter your question</h4>
+            <h4>{{ $t('faq.feedback.yes_form_title') }}</h4>
             <el-input
               v-model="feedbackQuestion"
-              placeholder="question"
+              :placeholder="$t('faq.feedback.no_form_placeholder')"
               size="large"
               class="feedback-input"
             />
             <el-button class="submit-feedback-btn" @click="submitFeedback">
-              Track
+              {{ $t('faq.feedback.no_form_button') }}
             </el-button>
         </div>
 
         <div v-if="isSubscribeFormVisible" class="feedback-form-container">
-            <h4>Enter email</h4>
+            <h4>{{ $t('faq.feedback.yes_form_title') }}</h4>
             <el-input
               v-model="subscribeEmail"
-              placeholder="Email"
+              :placeholder="$t('faq.feedback.yes_form_placeholder')"
               size="large"
               class="feedback-input"
             />
             <el-button class="submit-feedback-btn" @click="submitSubscription">
-              Track
+              {{ $t('faq.feedback.yes_form_button') }}
             </el-button>
         </div>
       </div>

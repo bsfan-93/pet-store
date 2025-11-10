@@ -60,7 +60,13 @@
     "feedback": {
       "title": "이 페이지가 도움이 되셨나요?",
       "yes": "예",
-      "no": "아니요"
+      "no": "아니요",
+      "no_form_title": "질문을 입력하세요",
+      "no_form_placeholder": "질문",
+      "no_form_button": "제출",
+      "yes_form_title": "이메일 주소를 입력하세요",
+      "yes_form_placeholder": "이메일",
+      "yes_form_button": "구독"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "장바구니에 추가",
     "added_feedback": "장바구니에 추가되었습니다!",
     "buy_now": "지금 구매",
+    "learn_more": "더 알아보기",
     "usp_title": "독특한 판매 포인트",
     "specs_title": "제품 사양",
     "params_title": "제품 매개변수",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Pets Clan 스마트 급식기",
       "title": "PETS CLAN,<br>평생의 우정을 키웁니다.",
-      "p1": "(한국어 자리 표시자 텍스트) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(한국어 자리 표시자 텍스트) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan은 당신이 사랑하는 반려동물의 행복을 위해 헌신합니다. 저희 제품은 전문적인 과학 연구와 사려 깊은 디자인의 결정체로, 반려동물이 행복하고 건강한 삶을 살 수 있도록 보장합니다.", 
+      "p2": "지능형 급식기부터 최첨단 급수기까지, 저희는 믿을 수 있고 지속 가능한 솔루션을 제공하여 당신이 반려동물을 손쉽게 돌볼 수 있도록 돕고, 둘 사이에 더 깊은 유대감을 형성하도록 합니다。",
       "stat1_label": "실험 테스트 결과",
       "stat2_label": "정확한 급식",
       "stat3_label": "오래가는 배터리"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "PONTI 소개",
       "title": "레드닷 디자인 어워드<br>다수 수상자",
-      "p1": "(한국어 자리 표시자 텍스트) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(한국어 자리 표시자 텍스트) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "저희의 수석 디자이너인 Andres Ponti는 제품 및 산업 디자인 분야에서 깊은 경험을 가진 홍콩 기반의 장인입니다. 그의 작품은 산업 디자인의 깔끔한 라인과 일본 미니멀리즘의 가벼움을 결합합니다。", 
+      "p2": "밀라노 폴리테크닉 대학교를 졸업한 Ponti는 2006년부터 2011년까지 7년 동안 일본에서 보냈습니다. 그는 규슈 대학에서 산업 및 운송 디자인 연구원으로 시작하여 오사카의 일본 디자인 마스터 Chiyuki Murata와 교토의 Junzo Yamashits의 지도를 받으며 일했습니다。", 
       "portrait_alt": "Ponti의 초상화"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "문의하기",
     "p1": "질문이나 의견이 있으신가요? 아래 양식을 사용하여 메시지를 보내거나 다음 주소로 메일을 보내주십시오:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "주소: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "소매 서비스",
     "retail_service_p": "소매 서비스에 대해서는 다음으로 문의하십시오: sales@petsclan.com",
     "form_title": "메시지 보내기",
@@ -349,6 +356,7 @@
     "title": "사용 설명서",
     "feeder": "급식기",
     "fountains": "급수기",
-    "leash": "목줄"
+    "leash": "목줄",
+    "product_name": "Pets Clan 스마트 기기"
   }
 }

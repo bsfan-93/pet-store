@@ -58,7 +58,7 @@ const { t } = useI18n();
   max-width: 1100px;
   margin: 0 auto;
   font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif; /* 使用更適合中文的字體 */
-  color: #000; /* 讓文字顏色更深一點 */
+  color: #333; /* 讓文字顏色更深一點 */
   text-align: left;
 }
 h1 {

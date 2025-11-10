@@ -18,15 +18,17 @@
               <div class="image-container">
                 <img :src="item.imageUrl" :alt="item.name" class="item-image">
               </div>
-              <router-link v-if="item.link" :to="item.link" class="item-button">
-                <span>{{ item.name }}</span>
+                            <router-link v-if="item.link" :to="item.link" class="item-button">
+                <span>{{ t('user_manual_page.product_name') }} {{ item.id }}</span>
+                <!-- <span>{{ t('user_manual_page.download_manual') }}</span> -->
                 <el-icon><Document /></el-icon>
               </router-link>
               <div v-else class="item-button-disabled">
-                <span>{{ item.name }}</span>
+                <span>{{ t('user_manual_page.product_name') }} {{ item.id }}</span>
+                <!-- <span>{{ t('user_manual_page.download_manual') }}</span> -->
                 <el-icon><Document /></el-icon>
               </div>
-            </div>
+                          </div>
           </div>
         </section>
 
@@ -53,10 +55,10 @@ const manualSections = ref([
   {
     titleKey: 'user_manual_page.feeder',
     items: [
-      { id: 1, name: 'pets clan feeder 1', link: '/placeholder/feeder-1', imageUrl: '/images/manual_feeder1.png' },
-      { id: 2, name: 'pets clan feeder 1', link: '/placeholder/feeder-2', imageUrl: '/images/manual_feeder2.png' },
-      { id: 3, name: 'pets clan feeder 1', link: '/placeholder/feeder-3', imageUrl: '/images/manual_feeder3.png' },
-      { id: 4, name: 'pets clan feeder 1', link: '/placeholder/feeder-4', imageUrl: '/images/manual_feeder4.png' }
+      { id: 1, name: 'Feeder Model 1', link: '/placeholder/feeder-1', imageUrl: '/images/manual_feeder1.png' },
+      { id: 2, name: 'Feeder Model 2', link: '/placeholder/feeder-2', imageUrl: '/images/manual_feeder2.png' },
+      { id: 3, name: 'Feeder Model 3', link: '/placeholder/feeder-3', imageUrl: '/images/manual_feeder3.png' },
+      { id: 4, name: 'Feeder Model 4', link: '/placeholder/feeder-4', imageUrl: '/images/manual_feeder4.png' }
     ]
   },
   {
@@ -95,7 +97,7 @@ const manualSections = ref([
   filter: none;
 }
 .main-content {
-  padding: 80px 20px 120px 20px;
+  padding: 40px 20px 120px 20px;
 }
 .manual-container {
   max-width: 1000px;
@@ -103,10 +105,10 @@ const manualSections = ref([
   text-align: left;
 }
 .page-title {
-  font-size: 32px;
+  font-size: 60px;
   font-weight: 600;
   color: #000;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
   /* ▼▼▼ 3. 將標題居中 ▼▼▼ */
   text-align: center; 
 }
@@ -162,17 +164,34 @@ const manualSections = ref([
 .item-button:hover {
   background-color: #dcedc8;
 }
-.item-button span {
+
+/* ▼▼▼ 样式修改：重写 item-button 内部的布局规则 ▼▼▼ */
+
+/* 1. 产品名称（第一个 span）占据所有剩余空间 */
+.item-button span:first-child {
   flex-grow: 1;
   text-align: left;
   white-space: nowrap; 
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* 2. 下载手册文本（第二个 span）和图标（el-icon）紧密排列在右侧 */
+.item-button span:nth-child(2) {
+    /* 移除 flex-grow: 1; */
+    flex-shrink: 0; /* 防止被压缩 */
+    margin-left: 10px; /* 与产品名称保持间距 */
+    white-space: nowrap;
+}
+
+/* 3. 图标紧随下载文本 */
 .item-button .el-icon {
   font-size: 18px;
   flex-shrink: 0;
+  margin-left: 5px; /* 与下载文本保持间距 */
 }
+
+/* 4. 重复应用于不可点击状态 */
 .item-button-disabled {
   display: flex;
   justify-content: space-between;
@@ -186,15 +205,24 @@ const manualSections = ref([
   box-sizing: border-box;
   cursor: not-allowed;
 }
-.item-button-disabled span {
+
+.item-button-disabled span:first-child {
   flex-grow: 1;
   text-align: left;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.item-button-disabled span:nth-child(2) {
+    flex-shrink: 0;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
 .item-button-disabled .el-icon {
   font-size: 18px;
   flex-shrink: 0;
+  margin-left: 5px;
 }
 </style>

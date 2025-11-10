@@ -60,7 +60,13 @@
     "feedback": {
       "title": "Esta página foi útil para você?",
       "yes": "SIM",
-      "no": "NÃO"
+      "no": "NÃO",
+      "no_form_title": "Por favor, insira sua pergunta",
+      "no_form_placeholder": "pergunta",
+      "no_form_button": "Enviar",
+      "yes_form_title": "Insira o e-mail",
+      "yes_form_placeholder": "E-mail",
+      "yes_form_button": "Subscrever"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "Adicionar ao carrinho",
     "added_feedback": "Adicionado ao carrinho!",
     "buy_now": "Comprar agora",
+    "learn_more":"Saiba Mais",
     "usp_title": "Pontos de Venda Únicos",
     "specs_title": "Especificações do produto",
     "params_title": "Parâmetros do produto",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Alimentador Inteligente Pets Clan",
       "title": "PETS CLAN,<br>ALIMENTANDO AMIZADES PARA A VIDA TODA.",
-      "p1": "(Texto de espaço reservado em português) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(Texto de espaço reservado em português) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "A Pets Clan dedica-se ao bem-estar dos seus amados animais de estimação. Os nossos produtos são o culminar de investigação científica especializada e design ponderado, garantindo que os seus animais de estimação levam uma vida feliz e saudável。", 
+      "p2": "Desde alimentadores inteligentes a fontes de água de última geração, fornecemos soluções fiáveis e sustentáveis que lhe permitem cuidar do seu animal de estimação sem esforço, promovendo um vínculo mais profundo entre vocês dois。", 
       "stat1_label": "resultados de testes experimentais",
       "stat2_label": "Alimentação precisa",
       "stat3_label": "Bateria de longa duração"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "SOBRE PONTI",
       "title": "VENCEDOR DO PRÊMIO<br>RED DOT DESIGN",
-      "p1": "(Texto de espaço reservado em português) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(Texto de espaço reservado em português) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "O nosso designer principal, Andres Ponti, é um artesão baseado em Long Kong com profunda experiência em design de produto e industrial. As suas peças combinam as linhas limpas do design industrial com a leveza do minimalismo japonês。", 
+      "p2": "Licenciado pela Politécnica de Milão, Ponti passou sete anos no Japão entre 2006 e 2011. Começou como investigador em design industrial e de transportes na Universidade de Kyushu antes de trabalhar sob a orientação dos mestres de design japoneses Chiyuki Murata e Junzo Yamashits。", 
       "portrait_alt": "Retrato de Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "Contate-Nos",
     "p1": "Tem alguma pergunta ou comentário? Use o formulário abaixo para nos enviar uma mensagem ou entre em contato por e-mail em:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, Califórnia",
+    "p3": "Endereço: 1135 Walsh Ave, Santa Clara, Califórnia",
     "retail_service_title": "Serviço de Varejo",
     "retail_service_p": "Para serviço de varejo, entre em contato: sales@petsclan.com",
     "form_title": "Envie-nos uma mensagem",
@@ -349,6 +356,7 @@
     "title": "Manual do usuário",
     "feeder": "Alimentador",
     "fountains": "Fontes",
-    "leash": "Coleira"
+    "leash": "Coleira",
+    "product_name": "Dispositivo Inteligente Pets Clan"
   }
 }

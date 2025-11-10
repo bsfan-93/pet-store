@@ -60,7 +60,13 @@
     "feedback": {
       "title": "Ist diese Seite hilfreich für Sie?",
       "yes": "JA",
-      "no": "NEIN"
+      "no": "NEIN",
+      "no_form_title": "Bitte geben Sie Ihre Frage ein",
+      "no_form_placeholder": "Frage",
+      "no_form_button": "Senden",
+      "yes_form_title": "Geben Sie die E-Mail-Adresse ein",
+      "yes_form_placeholder": "E-Mail",
+      "yes_form_button": "Abonnieren"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "In den Warenkorb",
     "added_feedback": "Zum Warenkorb hinzugefügt!",
     "buy_now": "Jetzt kaufen",
+    "learn_more":"Mehr erfahren",
     "usp_title": "Alleinstellungsmerkmale",
     "specs_title": "Produktspezifikationen",
     "params_title": "Produktparameter",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Pets Clan Intelligenter Futterautomat",
       "title": "PETS CLAN,<br>LEBENSLANGE FREUNDSCHAFTEN FÜTTERN.",
-      "p1": "(Platzhaltertext auf Deutsch) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(Platzhaltertext auf Deutsch) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan widmet sich dem Wohlbefinden Ihrer geliebten Haustiere. Unsere Produkte sind das Ergebnis von fachkundiger wissenschaftlicher Forschung und durchdachtem Design, um sicherzustellen, dass Ihre Haustiere ein glückliches und gesundes Leben führen.", 
+      "p2": "Von intelligenten Futterautomaten bis hin zu hochmodernen Trinkbrunnen bieten wir zuverlässige und nachhaltige Lösungen, die es Ihnen ermöglichen, Ihr Haustier mühelos zu pflegen und eine tiefere Bindung zwischen Ihnen beiden zu fördern.", 
       "stat1_label": "Ergebnisse von experimentellen Tests",
       "stat2_label": "Präzise Fütterung",
       "stat3_label": "Langlebiger Akku"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "ÜBER PONTI",
       "title": "GEWINNER DES<br>RED DOT DESIGN AWARD",
-      "p1": "(Platzhaltertext auf Deutsch) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(Platzhaltertext auf Deutsch) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "Unser Chefdesigner, Andres Ponti, ist ein in Hongkong ansässiger Handwerker mit umfassender Erfahrung in Produkt- und Industriedesign. Seine Stücke kombinieren die klaren Linien des Industriedesigns mit der Leichtigkeit des japanischen Minimalismus.", 
+      "p2": "Als Absolvent der Polytechnischen Universität Mailand verbrachte Ponti zwischen 2006 und 2011 sieben Jahre in Japan. Er begann als Forscher für Industrie- und Transportdesign an der Kyushu University, bevor er unter der Anleitung der japanischen Designmeister Chiyuki Murata in Osaka und Junzo Yamashits in Kyoto arbeitete.", 
       "portrait_alt": "Porträt von Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "Kontaktieren Sie uns",
     "p1": "Haben Sie eine Frage oder einen Kommentar? Verwenden Sie das untenstehende Formular, um uns eine Nachricht zu senden oder kontaktieren Sie uns per E-Mail unter:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, Kalifornien",
+    "p3": "Unsere Adresse: 1135 Walsh Ave, Santa Clara, Kalifornien",
     "retail_service_title": "Einzelhandelsservice",
     "retail_service_p": "Für den Einzelhandelsservice kontaktieren Sie bitte: sales@petsclan.com",
     "form_title": "Senden Sie uns eine Nachricht",
@@ -349,6 +356,7 @@
     "title": "Benutzerhandbuch",
     "feeder": "Futterautomat",
     "fountains": "Trinkbrunnen",
-    "leash": "Leine"
+    "leash": "Leine",
+    "product_name": "Pets Clan Smartes Gerät"
   }
 }

@@ -60,7 +60,7 @@ const { t } = useI18n();
   max-width: 1200px;
   margin: 0 auto;
   font-family: 'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #000;
+  color: #333;
   text-align: left;
 }
 h1 {

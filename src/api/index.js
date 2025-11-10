@@ -248,7 +248,7 @@ export const trackOrder = (orderNumber) => {
 };
 
 export const getUserOrders = () => {
-  return new Promise(resolve => setTimeout(() => resolve([]), 100));
+  return apiFetch('/api/order/order-master/myOrder');
 };
 
 

@@ -120,6 +120,7 @@ const handleSubscribe = async () => {
   flex-shrink: 0;
   background-color: #000; /* 修复了语法错误，移除了多余的 '+' */
 }
+
 .popup-image img {
   width: 100%;
   height: 100%;
@@ -133,7 +134,7 @@ const handleSubscribe = async () => {
   padding: 50px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   background-color: #fff;
   box-sizing: border-box;
 }
@@ -147,6 +148,7 @@ const handleSubscribe = async () => {
   color: #999;
   cursor: pointer;
 }
+
 h2 {
   font-size: 2.5vw; /* 48px/19.2 */
   font-weight: 700;
@@ -158,31 +160,38 @@ h2 {
 :deep(.highlight) {
   color: #D32F2F;
 }
+
 p {
   font-size: 0.9375vw; /* 18px/19.2 */
   color: #555;
   margin: 0 0 2.08vw 0; /* 40px/19.2 */
 }
+
 form {
   display: flex;
   flex-direction: column;
 }
+
 label {
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 10px;
   color: #333;
 }
+
 .email-input {
   margin-bottom: 25px;
 }
+
 .email-input :deep(.el-input__wrapper) {
   height: 50px;
   border-radius: 4px;
 }
+
 .email-input :deep(.el-input__inner) {
   font-size: 16px;
 }
+
 .subscribe-btn {
   background-color: #7CB342;
   color: #fff;
@@ -191,9 +200,11 @@ label {
   font-size: 18px;
   font-weight: 600;
 }
+
 .subscribe-btn:hover {
   background-color: #7CB342;
 }
+
 .no-thanks-link {
   text-align: center;
   margin-top: 25px;
@@ -201,6 +212,7 @@ label {
   color: #1976D2;
   text-decoration: underline;
 }
+
 .error-message {
   color: #D32F2F;
   font-size: 13px;
@@ -216,5 +228,14 @@ label {
   padding: 0;
 }
 
-
+.subscribe-dialog h2:lang(zh),
+.subscribe-dialog h2:lang(ja),
+.subscribe-dialog h2:lang(ko),
+.subscribe-dialog h2:lang(th),
+.subscribe-dialog p:lang(zh),
+.subscribe-dialog p:lang(ja),
+.subscribe-dialog p:lang(ko),
+.subscribe-dialog p:lang(th) {
+  line-height: 1.4;
+}
 </style>

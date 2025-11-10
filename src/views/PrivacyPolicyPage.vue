@@ -78,6 +78,7 @@ const { t } = useI18n();
   text-align: center;
   letter-spacing: 2px;
 }
+
 .update-date {
   font-size: 14px;
   font-weight: 600;

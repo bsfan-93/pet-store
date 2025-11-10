@@ -38,6 +38,7 @@
     "download_app_title": "Download App",
     "links": {
       "about_us": "About US",
+      "blog": "Blog",
       "privacy_policy": "Privacy Policy",
       "terms_of_service": "Terms of Service",
       "faq": "FAQ",
@@ -47,6 +48,7 @@
       "user_manual": "User Manual",
       "shipping_policy": "Shipping Policy",
       "warranty_policy": "Warranty Policy",
+      "price_match_policy": "Price Match Policy",
       "return_refund_policy": "Return & Refund Policy",
       "app": "App"
     }
@@ -56,7 +58,13 @@
     "feedback": {
       "title": "Is this page helpful to you?",
       "yes": "YES",
-      "no": "NO"
+      "no": "NO",
+      "no_form_title": "Please enter your question",
+      "no_form_placeholder": "question",
+      "no_form_button": "Submit",
+      "yes_form_title": "Enter email",
+      "yes_form_placeholder": "Email",
+      "yes_form_button": "Subscribe"
     },
     "items": [
       {
@@ -151,6 +159,7 @@
     "add_to_cart": "Add to Cart",
     "added_feedback": "Added to cart!",
     "buy_now": "Buy Now",
+    "learn_more": "Learn More",
     "usp_title": "Unique Selling Points",
     "specs_title": "Product Specifications",
     "params_title": "Product Parameters",
@@ -224,15 +233,14 @@
   "lifelong": {
     "image_alt": "Pets Clan Smart Feeder",
     "title": "PETS CLAN,<br>FEEDING LIFELONG FRIENDSHIPS.",
-    "p1": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-    "p2": "GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
-    "stat1_label": "experimental test results",
+    "p1": "Pets Clan is dedicated to the well-being of your beloved pets. Our products are the culmination of expert scientific research and thoughtful design, ensuring your pets lead a happy, healthy life.", 
+    "p2": "From intelligent feeders to state-of-the-art water fountains, we provide reliable and sustainable solutions that allow you to care for your pet effortlessly, fostering a deeper bond between you two.",    "stat1_label": "experimental test results",
     "stat2_label": "Precise feeding",
     "stat3_label": "Long-lasting battery"
   },
   "ponti": {
     "subtitle": "ABOUT PONTI",
-    "title": "HONGDIANJIANG IFJIANG<br>DUOCI HUODEZHE",
+    "title": "RED DOT DESIGN AWARD<br>MULTIPLE WINNER",
     "p1": "Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
     "p2": "A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
     "portrait_alt": "Portrait of Ponti"
@@ -280,7 +288,7 @@
     "title": "CONTACT  US",
     "p1": "Our media team works closely with the media and social partners to solve issues regarding pets' life conditions. We aim to support with high-tech and healthy living styles for both humans and pets.",
     "p2": "Customer Service:<b>{email}</b> (We will reply to your email within 24 hours.)",
-    "p3": "Customer Service Phone:<b>{phone}</b> ({hours})",
+    "p3": "Our Address: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "Retail Service",
     "retail_service_p": "In addition to ensuring neat, clean, compliant and safe basic goods display requirements, we will try our best to comprehensively enrich product types and ensure sufhcient quantity to meet customers' purchasing needs.",
     "form_title": "Do you have any question?",
@@ -352,7 +360,8 @@
     "title": "User Manual",
     "feeder": "Feeder",
     "fountains": "Fountains",
-    "leash": "Leash"
+    "leash": "Leash",
+    "product_name": "Pets Clan Smart Device"
   },
   "shop_page": {
     "all_products_title": "All products",

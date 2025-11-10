@@ -60,7 +60,13 @@
     "feedback": {
       "title": "หน้านี้มีประโยชน์กับคุณหรือไม่?",
       "yes": "ใช่",
-      "no": "ไม่"
+      "no": "ไม่",
+      "no_form_title": "กรุณาป้อนคำถามของคุณ",
+      "no_form_placeholder": "คำถาม",
+      "no_form_button": "ส่ง",
+      "yes_form_title": "ป้อนอีเมล",
+      "yes_form_placeholder": "อีเมล",
+      "yes_form_button": "สมัครสมาชิก"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "เพิ่มไปยังรถเข็น",
     "added_feedback": "เพิ่มลงในรถเข็นแล้ว!",
     "buy_now": "ซื้อตอนนี้",
+    "learn_more":"เรียนรู้เพิ่มเติม",
     "usp_title": "จุดขายที่ไม่เหมือนใคร",
     "specs_title": "ข้อมูลจำเพาะของผลิตภัณฑ์",
     "params_title": "พารามิเตอร์ผลิตภัณฑ์",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "เครื่องให้อาหารอัจฉริยะ Pets Clan",
       "title": "PETS CLAN<br>เลี้ยงดูมิตรภาพตลอดชีวิต",
-      "p1": "(ข้อความตัวยึดตำแหน่งในภาษาไทย) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(ข้อความตัวยึดตำแหน่งในภาษาไทย) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan มุ่งมั่นเพื่อสวัสดิภาพของสัตว์เลี้ยงอันเป็นที่รักของคุณ ผลิตภัณฑ์ของเราเป็นที่สุดของการวิจัยทางวิทยาศาสตร์จากผู้เชี่ยวชาญและการออกแบบอย่างรอบคอบ เพื่อให้มั่นใจว่าสัตว์เลี้ยงของคุณจะมีชีวิตที่สุขสบายและสุขภาพดี。", 
+      "p2": "ตั้งแต่เครื่องให้อาหารอัจฉริยะไปจนถึงน้ำพุที่ทันสมัย เรามอบโซลูชันที่เชื่อถือได้และยั่งยืนที่ช่วยให้คุณดูแลสัตว์เลี้ยงได้อย่างง่ายดาย ส่งเสริมความผูกพันที่ลึกซึ้งยิ่งขึ้นระหว่างคุณทั้งสอง。", 
       "stat1_label": "ผลการทดสอบในห้องปฏิบัติการ",
       "stat2_label": "การให้อาหารที่แม่นยำ",
       "stat3_label": "แบตเตอรี่ที่ใช้งานได้ยาวนาน"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "เกี่ยวกับ PONTI",
       "title": "ผู้ชนะรางวัล<br>RED DOT DESIGN AWARD",
-      "p1": "(ข้อความตัวยึดตำแหน่งในภาษาไทย) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(ข้อความตัวยึดตำแหน่งในภาษาไทย) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "Andres Ponti นักออกแบบหลักของเรา เป็นช่างฝีมือที่ประจำอยู่ในฮ่องกงที่มีประสบการณ์ลึกซึ้งในการออกแบบผลิตภัณฑ์และอุตสาหกรรม ผลงานของเขาผสมผสานเส้นสายที่สะอาดตาของการออกแบบอุตสาหกรรมเข้ากับความเรียบง่ายแบบญี่ปุ่น。", 
+      "p2": "Ponti ผู้สำเร็จการศึกษาจาก Polytechnic of Milan ใช้เวลาเจ็ดปีในญี่ปุ่นระหว่างปี 2006 ถึง 2011 เขาเริ่มต้นจากการเป็นนักวิจัยด้านการออกแบบอุตสาหกรรมและการขนส่งที่ Kyushu University ก่อนที่จะทำงานภายใต้การแนะนำของปรมาจารย์ด้านการออกแบบชาวญี่ปุ่น Chiyuki Murata และ Junzo Yamashits。", 
       "portrait_alt": "ภาพเหมือนของ Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "ติดต่อเรา",
     "p1": "มีคำถามหรือความคิดเห็นหรือไม่? ใช้แบบฟอร์มด้านล่างเพื่อส่งข้อความถึงเราหรือติดต่อเราทางอีเมลที่:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "ที่อยู่: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "บริการค้าปลีก",
     "retail_service_p": "สำหรับบริการค้าปลีก โปรดติดต่อ: sales@petsclan.com",
     "form_title": "ส่งข้อความถึงเรา",
@@ -349,6 +356,7 @@
     "title": "คู่มือการใช้งาน",
     "feeder": "เครื่องให้อาหาร",
     "fountains": "น้ำพุ",
-    "leash": "สายจูง"
+    "leash": "สายจูง",
+    "product_name": "อุปกรณ์อัจฉริยะ Pets Clan"
   }
 }

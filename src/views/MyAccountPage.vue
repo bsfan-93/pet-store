@@ -110,14 +110,21 @@ const fetchOrders = async () => {
   isLoadingOrders.value = true;
   try {
     const userOrders = await getUserOrders();
-    // 模拟从API返回的订单数据
-    orders.value = userOrders.map((order, index) => ({
-      ...order,
-      date: '2025/6/4',
-      productName: index % 2 === 0 ? 'Pets clan Feeder' : 'Pets clan Fountains',
-      specs: 'blue/big',
-      status: index % 2 === 0 ? 'in-progress' : 'completed',
-    }));
+    // ▼▼▼ 移除模拟数据映射，使用真实 API 数据结构 ▼▼▼
+    if (Array.isArray(userOrders)) {
+        // 映射数据以匹配模板需要的字段。我们假设 API 返回了 orderDate, goodName, specification, and orderStatus
+        orders.value = userOrders.map(order => ({
+            id: order.id,
+            date: order.orderDate || 'N/A', // 假设 API 字段名为 orderDate
+            productName: order.goodName || 'N/A', // 假设 API 字段名为 goodName
+            specs: order.specification || 'N/A', // 假设 API 字段名为 specification
+            // 假设 API 中 status 字段为 orderStatus，且值为 2 代表“已完成”
+            status: order.orderStatus === 2 ? 'completed' : 'in-progress', 
+        }));
+    } else {
+        orders.value = [];
+    }
+    // ▲▲▲ 移除模拟数据映射，使用真实 API 数据结构 ▲▲▲
   } catch (error) {
     console.error("Failed to fetch orders:", error);
     orders.value = [];

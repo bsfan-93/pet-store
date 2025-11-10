@@ -232,7 +232,7 @@ const features = computed(() => [
   flex-direction: column;
 }
 .tagline-line {
-  font-size: 3.125vw; /* 60px/19.2 */
+  font-size: 2.125vw; /* 60px/19.2 */
   font-weight: bold;
   letter-spacing: 2px;
   line-height: 1.2;

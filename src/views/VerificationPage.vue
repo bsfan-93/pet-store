@@ -100,26 +100,42 @@ const submitForm = async (formEl) => {
   color: var(--text-color); filter: none;
 }
 .form-main {
-  flex-grow: 1; display: flex; justify-content: center; align-items: center;
-  background-color: #f7f7f7; padding: 60px 20px;
+  flex-grow: 1; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  background-color: #f7f7f7; 
+  padding: 60px 20px;
 }
 .form-box {
-  background-color: #fff; padding: 40px; border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 400px;
+  background-color: #fff; 
+  padding: 40px; 
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+  width: 100%; 
+  max-width: 400px;
   text-align: center;
 }
 h1 {
-  font-size: 32px; font-weight: 700; margin-bottom: 10px;
+  font-size: 32px; 
+  font-weight: 700; 
+  margin-bottom: 10px;
 }
 .subtitle {
-  color: #7CB342; margin-bottom: 30px;
+  color: #7CB342; 
+  margin-bottom: 30px;
 }
 .submit-button {
-  width: 100%; padding: 20px; font-size: 16px; font-weight: 500;
-  background-color: #7CB342; border-color: #7CB342;
+  width: 100%; 
+  padding: 20px; 
+  font-size: 16px; 
+  font-weight: 500;
+  background-color: #7CB342; 
+  border-color: #7CB342;
 }
 .submit-button:hover {
-  background-color: #8bc34a; border-color: #8bc34a;
+  background-color: #8bc34a; 
+  border-color: #8bc34a;
 }
 /* ▼▼▼ START: 核心修改点 2 ▼▼▼ */
 .back-link-container {

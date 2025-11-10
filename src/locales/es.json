@@ -60,7 +60,13 @@
     "feedback": {
       "title": "¿Te ha resultado útil esta página?",
       "yes": "SÍ",
-      "no": "NO"
+      "no": "NO",
+      "no_form_title": "Por favor, introduzca su pregunta",
+      "no_form_placeholder": "pregunta",
+      "no_form_button": "Enviar",
+      "yes_form_title": "Introduzca el correo electrónico",
+      "yes_form_placeholder": "Correo electrónico",
+      "yes_form_button": "Suscribirse"
     },
     "items": [
       {
@@ -145,6 +151,7 @@
     "add_to_cart": "Añadir al carrito",
     "added_feedback": "¡Añadido al carrito!",
     "buy_now": "Comprar ahora",
+    "learn_more":"Más información",
     "usp_title": "Puntos de venta únicos",
     "specs_title": "Especificaciones del producto",
     "params_title": "Parámetros del producto",
@@ -219,8 +226,8 @@
     "lifelong": {
       "image_alt": "Comedero Inteligente de Pets Clan",
       "title": "PETS CLAN,<br>ALIMENTANDO AMISTADES PARA TODA LA VIDA.",
-      "p1": "(Texto de marcador de posición en español) ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghiklmnopgrstuwwx234567890JSAHJDSA HBDHASXJHSAJHXJSHAXJUSAHCXHSAJKCHUSAHCJKASHCUHSAJCHJASHCUJASGBCHA",
-      "p2": "(Texto de marcador de posición en español) GCSSCGHASHC]KHXJCHASUHC]XHAC]HZXJCHIASHXCJASHCJHASC]ZHCJKSAHSHFDIE SHDIHYSDIYHASDHYUASHYDUAHSYDUAYSHDIUASIODHASIODJOIASJUDIOASUIDOI",
+      "p1": "Pets Clan se dedica al bienestar de sus queridas mascotas. Nuestros productos son la culminación de la investigación científica experta y un diseño reflexivo, asegurando que sus mascotas lleven una vida feliz y saludable.",
+      "p2": "Desde comederos inteligentes hasta fuentes de agua de última generación, ofrecemos soluciones confiables y sostenibles que le permiten cuidar a su mascota sin esfuerzo, fomentando un vínculo más profundo entre ustedes dos.",
       "stat1_label": "resultados de pruebas experimentales",
       "stat2_label": "Alimentación precisa",
       "stat3_label": "Batería de larga duración"
@@ -228,8 +235,8 @@
     "ponti": {
       "subtitle": "SOBRE PONTI",
       "title": "GANADOR DEL PREMIO<br>RED DOT DESIGN",
-      "p1": "(Texto de marcador de posición en español) Ades ront, ton n 1t485 n coyisri sal s a long Kongbased thtisn dsignerxpekiangn ppducandiustrnidsign.le pplecs comtine he deane df istn dsig wifhe igtnesof ks psnese miimalism. Ater serenyesrsin jags, Andres Pontinaw fesin Hang Kang where he ibunded Poni Deign Shrdion 2012.",
-      "p2": "(Texto de marcador de posición en español) A gaduste aithe Porecnicodf Milan, al Andes Poni ied seren yesrin anan betnesn 2006 arid 2011 He sared asa resesrdher n indusid and fansprtiondesgnatkyushu Unversily in fhaoka and weton to wekas a youngdesane undihe guidcnee of lapanese design mastes Chiskl Murata in Osakaand junzo Yamashits in Kyota.",
+      "p1": "Nuestro diseñador principal, Andres Ponti, es un artesano con sede en Hong Kong con una profunda experiencia en diseño de productos e industrial. Sus piezas combinan las líneas limpias del diseño industrial con la ligereza del minimalismo japonés。", 
+      "p2": "Graduado del Politécnico de Milán, Ponti pasó siete años en Japón entre 2006 y 2011. Comenzó como investigador en diseño industrial y de transporte en la Universidad de Kyushu antes de trabajar bajo la dirección de los maestros del diseño japonés Chiyuki Murata y Junzo Yamashits。", 
       "portrait_alt": "Retrato de Ponti"
     },
     "clan": {
@@ -275,7 +282,7 @@
     "title": "Contáctenos",
     "p1": "¿Tiene alguna pregunta o comentario? Utilice el siguiente formulario para enviarnos un mensaje o contáctenos por correo a:",
     "p2": "support@petsclan.com",
-    "p3": "1135 Walsh Ave, Santa Clara, California",
+    "p3": "Dirección: 1135 Walsh Ave, Santa Clara, California",
     "retail_service_title": "Servicio Minorista",
     "retail_service_p": "Para servicio minorista, por favor contacte a: sales@petsclan.com",
     "form_title": "Envíenos un mensaje",
@@ -349,6 +356,7 @@
     "title": "Manual de usuario",
     "feeder": "Comedero",
     "fountains": "Fuentes",
-    "leash": "Correa"
+    "leash": "Correa",
+    "product_name": "Dispositivo Inteligente Pets Clan"
   }
 }

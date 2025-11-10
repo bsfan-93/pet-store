@@ -27,7 +27,7 @@
               <p class="nav-item-description">{{ item.description }}</p>
               <div class="nav-item-actions">
                 <button class="buy-now" @click="goToProduct(item.goodId)">{{ t('product.buy_now') }}</button>
-                <a href="#" @click.prevent="goToProduct(item.goodId)" class="learn-more">Learn More →</a>
+                <a href="#" @click.prevent="goToProduct(item.goodId)" class="learn-more">{{ t('product.learn_more') }} →</a>
               </div>
             </div>
           </li>
