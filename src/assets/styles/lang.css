@@ -1,0 +1,58 @@
+/* =====================================
+   🌏 lang.css — 多语言与文字排版适配
+   ===================================== */
+
+/* 中文、日文、韩文、泰文全局行高优化 */
+:lang(zh) h1,
+:lang(zh) h2,
+:lang(zh) h3,
+:lang(zh) p,
+:lang(ja) h1,
+:lang(ja) h2,
+:lang(ja) h3,
+:lang(ja) p,
+:lang(ko) h1,
+:lang(ko) h2,
+:lang(ko) h3,
+:lang(ko) p,
+:lang(th) h1,
+:lang(th) h2,
+:lang(th) h3,
+:lang(th) p {
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+/* 不同语言的字体优化 */
+:lang(zh) {
+  font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+}
+:lang(ja) {
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic Pro", sans-serif;
+}
+:lang(ko) {
+  font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+:lang(th) {
+  font-family: "Noto Sans Thai", "Tahoma", sans-serif;
+}
+
+/* 统一 h1-h3 字号在不同屏幕上的表现 */
+h1, h2, h3 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* 让文字在不同屏幕下可缩放 */
+html {
+  font-size: calc(14px + 0.2vw);
+}
+
+body {
+  font-size: 1rem;
+}
+
+/* =============================
+   📄 结束 lang.css
+   ============================= */

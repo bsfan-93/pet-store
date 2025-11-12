@@ -6,6 +6,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './assets/styles/main.css'
+import './assets/styles/lang.css'
 import App from './App.vue'
 import i18n from './i18n'
 import router from './router' // 1. 导入我们创建的路由实例
