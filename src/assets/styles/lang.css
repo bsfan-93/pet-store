@@ -44,13 +44,16 @@ h1, h2, h3 {
   line-height: 1.4;
 }
 
-/* 让文字在不同屏幕下可缩放 */
+/* ▼▼▼ 核心修改 ▼▼▼
+  将全局的 vw 缩放改为固定的 14px 基础字体 
+*/
 html {
-  font-size: calc(14px + 0.2vw);
+  /* 修改前: font-size: calc(14px + 0.2vw); */
+  font-size: 14px;
 }
 
 body {
-  font-size: 1rem;
+  font-size: 1rem; /* 1rem = 14px */
 }
 
 /* =============================

@@ -60,15 +60,15 @@ defineProps({
 }
 .hero-content {
   position: absolute;
-  bottom: 3.125vw;
-  left: 10vw;
+  bottom: 3.125vw; /* 保留vw，使其能自适应屏幕底部距离 */
+  left: 10vw; /* 保留vw，使其能自适应屏幕左侧距离 */
   z-index: 10;
   color: #fff;
 }
 .hero-content h1 {
-  font-size: 2.708vw;
+  font-size: 52px; /* 【修改】 2.708vw -> 52px (基于1920px的 2.708vw 计算) */
   font-weight: 400;
-  margin-bottom: 1.5625vw;
+  margin-bottom: 30px; /* 【修改】 1.5625vw -> 30px */
   line-height: 1.2;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 }
@@ -76,12 +76,12 @@ defineProps({
   background-color: #92C45C;
   border-color: #92C45C;
   color: var(--secondary-color);
-  padding: 1.04vw 2.08vw;
-  border-radius:  2.6vw;
-  border-width: 0.1vw;
-  font-size: 0.9375vw;
+  padding: 20px 40px; /* 【修改】 1.04vw 2.08vw -> 20px 40px */
+  border-radius: 50px; /* 【修改】 2.6vw -> 50px */
+  border-width: 1px; /* 【修改】 0.1vw -> 1px */
+  font-size: 18px; /* 【修改】 0.9375vw -> 18px */
   font-weight: bold;
-  letter-spacing: 0.052vw;
+  letter-spacing: 1px; /* 【修改】 0.052vw -> 1px */
   transition: all 0.3s ease;
 }
 .shop-now-btn:hover {
@@ -110,6 +110,7 @@ defineProps({
   background: var(--secondary-color);
 }
 @media (max-width: 767px) {
+  /* 手机端的 px 样式已经存在，它们将正确覆盖PC端的大 px 值 */
   .hero-content h1 {
     font-size: 32px;
     margin-bottom: 20px;

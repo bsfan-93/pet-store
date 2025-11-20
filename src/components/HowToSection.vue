@@ -49,7 +49,7 @@ onMounted(() => {
 
   /* 使用padding来控制文字和边缘的距离 */
   box-sizing: border-box; /* 确保padding不会撑大元素 */
-  padding: 0 0 10vh 10vm; /* 调整：使内边距随视口宽度缩放 */
+  padding: 0 0 10vh 10vw; /* 调整：使内边距随视口宽度缩放 (这里保留vw是OK的，因为它只控制位置) */
 }
 
 .content-overlay {
@@ -57,18 +57,12 @@ onMounted(() => {
 }
 
 .content-overlay h2 {
-  font-size: 2.5vw; /* 假设设计稿标题是 48px，基准宽度 1920px (48/1920*100) */
+  font-size: 48px; /* 【修改】 2.5vw -> 48px */
   text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* 可以适当加深阴影使其更清晰 */
-  max-width: 20.83vw; /* 假设原来 max-width 400px (400/1920*100) */
+  max-width: 400px; /* 【修改】 20.83vw -> 400px */
 }
 
-@media (max-width: 767px) {
-    .content-overlay h2 {
-        font-size: 28px;
-    }
-}
-
-/* ▼▼▼ 【新增】針對手機的響應式樣式 ▼▼▼ */
+/* ▼▼▼ 【修改】将 767px 的媒体查询独立出来 ▼▼▼ */
 @media (max-width: 767px) {
   .how-to-section {
     height: auto; /* 移除固定的視窗高度 */

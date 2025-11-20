@@ -14,17 +14,8 @@
   --font-size-title: 48px;
   --font-size-body: 16px;
 
-  /* 尺寸和间距
-  --header-height: 70px;
-  /* 将 175px 转换为 vw，例如 175 / 19.2 = 9.11vw */
-  --logo-width: 9.11vw; /* <-- 修改这里，使 LOGO 宽度等比缩放 */
-  /* 将 66px 转换为 vw，例如 66 / 19.2 = 3.43vw */
-  --logo-height: 3.43vw;    /* <-- 修改这里，使 LOGO 高度等比缩放 */
-  --icon-size: 16px;        /* 图标大小通常可以保持 px 或根据实际情况调整 */
-  --container-width: 1750px;        /* 页面内容主容器宽度 */
-
   /* 尺寸和间距 */
-  --header-height: 70px;
+  --header-height: 60px;
   /* ▼▼▼ 核心修复：将 vw 尺寸转换为固定的 px 尺寸 ▼▼▼ */
   --logo-width: 175px;   /* 恢复到原始的 175px */
   --logo-height: 66px;    /* 恢复到原始的 66px */
@@ -36,7 +27,7 @@
 /* 全局重置和基础样式 */
 body {
   margin: 0;
-  font-family: 'Outfit', 'Noto Sans SC', sans-serif; 
+  font-family: 'Outfit', 'Noto Sans SC', sans-serif;
   color: var(--text-color);
   background-color: #ffffff;
 }

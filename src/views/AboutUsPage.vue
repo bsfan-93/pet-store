@@ -196,7 +196,7 @@ const features = computed(() => [
   justify-content: center; /* 尝试将内容组居中对齐 */
   align-items: flex-start;
   /* 控制点 1: 调整左右两块的间距 */
-  /* gap: -150px; */
+  gap: 80px; /* 【修改】从 -150px 修正为一个合理的间距 */
 }
 .intro-left {
   /* 让左侧内容块占据可用空间的一半，但不要超过其自身所需宽度 */
@@ -210,18 +210,18 @@ const features = computed(() => [
 
 /* 公司介绍区域的描述 */
 .description {
-  font-size: 1.145vw; /* 22px/19.2 */
+  font-size: 22px; /* 【修改】 1.145vw -> 22px */
   line-height: 1.8;
   color: #333;
-  margin: 0 0 1.25vw 0; /* 24px/19.2 */
+  margin: 0 0 24px 0; /* 【修改】 1.25vw -> 24px */
 }
 .signature-image {
   /* 控制点 1: 调整宽度来改变大小 */
-  width: 3.64vw; /* 70px/19.2 */
+  width: 70px; /* 【修改】 3.64vw -> 70px */
   height: auto;
   padding-left: 0px;
   /* 控制点 2: 调整上边距来改变与上方段落的距离 */
-  margin-top: -1.04vw; /* -20px/19.2 */
+  margin-top: -20px; /* 【修改】 -1.04vw -> -20px */
 }
 /* ▲▲▲ END: CSS MODIFICATION FOR PARAGRAPH ▲▲▲ */
 
@@ -232,7 +232,7 @@ const features = computed(() => [
   flex-direction: column;
 }
 .tagline-line {
-  font-size: 2.125vw; /* 60px/19.2 */
+  font-size: 60px; /* 【修改】 2.125vw -> 60px */
   font-weight: bold;
   letter-spacing: 2px;
   line-height: 1.2;
@@ -240,10 +240,10 @@ const features = computed(() => [
   white-space: nowrap;
 }
 .tagline-line:nth-child(1) {
-  margin-bottom: 4.68vw; /* 90px/19.2 */  /* 拉大第一行和第二行的间距 */
+  margin-bottom: 90px; /* 【修改】 4.68vw -> 90px */  /* 拉大第一行和第二行的间距 */
 }
 .tagline-line:nth-child(2) {
-  margin-bottom: 0.78vw; /* 15px/19.2 */  /* 第二行和第三行的间距 */
+  margin-bottom: 15px; /* 【修改】 0.78vw -> 15px */  /* 第二行和第三行的间距 */
 }
 /* ▲▲▲ END: CSS MODIFICATION FOR TAGLINE ▲▲▲ */
 
@@ -281,19 +281,19 @@ const features = computed(() => [
   text-align: center;
 }
 .feature-icon {
-  width: 8.33vw; /* 160px/19.2 */
-  height: 8.33vw; /* 160px/19.2 */
-  margin-bottom: 1.04vw; /* 20px/19.2 */
+  width: 160px; /* 【修改】 8.33vw -> 160px */
+  height: 160px; /* 【修改】 8.33vw -> 160px */
+  margin-bottom: 20px; /* 【修改】 1.04vw -> 20px */
 }
 .feature-title {
-  font-size: 1.25vw; /* 24px/19.2 */
+  font-size: 24px; /* 【修改】 1.25vw -> 24px */
   font-weight: bold;
   color: #000;
   margin: 0 0 10px 0;
   line-height: 1.4;
 }
 .feature-description {
-  ffont-size: 1.145vw; /* 22px/19.2 */
+  font-size: 22px; /* 【修改】 1.145vw -> 22px */
   color: #555;
   line-height: 1.6;
   margin: 0;
@@ -327,26 +327,26 @@ const features = computed(() => [
   border-radius: 0px;
 }
 
-lf-right {
+.lf-right { /* 【修改】 修正了 lf-right 的拼写错误 */
   /* 控制点 3: 调整右侧文字部分的宽度 */
   width: 480px;
   flex-shrink: 0; /* 防止被压缩 */
 }
 
 .lf-title {
-  font-size: 3.125vw; /* 60px/19.2 */
+  font-size: 60px; /* 【修改】 3.125vw -> 60px */
   font-weight: bold;
   color: #000;
   line-height: 1.3;
-  margin: 0 0 1.04vw 0; /* 20px/19.2 */
+  margin: 0 0 20px 0; /* 【修改】 1.04vw -> 20px */
   letter-spacing: 1px;
 }
 
 .lf-description {
-  font-size: 1.145vw; /* 22px/19.2 */
+  font-size: 22px; /* 【修改】 1.145vw -> 22px */
   color: #555;
   line-height: 1.7;
-  margin: 0 0 1.25vw 0; /* 24px/19.2 */
+  margin: 0 0 24px 0; /* 【修改】 1.25vw -> 24px */
 }
 
 .lf-stats {
@@ -362,16 +362,16 @@ lf-right {
 }
 
 .lf-stats .stat-value {
-  font-size: 1.875vw; /* 36px/19.2 */
+  font-size: 36px; /* 【修改】 1.875vw -> 36px */
   font-weight: bold;
   color: #000;
   line-height: 1.1;
 }
 
 .lf-stats .stat-label {
-  font-size: 0.73vw; /* 14px/19.2 */
+  font-size: 14px; /* 【修改】 0.73vw -> 14px */
   color: #666;
-  margin-top: 0.41vw; /* 8px/19.2 */
+  margin-top: 8px; /* 【修改】 0.41vw -> 8px */
   white-space: nowrap;
 }
 
@@ -394,7 +394,7 @@ lf-right {
 }
 
 .ponti-subtitle {
-  font-size: 1.25vw; /* 24px/19.2 */
+  font-size: 24px; /* 【修改】 1.25vw -> 24px */
   font-weight: bold;
   color: #555;
   letter-spacing: 1px;
@@ -403,19 +403,19 @@ lf-right {
 }
 
 .ponti-title {
-  font-size: 3.125vw; /* 60px/19.2 */
+  font-size: 60px; /* 【修改】 3.125vw -> 60px */
   font-weight: bold;
   color: #000;
   line-height: 1.4;
   text-transform: uppercase;
-  margin: 0 0 1.56vw 0; /* 30px/19.2 */
+  margin: 0 0 30px 0; /* 【修改】 1.56vw -> 30px */
 }
 
 .ponti-description {
-  font-size: 1.145vw; /* 22px/19.2 */
+  font-size: 22px; /* 【修改】 1.145vw -> 22px */
   color: #666;
   line-height: 1.8;
-  margin: 0 0 1.04vw 0; /* 20px/19.2 */
+  margin: 0 0 20px 0; /* 【修改】 1.04vw -> 20px */
 }
 
 .ponti-right {
@@ -436,7 +436,7 @@ lf-right {
   position: absolute;
   right: -50px;
   bottom: 20px;
-  font-size: 3.125vw; /* 60px/19.2 */
+  font-size: 60px; /* 【修改】 3.125vw -> 60px */
   font-weight: bold;
   color: #e0e0e0;
   line-height: 0.9;
@@ -457,10 +457,10 @@ lf-right {
 }
 
 .clan-title {
-  font-size: 3.125vw; /* 60px/19.2 */
+  font-size: 60px; /* 【修改】 3.125vw -> 60px */
   font-weight: bold;
   color: #000;
-  margin: 0 0 2.08vw 0; /* 40px/19.2 */
+  margin: 0 0 40px 0; /* 【修改】 2.08vw -> 40px */
 }
 
 .clan-video-wrapper {
@@ -498,11 +498,11 @@ lf-right {
 }
 
 .play-icon {
-  font-size: 4.16vw; /* 80px/19.2 */
+  font-size: 80px; /* 【修改】 4.16vw -> 80px */
   color: white;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 50%;
-  padding: 1.04vw; /* 20px/19.2 */
+  padding: 20px; /* 【修改】 1.04vw -> 20px */
   transition: transform 0.3s ease;
 }
 
@@ -510,9 +510,10 @@ lf-right {
   transform: scale(1.1);
 }
 
-/* ▼▼▼ 【新增】針對平板和手機的響應式樣式 ▼▼▼ */
+/* ▼▼▼ 【无需修改】媒体查询部分保持不变 ▼▼▼ */
+/* 它们现在会正确地覆盖上面我们设置的大的 px 值 */
 
-/* --- 平板電腦樣式 (寬度 ≤ 1199px) --- */
+/* --- 平板电脑样式 (宽度 ≤ 1199px) --- */
 @media (max-width: 1199px) {
   .intro-container,
   .lifelong-friends-container,
@@ -540,9 +541,41 @@ lf-right {
   .ponti-vertical-name {
     display: none;
   }
+  
+  /* 【新增】覆盖平板电脑上的字体 */
+  .description,
+  .lf-description,
+  .ponti-description {
+    font-size: 18px;
+  }
+  .tagline-line,
+  .lf-title,
+  .ponti-title,
+  .clan-title {
+    font-size: 42px;
+  }
+  .feature-icon {
+    width: 120px;
+    height: 120px;
+  }
+  .feature-title {
+    font-size: 20px;
+  }
+  .feature-description {
+    font-size: 16px;
+  }
+  .lf-stats .stat-value {
+    font-size: 30px;
+  }
+  .ponti-subtitle {
+    font-size: 20px;
+  }
+  .play-icon {
+    font-size: 60px;
+  }
 }
 
-/* --- 手機樣式 (寬度 ≤ 767px) --- */
+/* --- 手機样式 (宽度 ≤ 767px) --- */
 @media (max-width: 767px) {
   .hero-section, .intro-section, .features-section, .lifelong-friends-section, .about-ponti-section, .about-clan-section {
     padding: 50px 20px; /* 縮小所有區塊的上下間距 */
@@ -565,9 +598,21 @@ lf-right {
   .lifelong-friends-container, .ponti-container, .ponti-left {
     text-align: center;
   }
+  
+  .intro-right, .ponti-left {
+    text-align: center; /* 在手机上也居中 */
+  }
 
   .lf-stats {
     justify-content: center;
+  }
+
+  .feature-icon {
+    width: 100px;
+    height: 100px;
+  }
+  .play-icon {
+    font-size: 50px;
   }
 }
 </style>

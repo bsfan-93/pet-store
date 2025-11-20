@@ -150,9 +150,9 @@ const handleSubscribe = async () => {
 }
 
 h2 {
-  font-size: 2.5vw; /* 48px/19.2 */
+  font-size: 48px; /* 【修改】 2.5vw -> 48px */
   font-weight: 700;
-  margin: 0 0 0.78vw 0; /* 15px/19.2 */
+  margin: 0 0 15px 0; /* 【修改】 0.78vw -> 15px */
   color: #000;
   line-height: 1.4;
 }
@@ -162,9 +162,9 @@ h2 {
 }
 
 p {
-  font-size: 0.9375vw; /* 18px/19.2 */
+  font-size: 18px; /* 【修改】 0.9375vw -> 18px */
   color: #555;
-  margin: 0 0 2.08vw 0; /* 40px/19.2 */
+  margin: 0 0 40px 0; /* 【修改】 2.08vw -> 40px */
 }
 
 form {
@@ -237,5 +237,41 @@ label {
 .subscribe-dialog p:lang(ko),
 .subscribe-dialog p:lang(th) {
   line-height: 1.4;
+}
+
+/* ▼▼▼ 【新增】媒体查询，适配平板和手机 ▼▼▼ */
+@media (max-width: 999px) { /* 970px + padding */
+  .popup-container {
+    flex-direction: column;
+    width: 90vw;
+    max-width: 480px; /* 接近 popup-content 的宽度 */
+    height: auto;
+  }
+  .popup-image {
+    width: 100%;
+    height: 250px; /* 调整一个合适的高度 */
+  }
+  .popup-content {
+    width: 100%;
+    height: auto;
+    padding: 40px 30px;
+  }
+  h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 16px;
+    margin-bottom: 25px;
+  }
+}
+
+@media (max-width: 767px) {
+  h2 {
+    font-size: 28px;
+  }
+  p {
+    font-size: 15px;
+  }
 }
 </style>
