@@ -144,34 +144,30 @@ const handleSubscribe = async () => {
 </script>
 
 <style scoped>
-/* 最終方案：使用 clamp() 實現有上下限的、嚴格的等比縮放 */
+/* 1. PC端样式 (1200px 以上) - 使用固定的 PX 值，确保在大屏/缩放时不乱跑 */
 .app-footer {
   background-color: #000;
   color: #fff;
-  /* padding: 90px -> clamp(最小, 理想, 最大) */
-  padding: 60px 9%;
+  padding: 60px 9%; /* 固定 padding */
 }
 
 .footer-container {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
-  /* 為了穩定佈局，這裡使用一個相對較固定的間距 */
-  gap: clamp(20px, 2vw, 40px);
+  gap: 40px; /* 固定间距 */
 }
 
 .links-section {
   display: flex;
-  /* gap: 160px */
-  gap: clamp(40px, 8.33vw, 160px);
+  gap: 120px; /* 固定间距 */
   flex-grow: 1;
 }
 
 .footer-column h4 {
-  /* font-size: 14px */
-  font-size: clamp(12px, 0.73vw, 14px);
+  font-size: 14px; /* 固定字体 */
   font-weight: 600;
-  margin-bottom: clamp(18px, 1.875vw, 36px);
+  margin-bottom: 36px;
   color: #fff;
   white-space: nowrap;
 }
@@ -186,8 +182,8 @@ const handleSubscribe = async () => {
   display: block;
   color: #fff;
   text-decoration: none;
-  font-size: clamp(12px, 0.73vw, 14px); /* font-size: 14px */
-  margin-bottom: clamp(12px, 1.5vw, 30px);
+  font-size: 14px;
+  margin-bottom: 30px;
   transition: color 0.2s;
   white-space: nowrap;
 }
@@ -202,49 +198,43 @@ const handleSubscribe = async () => {
 }
 
 .subscribe-section h4 {
-  /* font-size: 36px */
-  font-size: clamp(24px, 1.875vw, 36px);
+  font-size: 36px;
   font-weight: 600;
-  margin-bottom: clamp(18px, 1.875vw, 36px);
-  margin-top: clamp(-20px, -1.04vw, -20px);
+  margin-bottom: 36px;
+  margin-top: -20px;
 }
 
 .subscribe-form-new {
   position: relative;
 }
 
-/* ▼▼▼ 这是修正后的样式，确保能正确应用 ▼▼▼ */
 .subscribe-form-new :deep(.el-input__wrapper) {
  background-color: #fff;
  border-radius: 10px;
  box-shadow: none !important;
- padding-left: clamp(15px, 1.04vw, 20px);
+ padding-left: 20px;
  padding-right: 5px; 
- height: clamp(44px, 2.7vw, 52px);
+ height: 52px; /* 固定高度 */
 }
 .subscribe-form-new :deep(.el-input__suffix) {
  margin-right: 8px; 
 }
 .subscribe-form-new :deep(.subscribe-button-inner.el-button.is-circle) {
-  /* 匹配图片中的淡绿色背景 */
  background-color: #92C45C; 
-  /* 匹配图片中的深色箭头 */
  color: #000;
  border: none;
  width: 80px;
  height: 40px;
-  /* 匹配图片中的圆角矩形 */
-  border-radius: 8px;
+ border-radius: 8px;
 }
 .subscribe-form-new :deep(.subscribe-button-inner.el-button.is-circle:hover) {
  background-color: #92C45C;
 }
-/* ▲▲▲ 修正结束 ▲▲▲ */
 
 .footer-bottom {
-  border-top: 1px solid #000;
-  padding-top: clamp(30px, 2.08vw, 40px);
-  margin-top: clamp(30px, 2.08vw, 40px);
+  border-top: 1px solid #333;
+  padding-top: 40px;
+  margin-top: 40px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -253,28 +243,28 @@ const handleSubscribe = async () => {
 .social-icons {
   display: flex;
   align-items: center;
-  gap: clamp(12px, 0.78vw, 15px);
+  gap: 15px;
 }
 
 .social-icon {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: clamp(22px, 1.3vw, 25px);
-  height: clamp(22px, 1.3vw, 25px);
+  width: 25px;
+  height: 25px;
   border: 2px solid #fff;
   border-radius: 50%;
   transition: transform 0.2s;
 }
 
 .social-icon img {
-  width: clamp(12px, 0.78vw, 15px);
-  height: clamp(12px, 0.78vw, 15px);
+  width: 15px;
+  height: 15px;
 }
 
 .download-app h4 {
-  font-size: clamp(12px, 0.73vw, 14px);
-  margin-bottom: clamp(12px, 0.78vw, 15px);
+  font-size: 14px;
+  margin-bottom: 15px;
   text-align: right;
 }
 
@@ -284,63 +274,86 @@ const handleSubscribe = async () => {
 }
 
 .store-buttons img {
-  height: clamp(28px, 1.56vw, 30px);
+  height: 30px;
 }
 
-/* ▼▼▼ 4. 样式修改：为成功提示框添加样式 ▼▼▼ */
 .subscribe-success-message {
   display: flex;
   align-items: center;
   padding: 40px 20px;
-  border: 1px solid #92C45C; /* 绿色边框 */
+  border: 1px solid #92C45C;
   border-radius: 10px;
   color: #fff;
-  /* 让它的高度和输入框保持一致 */
-  height: clamp(44px, 2.7vw, 52px); 
+  height: 52px;
   box-sizing: border-box;
   font-size: 16px;
 }
 
-/* 2. 图标样式（核心修改） */
 .subscribe-success-message .success-icon {
-  /* 用背景色和圆角制作圆形背景 */
  background-color: #92C45C; 
  border-radius: 50%;
-  
-  /* 控制圆形的大小 */
   width: 24px;
   height: 24px;
-
-  /* 让内部的对勾居中 */
   display: flex;
   justify-content: center;
   align-items: center;
-
-  /* 控制对勾本身的颜色和大小 */
- color: #fff; /* 白色对勾 */
+ color: #fff;
  font-size: 16px;
-
-  /* 与文字的间距 */
  margin-right: 40px;
-  flex-shrink: 0; /* 防止图标被压缩 */
+  flex-shrink: 0;
 }
 
-/* 3. 文字样式 */
 .subscribe-success-message span {
  font-size: 16px;
-  line-height: 1.6; /* 改善换行后的行间距 */
+  line-height: 1.6;
 }
-
 
 .store-link {
   display: inline-block;
-  border: 1.8px solid #fff; /* <-- 控制白色邊框的關鍵 */
-  border-radius: 6px;      /* 這是圓角 */
-  line-height: 0;          /* 確保邊框能緊貼圖片 */
+  border: 1.8px solid #fff;
+  border-radius: 6px;
+  line-height: 0;
   transition: transform 0.2s ease;
 }
 
 .store-link:hover {
   transform: scale(1.05);
+}
+
+/* 2. 平板端适配 (覆盖PC样式) */
+@media (max-width: 1199px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .links-section {
+    gap: 60px;
+    justify-content: space-between;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  .download-app h4 {
+    text-align: center;
+  }
+}
+
+/* 3. 手机端适配 (覆盖平板样式) */
+@media (max-width: 767px) {
+  .app-footer {
+    padding: 40px 20px;
+  }
+  .links-section {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .subscribe-section h4 {
+    font-size: 24px;
+  }
+  .footer-column a {
+    margin-bottom: 20px;
+  }
 }
 </style>
